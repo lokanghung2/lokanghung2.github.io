@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SCENTCRAFT TAIWAN ｜ 全球首創香水鋼筆 ‧ 聖誕奢華典藏禮盒</title>
-  <meta name="description" content="別再送無聊的香氛蠟燭了。送一支能書寫出台灣高山檜木香氣的精工鋼筆。100% 台灣精密製造，保證聖誕夜前送達聖誕樹下。">
+  <title>SCENT INK TAIWAN ｜ 全球首創沙龍香氛墨水 ‧ 感官書寫禮盒</title>
+  <meta name="description" content="別再用沒有溫度的工業墨水寫字。隨盒附贈精工玻璃沾水筆，無需鋼筆人人可用。台灣製造沙龍香氛墨水，將日常手帳與手寫昇華為每日五分鐘的靜心芳療儀式。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Noto+Serif+TC:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -17,7 +17,6 @@
       --gold-light: #f5e298;
       --gold-dark: #997819;
       --gold-glow: rgba(212, 175, 55, 0.25);
-      --emerald-accent: #0f2b20;
       --text-white: #f7f9fc;
       --text-muted: #9aa5b8;
       --text-dim: #647087;
@@ -26,11 +25,7 @@
       --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       background-color: var(--bg-dark);
@@ -41,7 +36,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Announcement Bar */
     .announcement-bar {
       background: linear-gradient(90deg, #18221c 0%, #2a1f10 50%, #18221c 100%);
       border-bottom: 1px solid var(--border-subtle);
@@ -50,7 +44,6 @@
       padding: 10px 16px;
       font-size: 0.88rem;
       font-weight: 600;
-      letter-spacing: 0.03em;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -68,10 +61,8 @@
       border-radius: 4px;
       font-size: 0.75rem;
       font-weight: 800;
-      letter-spacing: 0.05em;
     }
 
-    /* Header */
     header {
       padding: 24px 32px;
       display: flex;
@@ -79,11 +70,6 @@
       align-items: center;
       max-width: 1300px;
       margin: 0 auto;
-    }
-
-    .brand-logo {
-      display: flex;
-      flex-direction: column;
     }
 
     .brand-logo .brand-name {
@@ -100,6 +86,7 @@
       letter-spacing: 0.25em;
       color: var(--text-muted);
       text-transform: uppercase;
+      display: block;
     }
 
     .nav-cta {
@@ -123,19 +110,9 @@
       box-shadow: 0 0 15px var(--gold-glow);
     }
 
-    /* Container */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-    /* Hero Section */
-    .hero {
-      padding: 60px 0 90px;
-      text-align: center;
-      position: relative;
-    }
+    .hero { padding: 60px 0 90px; text-align: center; position: relative; }
 
     .hero-category-tag {
       display: inline-flex;
@@ -148,7 +125,6 @@
       font-size: 0.85rem;
       font-weight: 600;
       color: var(--gold-light);
-      letter-spacing: 0.08em;
       margin-bottom: 24px;
     }
 
@@ -157,7 +133,6 @@
       font-size: clamp(2.1rem, 5vw, 3.8rem);
       line-height: 1.25;
       font-weight: 900;
-      letter-spacing: -0.01em;
       margin-bottom: 24px;
       background: linear-gradient(180deg, #ffffff 0%, #dcdfe6 70%, #9aa5b8 100%);
       -webkit-background-clip: text;
@@ -200,7 +175,6 @@
       border-radius: 8px;
       font-size: 1.15rem;
       font-weight: 700;
-      letter-spacing: 0.03em;
       text-decoration: none;
       box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
       transition: var(--transition-smooth);
@@ -224,7 +198,6 @@
       justify-content: center;
     }
 
-    /* Product Showcase Visualizer */
     .hero-showcase {
       position: relative;
       background: radial-gradient(circle at center, #182230 0%, #0a0e17 70%);
@@ -237,81 +210,68 @@
       overflow: hidden;
     }
 
-    .pen-display-stage {
+    .ink-display-stage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      padding: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .crystal-bottle {
+      width: 140px;
+      height: 160px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(13,17,23,0.9) 30%, #080c14 100%);
+      border-radius: 12px;
+      border: 2px solid rgba(212, 175, 55, 0.4);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 0 20px rgba(212, 175, 55, 0.2);
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      position: relative;
-      min-height: 280px;
+      padding: 12px;
     }
 
-    .pen-mockup {
-      width: 100%;
-      max-width: 620px;
-      height: 140px;
-      background: linear-gradient(90deg, #11141a 0%, #222938 30%, #3f4d66 50%, #222938 70%, #11141a 100%);
-      border-radius: 8px;
-      position: relative;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 1px 2px rgba(255,255,255,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      border: 1px solid rgba(212, 175, 55, 0.4);
-    }
-
-    .pen-nib {
-      width: 60px;
-      height: 30px;
-      background: linear-gradient(135deg, #ffe28a 0%, #d4af37 60%, #8a6c11 100%);
-      clip-path: polygon(100% 50%, 0% 0%, 20% 50%, 0% 100%);
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-    }
-
-    .pen-body-band {
-      height: 100%;
-      width: 14px;
-      background: linear-gradient(180deg, #fce49b 0%, #d4af37 50%, #80630d 100%);
-      margin: 0 15px;
-    }
-
-    .pen-diffuser-slot {
-      flex: 1;
-      height: 26px;
-      background: rgba(0,0,0,0.6);
-      border-radius: 13px;
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      display: flex;
-      align-items: center;
-      padding: 0 12px;
-      color: var(--gold-light);
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      justify-content: space-between;
-    }
-
-    .pen-cap-clip {
-      width: 90px;
-      height: 12px;
-      background: linear-gradient(180deg, #fff 0%, #d4af37 50%, #997819 100%);
-      border-radius: 6px;
-    }
-
-    .scent-aura {
+    .bottle-cap {
       position: absolute;
-      top: 20px;
-      width: 80%;
-      height: 60px;
-      background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.18) 0%, rgba(212, 175, 55, 0) 70%);
-      filter: blur(12px);
-      animation: pulseAura 4s infinite ease-in-out;
-      pointer-events: none;
+      top: -20px;
+      width: 60px;
+      height: 20px;
+      background: linear-gradient(135deg, #fce49b 0%, #d4af37 60%, #80630d 100%);
+      border-radius: 4px;
     }
 
-    @keyframes pulseAura {
-      0%, 100% { opacity: 0.4; transform: scale(0.98); }
-      50% { opacity: 0.9; transform: scale(1.04); }
+    .bottle-label {
+      border: 1px solid var(--border-subtle);
+      padding: 10px 8px;
+      text-align: center;
+      width: 100%;
+      background: rgba(0,0,0,0.5);
+    }
+
+    .bottle-label h4 { font-family: 'Noto Serif TC', serif; font-size: 0.85rem; color: var(--gold-light); font-weight: 700; }
+    .bottle-label p { font-size: 0.7rem; color: var(--text-muted); }
+
+    .glass-dip-pen {
+      width: 220px;
+      height: 16px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.7) 0%, rgba(212, 175, 55, 0.6) 50%, rgba(255,255,255,0.3) 100%);
+      border-radius: 8px;
+      transform: rotate(-25deg);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .glass-pen-tip {
+      position: absolute;
+      left: -20px;
+      top: 0;
+      width: 25px;
+      height: 16px;
+      background: linear-gradient(135deg, #ffe28a 0%, #d4af37 100%);
+      clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
     }
 
     .pen-callouts {
@@ -336,18 +296,10 @@
       color: var(--gold-light);
       font-weight: 700;
       margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
-    .callout-item p {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
+    .callout-item p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
 
-    /* Trust Strip */
     .trust-strip {
       display: flex;
       flex-wrap: wrap;
@@ -367,24 +319,14 @@
       font-weight: 500;
     }
 
-    .trust-badge span.icon {
-      color: var(--gold-primary);
-      font-size: 1.15rem;
-      font-weight: bold;
-    }
+    .trust-badge span.icon { color: var(--gold-primary); font-size: 1.15rem; font-weight: bold; }
 
-    /* Common Enemy Section */
     .section-enemy {
       padding: 90px 0;
       background: linear-gradient(180deg, var(--bg-dark) 0%, #0d111a 100%);
     }
 
-    .section-header {
-      text-align: center;
-      max-width: 780px;
-      margin: 0 auto 56px;
-    }
-
+    .section-header { text-align: center; max-width: 780px; margin: 0 auto 56px; }
     .section-subtitle {
       font-size: 0.82rem;
       letter-spacing: 0.2em;
@@ -393,7 +335,6 @@
       font-weight: 700;
       margin-bottom: 12px;
     }
-
     .section-title {
       font-family: 'Noto Serif TC', 'Cinzel', serif;
       font-size: clamp(1.8rem, 3.5vw, 2.6rem);
@@ -401,14 +342,8 @@
       line-height: 1.35;
       font-weight: 900;
     }
+    .section-desc { color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; }
 
-    .section-desc {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      line-height: 1.8;
-    }
-
-    /* Comparison Table */
     .comparison-wrapper {
       max-width: 980px;
       margin: 0 auto;
@@ -416,79 +351,21 @@
       border-radius: 16px;
       border: 1px solid var(--border-card);
       overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     }
 
-    .comparison-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1.1fr 1.4fr;
-    }
+    .comparison-grid { display: grid; grid-template-columns: 1.2fr 1.1fr 1.4fr; }
+    .comp-header { padding: 20px 24px; font-weight: 700; font-size: 0.98rem; border-bottom: 1px solid var(--border-card); }
+    .comp-header.enemy { background: rgba(239, 68, 68, 0.08); color: #fca5a5; }
+    .comp-header.traditional { background: rgba(148, 163, 184, 0.08); color: #cbd5e1; }
+    .comp-header.hero { background: rgba(212, 175, 55, 0.15); color: var(--gold-light); border-left: 2px solid var(--gold-primary); }
 
-    .comp-header {
-      padding: 20px 24px;
-      font-weight: 700;
-      font-size: 0.98rem;
-      border-bottom: 1px solid var(--border-card);
-    }
+    .comp-cell { padding: 18px 24px; font-size: 0.92rem; border-bottom: 1px solid rgba(255, 255, 255, 0.04); display: flex; align-items: center; }
+    .comp-cell.enemy { background: rgba(239, 68, 68, 0.03); color: var(--text-dim); }
+    .comp-cell.traditional { background: rgba(148, 163, 184, 0.02); color: var(--text-muted); }
+    .comp-cell.hero { background: rgba(212, 175, 55, 0.05); color: var(--text-white); font-weight: 600; border-left: 2px solid var(--gold-primary); }
 
-    .comp-header.enemy {
-      background: rgba(239, 68, 68, 0.08);
-      color: #fca5a5;
-    }
-
-    .comp-header.traditional {
-      background: rgba(148, 163, 184, 0.08);
-      color: #cbd5e1;
-    }
-
-    .comp-header.hero {
-      background: rgba(212, 175, 55, 0.15);
-      color: var(--gold-light);
-      border-left: 2px solid var(--gold-primary);
-    }
-
-    .comp-row {
-      display: contents;
-    }
-
-    .comp-cell {
-      padding: 18px 24px;
-      font-size: 0.92rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      display: flex;
-      align-items: center;
-      line-height: 1.5;
-    }
-
-    .comp-cell.enemy {
-      background: rgba(239, 68, 68, 0.03);
-      color: var(--text-dim);
-    }
-
-    .comp-cell.traditional {
-      background: rgba(148, 163, 184, 0.02);
-      color: var(--text-muted);
-    }
-
-    .comp-cell.hero {
-      background: rgba(212, 175, 55, 0.05);
-      color: var(--text-white);
-      font-weight: 600;
-      border-left: 2px solid var(--gold-primary);
-    }
-
-    /* Editions Section */
-    .section-editions {
-      padding: 90px 0;
-      position: relative;
-    }
-
-    .editions-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 28px;
-      margin-top: 48px;
-    }
+    .section-editions { padding: 90px 0; }
+    .editions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; margin-top: 48px; }
 
     .edition-card {
       background: var(--bg-card);
@@ -500,13 +377,7 @@
       position: relative;
       transition: var(--transition-smooth);
     }
-
-    .edition-card:hover {
-      border-color: var(--border-subtle);
-      transform: translateY(-4px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-    }
-
+    .edition-card:hover { border-color: var(--border-subtle); transform: translateY(-4px); }
     .edition-card.featured {
       border: 1.5px solid var(--gold-primary);
       background: linear-gradient(180deg, #181d2a 0%, #121622 100%);
@@ -521,73 +392,20 @@
       color: #000;
       font-size: 0.75rem;
       font-weight: 800;
-      letter-spacing: 0.05em;
       padding: 4px 14px;
       border-radius: 20px;
     }
 
-    .edition-name {
-      font-family: 'Noto Serif TC', 'Cinzel', serif;
-      font-size: 1.4rem;
-      margin-bottom: 8px;
-      color: var(--text-white);
-      font-weight: 700;
-    }
+    .edition-name { font-family: 'Noto Serif TC', serif; font-size: 1.4rem; margin-bottom: 8px; color: var(--text-white); font-weight: 700; }
+    .edition-scent-notes { font-size: 0.85rem; color: var(--gold-light); margin-bottom: 20px; }
+    .edition-price-box { margin-bottom: 24px; display: flex; align-items: baseline; gap: 10px; }
+    .price-main { font-family: 'Cinzel', serif; font-size: 2.3rem; font-weight: 700; color: var(--text-white); }
+    .price-sub { font-size: 0.88rem; color: var(--text-muted); }
+    .price-save { color: #34d399; font-size: 0.88rem; font-weight: 700; }
 
-    .edition-scent-notes {
-      font-size: 0.85rem;
-      color: var(--gold-light);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .edition-price-box {
-      margin-bottom: 24px;
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-    }
-
-    .price-main {
-      font-family: 'Cinzel', serif;
-      font-size: 2.3rem;
-      font-weight: 700;
-      color: var(--text-white);
-    }
-
-    .price-sub {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-    }
-
-    .price-save {
-      color: #34d399;
-      font-size: 0.88rem;
-      font-weight: 700;
-    }
-
-    .edition-features {
-      list-style: none;
-      margin-bottom: 32px;
-      flex: 1;
-    }
-
-    .edition-features li {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      line-height: 1.5;
-    }
-
-    .edition-features li span.chk {
-      color: var(--gold-primary);
-      font-weight: bold;
-    }
+    .edition-features { list-style: none; margin-bottom: 32px; flex: 1; }
+    .edition-features li { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 12px; display: flex; gap: 8px; }
+    .edition-features li span.chk { color: var(--gold-primary); font-weight: bold; }
 
     .btn-card {
       width: 100%;
@@ -596,70 +414,27 @@
       font-size: 1rem;
       font-weight: 700;
       text-align: center;
-      text-decoration: none;
       transition: var(--transition-smooth);
       cursor: pointer;
       border: 1px solid var(--gold-primary);
       background: transparent;
       color: var(--gold-light);
     }
+    .edition-card.featured .btn-card { background: var(--gold-primary); color: #000; }
+    .btn-card:hover { background: var(--gold-light); color: #000; box-shadow: 0 0 20px var(--gold-glow); }
 
-    .edition-card.featured .btn-card {
-      background: var(--gold-primary);
-      color: #000;
-    }
+    .section-faq { padding: 90px 0; background: var(--bg-surface); }
+    .faq-container { max-width: 820px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border-card); padding: 24px 0; }
+    .faq-question { font-size: 1.15rem; font-weight: 700; color: var(--text-white); margin-bottom: 12px; }
+    .faq-answer { font-size: 0.95rem; color: var(--text-muted); line-height: 1.75; }
+    .faq-answer strong { color: var(--gold-light); }
 
-    .btn-card:hover {
-      background: var(--gold-light);
-      color: #000;
-      box-shadow: 0 0 20px var(--gold-glow);
-    }
-
-    /* Objection Breaker FAQ */
-    .section-faq {
-      padding: 90px 0;
-      background: var(--bg-surface);
-      border-top: 1px solid var(--border-card);
-    }
-
-    .faq-container {
-      max-width: 820px;
-      margin: 0 auto;
-    }
-
-    .faq-item {
-      border-bottom: 1px solid var(--border-card);
-      padding: 24px 0;
-    }
-
-    .faq-question {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--text-white);
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .faq-answer {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.75;
-    }
-
-    .faq-answer strong {
-      color: var(--gold-light);
-    }
-
-    /* Final CTA */
     .section-final-cta {
       padding: 100px 0;
       text-align: center;
       background: radial-gradient(circle at center, #1b2535 0%, #080a0f 80%);
-      position: relative;
     }
-
     .final-cta-card {
       max-width: 840px;
       margin: 0 auto;
@@ -668,10 +443,8 @@
       padding: 60px 32px;
       background: rgba(15, 19, 28, 0.85);
       backdrop-filter: blur(16px);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.7);
     }
 
-    /* Footer */
     footer {
       border-top: 1px solid var(--border-card);
       padding: 40px 24px;
@@ -679,133 +452,105 @@
       font-size: 0.85rem;
       color: var(--text-dim);
     }
+    .footer-mit-badge { color: var(--text-muted); margin-bottom: 16px; font-size: 0.9rem; }
 
-    .footer-mit-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      font-size: 0.9rem;
-    }
-
-    /* Responsive */
     @media (max-width: 768px) {
-      .comparison-grid {
-        grid-template-columns: 1fr;
-      }
-      .comp-header.hero {
-        border-left: none;
-        border-top: 2px solid var(--gold-primary);
-      }
-      .comp-cell.hero {
-        border-left: none;
-        border-top: 1px solid var(--border-subtle);
-      }
-      .trust-strip {
-        gap: 16px;
-      }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .comp-header.hero { border-left: none; border-top: 2px solid var(--gold-primary); }
+      .comp-cell.hero { border-left: none; border-top: 1px solid var(--border-subtle); }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
+  <!-- Announcement Bar -->
   <div class="announcement-bar">
-    <span class="announcement-badge">聖誕抵達契約</span>
-    <span>🎄 12 月 12 日前下單 ── 保證 12 月 24 日聖誕夜前送達聖誕樹下（若遲到 100% 全額退款，筆免費送您）</span>
+    <span class="announcement-badge">感官首發</span>
+    <span>🌿 每組入門套裝均免費加贈「手工吹製精工玻璃沾水筆」‧ 全球掛號免運直送</span>
   </div>
 
   <!-- Header -->
   <header>
     <div class="brand-logo">
-      <a href="#" class="brand-name">SCENTCRAFT</a>
-      <span class="brand-sub">TAIWAN ‧ 台灣精工典藏</span>
+      <a href="#" class="brand-name">SCENT INK</a>
+      <span class="brand-sub">TAIWAN ‧ 台灣沙龍香氛墨水</span>
     </div>
-    <a href="#editions" class="nav-cta">預約聖誕禮盒 — $88 USD</a>
+    <a href="#editions" class="nav-cta">預約入門套裝 — $58 USD</a>
   </header>
 
   <!-- Hero Section -->
   <main>
     <section class="hero container">
       <div class="hero-category-tag">
-        <span>🇹🇼 100% 台灣精密製造 (MIT)</span>
+        <span>🇹🇼 台灣專業研發製造 (MIT)</span>
         <span>•</span>
-        <span>全球首創香水鋼筆 ‧ 聖誕奢華典藏</span>
+        <span>沙龍香氛墨水 ‧ 感官書寫禮盒</span>
       </div>
 
       <h1 class="hero-h1">
-        別再送另一顆無聊的香氛蠟燭。<br>
-        <span class="highlight">送一支能寫出香氣的精工鋼筆。</span>
+        別再用沒有溫度的墨水寫字。<br>
+        <span class="highlight">讓每一筆手寫，都留下專屬香氣。</span>
       </h1>
 
       <p class="hero-subhead">
-        台灣航太級精密金屬 CNC 工藝打造。當筆尖在紙上劃過，散發神聖台灣高山檜木沙龍香調。<br>
-        今年聖誕樹下，唯一一件他們絕捨不得轉送他人的靈魂禮物。
+        台灣專業沙龍級水性調香墨水。隨盒附贈零門檻手工吹製玻璃沾水筆，無需鋼筆人人可用。<br>
+        將日常手帳與晨間日記，昇華為每日五分鐘的安靜心靈芳療儀式。
       </p>
 
       <div class="hero-cta-group">
         <a href="#editions" class="btn-primary" id="btn-hero-cta">
-          <span>立即預購聖誕限定禮盒 — $88 USD (約 NT$2,800)</span>
+          <span>立即取得感官入門禮盒 — $58 USD (約 NT$1,850)</span>
           <span>→</span>
         </a>
         <div class="delivery-guarantee-pill">
-          <span>🔒 美國/全球海外倉專線直送</span>
+          <span>🔒 隨盒附贈精工玻璃沾水筆</span>
           <span>•</span>
-          <span>免費加贈聖誕限定曜石黑燙金硬盒與封蠟包裝</span>
+          <span>沾墨即寫 ‧ 清水一秒沖洗乾淨</span>
         </div>
       </div>
 
-      <!-- Interactive Pen Showcase Visualizer -->
+      <!-- Product Showcase Visualizer -->
       <div class="hero-showcase">
-        <div class="pen-display-stage">
-          <div class="scent-aura"></div>
-          <div class="pen-mockup">
-            <div class="pen-nib" title="德標 0.5mm 銥金順滑筆尖"></div>
-            <div class="pen-body-band"></div>
-            <div class="pen-diffuser-slot">
-              <span>微孔固態香氛艙 SOLID SCENT CORE</span>
-              <span>TAIWAN HINOKI 高山檜木</span>
+        <div class="ink-display-stage">
+          <div class="crystal-bottle">
+            <div class="bottle-cap"></div>
+            <div class="bottle-label">
+              <h4>SCENT INK</h4>
+              <p>TAIWAN ARTISAN</p>
+              <p style="font-size:0.6rem; color:var(--gold-light); margin-top:4px;">30ml 沙龍香氛墨水</p>
             </div>
-            <div class="pen-body-band"></div>
-            <div class="pen-cap-clip"></div>
+          </div>
+          <div class="glass-dip-pen">
+            <div class="glass-pen-tip"></div>
           </div>
         </div>
 
         <div class="pen-callouts">
           <div class="callout-item">
-            <h4><span>⚖️</span> 32g 黃金手感配重</h4>
-            <p>實心黃銅與航太鋁合金 CNC 一體車削，微米級公差手感。</p>
+            <h4><span>🌿</span> IFRA 國際安全調香認證</h4>
+            <p>100% 水性微膠囊無酒精配方，溫和無毒，散發天然雅緻沙龍香調。</p>
           </div>
           <div class="callout-item">
-            <h4><span>🌲</span> 固態微孔沙龍擴散芯</h4>
-            <p>100% 無液態酒精，零揮發外洩，每支香芯持香 6 個月以上。</p>
+            <h4><span>✍️</span> 零門檻精工玻璃沾水筆</h4>
+            <p>沾一下順暢書寫 50 字，清水一沖 1 秒換墨換味，永遠不堵筆。</p>
           </div>
           <div class="callout-item">
-            <h4><span>✈️</span> 航空級氣壓防漏平衡閥</h4>
-            <p>專利高空氣壓平衡艙，35,000 英呎極限負壓零爆墨、零滲漏。</p>
+            <h4><span>📜</span> 紙上持久留香數週</h4>
+            <p>中性 pH 耐光墨水，墨水數秒即乾，香氣滲入紙張纖維留香數週。</p>
           </div>
           <div class="callout-item">
-            <h4><span>✍️</span> 德標順滑水性書寫流動</h4>
-            <p>墨水數秒即乾，紙張散發神木清香長達數月不散。</p>
+            <h4><span>✈️</span> 專利航空防漏矽膠塞</h4>
+            <p>通過 -0.8 bar 航空負壓測試，抗高空氣壓與顛簸，空運零外洩。</p>
           </div>
         </div>
       </div>
 
       <!-- Trust Strip -->
       <div class="trust-strip">
-        <div class="trust-badge">
-          <span class="icon">✓</span> 100% 台灣精密製造 (MIT)
-        </div>
-        <div class="trust-badge">
-          <span class="icon">✓</span> IFRA 國際安全無毒香精認證
-        </div>
-        <div class="trust-badge">
-          <span class="icon">✓</span> 零沾墨即插即寫卡式墨膽
-        </div>
-        <div class="trust-badge">
-          <span class="icon">✓</span> 保證 12/24 聖誕夜前送達
-        </div>
+        <div class="trust-badge"><span class="icon">✓</span> 100% 台灣在地研發調香</div>
+        <div class="trust-badge"><span class="icon">✓</span> IFRA 國際安全無毒認證</div>
+        <div class="trust-badge"><span class="icon">✓</span> 免鋼筆！隨盒附贈玻璃沾水筆</div>
+        <div class="trust-badge"><span class="icon">✓</span> 30 天安心體驗保證</div>
       </div>
     </section>
 
@@ -813,39 +558,34 @@
     <section class="section-enemy">
       <div class="container">
         <div class="section-header">
-          <div class="section-subtitle">節慶送禮殘酷真相</div>
-          <h2 class="section-title">為什麼 76% 的聖誕禮物最終都在衣櫃角落積灰塵？</h2>
+          <div class="section-subtitle">書寫的殘酷對比</div>
+          <h2 class="section-title">為什麼我們還要忍受刺鼻、冰冷的工業黑墨水？</h2>
           <p class="section-desc">
-            每年 12 月，無數的香氛蠟燭、普通馬克杯和刺人的圍巾在禮貌微笑中被拆開 ── 然後被遺忘在抽屜深處，或者在隔年聖誕被轉送出去。
+            我們願意花大錢買高級香氛蠟燭與沙龍香水，卻每天用充滿化學刺鼻味、冰冷毫無溫度的普通辦公室墨水，記錄內心最私密的手帳與信件。
           </p>
         </div>
 
         <div class="comparison-wrapper">
           <div class="comparison-grid">
-            <!-- Headers -->
-            <div class="comp-header enemy">爛大街的無聊禮品 (香氛蠟燭 / 馬克杯)</div>
-            <div class="comp-header traditional">傳統老派鋼筆 (萬寶龍 / Parker 等商務筆)</div>
-            <div class="comp-header hero">👑 SCENTCRAFT 台灣香水鋼筆 (MIT)</div>
+            <div class="comp-header enemy">冷冰冰工業墨水 (Parker / Pilot)</div>
+            <div class="comp-header traditional">歐美小眾香氛墨水 (J. Herbin)</div>
+            <div class="comp-header hero">👑 SCENT INK TAIWAN (感官禮盒)</div>
 
-            <!-- Row 1 -->
-            <div class="comp-cell enemy">點燃 20 小時燒完即空，隨風而逝</div>
-            <div class="comp-cell traditional">冷冰冰、距離感強烈、充滿辦公室合約味</div>
-            <div class="comp-cell hero">永久精工金屬筆身，微孔沙龍香芯可替換持香</div>
+            <div class="comp-cell enemy">刺鼻化學味，冰冷枯燥</div>
+            <div class="comp-cell traditional">氣味微弱，寫完數分鐘即消散</div>
+            <div class="comp-cell hero">沙龍級高級調香，紙張持久留香數週</div>
 
-            <!-- Row 2 -->
-            <div class="comp-cell enemy">在聖誕樹下毫無話題性與驚喜感</div>
-            <div class="comp-cell traditional">灌墨水繁瑣髒手，令人望而生畏</div>
-            <div class="comp-cell hero">寫下祝福的瞬間，滿室繚繞令人驚艷的高山香氣</div>
+            <div class="comp-cell enemy">必須自備鋼筆，灌墨洗筆繁瑣髒手</div>
+            <div class="comp-cell traditional">必須自備鋼筆，容易堵塞昂貴筆舌</div>
+            <div class="comp-cell hero">內建精工玻璃沾水筆！沾墨即寫，清水1秒清潔</div>
 
-            <!-- Row 3 -->
-            <div class="comp-cell enemy">$35 ~ $50 USD (感覺廉價隨便)</div>
-            <div class="comp-cell traditional">$250 ~ $600+ USD (預算過於沉重)</div>
-            <div class="comp-cell hero">$88 USD (體面、尊榮、輕奢的黃金甜蜜區間)</div>
+            <div class="comp-cell enemy">$10 事務消耗品，毫無美感</div>
+            <div class="comp-cell traditional">$18 小裸瓶，運費昂貴無禮品感</div>
+            <div class="comp-cell hero">$58 曜石黑燙金厚底水晶展示禮盒</div>
 
-            <!-- Row 4 -->
-            <div class="comp-cell enemy">隔年聖誕節被毫不猶豫轉送給別人</div>
-            <div class="comp-cell traditional">長期鎖在辦公桌抽屜底層幾乎不碰</div>
-            <div class="comp-cell hero">成為每天書寫隨身攜帶、珍藏一生的私人信物</div>
+            <div class="comp-cell enemy">枯燥的辦公作業</div>
+            <div class="comp-cell traditional">侷限於少數硬核鋼筆發燒友</div>
+            <div class="comp-cell hero">專屬於你每日五分鐘的安靜心靈書寫儀式</div>
           </div>
         </div>
       </div>
@@ -854,149 +594,128 @@
     <!-- Editions & Pricing -->
     <section class="section-editions container" id="editions">
       <div class="section-header">
-        <div class="section-subtitle">聖誕限定首發批次</div>
-        <h2 class="section-title">選擇您的聖誕奢華典藏禮盒</h2>
-        <p class="section-desc">
-          台灣台中金屬加工聚落 CNC 精密車削。手工組裝於磁吸天鵝絨硬盒，附燙金火漆封蠟證書。
-        </p>
+        <div class="section-subtitle">選擇您的感官書寫體驗</div>
+        <h2 class="section-title">感官書寫禮盒與典藏墨水</h2>
+        <p class="section-desc">厚底水晶玻璃瓶裝。手工組裝於磁吸曜石黑燙金展示硬盒。</p>
       </div>
 
       <div class="editions-grid">
-        <!-- Edition 1: Hinoki -->
+        <!-- Edition 1: Starter Kit -->
         <div class="edition-card featured">
-          <span class="featured-tag">★ 最受歡迎送禮首選</span>
-          <h3 class="edition-name">台灣高山檜木限定版</h3>
-          <div class="edition-scent-notes">
-            <span>🌲 沙龍香調：台灣高山檜木、大西洋雪松、溫潤白麝香</span>
-          </div>
+          <span class="featured-tag">★ 最受歡迎 ‧ 手帳族首選</span>
+          <h3 class="edition-name">感官書寫入門禮盒</h3>
+          <div class="edition-scent-notes"><span>✨ 30ml 沙龍香氛墨水 ＋ 精工玻璃沾水筆</span></div>
           <div class="edition-price-box">
-            <span class="price-main">$88</span>
-            <span class="price-sub">USD (約 NT$2,800)</span>
+            <span class="price-main">$58</span>
+            <span class="price-sub">USD (約 NT$1,850)</span>
           </div>
           <ul class="edition-features">
-            <li><span class="chk">✓</span> 1x 曜石黑 ✕ 髮絲紋黃銅 CNC 精工香水鋼筆</li>
-            <li><span class="chk">✓</span> 2x 高山檜木固態香氛芯 (每支持香 6 個月以上)</li>
-            <li><span class="chk">✓</span> 1x 30ml 頂級水性深黑墨水 (台灣製)</li>
-            <li><span class="chk">✓</span> 奢華燙金磁吸硬盒 ＋ 手寫書法聖誕賀卡</li>
-            <li><span class="chk">✓</span> 保證 12 月 24 日聖誕夜前送達聖誕樹下</li>
+            <li><span class="chk">✓</span> 1x 30ml 厚底水晶瓶沙龍香氛墨水 (台灣製)</li>
+            <li><span class="chk">✓</span> 1x 手工吹製螺旋精工玻璃沾水筆</li>
+            <li><span class="chk">✓</span> 1x 專屬厚磅試香書法棉紙卡套組</li>
+            <li><span class="chk">✓</span> 曜石黑燙金磁吸展示硬盒</li>
+            <li><span class="chk">✓</span> 全球掛號免運直送</li>
           </ul>
-          <button class="btn-card" onclick="alert('已選擇：台灣高山檜木版 ($88 USD) 進入結帳頁面')">預約此禮盒 — $88 USD</button>
+          <button class="btn-card" onclick="alert('已選擇：感官書寫入門禮盒 ($58 USD)')">預約入門禮盒 — $58 USD</button>
         </div>
 
-        <!-- Edition 2: Smoked Oolong -->
+        <!-- Edition 2: Collector Duo -->
         <div class="edition-card">
-          <h3 class="edition-name">高山煙燻烏龍限定版</h3>
-          <div class="edition-scent-notes">
-            <span>🍵 沙龍香調：炭焙高山烏龍、義大利佛手柑、琥珀木</span>
-          </div>
+          <h3 class="edition-name">雙重香調尊榮禮箱</h3>
+          <div class="edition-scent-notes"><span>✨ 2 瓶限定香調 ＋ 2 支筆 ＋ 手帳筆記本</span></div>
           <div class="edition-price-box">
             <span class="price-main">$88</span>
-            <span class="price-sub">USD (約 NT$2,800)</span>
+            <span class="price-save">現省 $28 USD (約 NT$2,800)</span>
           </div>
           <ul class="edition-features">
-            <li><span class="chk">✓</span> 1x 極光墨綠 ✕ 香檳金 CNC 精工香水鋼筆</li>
-            <li><span class="chk">✓</span> 2x 煙燻烏龍固態香氛芯 (每支持香 6 個月以上)</li>
-            <li><span class="chk">✓</span> 1x 30ml 頂級水性深黑墨水 (台灣製)</li>
-            <li><span class="chk">✓</span> 奢華燙金磁吸硬盒 ＋ 手寫書法聖誕賀卡</li>
-            <li><span class="chk">✓</span> 保證 12 月 24 日聖誕夜前送達聖誕樹下</li>
+            <li><span class="chk">✓</span> 2x 30ml 沙龍香氛墨水 (雙重限定氣味)</li>
+            <li><span class="chk">✓</span> 2x 精工玻璃沾水筆</li>
+            <li><span class="chk">✓</span> 1x 專屬留香厚磅手帳筆記本</li>
+            <li><span class="chk">✓</span> 雙層胡桃木紋典藏展示禮箱</li>
+            <li><span class="chk">✓</span> 全球掛號免運直送</li>
           </ul>
-          <button class="btn-card" onclick="alert('已選擇：高山煙燻烏龍版 ($88 USD) 進入結帳頁面')">預約此禮盒 — $88 USD</button>
+          <button class="btn-card" onclick="alert('已選擇：雙重香調尊榮禮箱 ($88 USD)')">預約雙瓶禮箱 — $88 USD</button>
         </div>
 
-        <!-- Edition 3: Duo Set -->
+        <!-- Edition 3: Refill Bottle -->
         <div class="edition-card">
-          <h3 class="edition-name">雙人尊榮典藏雙筆箱</h3>
-          <div class="edition-scent-notes">
-            <span>✨ 完整雙香調典藏體驗（檜木 ＋ 烏龍）</span>
-          </div>
+          <h3 class="edition-name">沙龍香氛墨水單瓶裝</h3>
+          <div class="edition-scent-notes"><span>✨ 30ml 水晶瓶單裝 (適合已有鋼筆與沾水筆者)</span></div>
           <div class="edition-price-box">
-            <span class="price-main">$158</span>
-            <span class="price-save">立省 $18 USD (約 NT$5,000)</span>
+            <span class="price-main">$24</span>
+            <span class="price-sub">USD (約 NT$770)</span>
           </div>
           <ul class="edition-features">
-            <li><span class="chk">✓</span> 2x 精工香水鋼筆 (曜石黑 ＋ 極光綠各一支)</li>
-            <li><span class="chk">✓</span> 4x 固態香氛擴散芯 (檜木 2 支 ＋ 烏龍 2 支)</li>
-            <li><span class="chk">✓</span> 2x 30ml 頂級水性墨水</li>
-            <li><span class="chk">✓</span> 雙層胡桃木紋尊榮展示禮箱</li>
-            <li><span class="chk">✓</span> 免費加贈客製雷雕紀念黃銅情侶書籤 ($36 價值)</li>
+            <li><span class="chk">✓</span> 1x 30ml 水晶瓶沙龍香氛墨水</li>
+            <li><span class="chk">✓</span> 相容所有常規鋼筆、沾水筆與毛筆</li>
+            <li><span class="chk">✓</span> 專利航空防漏矽膠塞</li>
+            <li><span class="chk">✓</span> 附贈試香棉紙卡</li>
           </ul>
-          <button class="btn-card" onclick="alert('已選擇：雙人尊榮典藏雙筆箱 ($158 USD) 進入結帳頁面')">預約雙筆禮箱 — $158 USD</button>
+          <button class="btn-card" onclick="alert('已選擇：沙龍香氛墨水單瓶裝 ($24 USD)')">加購單瓶墨水 — $24 USD</button>
         </div>
       </div>
     </section>
 
-    <!-- Objection Breakers FAQ -->
+    <!-- FAQ -->
     <section class="section-faq">
       <div class="container faq-container">
         <div class="section-header">
           <div class="section-subtitle">無憂解答</div>
-          <h2 class="section-title">常見問題與疑慮粉碎</h2>
+          <h2 class="section-title">常見問題解答</h2>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question">
-            <span>鋼筆會不會很難用、灌墨水弄得滿手髒？</span>
-          </div>
+          <div class="faq-question"><span>我沒有鋼筆，也可以使用這款墨水嗎？</span></div>
           <div class="faq-answer">
-            <strong>保證零髒手、一秒卡榫！</strong> 不同於傳統老派鋼筆繁瑣的吸墨器，SCENTCRAFT 採用密封墨膽卡式結構（Cartridge System）。輕輕一推即可卡入上墨，像中性筆一樣順滑好寫，但拿在手上的氣派尊榮感高出 10 倍。
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>香水味道太主觀，萬一收禮人不喜歡濃香水怎麼辦？</span>
-          </div>
-          <div class="faq-answer">
-            <strong>這不是噴在身上的刺鼻香水，而是私密淡雅的木質雅香！</strong> 專利微孔固態擴散芯經過精密調校，僅在書寫者半米範圍內散發淡淡的台灣高山檜木或煙燻烏龍香氣，低調沉靜，絕不打擾他人。香氛更獲得國際 IFRA 安全認證，溫和無負擔。
+            <strong>完全不需要鋼筆！</strong> 每套入門禮盒均免費附贈一支「精工玻璃沾水筆」。只需將筆尖輕沾墨水，即可流暢書寫 50 字；使用完在清水杯中輕輕涮洗 1 秒即可清潔乾淨，任何人都能立刻享受書寫樂趣！
           </div>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question">
-            <span>萬一超過聖誕節才寄到，送禮不就尷尬了？</span>
-          </div>
+          <div class="faq-question"><span>香氛墨水會不會堵塞我昂貴的鋼筆？</span></div>
           <div class="faq-answer">
-            <strong>100% 聖誕夜抵達保證契約！</strong> 所有 12 月 12 日前成立的訂單，均由美國本土及歐盟海外倉專線直發。若物流追蹤顯示在 12 月 24 日之後才抵達，我們將 100% 全額退款，且鋼筆免費贈送給您！
+            <strong>100% 安全、保證不堵筆！</strong> 我們的配方為純水性微膠囊調香，不含任何酒精與固體油脂顆粒。經實驗室 1,000 小時連續測試，不沉澱、不堵筆、不傷筆舌，可安心用於各品牌鋼筆。
           </div>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question">
-            <span>這支筆搭飛機能防漏墨嗎？在高空氣壓下會不會爆墨？</span>
-          </div>
+          <div class="faq-question"><span>墨水寫在紙上的香味能維持多久？</span></div>
           <div class="faq-answer">
-            <strong>通過 -0.8 bar 航空級負壓防漏測試！</strong> 內部搭載專利「微孔氣壓平衡閥（Barometric Pressure Balancing Chamber）」，能隨時平衡客艙 35,000 英呎的氣壓劇變，香氛艙與墨水膽物理隔離，絕無溢墨漏液風險。
+            <strong>紙上留香長達數週至數月！</strong> 墨水數秒即乾，微膠囊香氣分子緊密吸附於紙張纖維中。每次重新翻開手帳或收到信件時，淡淡優雅的沙龍香氣依然撲鼻而來。
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question"><span>跨國空運寄送會不會漏墨爆瓶？</span></div>
+          <div class="faq-answer">
+            <strong>通過 -0.8 bar 航空負壓防漏測試！</strong> 厚底水晶瓶口特製食品級高彈性矽膠密封內塞，能承受高空氣壓驟變，空運零外洩、零滲漏。
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Final CTA Section -->
+    <!-- Final CTA -->
     <section class="section-final-cta">
       <div class="container">
         <div class="final-cta-card">
-          <div class="section-subtitle">把握聖誕早鳥批次</div>
+          <div class="section-subtitle">喚醒手寫的靈魂</div>
           <h2 class="hero-h1" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px;">
-            今年聖誕，成為那個送出最驚艷禮物的人。
+            給日常書寫一場安靜的芳療。
           </h2>
           <p class="hero-subhead" style="margin-bottom: 32px;">
-            送出一件他們會驕傲拆開、傳閱全場、並在未來數年珍藏於手邊的靈魂信物。
+            遠離喧囂冰冷的數位屏幕。每天早晨留給自己五分鐘，用帶有香氣的墨水，寫下內心的平靜。
           </p>
           <a href="#editions" class="btn-primary" style="font-size: 1.15rem; padding: 18px 48px;">
-            立即預訂聖誕限定批次 — $88 USD (約 NT$2,800) →
+            立即預訂感官入門禮盒 — $58 USD (約 NT$1,850) →
           </a>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
   <footer>
-    <div class="footer-mit-badge">
-      <span>🇹🇼</span>
-      <span>100% 台灣精密製造 (Made in Taiwan) ‧ 終身機械結構保固</span>
-    </div>
-    <p>© 2024 SCENTCRAFT TAIWAN. 依循特勞特定位理論雙軌架構打造。</p>
+    <div class="footer-mit-badge">🇹🇼 台灣在地專業研發製造 (Made in Taiwan) ‧ 國際 IFRA 認證</div>
+    <p>© 2024 SCENT INK TAIWAN. 依循特勞特定位理論雙軌架構打造。</p>
   </footer>
 
 </body>
