@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCENTCRAFT TAIWAN | The World's First Perfume Fountain Pen</title>
+  <meta name="description" content="Stop giving another boring candle. Give a luxury precision fountain pen that writes with sacred Taiwanese Hinoki perfume. Guaranteed Christmas delivery.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #080a0f;
+      --bg-surface: #0f131c;
+      --bg-card: #151a26;
+      --gold-primary: #d4af37;
+      --gold-light: #f5e298;
+      --gold-dark: #997819;
+      --gold-glow: rgba(212, 175, 55, 0.25);
+      --emerald-accent: #0f2b20;
+      --text-white: #f7f9fc;
+      --text-muted: #9aa5b8;
+      --text-dim: #647087;
+      --border-subtle: rgba(212, 175, 55, 0.2);
+      --border-card: rgba(255, 255, 255, 0.08);
+      --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Announcement Bar */
+    .announcement-bar {
+      background: linear-gradient(90deg, #18221c 0%, #2a1f10 50%, #18221c 100%);
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--gold-light);
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .announcement-badge {
+      background: var(--gold-primary);
+      color: #000;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    /* Header */
+    header {
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .brand-logo {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-logo .brand-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--gold-light);
+      text-decoration: none;
+    }
+
+    .brand-logo .brand-sub {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+    }
+
+    .nav-cta:hover {
+      background: var(--gold-primary);
+      color: #080a0f;
+      box-shadow: 0 0 15px var(--gold-glow);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 60px 0 90px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-category-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero-h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.2rem, 5.5vw, 4rem);
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+      background: linear-gradient(180deg, #ffffff 0%, #dcdfe6 70%, #9aa5b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-h1 span.highlight {
+      background: linear-gradient(135deg, #f5e298 0%, #d4af37 60%, #b28a1c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+    }
+
+    .hero-subhead {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto 36px;
+      font-weight: 400;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 48px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #e3c457 0%, #d4af37 50%, #af8b1b 100%);
+      color: #0a0d14;
+      padding: 16px 36px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+      transition: var(--transition-smooth);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(212, 175, 55, 0.45);
+      background: linear-gradient(135deg, #fae9a8 0%, #deb83e 50%, #c49a1d 100%);
+    }
+
+    .delivery-guarantee-pill {
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Product Showcase Visualizer */
+    .hero-showcase {
+      position: relative;
+      background: radial-gradient(circle at center, #182230 0%, #0a0e17 70%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 40px 20px;
+      margin: 0 auto;
+      max-width: 950px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+      overflow: hidden;
+    }
+
+    .pen-display-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 280px;
+    }
+
+    .pen-mockup {
+      width: 100%;
+      max-width: 600px;
+      height: 140px;
+      background: linear-gradient(90deg, #11141a 0%, #222938 30%, #3f4d66 50%, #222938 70%, #11141a 100%);
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 1px 2px rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+    }
+
+    .pen-nib {
+      width: 60px;
+      height: 30px;
+      background: linear-gradient(135deg, #ffe28a 0%, #d4af37 60%, #8a6c11 100%);
+      clip-path: polygon(100% 50%, 0% 0%, 20% 50%, 0% 100%);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+    }
+
+    .pen-body-band {
+      height: 100%;
+      width: 14px;
+      background: linear-gradient(180deg, #fce49b 0%, #d4af37 50%, #80630d 100%);
+      margin: 0 15px;
+    }
+
+    .pen-diffuser-slot {
+      flex: 1;
+      height: 24px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      color: var(--gold-light);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      justify-content: space-between;
+    }
+
+    .pen-cap-clip {
+      width: 90px;
+      height: 12px;
+      background: linear-gradient(180deg, #fff 0%, #d4af37 50%, #997819 100%);
+      border-radius: 6px;
+    }
+
+    .scent-aura {
+      position: absolute;
+      top: 20px;
+      width: 80%;
+      height: 60px;
+      background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.18) 0%, rgba(212, 175, 55, 0) 70%);
+      filter: blur(12px);
+      animation: pulseAura 4s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    @keyframes pulseAura {
+      0%, 100% { opacity: 0.4; transform: scale(0.98); }
+      50% { opacity: 0.9; transform: scale(1.04); }
+    }
+
+    .pen-callouts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      width: 100%;
+      margin-top: 32px;
+      border-top: 1px solid var(--border-card);
+      padding-top: 24px;
+    }
+
+    .callout-item {
+      text-align: left;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+    }
+
+    .callout-item h4 {
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .callout-item p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Trust Strip */
+    .trust-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border-card);
+      margin-top: 40px;
+    }
+
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--text-white);
+      font-weight: 500;
+    }
+
+    .trust-badge span.icon {
+      color: var(--gold-primary);
+      font-size: 1.1rem;
+    }
+
+    /* Common Enemy Section */
+    .section-enemy {
+      padding: 90px 0;
+      background: linear-gradient(180deg, var(--bg-dark) 0%, #0d111a 100%);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 750px;
+      margin: 0 auto 56px;
+    }
+
+    .section-subtitle {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      margin-bottom: 16px;
+      line-height: 1.25;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* Comparison Table */
+    .comparison-wrapper {
+      max-width: 950px;
+      margin: 0 auto;
+      background: var(--bg-surface);
+      border-radius: 16px;
+      border: 1px solid var(--border-card);
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1.3fr;
+    }
+
+    .comp-header {
+      padding: 20px 24px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-bottom: 1px solid var(--border-card);
+    }
+
+    .comp-header.enemy {
+      background: rgba(239, 68, 68, 0.08);
+      color: #fca5a5;
+    }
+
+    .comp-header.traditional {
+      background: rgba(148, 163, 184, 0.08);
+      color: #cbd5e1;
+    }
+
+    .comp-header.hero {
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold-light);
+      border-left: 2px solid var(--gold-primary);
+    }
+
+    .comp-row {
+      display: contents;
+    }
+
+    .comp-cell {
+      padding: 18px 24px;
+      font-size: 0.88rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+    }
+
+    .comp-cell.enemy {
+      background: rgba(239, 68, 68, 0.03);
+      color: var(--text-dim);
+    }
+
+    .comp-cell.traditional {
+      background: rgba(148, 163, 184, 0.02);
+      color: var(--text-muted);
+    }
+
+    .comp-cell.hero {
+      background: rgba(212, 175, 55, 0.05);
+      color: var(--text-white);
+      font-weight: 600;
+      border-left: 2px solid var(--gold-primary);
+    }
+
+    /* Editions Section */
+    .section-editions {
+      padding: 90px 0;
+      position: relative;
+    }
+
+    .editions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+      margin-top: 48px;
+    }
+
+    .edition-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+
+    .edition-card:hover {
+      border-color: var(--border-subtle);
+      transform: translateY(-4px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    }
+
+    .edition-card.featured {
+      border: 1.5px solid var(--gold-primary);
+      background: linear-gradient(180deg, #181d2a 0%, #121622 100%);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
+    }
+
+    .featured-tag {
+      position: absolute;
+      top: -12px;
+      right: 24px;
+      background: linear-gradient(135deg, #e3c457 0%, #d4af37 100%);
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .edition-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+      color: var(--text-white);
+    }
+
+    .edition-scent-notes {
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .edition-price-box {
+      margin-bottom: 24px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .price-main {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--text-white);
+    }
+
+    .price-save {
+      color: #34d399;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .edition-features {
+      list-style: none;
+      margin-bottom: 32px;
+      flex: 1;
+    }
+
+    .edition-features li {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .edition-features li span.chk {
+      color: var(--gold-primary);
+      font-weight: bold;
+    }
+
+    .btn-card {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+      cursor: pointer;
+      border: 1px solid var(--gold-primary);
+      background: transparent;
+      color: var(--gold-light);
+    }
+
+    .edition-card.featured .btn-card {
+      background: var(--gold-primary);
+      color: #000;
+    }
+
+    .btn-card:hover {
+      background: var(--gold-light);
+      color: #000;
+      box-shadow: 0 0 20px var(--gold-glow);
+    }
+
+    /* Objection Breaker FAQ */
+    .section-faq {
+      padding: 90px 0;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-card);
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border-card);
+      padding: 24px 0;
+    }
+
+    .faq-question {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-white);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-answer {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .faq-answer strong {
+      color: var(--gold-light);
+    }
+
+    /* Final CTA */
+    .section-final-cta {
+      padding: 100px 0;
+      text-align: center;
+      background: radial-gradient(circle at center, #1b2535 0%, #080a0f 80%);
+      position: relative;
+    }
+
+    .final-cta-card {
+      max-width: 820px;
+      margin: 0 auto;
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 60px 32px;
+      background: rgba(15, 19, 28, 0.85);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-card);
+      padding: 40px 24px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .footer-mit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+      .comp-header.hero {
+        border-left: none;
+        border-top: 2px solid var(--gold-primary);
+      }
+      .comp-cell.hero {
+        border-left: none;
+        border-top: 1px solid var(--border-subtle);
+      }
+      .trust-strip {
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <span class="announcement-badge">Holiday Guarantee</span>
+    <span>🎄 Order Before Dec 12 — Guaranteed Under Your Tree by Dec 24 (or 100% Refund & Keep the Pen)</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand-logo">
+      <a href="#" class="brand-name">SCENTCRAFT</a>
+      <span class="brand-sub">TAIWAN ‧ PRECISION CRAFT</span>
+    </div>
+    <a href="#editions" class="nav-cta">Reserve Gift Box — $88 USD</a>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero container">
+      <div class="hero-category-tag">
+        <span>🇹🇼 Precision Made in Taiwan</span>
+        <span>•</span>
+        <span>The World's First Perfume Fountain Pen</span>
+      </div>
+
+      <h1 class="hero-h1">
+        Stop Giving Another Boring Candle.<br>
+        <span class="highlight">Give a Pen That Writes with Perfume.</span>
+      </h1>
+
+      <p class="hero-subhead">
+        A luxury metal fountain pen engineered in Taiwan's aerospace machining hub. 
+        Diffuses private notes of sacred alpine Hinoki wood as your nib glides across paper. 
+        The only holiday gift they won't re-gift.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#editions" class="btn-primary" id="btn-hero-cta">
+          <span>Claim Holiday Gift Box — $88 USD</span>
+          <span>→</span>
+        </a>
+        <div class="delivery-guarantee-pill">
+          <span>🔒 US Hub Express Shipping</span>
+          <span>•</span>
+          <span>Free Holiday Gold-Foil Gift Wrapping Included</span>
+        </div>
+      </div>
+
+      <!-- Interactive Pen Showcase Visualizer -->
+      <div class="hero-showcase">
+        <div class="pen-display-stage">
+          <div class="scent-aura"></div>
+          <div class="pen-mockup">
+            <div class="pen-nib" title="German-standard 0.5mm Nib"></div>
+            <div class="pen-body-band"></div>
+            <div class="pen-diffuser-slot">
+              <span>微孔固態香氛艙 SOLID SCENT CORE</span>
+              <span>TAIWAN HINOKI</span>
+            </div>
+            <div class="pen-body-band"></div>
+            <div class="pen-cap-clip"></div>
+          </div>
+        </div>
+
+        <div class="pen-callouts">
+          <div class="callout-item">
+            <h4><span>⚖️</span> 32g Precision Balance</h4>
+            <p>Full metal CNC machined from solid brass and aerospace aluminum.</p>
+          </div>
+          <div class="callout-item">
+            <h4><span>🌲</span> Solid Salon Diffuser</h4>
+            <p>100% alcohol-free micro-porous scent core. Zero spills, lasts 6+ months.</p>
+          </div>
+          <div class="callout-item">
+            <h4><span>✈️</span> Aviation Barometric Seal</h4>
+            <p>Patented pressure chamber prevents ink leaks even at 35,000 feet.</p>
+          </div>
+          <div class="callout-item">
+            <h4><span>✍️</span> Smooth Archival Flow</h4>
+            <p>Ink dries in seconds; paper stays fragrant for months.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust Strip -->
+      <div class="trust-strip">
+        <div class="trust-badge">
+          <span class="icon">✓</span> 100% Precision Made in Taiwan
+        </div>
+        <div class="trust-badge">
+          <span class="icon">✓</span> IFRA Certified Non-Toxic Fragrance
+        </div>
+        <div class="trust-badge">
+          <span class="icon">✓</span> Zero-Mess Quick Click Cartridge
+        </div>
+        <div class="trust-badge">
+          <span class="icon">✓</span> Guaranteed Dec 24 Christmas Arrival
+        </div>
+      </div>
+    </section>
+
+    <!-- The Common Enemy Confrontation -->
+    <section class="section-enemy">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-subtitle">THE HOLIDAY REALITY CHECK</div>
+          <h2 class="section-title">Why 76% of Holiday Gifts End Up Forgotten</h2>
+          <p class="section-desc">
+            Every December, millions of scented candles, generic mugs, and scratchy scarves get opened with polite smiles — and shoved into closet drawers forever.
+          </p>
+        </div>
+
+        <div class="comparison-wrapper">
+          <div class="comparison-grid">
+            <!-- Headers -->
+            <div class="comp-header enemy">The Boring Cliché (Candle / Socks)</div>
+            <div class="comp-header traditional">Old Traditional Pen (Montblanc / Parker)</div>
+            <div class="comp-header hero">👑 SCENTCRAFT Perfume Pen (MIT)</div>
+
+            <!-- Row 1 -->
+            <div class="comp-cell enemy">Burns out in 20 hours and disappears</div>
+            <div class="comp-cell traditional">Cold, stiff corporate contract vibe</div>
+            <div class="comp-cell hero">Lasts a lifetime with refillable salon scent cores</div>
+
+            <!-- Row 2 -->
+            <div class="comp-cell enemy">Zero conversation value under the tree</div>
+            <div class="comp-cell traditional">Intimidating, messy ink filling bottles</div>
+            <div class="comp-cell hero">The entire room leans in to smell the handwritten note</div>
+
+            <!-- Row 3 -->
+            <div class="comp-cell enemy">$35 ~ $50 (feels generic & cheap)</div>
+            <div class="comp-cell traditional">$250 ~ $600+ (heavy budget burden)</div>
+            <div class="comp-cell hero">$88 USD (prestige luxury at the golden sweet spot)</div>
+
+            <!-- Row 4 -->
+            <div class="comp-cell enemy">Re-gifted next December without hesitation</div>
+            <div class="comp-cell traditional">Sits locked in a desk drawer untouched</div>
+            <div class="comp-cell hero">Cherished daily as a personal signature ritual</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Editions & Pricing -->
+    <section class="section-editions container" id="editions">
+      <div class="section-header">
+        <div class="section-subtitle">HOLIDAY LIMITED BATCH</div>
+        <h2 class="section-title">Select Your Christmas Presentation Box</h2>
+        <p class="section-desc">
+          Machined in Taiwan. Hand-assembled in luxury magnetic-closure presentation chests with gold wax seals.
+        </p>
+      </div>
+
+      <div class="editions-grid">
+        <!-- Edition 1: Hinoki -->
+        <div class="edition-card featured">
+          <span class="featured-tag">★ Most Popular for Gifting</span>
+          <h3 class="edition-name">Taiwan Alpine Hinoki</h3>
+          <div class="edition-scent-notes">
+            <span>🌲 Scent: Sacred Cypress, Cedarwood, Warm White Musk</span>
+          </div>
+          <div class="edition-price-box">
+            <span class="price-main">$88</span>
+            <span class="text-dim">USD</span>
+          </div>
+          <ul class="edition-features">
+            <li><span class="chk">✓</span> 1x Obsidian Black & Brass CNC Fountain Pen</li>
+            <li><span class="chk">✓</span> 2x Alpine Hinoki Scent Cores (6+ months each)</li>
+            <li><span class="chk">✓</span> 1x 30ml Archival Black Fountain Ink</li>
+            <li><span class="chk">✓</span> Luxury Gold-Foil Holiday Gift Box & Envelope</li>
+            <li><span class="chk">✓</span> Guaranteed Dec 24 Christmas Eve Delivery</li>
+          </ul>
+          <button class="btn-card" onclick="alert('Proceeding to Checkout: Alpine Hinoki Edition ($88 USD)')">Claim This Gift Box — $88</button>
+        </div>
+
+        <!-- Edition 2: Smoked Oolong -->
+        <div class="edition-card">
+          <h3 class="edition-name">High Mountain Smoked Oolong</h3>
+          <div class="edition-scent-notes">
+            <span>🍵 Scent: Roasted Tea Leaves, Bergamot, Amberwood</span>
+          </div>
+          <div class="edition-price-box">
+            <span class="price-main">$88</span>
+            <span class="text-dim">USD</span>
+          </div>
+          <ul class="edition-features">
+            <li><span class="chk">✓</span> 1x Forest Emerald & Champagne Gold CNC Pen</li>
+            <li><span class="chk">✓</span> 2x Smoked Oolong Scent Cores (6+ months each)</li>
+            <li><span class="chk">✓</span> 1x 30ml Archival Black Fountain Ink</li>
+            <li><span class="chk">✓</span> Luxury Gold-Foil Holiday Gift Box & Envelope</li>
+            <li><span class="chk">✓</span> Guaranteed Dec 24 Christmas Eve Delivery</li>
+          </ul>
+          <button class="btn-card" onclick="alert('Proceeding to Checkout: Smoked Oolong Edition ($88 USD)')">Claim This Gift Box — $88</button>
+        </div>
+
+        <!-- Edition 3: Duo Set -->
+        <div class="edition-card">
+          <h3 class="edition-name">Collector's Holiday Duo Chest</h3>
+          <div class="edition-scent-notes">
+            <span>✨ Complete Scent Experience (Hinoki + Oolong)</span>
+          </div>
+          <div class="edition-price-box">
+            <span class="price-main">$158</span>
+            <span class="price-save">Save $18 USD</span>
+          </div>
+          <ul class="edition-features">
+            <li><span class="chk">✓</span> 2x Precision Perfume Pens (Both Finishes)</li>
+            <li><span class="chk">✓</span> 4x Solid Fragrance Cores (2 of each aroma)</li>
+            <li><span class="chk">✓</span> 2x 30ml Archival Inks</li>
+            <li><span class="chk">✓</span> Double-Deck Luxury Presentation Wood Chest</li>
+            <li><span class="chk">✓</span> Free Engraved Brass Couple Bookmarks ($36 Value)</li>
+          </ul>
+          <button class="btn-card" onclick="alert('Proceeding to Checkout: Collector Duo Chest ($158 USD)')">Claim Duo Chest — $158</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Objection Breakers FAQ -->
+    <section class="section-faq">
+      <div class="container faq-container">
+        <div class="section-header">
+          <div class="section-subtitle">PEACE OF MIND</div>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Will this pen be messy or hard to use?</span>
+          </div>
+          <div class="faq-answer">
+            <strong>Zero mess guaranteed.</strong> Unlike messy antique fountain pens, SCENTCRAFT uses quick-click sealed cartridges. You click it in and start writing immediately. It glides like a gel rollerball, but commands 10x the prestige.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>What if the recipient is sensitive to strong perfumes?</span>
+          </div>
+          <div class="faq-answer">
+            <strong>This is an intimate salon aroma, not a loud spray.</strong> The micro-porous solid diffuser is engineered to release gentle, calming notes of Taiwan Alpine Cypress that only the writer experiences within personal arm's reach. It is certified non-toxic by IFRA.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>What happens if it arrives after Christmas Day?</span>
+          </div>
+          <div class="faq-answer">
+            <strong>100% Christmas Delivery Guarantee.</strong> All orders placed before December 12 are shipped express from our US & EU 3PL fulfillment hubs. If tracking shows delivery after Dec 24, we will refund 100% of your money and you keep the pen for free.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Can this pen fly on an airplane without leaking?</span>
+          </div>
+          <div class="faq-answer">
+            <strong>Yes, engineered with an aviation barometric valve.</strong> Our patented internal pressure balance chamber equalizes cabin pressure shifts, preventing ink overflow even at 35,000 feet.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="section-final-cta">
+      <div class="container">
+        <div class="final-cta-card">
+          <div class="section-subtitle">THE CLOCK IS TICKING</div>
+          <h2 class="hero-h1" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px;">
+            Be Remembered This Christmas.
+          </h2>
+          <p class="hero-subhead" style="margin-bottom: 32px;">
+            Give the one gift they will proudly unwrap, pass around the room, and treasure for years to come.
+          </p>
+          <a href="#editions" class="btn-primary" style="font-size: 1.15rem; padding: 18px 48px;">
+            Order Before Batch Sells Out — $88 USD →
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-mit-badge">
+      <span>🇹🇼</span>
+      <span>Precision Engineered & Machined in Taiwan (MIT) ‧ Built to Last a Lifetime</span>
+    </div>
+    <p>© 2024 SCENTCRAFT TAIWAN. All Rights Reserved. Compliant with Trout Positioning Architecture.</p>
+  </footer>
+
+</body>
+</html>
