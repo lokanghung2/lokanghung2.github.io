@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MANLEARN 男孩學好學滿 ｜ 工程師專用 90 天個人魅力重構編譯器</title>
+  <meta name="description" content="程式可以 Debug，人生也可以升級！專為竹科、內科、南科工程師量身打造的 90 天個人魅力重構編譯器。拒絕婚友社人肉撮合，鄙視低俗 PUA 套路，以六維模組化敏捷陪跑，科學重構你的外型、體態與溝通底層。">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #060913;
+      --bg-secondary: #0c1222;
+      --bg-tertiary: #131c35;
+      --surface-glass: rgba(18, 28, 54, 0.7);
+      --surface-glass-hover: rgba(28, 42, 80, 0.85);
+      --border-color: rgba(66, 153, 225, 0.2);
+      --border-highlight: rgba(0, 240, 255, 0.5);
+      
+      --cyan-neon: #00f0ff;
+      --blue-electric: #0070f3;
+      --purple-matrix: #7928ca;
+      --amber-warning: #f5a623;
+      --emerald-success: #10b981;
+      --rose-danger: #f43f5e;
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --font-code: 'Fira Code', monospace;
+      --font-body: 'Noto Sans TC', sans-serif;
+      --font-title: 'Outfit', 'Noto Sans TC', sans-serif;
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-full: 9999px;
+      
+      --shadow-glow: 0 0 25px rgba(0, 240, 255, 0.25);
+      --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 65%, rgba(121, 40, 202, 0.08) 0%, transparent 45%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header Nav */
+    nav.navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(6, 9, 19, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      transition: var(--transition-smooth);
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 72px;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+    .brand-symbol {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--cyan-neon), var(--blue-electric));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-family: var(--font-code);
+      color: #000;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    }
+    .brand-text {
+      font-size: 1.15rem;
+      font-weight: 800;
+      font-family: var(--font-title);
+      letter-spacing: -0.5px;
+    }
+    .brand-badge {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(0, 240, 255, 0.15);
+      color: var(--cyan-neon);
+      border: 1px solid var(--border-highlight);
+      font-family: var(--font-code);
+      margin-left: 6px;
+    }
+    .nav-menu {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-menu a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: var(--transition-smooth);
+    }
+    .nav-menu a:hover {
+      color: var(--cyan-neon);
+    }
+    .nav-cta {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      border: none;
+      font-family: var(--font-body);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan-neon), var(--blue-electric));
+      color: #000;
+      box-shadow: 0 4px 20px rgba(0, 240, 255, 0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(0, 240, 255, 0.5);
+    }
+    .btn-secondary {
+      background: var(--surface-glass);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+    }
+    .btn-secondary:hover {
+      background: var(--surface-glass-hover);
+      border-color: var(--cyan-neon);
+      color: var(--cyan-neon);
+    }
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+    }
+    .btn-lg {
+      padding: 16px 36px;
+      font-size: 1.1rem;
+    }
+
+    /* Section Global */
+    section {
+      padding: 100px 0;
+      position: relative;
+    }
+    .section-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 60px auto;
+    }
+    .section-tag {
+      display: inline-block;
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--cyan-neon);
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      padding: 4px 14px;
+      border-radius: var(--radius-full);
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      font-family: var(--font-title);
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      background: linear-gradient(180deg, #fff 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .section-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding-top: 170px;
+      padding-bottom: 90px;
+      position: relative;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 50px;
+      align-items: center;
+    }
+    .hero-badge-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .hero-pill {
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald-success);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-pill::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--emerald-success);
+      box-shadow: 0 0 8px var(--emerald-success);
+    }
+    .hero-title {
+      font-size: 3.4rem;
+      line-height: 1.2;
+      font-weight: 900;
+      font-family: var(--font-title);
+      margin-bottom: 24px;
+      letter-spacing: -1.5px;
+    }
+    .hero-title .highlight {
+      background: linear-gradient(90deg, var(--cyan-neon) 0%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+    }
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      line-height: 1.8;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .trust-metrics {
+      display: flex;
+      gap: 30px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-color);
+    }
+    .metric-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .metric-value {
+      font-family: var(--font-code);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--cyan-neon);
+    }
+    .metric-label {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    /* Hero Interactive Radar Card */
+    .hero-visual-card {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-card), var(--shadow-glow);
+      backdrop-filter: blur(20px);
+      position: relative;
+    }
+    .radar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+    }
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red { background: var(--rose-danger); }
+    .dot-yellow { background: var(--amber-warning); }
+    .dot-green { background: var(--emerald-success); }
+    .radar-title {
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .radar-canvas-container {
+      width: 100%;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .radar-status-bar {
+      margin-top: 18px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-code);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      border-left: 3px solid var(--cyan-neon);
+    }
+
+    /* Comparison Battle Grid */
+    .battle-table-wrap {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .battle-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    .battle-table th, .battle-table td {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .battle-table th {
+      background: rgba(12, 18, 34, 0.95);
+      font-family: var(--font-code);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .battle-table th.highlight-col {
+      background: rgba(0, 240, 255, 0.1);
+      color: var(--cyan-neon);
+      border-top: 2px solid var(--cyan-neon);
+      font-size: 1.05rem;
+    }
+    .battle-table td.highlight-col {
+      background: rgba(0, 240, 255, 0.03);
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .verdict-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+    }
+    .verdict-bad { background: rgba(244, 63, 94, 0.15); color: var(--rose-danger); }
+    .verdict-warning { background: rgba(245, 166, 35, 0.15); color: var(--amber-warning); }
+    .verdict-good { background: rgba(16, 185, 129, 0.15); color: var(--emerald-success); }
+
+    /* Six Dimension Grid */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .module-card {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+    .module-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-highlight);
+      background: var(--surface-glass-hover);
+      box-shadow: 0 10px 30px rgba(0, 240, 255, 0.15);
+    }
+    .module-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-sm);
+      background: rgba(0, 240, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+    }
+    .module-code {
+      font-family: var(--font-code);
+      font-size: 0.75rem;
+      color: var(--cyan-neon);
+      margin-bottom: 6px;
+    }
+    .module-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .module-bug {
+      font-size: 0.88rem;
+      color: var(--rose-danger);
+      background: rgba(244, 63, 94, 0.08);
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      border-left: 2px solid var(--rose-danger);
+    }
+    .module-fix {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Sprint Timeline */
+    .timeline-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      position: relative;
+    }
+    .timeline-card {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      position: relative;
+    }
+    .phase-badge {
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      background: rgba(0, 240, 255, 0.12);
+      color: var(--cyan-neon);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      display: inline-block;
+      margin-bottom: 14px;
+    }
+    .phase-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .phase-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .phase-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .phase-list li::before {
+      content: '✓';
+      color: var(--cyan-neon);
+      font-weight: bold;
+    }
+
+    /* Before/After Showcase */
+    .case-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+    }
+    .case-card {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+    }
+    .case-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 14px;
+    }
+    .case-profile {
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+    .case-tag {
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      color: var(--cyan-neon);
+    }
+    .case-contrast-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .contrast-item {
+      padding: 16px;
+      border-radius: var(--radius-sm);
+    }
+    .contrast-before {
+      background: rgba(244, 63, 94, 0.08);
+      border: 1px solid rgba(244, 63, 94, 0.2);
+    }
+    .contrast-after {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    .contrast-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: var(--font-code);
+      margin-bottom: 6px;
+    }
+    .contrast-before .contrast-label { color: var(--rose-danger); }
+    .contrast-after .contrast-label { color: var(--emerald-success); }
+    .contrast-text {
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+    .case-quote {
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      border-left: 3px solid var(--cyan-neon);
+      padding-left: 14px;
+      margin-top: 16px;
+    }
+
+    /* Coaches */
+    .coaches-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .coach-card {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .coach-avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e293b, #334155);
+      border: 3px solid var(--cyan-neon);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      margin-bottom: 20px;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+    }
+    .coach-name {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .coach-role {
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      color: var(--cyan-neon);
+      margin-bottom: 16px;
+    }
+    .coach-bio {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* Pricing Section */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 32px;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .price-card {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .price-card.featured {
+      border-color: var(--cyan-neon);
+      background: linear-gradient(180deg, rgba(12, 24, 48, 0.9) 0%, rgba(6, 12, 28, 0.95) 100%);
+      box-shadow: 0 0 35px rgba(0, 240, 255, 0.25);
+    }
+    .popular-tag {
+      position: absolute;
+      top: -14px;
+      right: 32px;
+      background: linear-gradient(90deg, var(--cyan-neon), var(--blue-electric));
+      color: #000;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-code);
+    }
+    .tier-name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .tier-desc {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+    .tier-price-box {
+      margin-bottom: 28px;
+    }
+    .tier-currency {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--cyan-neon);
+    }
+    .tier-amount {
+      font-size: 2.8rem;
+      font-weight: 900;
+      font-family: var(--font-code);
+      color: var(--text-main);
+    }
+    .tier-period {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+    .features-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 36px;
+      flex-grow: 1;
+    }
+    .features-list li {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .features-list li::before {
+      content: '✓';
+      color: var(--cyan-neon);
+      font-weight: bold;
+    }
+
+    /* Low Risk Callout */
+    .break-in-box {
+      max-width: 920px;
+      margin: 40px auto 0 auto;
+      background: rgba(245, 166, 35, 0.08);
+      border: 1px dashed rgba(245, 166, 35, 0.4);
+      border-radius: var(--radius-md);
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .break-in-text h4 {
+      font-size: 1.15rem;
+      color: var(--amber-warning);
+      margin-bottom: 4px;
+    }
+    .break-in-text p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    /* FAQ */
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+    .faq-question {
+      padding: 22px 26px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-toggle {
+      font-family: var(--font-code);
+      font-size: 1.2rem;
+      color: var(--cyan-neon);
+      transition: var(--transition-smooth);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 26px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+    }
+    .faq-item.active {
+      border-color: var(--border-highlight);
+      background: var(--surface-glass-hover);
+    }
+    .faq-item.active .faq-toggle {
+      transform: rotate(45deg);
+    }
+    .faq-item.active .faq-answer {
+      max-height: 250px;
+      padding-bottom: 22px;
+    }
+
+    /* Final CTA Banner */
+    .final-cta {
+      background: linear-gradient(135deg, rgba(0, 112, 243, 0.25) 0%, rgba(121, 40, 202, 0.25) 100%);
+      border: 1px solid var(--border-highlight);
+      border-radius: var(--radius-lg);
+      padding: 60px 40px;
+      text-align: center;
+      box-shadow: var(--shadow-glow);
+      margin-top: 60px;
+    }
+    .final-cta h2 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 16px;
+      font-family: var(--font-title);
+    }
+    .final-cta p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto 32px auto;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 50px 0 30px 0;
+      background: #04060d;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+    }
+    .footer-links a:hover {
+      color: var(--cyan-neon);
+    }
+    .copyright {
+      text-align: center;
+      font-size: 0.8rem;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Modal for Radar Test */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-highlight);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 580px;
+      padding: 36px;
+      position: relative;
+      box-shadow: 0 0 50px rgba(0, 240, 255, 0.3);
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.5rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .modal-close:hover { color: var(--text-main); }
+    .test-step-label {
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      color: var(--cyan-neon);
+      margin-bottom: 10px;
+    }
+    .modal-title {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+    .form-input, .form-select {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+    }
+    .form-input:focus, .form-select:focus {
+      border-color: var(--cyan-neon);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .modules-grid { grid-template-columns: 1fr 1fr; }
+      .timeline-container { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .case-grid { grid-template-columns: 1fr; }
+      .coaches-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 2.6rem; }
+      .battle-table-wrap { overflow-x: auto; }
+      .break-in-box { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 640px) {
+      .modules-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 2.1rem; }
+      .trust-metrics { flex-direction: column; gap: 14px; }
+      .nav-menu { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="brand-logo">
+        <div class="brand-symbol">M_</div>
+        <span class="brand-text">MANLEARN</span>
+        <span class="brand-badge">COMPILER v2.5</span>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="#why-compiler">心智對決</a></li>
+        <li><a href="#modules">六維模組</a></li>
+        <li><a href="#sprint">90 天流程</a></li>
+        <li><a href="#cases">工程師實證</a></li>
+        <li><a href="#coaches">教練團隊</a></li>
+        <li><a href="#pricing">方案費用</a></li>
+        <li><a href="#faq">常見問答</a></li>
+      </ul>
+      <div class="nav-cta">
+        <button class="btn btn-primary btn-sm" onclick="openRadarModal()">測量魅力雷達</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge-container">
+            <span class="hero-pill">竹科 ‧ 內科 ‧ 南科工程師專用</span>
+            <span class="section-tag" style="margin-bottom:0">嚴肅科學魅力重構</span>
+          </div>
+          <h1 class="hero-title">
+            程式可以 Debug，<br>
+            <span class="highlight">人生也可以升級！</span>
+          </h1>
+          <p class="hero-subtitle">
+            像重構程式碼一樣，90 天徹底重構你的魅力底層。<br>
+            <strong>拒絕婚友社的人肉撮合</strong>，<strong>鄙視低俗 PUA 的虛假套路</strong>。以穿搭、體態、聊天、攝影、約會、社交六維模組化敏捷陪跑，找回屬於你的硬核自信。
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" onclick="openRadarModal()">
+              <span>🚀 立即測出六維魅力雷達圖 (免費)</span>
+            </button>
+            <a href="#pricing" class="btn btn-secondary btn-lg">
+              <span>NT$ 990 預約 1v1 專家健檢</span>
+            </a>
+          </div>
+          <div class="trust-metrics">
+            <div class="metric-item">
+              <span class="metric-value">90 Days</span>
+              <span class="metric-label">敏捷重構週期</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-value">6 模組</span>
+              <span class="metric-label">閉環全方位演算法</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-value">0%</span>
+              <span class="metric-label">低俗話術與偽裝套路</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-value">84.6%</span>
+              <span class="metric-label">學員 90 天主動約會率</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Radar Card Visual -->
+        <div class="hero-visual-card">
+          <div class="radar-header">
+            <div class="terminal-dots">
+              <span class="terminal-dot dot-red"></span>
+              <span class="terminal-dot dot-yellow"></span>
+              <span class="terminal-dot dot-green"></span>
+            </div>
+            <span class="radar-title">CHARISMA_COMPILER_V2.5.HEX</span>
+          </div>
+          <div class="radar-canvas-container">
+            <svg viewBox="0 0 300 300" width="100%" height="100%">
+              <!-- Radar Background Polygons -->
+              <polygon points="150,30 254,90 254,210 150,270 46,210 46,90" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <polygon points="150,60 228,105 228,195 150,240 72,195 72,105" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <polygon points="150,90 202,120 202,180 150,210 98,180 98,120" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <polygon points="150,120 176,135 176,165 150,180 124,165 124,135" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              
+              <!-- Axes -->
+              <line x1="150" y1="150" x2="150" y2="30" stroke="rgba(255,255,255,0.15)"/>
+              <line x1="150" y1="150" x2="254" y2="90" stroke="rgba(255,255,255,0.15)"/>
+              <line x1="150" y1="150" x2="254" y2="210" stroke="rgba(255,255,255,0.15)"/>
+              <line x1="150" y1="150" x2="150" y2="270" stroke="rgba(255,255,255,0.15)"/>
+              <line x1="150" y1="150" x2="46" y2="210" stroke="rgba(255,255,255,0.15)"/>
+              <line x1="150" y1="150" x2="46" y2="90" stroke="rgba(255,255,255,0.15)"/>
+              
+              <!-- Before Data (Red Polygon: Unbalanced) -->
+              <polygon points="150,115 170,138 210,185 150,165 85,188 95,120" fill="rgba(244, 63, 94, 0.2)" stroke="#f43f5e" stroke-width="2" stroke-dasharray="4,4"/>
+              
+              <!-- After Data (Cyan Polygon: Fully Optimized) -->
+              <polygon points="150,42 242,96 238,202 150,255 60,202 58,98" fill="rgba(0, 240, 255, 0.25)" stroke="#00f0ff" stroke-width="2.5"/>
+              
+              <!-- Data Points -->
+              <circle cx="150" cy="42" r="4" fill="#00f0ff"/>
+              <circle cx="242" cy="96" r="4" fill="#00f0ff"/>
+              <circle cx="238" cy="202" r="4" fill="#00f0ff"/>
+              <circle cx="150" cy="255" r="4" fill="#00f0ff"/>
+              <circle cx="60" cy="202" r="4" fill="#00f0ff"/>
+              <circle cx="58" cy="98" r="4" fill="#00f0ff"/>
+
+              <!-- Labels -->
+              <text x="150" y="20" fill="#00f0ff" font-size="11" font-family="'Fira Code', monospace" text-anchor="middle">穿搭剪裁 STYLE</text>
+              <text x="265" y="90" fill="#94a3b8" font-size="11" font-family="'Fira Code', monospace">體態力學 BODY</text>
+              <text x="265" y="215" fill="#94a3b8" font-size="11" font-family="'Fira Code', monospace">攝影視覺 PHOTO</text>
+              <text x="150" y="288" fill="#00f0ff" font-size="11" font-family="'Fira Code', monospace" text-anchor="middle">聊天編譯 CHAT</text>
+              <text x="35" y="215" fill="#94a3b8" font-size="11" font-family="'Fira Code', monospace" text-anchor="end">約會演練 DATING</text>
+              <text x="35" y="90" fill="#94a3b8" font-size="11" font-family="'Fira Code', monospace" text-anchor="end">社交圈層 SOCIAL</text>
+            </svg>
+          </div>
+          <div class="radar-status-bar">
+            <strong>System Verdict:</strong> 檢測到嚴重「邏輯自嗨」與「駝背衣著 Bug」，執行 90 天敏捷編譯可修復 87% 魅力遺漏。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Mental Battle Table (公敵與對決) -->
+  <section id="why-compiler">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">心智階梯對決盤</span>
+        <h2 class="section-title">為什麼市面上的解法全在浪費你的時間？</h2>
+        <p class="section-desc">婚友社賣的是人肉撮合，PUA 賣的是低俗話術，盲目自學只是不斷試錯。你本體若有 Bug，撮合一百次也是被發卡。</p>
+      </div>
+
+      <div class="battle-table-wrap">
+        <table class="battle-table">
+          <thead>
+            <tr>
+              <th style="width: 20%;">比較維度</th>
+              <th class="highlight-col" style="width: 28%;">⚡ MANLEARN 重構編譯器</th>
+              <th style="width: 26%;">傳統婚友社 / 實體相親</th>
+              <th style="width: 26%;">低俗 PUA / 把妹套路課</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>核心本質</strong></td>
+              <td class="highlight-col"><span class="verdict-badge verdict-good">✓ 本體實力科學重構</span></td>
+              <td><span class="verdict-badge verdict-bad">✕ 人肉撮合排隊</span></td>
+              <td><span class="verdict-badge verdict-bad">✕ 虛假人設欺騙話術</span></td>
+            </tr>
+            <tr>
+              <td><strong>底層哲學</strong></td>
+              <td class="highlight-col">像寫 code 一樣可除錯、可度量</td>
+              <td>交給緣分、看女生臉色、碰運氣</td>
+              <td>打壓女性、硬背土味情話、物化關係</td>
+            </tr>
+            <tr>
+              <td><strong>交付方式</strong></td>
+              <td class="highlight-col">90 天敏捷 Sprint + 每週 1v1 覆盤</td>
+              <td>每個月塞 2~3 個完全不認識的相親</td>
+              <td>週末夜店大拜拜搭訕、錄播罐頭視頻</td>
+            </tr>
+            <tr>
+              <td><strong>長效資產</strong></td>
+              <td class="highlight-col">品味、體態、談吐永久烙印在自身</td>
+              <td>合約結束即回到原點，繼續單身</td>
+              <td>被人拆穿後信譽破產，惡名昭彰</td>
+            </tr>
+            <tr>
+              <td><strong>收費透明度</strong></td>
+              <td class="highlight-col">NT$ 48,000 / 68,000 明碼標價</td>
+              <td>動輒 8~15 萬，不斷推銷加價換名額</td>
+              <td>數萬到數十萬不等，無退款保障</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Six Modules Architecture -->
+  <section id="modules" style="background: rgba(12, 18, 34, 0.4);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">六維架構系統</span>
+        <h2 class="section-title">全面修復你的 6 大魅力模組</h2>
+        <p class="section-desc">由內而外，將理科大腦難以言喻的「感覺」，拆解為精準的工程化模組。</p>
+      </div>
+
+      <div class="modules-grid">
+        <!-- Module 1 -->
+        <div class="module-card">
+          <div class="module-icon-wrap">👔</div>
+          <div class="module-code">MODULE_01 // HARDWARE</div>
+          <h3 class="module-name">穿搭剪裁重塑</h3>
+          <div class="module-bug">常見 Bug：寬鬆荷葉邊系服、長度過長牛仔褲、暗沉無層次。</div>
+          <p class="module-fix">依據骨架與膚色建立「工程師膠囊衣櫥」，鎖定極簡、修身、高質感面料，出門 5 分鐘自然穿出高級感。</p>
+        </div>
+
+        <!-- Module 2 -->
+        <div class="module-card">
+          <div class="module-icon-wrap">🏋️</div>
+          <div class="module-code">MODULE_02 // KINETIC</div>
+          <h3 class="module-name">體態力學校準</h3>
+          <div class="module-bug">常見 Bug：圓肩駝背、烏龜頸前傾、走路眼神飄移畏縮。</div>
+          <p class="module-fix">物理力學校正肌肉張力，重塑胸腔挺拔度與肩背線條，建立沉穩、具領導力的男性肢體語言與目光接觸。</p>
+        </div>
+
+        <!-- Module 3 -->
+        <div class="module-card">
+          <div class="module-icon-wrap">📸</div>
+          <div class="module-code">MODULE_03 // VISUAL</div>
+          <h3 class="module-name">攝影視覺工程</h3>
+          <div class="module-bug">常見 Bug：浴室鏡面死光自拍、證件照臉僵、死亡俯角。</div>
+          <p class="module-fix">專業攝影師 1 對 1 實拍，打造自然、有生活溫度、展現高品味個人故事的社交平台與交友軟體照片矩陣。</p>
+        </div>
+
+        <!-- Module 4 -->
+        <div class="module-card">
+          <div class="module-icon-wrap">💬</div>
+          <div class="module-code">MODULE_04 // RUNTIME</div>
+          <h3 class="module-name">聊天編譯解碼</h3>
+          <div class="module-bug">常見 Bug：身家調查式問答、身陷「解決方案」直男邏輯。</div>
+          <p class="module-fix">植入情緒解碼核心，學會傾聽、拋接球、幽默回話與氛圍升溫，告別尬聊，讓女生覺得跟你聊天極度舒服。</p>
+        </div>
+
+        <!-- Module 5 -->
+        <div class="module-card">
+          <div class="module-icon-wrap">🍷</div>
+          <div class="module-code">MODULE_05 // INTERACTION</div>
+          <h3 class="module-name">約會動態演練</h3>
+          <div class="module-bug">常見 Bug：不知道去哪約會、進退失據、買單尷尬、被發好人卡。</div>
+          <p class="module-fix">從餐廳動線選擇、約會微醺節奏、自然肢體進挪到專屬模擬約會實戰反饋，徹底掌握約會主導權。</p>
+        </div>
+
+        <!-- Module 6 -->
+        <div class="module-card">
+          <div class="module-icon-wrap">🌐</div>
+          <div class="module-code">MODULE_06 // NETWORK</div>
+          <h3 class="module-name">社交圈層拓撲</h3>
+          <div class="module-bug">常見 Bug：兩點一線生活圈、除了公司同事無處認識異性。</div>
+          <p class="module-fix">打造可持續拓寬的生活方式（興趣圈、品酒、展覽、科技精英校友會），擺脫孤島困境，自然吸引優質對象。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: 90 Days Sprint Roadmap -->
+  <section id="sprint">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">敏捷流程圖</span>
+        <h2 class="section-title">90 天，從骨子裡重構你的魅力核心</h2>
+        <p class="section-desc">拒絕大拜拜灌水課程。每週固定 1 次 1v1 Sprint 覆盤，每週產出明確交付物。</p>
+      </div>
+
+      <div class="timeline-container">
+        <!-- Sprint 1 -->
+        <div class="timeline-card">
+          <span class="phase-badge">SPRINT 01 // DAY 1 - 30</span>
+          <h3 class="phase-title">硬體架構重啟 (Hardware Boot)</h3>
+          <ul class="phase-list">
+            <li>深度一對一魅力弱點雷達建檔</li>
+            <li>髮型改造 ＋ 個人專屬膠囊衣櫥剪裁</li>
+            <li>物理體態校準與挺拔步態訓練</li>
+            <li>專業攝影師實體外拍，產出 15 張高質感主視覺</li>
+          </ul>
+        </div>
+
+        <!-- Sprint 2 -->
+        <div class="timeline-card">
+          <span class="phase-badge">SPRINT 02 // DAY 31 - 60</span>
+          <h3 class="phase-title">軟體通訊編譯 (Software Protocol)</h3>
+          <ul class="phase-list">
+            <li>文字通訊除錯：分析過往被已讀不回的聊天紀錄</li>
+            <li>情緒共鳴與反問機制實時訓練</li>
+            <li>交友軟體自介與演算法權重優化</li>
+            <li>每週 1v1 對話錄音覆盤與口語調整</li>
+          </ul>
+        </div>
+
+        <!-- Sprint 3 -->
+        <div class="timeline-card">
+          <span class="phase-badge">SPRINT 03 // DAY 61 - 90</span>
+          <h3 class="phase-title">實戰整合部署 (Production Deploy)</h3>
+          <ul class="phase-list">
+            <li>真實社交情境拓展與自然破冰練習</li>
+            <li>實體模擬約會驗收（專業女性教練視角覆盤）</li>
+            <li>約會轉場、氣氛升溫與關係確立策略</li>
+            <li>科技精英校友會長期引薦與持續覆盤</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Engineering Case Studies -->
+  <section id="cases" style="background: rgba(12, 18, 34, 0.4);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">同行實證</span>
+        <h2 class="section-title">他們在寫 Code 的同時，完成了人生升級</h2>
+        <p class="section-desc">真實科技從業者脫敏見證，無虛構浮誇，只有扎實的維度躍遷。</p>
+      </div>
+
+      <div class="case-grid">
+        <!-- Case 1 -->
+        <div class="case-card">
+          <div class="case-header">
+            <div class="case-profile">阿翔 ‧ 31 歲 (竹科半導體硬體工程師)</div>
+            <div class="case-tag">單身 7 年 ➔ 90 天脫單</div>
+          </div>
+          <div class="case-contrast-box">
+            <div class="contrast-item contrast-before">
+              <div class="contrast-label">BEFORE [重構前]</div>
+              <div class="contrast-text">聯誼花十幾萬換來 5 張好人卡；深藍系服配運動鞋；一跟女生講話就眼神下飄、像在做進度回報。</div>
+            </div>
+            <div class="contrast-item contrast-after">
+              <div class="contrast-label">AFTER [90 天後]</div>
+              <div class="contrast-text">換裝日系極簡剪裁；體態舒展挺拔；掌握聊天「情緒延伸法」，在第 75 天成功與同溫層設計師女友確立關係。</div>
+            </div>
+          </div>
+          <p class="case-quote">
+            「Curry 教練一句話打醒我：『你伺服器壞了知道重構，為什麼自己的人生擺爛？』這筆投資是我這輩子 ROI 最高的決定。」
+          </p>
+        </div>
+
+        <!-- Case 2 -->
+        <div class="case-card">
+          <div class="case-header">
+            <div class="case-profile">Kevin ‧ 28 歲 (內科軟體後端工程師)</div>
+            <div class="case-tag">交友軟體掛蛋 ➔ 每週自然約會 2 次</div>
+          </div>
+          <div class="case-contrast-box">
+            <div class="contrast-item contrast-before">
+              <div class="contrast-label">BEFORE [重構前]</div>
+              <div class="contrast-text">自拍照全是用前鏡頭由下往上拍；自我介紹寫滿技術專長；配對率趨近於零，自認『長得太宅沒救』。</div>
+            </div>
+            <div class="contrast-item contrast-after">
+              <div class="contrast-label">AFTER [90 天後]</div>
+              <div class="contrast-text">專業外拍產出生活感視覺；Fiona 教練重調自介故事；第一個月配對數突破 30+，學會輕鬆幽默掌握約會步調。</div>
+            </div>
+          </div>
+          <p class="case-quote">
+            「原來根本不是長相問題，而是我的底層溝通訊號全是噪聲。像寫 code 一樣把 bug 抓出來，一切順理成章。」
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Coaches -->
+  <section id="coaches">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">雙軌教練陣容</span>
+        <h2 class="section-title">理性邏輯 ╳ 女性視角的完整互補</h2>
+        <p class="section-desc">不找虛浮無實績的網紅，由具備心理溝通與頂級審美的專業導師全流程把關。</p>
+      </div>
+
+      <div class="coaches-grid">
+        <div class="coach-card">
+          <div class="coach-avatar">👨‍💼</div>
+          <h3 class="coach-name">Curry 教練</h3>
+          <div class="coach-role">MANLEARN 創始教練 / 男性格局與溝通架構師</div>
+          <p class="coach-bio">
+            長期鑽研男性心理學、高維社交動態與理科思維溝通機制。擅長將抽象複雜的「情商」降維翻譯為工程師可快速上手的邏輯演算法，累計協助超過百位工程師克服社交恐懼、重建自信主場。
+          </p>
+        </div>
+
+        <div class="coach-card">
+          <div class="coach-avatar">👩‍🎨</div>
+          <h3 class="coach-name">Fiona 教練</h3>
+          <div class="coach-role">形象總監 / 女性視角真實審美設計師</div>
+          <p class="coach-bio">
+            具備多年男性高級成衣穿搭指導與生活品味塑造經驗。從真實優質女性的第一視角出發，一針見血戳破工程師常見的自嗨盲點，為你打造乾淨、自然、極具安全感的質感男性外在。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Transparent Pricing -->
+  <section id="pricing" style="background: rgba(12, 18, 34, 0.4);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">透明定價矩陣</span>
+        <h2 class="section-title">投資你最核心的本體資產</h2>
+        <p class="section-desc">一頓飯、一套西裝的錢轉瞬即逝；一套陪伴你一生的個人魅力底層系統，終身受用。</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Standard Tier -->
+        <div class="price-card">
+          <h3 class="tier-name">Standard Sprint</h3>
+          <p class="tier-desc">90 天敏捷標準營 ‧ 適合想全面排查 Bug 的自驅型工程師</p>
+          <div class="tier-price-box">
+            <span class="tier-currency">NT$</span>
+            <span class="tier-amount">48,000</span>
+            <span class="tier-period">/ 90 天完整週期</span>
+          </div>
+          <ul class="features-list">
+            <li>完整 6 大模組 40+ 小時底層架構線上影音</li>
+            <li>每週 1 次 1v1 線上 Sprint 敏捷覆盤 (共 12 次)</li>
+            <li>實體 Day 14 形象改造日 (專屬造型剪裁建議)</li>
+            <li>專業攝影師半日外拍 (含 10 張精修主視覺)</li>
+            <li>專屬教練 LINE 群組日常聊天文字覆盤答疑</li>
+            <li>MANLEARN 科技精英校友會終身交流資格</li>
+          </ul>
+          <button class="btn btn-secondary" onclick="openRadarModal()">預約諮詢評估</button>
+        </div>
+
+        <!-- VIP Tier -->
+        <div class="price-card featured">
+          <span class="popular-tag">MOST RECOMMENDED</span>
+          <h3 class="tier-name">Black Label VIP</h3>
+          <p class="tier-desc">首席教練高規格深度陪跑 ‧ 追求極致效率與客製化</p>
+          <div class="tier-price-box">
+            <span class="tier-currency">NT$</span>
+            <span class="tier-amount">68,000</span>
+            <span class="tier-period">/ 90 天完整週期</span>
+          </div>
+          <ul class="features-list">
+            <li>包含 Standard 全部權益</li>
+            <li>Curry ╳ Fiona 雙首席教練全流程親自操刀</li>
+            <li>教練陪同實體實體商場採買服飾 1 次 (3小時)</li>
+            <li>實體 1v1 模擬約會實戰演練 2 次 (含女性視角即時拆解)</li>
+            <li>急件對話語音 24 小時內極速除錯通道</li>
+            <li>100% 滿意承諾：完課後未獲異性正向反饋免費延長陪跑 30 天</li>
+          </ul>
+          <button class="btn btn-primary" onclick="openRadarModal()">立即申請 VIP 席次</button>
+        </div>
+      </div>
+
+      <!-- Low Risk Gateway Box -->
+      <div class="break-in-box">
+        <div class="break-in-text">
+          <h4>💡 還不確定自己適合哪種方案？先做 30 分鐘 1v1 專屬健檢</h4>
+          <p>只需 NT$ 990 破冰門票，教練親自透過 Zoom 排查你的個人雷達圖。後續若報名 90 天重構營，<strong>全額 200% 折抵（現折 NT$ 2,000 學費）</strong>。</p>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openRadarModal()">立即預約健檢 (NT$ 990)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: FAQ (異議爆破) -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">FREQUENTLY ASKED QUESTIONS</span>
+        <h2 class="section-title">直面你的所有顧慮</h2>
+        <p class="section-desc">工程師講求事實與證據。以下是學員在諮詢時最常提出的硬核問題。</p>
+      </div>
+
+      <div class="faq-container">
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>你們跟市面上教把妹、PUA 的課程到底有何不同？</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            我們強烈鄙視任何欺騙、騷擾、打壓女性的低俗套路。真正的魅力來自於你本體的硬核價值：得體的外在審美、挺拔的姿態、同理傾聽的情緒能力。我們不做包裝詐騙，而是像 Code Review 一樣，幫你找出阻礙你發光的盲點並徹底修復。
+          </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>我平常在園區工時很長、常態加班，有時間執行嗎？</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            整套系統專為科技業工時設計。非同步影音隨時隨地可看，每週 1v1 Sprint 覆盤只需 20~30 分鐘，可彈性安排在平日下班後或週末。我們教的是如何將練習融入日常（例如上班站姿、午餐點餐談吐），不額外消耗你的寶貴休息時間。
+          </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>我的長相很普通、年紀超過 35 歲，真的還救得起來嗎？</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            絕大多數成年男性的吸引力短板從來不是「基因長相」，而是「審美災難」、「體態萎靡」與「溝通像面試官」。35 歲以上的工程師擁有穩定的經濟實力與成熟心智，只要把外在質感與溝通氛圍補齊，在婚戀市場是極具吸引力的頂級資產。
+          </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>真的學不會或沒效果可以退費嗎？</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            我們嚴格遵守合約規範。簽約後 14 天內，若認為課程體系與您的預期不符，可依合約規定申請退費。我們只收真正渴望打破現狀、願意付出行動的工程師。
+          </div>
+        </div>
+      </div>
+
+      <!-- Final CTA -->
+      <div class="final-cta">
+        <h2>不要讓底層 Bug，耽誤你本該發光的人生</h2>
+        <p>花 3 分鐘完成六維雷達測評，踏出告別無效相親與好人卡的第一步。</p>
+        <button class="btn btn-primary btn-lg" onclick="openRadarModal()">
+          <span>🚀 免費生成我的魅力雷達分析報告</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="brand-logo">
+          <div class="brand-symbol">M_</div>
+          <span class="brand-text">MANLEARN 男孩學好學滿</span>
+        </div>
+        <div class="footer-links">
+          <a href="#">隱私政策</a>
+          <a href="#">服務條款</a>
+          <a href="#">教練合約規約</a>
+          <a href="mailto:support@manlearn.com">聯絡我們 support@manlearn.com</a>
+        </div>
+      </div>
+      <div class="copyright">
+        &copy; 2026 MANLEARN.COM ‧ 男孩學好學滿. All Rights Reserved. 專為工程師打造的個人魅力重構編譯器。
+      </div>
+    </div>
+  </footer>
+
+  <!-- Radar Test Modal -->
+  <div class="modal-overlay" id="radarModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeRadarModal()">&times;</button>
+      <div class="test-step-label">DIAGNOSTIC TEST // STEP 01</div>
+      <h3 class="modal-title">領取你的「個人六維魅力雷達分析」</h3>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">
+        填寫真實工作與約會現況，系統演算法將於 60 秒內為你生成專屬分析報告並傳送至您的 LINE。
+      </p>
+
+      <form id="radarForm" onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+          <label>目前從業領域 / 公司</label>
+          <select class="form-select" required>
+            <option value="">請選擇</option>
+            <option value="tsmc">半導體製造 (台積電 / 聯電 / 力積電等)</option>
+            <option value="ic">IC 設計 (聯發科 / 聯詠 / 瑞昱等)</option>
+            <option value="sw">軟體 / 互聯網 / 外商科技</option>
+            <option value="sys">系統廠 / 硬體工程 (廣達 / 華碩等)</option>
+            <option value="other">其他專業技術領域</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>目前最困擾你的魅力短板</label>
+          <select class="form-select" required>
+            <option value="">請選擇</option>
+            <option value="chat">聊天冷場、常被發好人卡或已讀不回</option>
+            <option value="style">不會穿搭、不清楚自己適合什麼外型</option>
+            <option value="posture">久坐辦公室駝背圓肩、缺乏氣場</option>
+            <option value="dating">交友軟體滑不到人、拍照太災難</option>
+            <option value="circle">生活圈封閉、不知去哪認識好對象</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>您的稱呼</label>
+          <input type="text" class="form-input" placeholder="例如：Alex / 陳工程師" required>
+        </div>
+
+        <div class="form-group">
+          <label>您的聯絡電話 (接收驗證碼)</label>
+          <input type="tel" class="form-input" placeholder="0912-345-678" required>
+        </div>
+
+        <div class="form-group">
+          <label>LINE ID (接收雷達圖 PDF 報告)</label>
+          <input type="text" class="form-input" placeholder="例如：alex_tech99" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">
+          ⚡ 立即生成並獲取專屬分析
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // FAQ Accordion
+    function toggleFaq(element) {
+      const isActive = element.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      if (!isActive) {
+        element.classList.add('active');
+      }
+    }
+
+    // Modal Controls
+    function openRadarModal() {
+      document.getElementById('radarModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeRadarModal() {
+      document.getElementById('radarModal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close modal on click outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('radarModal');
+      if (event.target === modal) {
+        closeRadarModal();
+      }
+    };
+
+    // Form Submit Mock
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      alert('感謝填寫！系統已在後端編譯您的魅力雷達圖，稍後將有專屬教練加您的 LINE 提供深度 1v1 報告解讀。');
+      closeRadarModal();
+    }
+  </script>
+</body>
+</html>
