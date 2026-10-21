@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商業戰略定位與創新產品展示庫 ｜ Projects Portfolio</title>
+  <meta name="description" content="商業戰略定位引擎、心智作戰武器庫與創新產品互動原型展示中心。收錄跟進王 Aifalo、MANLEARN 男孩學好學滿、農馭 OpenAgriBot、SCENTCRAFT 香水鋼筆等專案。">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #07090E;
+      --card-bg: rgba(18, 24, 38, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-border-hover: rgba(59, 130, 246, 0.5);
+      --primary: #3B82F6;
+      --accent: #10B981;
+      --text: #F1F5F9;
+      --text-muted: #94A3B8;
+      --tag-bg: rgba(255, 255, 255, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+      background: radial-gradient(circle at 50% 0%, #152238 0%, var(--bg) 60%);
+      background-attachment: fixed;
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Glow */
+    .glow-bg {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 3rem;
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #60A5FA;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 10px #10B981;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #FFFFFF 30%, #94A3B8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.75rem;
+    }
+
+    /* Card */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--theme-color, #3B82F6), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--card-border-hover);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 25px -5px var(--theme-glow, rgba(59, 130, 246, 0.2));
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .status-tag {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .status-live {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .card h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      flex: 1;
+      line-height: 1.65;
+    }
+
+    .meta-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .meta-pill {
+      font-size: 0.78rem;
+      padding: 0.2rem 0.65rem;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      color: #CBD5E1;
+    }
+
+    .card-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #60A5FA;
+    }
+
+    .card-action span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .sub-links {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .sub-link {
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .sub-link:hover {
+      color: #FFFFFF;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: #64748B;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding-top: 2.5rem;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-bg"></div>
+
+  <div class="container">
+    <header>
+      <div class="badge">
+        <span class="badge-dot"></span>
+        STRATEGY &amp; PRODUCT ENGINE PORTAL
+      </div>
+      <h1>商業戰略定位 ‧ 創新展示中心</h1>
+      <p class="subtitle">深度整合商業戰略定位、心智作戰武器庫與高說服力落地原型之動態成果入口。</p>
+    </header>
+
+    <main class="grid">
+      <!-- Aifalo CRM -->
+      <a href="./aifalo_crm/index.html" class="card" style="--theme-color: #1D5BF0; --theme-glow: rgba(29, 91, 240, 0.3);">
+        <div class="card-top">
+          <div class="icon-box">⚡</div>
+          <span class="status-tag status-live">Live</span>
+        </div>
+        <h2>跟進王 Aifalo</h2>
+        <p>保險開單口袋軍師！早上 10 分鐘清空今日跟進。名片拍一張、語音說一句，今天該跟進誰、聊什麼，打開手機一目瞭然。</p>
+        <div class="meta-list">
+          <span class="meta-pill">保險 CRM</span>
+          <span class="meta-pill">心智武器庫</span>
+          <span class="meta-pill">跟進轉換</span>
+        </div>
+        <div class="card-action">
+          <span>開啟落地頁 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <!-- MANLEARN -->
+      <a href="./manlearn/index.html" class="card" style="--theme-color: #6366F1; --theme-glow: rgba(99, 102, 241, 0.3);">
+        <div class="card-top">
+          <div class="icon-box">🧠</div>
+          <span class="status-tag status-live">Live</span>
+        </div>
+        <h2>MANLEARN 男孩學好學滿</h2>
+        <p>工程師專用 90 天個人魅力重構編譯器。拒絕婚友社盲目撮合與低俗 PUA，以六維模組化敏捷陪跑，科學重構外型與溝通底層。</p>
+        <div class="meta-list">
+          <span class="meta-pill">魅力重構</span>
+          <span class="meta-pill">工程師市場</span>
+          <span class="meta-pill">90天陪跑</span>
+        </div>
+        <div class="card-action">
+          <span>進入學院 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <!-- OpenAgriBot -->
+      <a href="./open_agribot/index.html" class="card" style="--theme-color: #10B981; --theme-glow: rgba(16, 185, 129, 0.3);">
+        <div class="card-top">
+          <div class="icon-box">🚜</div>
+          <span class="status-tag status-live">Live</span>
+        </div>
+        <h2>農馭 OpenAgriBot</h2>
+        <p>專為台灣農機製造商打造的開放式軟體大腦：Gazebo 虛擬溫室模擬先行、Nav2 自主導航、手機一鍵派工，讓硬體農機秒變智慧自走車。</p>
+        <div class="meta-list">
+          <span class="meta-pill">智慧農業</span>
+          <span class="meta-pill">ROS2 / Gazebo</span>
+          <span class="meta-pill">合作提案</span>
+        </div>
+        <div class="card-action">
+          <span>前往官網 <span class="arrow">→</span></span>
+          <div class="sub-links" onclick="event.stopPropagation()">
+            <a class="sub-link" href="./open_agribot/proposal_interactive.html">互動展示頁</a>
+          </div>
+        </div>
+      </a>
+
+      <!-- Perfume Fountain Pen -->
+      <a href="./perfume_fountain_pen/index.html" class="card" style="--theme-color: #D97706; --theme-glow: rgba(217, 119, 6, 0.3);">
+        <div class="card-top">
+          <div class="icon-box">🖋️</div>
+          <span class="status-tag status-live">Live</span>
+        </div>
+        <h2>SCENTCRAFT 檜木香水鋼筆</h2>
+        <p>全球首款結合台灣神聖檜木香氣之奢華書寫工具。告別千篇一律的無聊香氛蠟燭，體驗書寫即芳療的尊榮品味。</p>
+        <div class="meta-list">
+          <span class="meta-pill">精品書寫</span>
+          <span class="meta-pill">台灣檜木</span>
+          <span class="meta-pill">跨境募資</span>
+        </div>
+        <div class="card-action">
+          <span>英文官網 (EN) <span class="arrow">→</span></span>
+          <div class="sub-links" onclick="event.stopPropagation()">
+            <a class="sub-link" href="./perfume_fountain_pen/index_ch.html">中文版 (CH)</a>
+          </div>
+        </div>
+      </a>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Strategy &amp; Positioning Engine ‧ Designed with Antigravity IDE</p>
+    </footer>
+  </div>
+</body>
+</html>
