@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>跟進王 Aifalo ｜ 保險開單口袋軍師 ‧ 早上 10 分鐘清空今日跟進</title>
   <meta name="description" content="不要再加班填報表！專為台灣保險業務打造的開單口袋軍師。名片拍一張、語音說一句，今天該跟進誰、聊什麼，打開手機一目瞭然。立即免費試用 14 天。">
-  
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
+    rel="stylesheet">
 
   <style>
     :root {
@@ -281,8 +284,15 @@
     }
 
     @keyframes floatSlow {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
     }
 
     .phone-screen {
@@ -419,13 +429,31 @@
       animation: waveAnim 1.2s ease-in-out infinite;
     }
 
-    .wave-bar:nth-child(2) { animation-delay: 0.2s; height: 18px; }
-    .wave-bar:nth-child(3) { animation-delay: 0.4s; height: 24px; }
-    .wave-bar:nth-child(4) { animation-delay: 0.1s; height: 14px; }
+    .wave-bar:nth-child(2) {
+      animation-delay: 0.2s;
+      height: 18px;
+    }
+
+    .wave-bar:nth-child(3) {
+      animation-delay: 0.4s;
+      height: 24px;
+    }
+
+    .wave-bar:nth-child(4) {
+      animation-delay: 0.1s;
+      height: 14px;
+    }
 
     @keyframes waveAnim {
-      0%, 100% { transform: scaleY(0.4); }
-      50% { transform: scaleY(1); }
+
+      0%,
+      100% {
+        transform: scaleY(0.4);
+      }
+
+      50% {
+        transform: scaleY(1);
+      }
     }
 
     /* Section Global */
@@ -527,7 +555,8 @@
       border: 1px solid var(--primary-light);
     }
 
-    .enemy-card h3, .hero-winner-card h3 {
+    .enemy-card h3,
+    .hero-winner-card h3 {
       font-size: 1.6rem;
       font-weight: 800;
       margin-bottom: 20px;
@@ -952,21 +981,30 @@
         grid-template-columns: 1fr;
         text-align: center;
       }
+
       .hero-actions {
         justify-content: center;
       }
+
       .hero-bullets {
         grid-template-columns: 1fr;
       }
-      .enemy-grid, .pricing-grid, .scenarios-grid, .trust-grid, .quotes-grid {
+
+      .enemy-grid,
+      .pricing-grid,
+      .scenarios-grid,
+      .trust-grid,
+      .quotes-grid {
         grid-template-columns: 1fr;
       }
+
       .hero h1 {
         font-size: 2.5rem;
       }
     }
   </style>
 </head>
+
 <body>
 
   <!-- Header -->
@@ -989,7 +1027,10 @@
         <a href="https://app.aifalo.com/login" class="btn-login">登入</a>
         <a href="https://app.aifalo.com/register" class="btn-primary" id="header-cta-btn">
           免費試用 14 天
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
         </a>
       </div>
     </div>
@@ -1000,10 +1041,13 @@
     <div class="container hero-grid">
       <div class="hero-content">
         <div class="hero-pill">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+          </svg>
           專為台灣 40 萬保險大軍打造 ‧ 去 CRM 化新物種
         </div>
-        
+
         <h1>
           不要再加班填報表！<br>
           早上 10 分鐘，<br>
@@ -1018,9 +1062,12 @@
         <div class="hero-actions">
           <a href="https://app.aifalo.com/register" class="btn-primary btn-large" id="hero-main-cta">
             立即免費試用 14 天
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
           </a>
-          
+
           <div class="hero-pricing-hint">
             <span class="price">NT$ 300 <span style="font-size: 1rem; color: #64748B;">/ 月</span></span>
             <span class="unit">原價 <s>$600</s> ‧ 無需綁約隨時可取消</span>
@@ -1029,15 +1076,24 @@
 
         <div class="hero-bullets">
           <div class="hero-bullet-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
             非中資模型 ‧ 全程加密
           </div>
           <div class="hero-bullet-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
             不碰核心保單 ‧ 合法合規
           </div>
           <div class="hero-bullet-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
             救回一張單 ‧ 投報幾十倍
           </div>
         </div>
@@ -1121,21 +1177,29 @@
         <!-- Enemy Side -->
         <div class="enemy-card">
           <div class="card-header-badge enemy-badge">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
             傳統總部 CRM ＆ 笨重日誌系統
           </div>
           <h3>行政負擔 ‧ 越填越累</h3>
           <ul class="comparison-list enemy-list">
             <li>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
               <span><strong>管理查勤導向</strong>：專供主管稽核、拜訪簽到，對你明天開單毫無幫助。</span>
             </li>
             <li>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
               <span><strong>手動打字繁瑣</strong>：外勤跑完累得要命，還要逐字輸入一堆無聊欄位。</span>
             </li>
             <li>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
               <span><strong>無效早安圖社交</strong>：千篇一律問候貼圖，被客戶嫌煩已讀不回甚至封鎖。</span>
             </li>
           </ul>
@@ -1144,21 +1208,29 @@
         <!-- Winner Side -->
         <div class="hero-winner-card">
           <div class="card-header-badge winner-badge">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
             跟進王 Aifalo（口袋開單軍師）
           </div>
           <h3>100% 站在你的利益端 ‧ 幫你開單</h3>
           <ul class="comparison-list winner-list">
             <li>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               <span><strong>開單結果導向</strong>：早上 10 分鐘挑出 5 位最該聊的人，連切入話題都備妥。</span>
             </li>
             <li>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               <span><strong>外勤零打字操作</strong>：上車講話 10 秒錄音、名片拍照 3 秒辨識，只說話不打字！</span>
             </li>
             <li>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               <span><strong>切中近況溫暖破冰</strong>：聊他剛買新車、小孩考大學，自然聊進心坎裡成交。</span>
             </li>
           </ul>
@@ -1180,7 +1252,11 @@
         <!-- Scenario 1 -->
         <div class="scenario-card">
           <div class="scenario-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
           </div>
           <h3>01. 晨間開局包</h3>
           <p>出門前花 10 分鐘看手機，系統智慧演算篩選出 5 位沉睡最久、意向最高的客戶。今天拜訪動線一清二楚，不再盯著聊天室發呆。</p>
@@ -1190,7 +1266,12 @@
         <!-- Scenario 2 -->
         <div class="scenario-card">
           <div class="scenario-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+              <line x1="12" y1="19" x2="12" y2="22" />
+            </svg>
           </div>
           <h3>02. 外勤零打字包</h3>
           <p>剛跟客戶喝完咖啡回到車上，按住錄音鍵說 10 秒鐘：「張老闆下週二要看醫療險試算」。AI 自動結構化建檔排程，連名片拍照都能 3 秒讀取！</p>
@@ -1200,7 +1281,10 @@
         <!-- Scenario 3 -->
         <div class="scenario-card">
           <div class="scenario-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
           </div>
           <h3>03. 破冰開口包</h3>
           <p>想聯繫對方但不知聊什麼？AI 根據過去記錄的生活瑣事，給出最自然的關心話術。每一次開口都聊中客戶近況，拉近信任再談開單！</p>
@@ -1222,7 +1306,9 @@
       <div class="trust-grid">
         <div class="trust-card">
           <div class="trust-badge-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
           </div>
           <h4>非中資頂級模型</h4>
           <p>採用國際頂尖非中資模型架構，拒絕將敏感資訊交由中國大陸模型處理。</p>
@@ -1230,7 +1316,10 @@
 
         <div class="trust-card">
           <div class="trust-badge-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
           </div>
           <h4>獨立資料庫全程加密</h4>
           <p>靜態儲存與資料傳輸全程 TLS 高規格加密，絕不將你的名單提供公版模型訓練。</p>
@@ -1238,7 +1327,10 @@
 
         <div class="trust-card">
           <div class="trust-badge-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+            </svg>
           </div>
           <h4>不碰核心身分證與病歷</h4>
           <p>前端自動遮蔽敏感帳號，只記錄朋友間日常社交話題，合規合法不踩金管會紅線。</p>
@@ -1246,7 +1338,10 @@
 
         <div class="trust-card">
           <div class="trust-badge-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+            </svg>
           </div>
           <h4>專利技術與台灣營運</h4>
           <p>天曲數位科技營運（統編 55949226），演算法技術取得專利保護，在台合法保障。</p>
@@ -1282,23 +1377,33 @@
 
           <ul class="pricing-features">
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               每日清晨「今日跟進」優先名單推播
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               名片拍照 OCR 辨識 ＋ 外勤 10 秒語音速記
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               情境式對話破冰與開單話術建議
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               手機 PWA ＋ 電腦跨裝置無縫同步
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               獨立資料庫全程加密與資安防火牆
             </li>
           </ul>
@@ -1324,28 +1429,39 @@
 
           <ul class="pricing-features">
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               包含 10 組獨立帳號配額（新人可彈性替換）
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               解決新人「不知道找誰、不敢開口」最大痛點
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               專屬通訊處顧問導入教學與開單技巧培訓
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               獨立開立三聯式公司發票（可報銷教育訓練）
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               多一名新人留存開單，投資回報超過 10 倍
             </li>
           </ul>
 
-          <a href="https://lin.ee/7dh66gw" target="_blank" class="btn-primary btn-full" style="background: #1E293B;" id="pricing-team-btn">
+          <a href="https://lin.ee/7dh66gw" target="_blank" class="btn-primary btn-full" style="background: #1E293B;"
+            id="pricing-team-btn">
             諮詢通訊處團購專案 →
           </a>
         </div>
@@ -1367,11 +1483,14 @@
         <div class="faq-item">
           <div class="faq-question">
             <span>我用筆記本或 LINE 釘選好好的，為什麼要每月花 NT$300？</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
           </div>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              筆記本超過 50 個客戶後，人的大腦根本無法計算誰該跟進，最後一定漏單！LINE 聊天室滑下去就忘，上個月說想幫小孩買保險的朋友，往往因為你一忙就忘了聯絡，最後被別家業務簽走。一張保單佣金幾萬塊，跟進王一個月只要 NT$300，只要一年幫你救回一張單，投報率就是幾十倍！
+              筆記本超過 50 個客戶後，人的大腦根本無法計算誰該跟進，最後一定漏單！LINE 聊天室滑下去就忘，上個月說想幫小孩買保險的朋友，往往因為你一忙就忘了聯絡，最後被別家業務簽走。一張保單佣金幾萬塊，跟進王一個月只要
+              NT$300，只要一年幫你救回一張單，投報率就是幾十倍！
             </div>
           </div>
         </div>
@@ -1380,11 +1499,14 @@
         <div class="faq-item">
           <div class="faq-question">
             <span>客戶名單輸進去，你們後台會不會看？會不會賣給同行？</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
           </div>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              絕對不會！我們是合法登記的台灣科技公司（天曲數位科技，統編 55949226），依法受《個人資料保護法》嚴密拘束。系統採用獨立隔離加密數據庫，嚴禁任何同行接觸你的資料，更不將名單提供大型模型做公開訓練。你的客戶人脈，永遠 100% 只屬於你個人！
+              絕對不會！我們是合法登記的台灣科技公司（天曲數位科技，統編
+              55949226），依法受《個人資料保護法》嚴密拘束。系統採用獨立隔離加密數據庫，嚴禁任何同行接觸你的資料，更不將名單提供大型模型做公開訓練。你的客戶人脈，永遠 100% 只屬於你個人！
             </div>
           </div>
         </div>
@@ -1393,7 +1515,9 @@
         <div class="faq-item">
           <div class="faq-question">
             <span>保險公司法遵極嚴，使用第三方工具會不會被總公司處分？</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
           </div>
           <div class="faq-answer">
             <div class="faq-answer-inner">
@@ -1406,7 +1530,9 @@
         <div class="faq-item">
           <div class="faq-question">
             <span>14 天免費試用結束後，如果不想用會不會被強制扣款？</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
           </div>
           <div class="faq-answer">
             <div class="faq-answer-inner">
@@ -1530,4 +1656,5 @@
     });
   </script>
 </body>
+
 </html>
