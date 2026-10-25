@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>天空元素視覺空間設計 SKYet Space Design | 反對樣品屋・18年iF大師親操極致坪效與商空吸金動線</title>
+  <meta name="description" content="天空元素由陳鶴元總監領軍，榮獲德國 iF、日本 Good Design、美國 IDA 等六大國際大獎。專為高房價時代打造：15~30 坪極小宅偷出 5 坪收納、40年老屋翻新預算封頂零追加，商業空間自帶打卡吸金動線，提升客單價 30%！">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #090a0f;
+      --bg-card: rgba(18, 20, 29, 0.75);
+      --bg-card-hover: rgba(26, 30, 44, 0.9);
+      --border-glow: rgba(230, 81, 0, 0.25);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      
+      --accent-gold: #f59e0b;
+      --accent-cyan: #06b6d4;
+      --accent-coral: #ef4444;
+      --accent-emerald: #10b981;
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --font-en: 'Outfit', -apple-system, sans-serif;
+      --font-tc: 'Noto Sans TC', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-tc);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(245, 158, 11, 0.07) 0%, transparent 40%),
+        radial-gradient(circle at 85% 70%, rgba(6, 182, 212, 0.07) 0%, transparent 40%),
+        linear-gradient(to bottom, #090a0f, #0d0f17);
+      background-attachment: fixed;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(9, 10, 15, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-symbol {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--accent-gold), #b45309);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-family: var(--font-en);
+      font-size: 20px;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
+    }
+
+    .brand-text h1 {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+
+    .brand-text p {
+      font-size: 11px;
+      color: var(--accent-gold);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-family: var(--font-en);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-gold);
+    }
+
+    .btn-cta-nav {
+      background: linear-gradient(135deg, var(--accent-gold), #d97706);
+      color: #000;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-cta-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    }
+
+    /* Badges Bar */
+    .awards-bar {
+      padding: 14px 0;
+      background: rgba(245, 158, 11, 0.04);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.12);
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .awards-bar span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 16px;
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .awards-bar span em {
+      color: var(--accent-gold);
+      font-style: normal;
+    }
+
+    /* Hero Section */
+    section.hero-section {
+      padding: 90px 0 70px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 46px;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 24px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-title .highlight-enemy {
+      color: var(--accent-coral);
+      text-decoration: line-through;
+      text-decoration-thickness: 3px;
+    }
+
+    .hero-title .highlight-nail {
+      background: linear-gradient(135deg, #fff 30%, var(--accent-gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+      margin-top: 8px;
+    }
+
+    .hero-subtext {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary-hero {
+      background: linear-gradient(135deg, var(--accent-gold), #d97706);
+      color: #0f172a;
+      font-size: 16px;
+      font-weight: 800;
+      padding: 16px 32px;
+      border-radius: 10px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 30px rgba(245, 158, 11, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary-hero:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(245, 158, 11, 0.5);
+    }
+
+    .btn-secondary-hero {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 16px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary-hero:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Visual Hammer Card */
+    .hammer-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 20px;
+      padding: 28px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .hammer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .hammer-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hammer-live-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--accent-emerald);
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent-emerald);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .scalpel-preview {
+      background: #0f121a;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      margin-bottom: 20px;
+    }
+
+    .diff-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+      font-size: 14px;
+    }
+
+    .diff-row:last-child {
+      border-bottom: none;
+    }
+
+    .diff-bad {
+      color: #f87171;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .diff-good {
+      color: var(--accent-emerald);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hammer-quote {
+      font-size: 13px;
+      color: var(--text-dim);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* Section Global Styles */
+    section.block-section {
+      padding: 90px 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 56px;
+    }
+
+    .section-eyebrow {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--accent-gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    /* Confrontation Table (Weapon 4) */
+    .confront-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--bg-card);
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    .confront-table th, .confront-table td {
+      padding: 20px 24px;
+      text-align: left;
+    }
+
+    .confront-table th {
+      background: rgba(255, 255, 255, 0.03);
+      font-size: 15px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .confront-table th.col-skyet {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--accent-gold);
+      border-bottom: 2px solid var(--accent-gold);
+    }
+
+    .confront-table tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: background 0.2s ease;
+    }
+
+    .confront-table tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .confront-table td {
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .confront-table td.cell-skyet {
+      background: rgba(245, 158, 11, 0.04);
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .confront-table td.dim {
+      color: var(--text-dim);
+    }
+
+    /* Category Showcase (Weapon 3) */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .cat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 32px 28px;
+      transition: all 0.3s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cat-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(245, 158, 11, 0.4);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    .cat-card.popular {
+      border-color: var(--accent-gold);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.06) 0%, var(--bg-card) 100%);
+    }
+
+    .popular-tag {
+      position: absolute;
+      top: -12px;
+      right: 24px;
+      background: var(--accent-gold);
+      color: #000;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cat-icon {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .cat-title {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .cat-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+
+    .cat-specs {
+      list-style: none;
+      margin-bottom: 28px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 20px;
+    }
+
+    .cat-specs li {
+      font-size: 13px;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cat-specs li::before {
+      content: "✓";
+      color: var(--accent-emerald);
+      font-weight: 800;
+    }
+
+    .cat-btn {
+      display: block;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      border: 1px solid var(--border-subtle);
+      transition: all 0.2s ease;
+    }
+
+    .cat-card.popular .cat-btn {
+      background: var(--accent-gold);
+      color: #000;
+      border-color: var(--accent-gold);
+    }
+
+    .cat-btn:hover {
+      background: var(--accent-gold);
+      color: #000;
+      border-color: var(--accent-gold);
+    }
+
+    /* Proof Badges (Weapon 5) */
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .proof-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .proof-number {
+      font-family: var(--font-en);
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--accent-gold);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .proof-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .proof-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Accordion FAQ (Weapon 6) */
+    .faq-container {
+      max-width: 840px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+
+    .faq-item:hover {
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .faq-question {
+      padding: 22px 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      user-select: none;
+    }
+
+    .faq-icon {
+      font-size: 18px;
+      color: var(--accent-gold);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-answer {
+      padding: 0 26px 22px;
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.7;
+      display: none;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    /* Testimonials / Social Currency (Weapon 7) */
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .quote-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 28px;
+      position: relative;
+    }
+
+    .quote-mark {
+      font-size: 40px;
+      color: var(--accent-gold);
+      line-height: 1;
+      opacity: 0.3;
+      margin-bottom: 8px;
+    }
+
+    .quote-text {
+      font-size: 15px;
+      color: var(--text-main);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .quote-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 16px;
+    }
+
+    .author-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #334155, #1e293b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .author-info h4 {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .author-info p {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    /* Final CTA Gate (Weapon 8) */
+    .cta-banner {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(6, 182, 212, 0.08) 100%);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: 24px;
+      padding: 64px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner h2 {
+      font-size: 38px;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .cta-banner p {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 36px;
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* Footer */
+    footer.site-footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 13px;
+      color: var(--text-dim);
+      text-align: center;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: #111420;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 540px;
+      padding: 36px;
+      position: relative;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .form-control {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--accent-gold);
+    }
+
+    /* RWD */
+    @media (max-width: 992px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .category-grid { grid-template-columns: 1fr; }
+      .proof-grid { grid-template-columns: 1fr; }
+      .quotes-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero-title { font-size: 34px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Awards Ribbon -->
+  <div class="awards-bar">
+    <span>🏆 榮獲 <em>德國 iF Design Award</em></span>
+    <span>🏆 <em>日本 Good Design Award</em></span>
+    <span>🥈 <em>美國 IDA 國際設計獎銀獎</em></span>
+    <span>🥈 <em>義大利 A' Design Award 銀獎</em></span>
+    <span>🥇 <em>英國倫敦設計獎金獎</em></span>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="#" class="brand-logo" id="header-brand-logo">
+        <div class="brand-symbol">SK</div>
+        <div class="brand-text">
+          <h1>天空元素視覺空間設計</h1>
+          <p>SKYet Space Scalpel Design</p>
+        </div>
+      </a>
+      
+      <nav class="nav-links">
+        <a href="#confrontation">對立審判</a>
+        <a href="#showcase">三大空間矩陣</a>
+        <a href="#proofs">大師信任狀</a>
+        <a href="#faq">防坑 FAQ</a>
+        <a href="#audit-gate" class="btn-cta-nav">預約平面圖審判</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section (Weapons 1 & 2) -->
+  <section class="hero-section" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span>⚡ 拒絕黑箱裝潢 ✕ 杜絕無效美圖</span>
+          </div>
+          
+          <h1 class="hero-title">
+            反對只看不實用的樣品屋！
+            <span class="highlight-nail">18 年 iF 大獎設計師，為你把坪效榨出雙倍價值。</span>
+          </h1>
+          
+          <p class="hero-subtext">
+            台灣高房價時代，每坪破百萬，別再把血汗錢花在只能拍照、住半年收納崩潰的空殼美學！天空元素以「空間透視解剖刀」，為 15~30 坪極小宅偷出 5 坪收納，為商業空間注入鏡頭自播吸金動線，承諾預算封頂零追加！
+          </p>
+          
+          <div class="hero-cta-group">
+            <a href="javascript:void(0)" onclick="openModal('住宅小宅平面圖審判')" class="btn-primary-hero" id="btn-hero-primary">
+              <span>線上戶型圖審判（偷出 5 坪）</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#showcase" class="btn-secondary-hero" id="btn-hero-secondary">
+              檢視商空吸金方案
+            </a>
+          </div>
+        </div>
+        
+        <!-- Weapon 2 Visual Hammer Card -->
+        <div class="hero-visual">
+          <div class="hammer-card">
+            <div class="hammer-header">
+              <span class="hammer-tag">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M4.93 19.07l4.24-4.24"/></svg>
+                核心視覺錘：空間透視解剖刀
+              </span>
+              <span class="hammer-live-status">
+                <span class="status-dot"></span>
+                毫米級圖紙審查中
+              </span>
+            </div>
+            
+            <div class="scalpel-preview">
+              <div class="diff-row">
+                <span class="diff-bad">✕ 傳統美圖樣品屋</span>
+                <span class="diff-good">✓ 天空元素空間神偷</span>
+              </div>
+              <div class="diff-row">
+                <span style="color:var(--text-muted)">走道死角浪費 3.2 坪</span>
+                <span class="diff-good">偷出 4.8 坪雙向暗門收納</span>
+              </div>
+              <div class="diff-row">
+                <span style="color:var(--text-muted)">水電黑箱開工追加50萬</span>
+                <span class="diff-good">簽署預算封頂契約 0 追加</span>
+              </div>
+              <div class="diff-row">
+                <span style="color:var(--text-muted)">商業裝修客人零拍照</span>
+                <span class="diff-good">空間自帶打卡，客單價+30%</span>
+              </div>
+            </div>
+            
+            <p class="hammer-quote">
+              「空間的本質不是貼大理石，而是用結構手術刀榨出真實生活機能與商業回報。」── 創辦人兼設計總監 陳鶴元
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Weapon 4: Strategic Enemy Confrontation Table -->
+  <section class="block-section" id="confrontation">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Anti-Positioning</span>
+        <h2 class="section-title">踩死裝潢黑箱！為什麼你不能再找傳統統包與美圖設計師？</h2>
+        <p class="section-desc">選擇天空元素，代表你正在終結台灣裝修市場的三大醜惡陳規：</p>
+      </div>
+      
+      <table class="confront-table">
+        <thead>
+          <tr>
+            <th style="width: 22%;">審核維度</th>
+            <th style="width: 26%;">傳統泥作統包工班</th>
+            <th style="width: 26%;">連鎖系統櫃 / 美圖美工</th>
+            <th class="col-skyet" style="width: 26%;">天空元素視覺空間設計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>收費與預算控制</strong></td>
+            <td class="dim">口頭低價搶標，開工拆牆後恐嚇管線全爛，惡意追加 30~50 萬。</td>
+            <td class="dim">按板材計價，為了拉高業績拼命塞滿櫃體，導致小宅嚴重壓迫。</td>
+            <td class="cell-skyet">簽署【預算封頂契約】！開工前結構全面透視，非業主主動變更，超支全額吸收！</td>
+          </tr>
+          <tr>
+            <td><strong>小宅空間機能 (15~25坪)</strong></td>
+            <td class="dim">毫無人體工學，動線衝突卡死，連大件吸塵器都放不下。</td>
+            <td class="dim">只能在方盒子塞標準模組，畸零角與斜角完全無法利用。</td>
+            <td class="cell-skyet">【空間透視解剖刀】：斜角借光 ✕ 雙向暗門，實打實偷出 20% 隱形可用坪數！</td>
+          </tr>
+          <tr>
+            <td><strong>老屋水電翻新 (30~50年)</strong></td>
+            <td class="dim">經驗摸彩做半套，水電漏水壁癌反覆發作，無第三方檢測。</td>
+            <td class="dim">不碰基礎重泥作水電，只做表面皮層包裝，暗坑未解。</td>
+            <td class="cell-skyet">72小時材料封箱 ✕ 內視鏡管線排雷，水電骨肉徹底重構，20年安全保固！</td>
+          </tr>
+          <tr>
+            <td><strong>商業空間開店回報</strong></td>
+            <td class="dim">毫無商業思維，做出來像傳統大賣場，無法吸引網紅客。</td>
+            <td class="dim">套用 Pinterest 公版網美模組，拍照角度呆板，幾個月就過氣。</td>
+            <td class="cell-skyet">前廣告 MV 美術指導跨界親操：打造【鏡頭自播吸金動線】，客單價翻倍！</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Weapon 3: Category Coordinate Showroom (Stage 1 + Stage 2) -->
+  <section class="block-section" id="showcase">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Category Matrix</span>
+        <h2 class="section-title">三大空間戰略矩陣：雙階推進火箭</h2>
+        <p class="section-desc">從住宅存量小宅極致偷坪效，到商業實體店面自帶流量，為不同野心的業主提供確定性解決方案：</p>
+      </div>
+      
+      <div class="category-grid">
+        <!-- Card 1 (Stage 1 Residential) -->
+        <div class="cat-card popular">
+          <span class="popular-tag">最受雙北屋主青睞</span>
+          <div class="cat-icon">📐</div>
+          <h3 class="cat-title">小宅偷空間 ✕ 老屋骨肉重構</h3>
+          <p class="cat-desc">專為 15~30 坪極小宅與 40 年老屋打造。反對只看不實用的樣品屋，毫米級動線為你偷出 5 坪隱形收納，預算封頂零追加！</p>
+          <ul class="cat-specs">
+            <li>15~25 坪保證多榨出 20% 有效可用機能</li>
+            <li>老屋 72 小時管線內視鏡排查，徹底消滅壁癌</li>
+            <li>法定契約明定「預算封頂，超支全包」</li>
+            <li>六大國際大獎總監親自審查圖紙收口</li>
+          </ul>
+          <a href="javascript:void(0)" onclick="openModal('住宅小宅老屋方案')" class="cat-btn">預約小宅戶型審判</a>
+        </div>
+        
+        <!-- Card 2 (Stage 1 Commercial) -->
+        <div class="cat-card">
+          <div class="cat-icon">☕</div>
+          <h3 class="cat-title">自帶打卡流量的商業空間</h3>
+          <p class="cat-desc">專攻特色餐飲、精品咖啡、潮流選品店。結合 18 年影視廣告 MV 美術指導經驗，讓進店人流自發拍照打卡發 IG，翻桌坪效多賺 30%！</p>
+          <ul class="cat-specs">
+            <li>獨家「鏡頭吸睛光影」：食物與人物自帶美肌打光</li>
+            <li>商業動線排布：提升翻桌效率與高客單轉化</li>
+            <li>首店超級視覺符號植入，省下百萬行銷買量費</li>
+            <li>從裝潢完工第一天起，顧客自發成為宣傳業務員</li>
+          </ul>
+          <a href="javascript:void(0)" onclick="openModal('商業空間吸金方案')" class="cat-btn">預約商空動線診斷</a>
+        </div>
+        
+        <!-- Card 3 (Stage 2 Cross-Industry Partner) -->
+        <div class="cat-card">
+          <div class="cat-icon">🚀</div>
+          <h3 class="cat-title">新創品牌旗艦空間合夥</h3>
+          <p class="cat-desc">【階段 2 跨界專屬】：空間即媒體 (Space as Media)。為具備全台連鎖野心的新創品牌，提供設計入股、AI 概念 72 小時極速渲染與旗艦店孵化！</p>
+          <ul class="cat-specs">
+            <li>72 小時 AI 空間概念秒出，極速驗證門店商業模型</li>
+            <li>設計技術折讓入股 ✕ 營業額抽成分潤共創</li>
+            <li>空間標準化手冊輸出，支持從首店到百店快速複製</li>
+            <li>每季度嚴格評選僅限合夥 2 家高潛力品牌</li>
+          </ul>
+          <a href="javascript:void(0)" onclick="openModal('新創品牌空間合夥專案')" class="cat-btn">申請空間合夥通道</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Weapon 5: Hard RTBs Proof Area -->
+  <section class="block-section" id="proofs">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Proof & Trust</span>
+        <h2 class="section-title">三大硬核信任狀：用無可反悔的物理證據說話</h2>
+        <p class="section-desc">刪除所有自誇形容詞，天空元素的每一次交付都背靠全球一級權威審查與實體制度：</p>
+      </div>
+      
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-number">6+</div>
+          <h3 class="proof-title">頂級國際設計大獎官方認證</h3>
+          <p class="proof-desc">榮獲德國 iF Design Award、日本 Good Design Award、美國 IDA 銀獎、英國 London 金獎、義大利 A' Design，權威背書，非坊間花錢買的假協會獎盃。</p>
+        </div>
+        
+        <div class="proof-card">
+          <div class="proof-number">18<em>y</em></div>
+          <h3 class="proof-title">18 年 300+ 實體案例庫 ✕ 著作</h3>
+          <p class="proof-desc">陳鶴元著有《小設計公司的生存之道》，經手數百間實體連鎖店面、新成屋與 40 年老宅，具備毫米級施工圖紙與建管水電硬底子。</p>
+        </div>
+        
+        <div class="proof-card">
+          <div class="proof-number">0<em>$</em></div>
+          <h3 class="proof-title">預算封頂契約：超支 0 追加</h3>
+          <p class="proof-desc">首創「72 小時透明材料封箱」與「法定預算封頂契約」。非業主主動變更，凡因設計漏算導致之追加款，由天空元素 100% 全額兜底！</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Weapon 6: Objection Killer FAQ -->
+  <section class="block-section" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Objection Killer</span>
+        <h2 class="section-title">簽約前最大疑慮？大師直球擊碎掏錢前的 4 大恐懼</h2>
+        <p class="section-desc">我們知道你在害怕什麼。頂級專家不講客套話，只給 100% 確定性的答案：</p>
+      </div>
+      
+      <div class="faq-container">
+        <div class="faq-item active">
+          <div class="faq-question">
+            <span>Q1：得過六大國際大獎的設計師，收費會不會是天價？我只是 20 坪小宅找得起嗎？</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            正因為得過大獎、有 18 年結構工法底蘊，陳鶴元才能一眼看出格局死穴！在台北或竹北，一坪房價動輒 80~120 萬。我們透過結構解剖為你在 15~20 坪裡多偷出 3~5 坪可用空間，等於直接替你省下 250 萬到 400 萬的購屋坪數成本！省下來的錢遠遠超過設計費，這是純粹的投資回報，而非裝潢開銷！
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Q2：會不會只顧搞藝術得獎，日常住起來打掃、收納很不實用？</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            我們的核心旗幟就是「反對只看不實用的樣品屋」！每一個抽屜深度、暗門收納、插座位置都經過人體工學毫米級精算，專門為台灣家庭雜物多、吸塵器與行李箱無處安放的痛點設計。我們保證：住進去 10 年，依然整齊如新！
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Q3：40 年老房子翻新，開工拆牆後真的不會被無底洞追加預算嗎？</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            我們直接簽訂【預算封頂契約】！在開工前 72 小時，我們會進行完整的內視鏡水電排查與管線結構透視，報價單逐項透明封箱。合約白紙黑字載明：只要您沒有在施工途中主動變更需求，凡因現場估算漏項造成的追加款，超出一毛錢由天空元素全額吸收！
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Q4：我是一家新創餐飲/零售店的老闆，你們能保證空間自帶打卡流量嗎？</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            陳鶴元早年從事影視廣告 MV 美術指導，深諳「鏡頭寬容度與光影心理學」。我們設計的不是普通的裝潢桌椅，而是「每張桌子都有自帶柔光的美食打光角度」與「進店前三步必拍的超級地標符號」。客人進門的第一反應不是滑手機，而是掏出手機拍照發 IG/Threads，讓空間自己替你省下每月數萬元的行銷買量費！
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Weapon 7: Social Currency Quotes -->
+  <section class="block-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Word of Mouth</span>
+        <h2 class="section-title">客戶吸菸區與茶水間的市井轉述口金句</h2>
+        <p class="section-desc">沒有任何行話術語，真實業主完工後脫口而出的口碑讚嘆：</p>
+      </div>
+      
+      <div class="quotes-grid">
+        <div class="quote-card">
+          <div class="quote-mark">“</div>
+          <p class="quote-text">「我家室內扣完公設才 17 坪，朋友上週來聚會，每個人都驚呼問我這是不是買了 30 坪！收納暗門做得太神了，連行李箱都看不見！」</p>
+          <div class="quote-author">
+            <div class="author-avatar">林</div>
+            <div class="author-info">
+              <h4>新北板橋・林先生</h4>
+              <p>新成屋 17 坪極致坪效改造</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="quote-card">
+          <div class="quote-mark">“</div>
+          <p class="quote-text">「找陳鶴元做店面最爽的是，試營運第一天客人進來第一件事不是看菜單，而是每個人都掏手機狂拍打卡，當週 IG 標記破千則！」</p>
+          <div class="quote-author">
+            <div class="author-avatar">張</div>
+            <div class="author-info">
+              <h4>台北東區・張創辦人</h4>
+              <p>特色精品餐酒館 55 坪商業全案</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="quote-card">
+          <div class="quote-mark">“</div>
+          <p class="quote-text">「買 45 年老宅本來怕被工班坑死。天空元素簽了預算封頂契約，完工結算居然真的一毛錢都沒被多追加，水電扎實得令人安心！」</p>
+          <div class="quote-author">
+            <div class="author-avatar">黃</div>
+            <div class="author-info">
+              <h4>台北大安・黃小姐</h4>
+              <p>45 年高齡公寓全棟骨肉翻新</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Weapon 8: Final CTA Gate -->
+  <section class="block-section" id="audit-gate">
+    <div class="container">
+      <div class="cta-banner">
+        <h2>別再讓爛格局，浪費你每坪百萬的房價！</h2>
+        <p>18 年國際 iF 大獎設計師親操。上傳平面圖，15 分鐘為你一眼揪出 3 處格局死穴，偷出 5 坪隱形收納，預算封頂零追加！</p>
+        
+        <div class="cta-actions">
+          <a href="javascript:void(0)" onclick="openModal('住宅小宅老屋平面圖審判')" class="btn-primary-hero">
+            立即預約【15分鐘戶型平面圖審判】
+          </a>
+          <a href="javascript:void(0)" onclick="openModal('商業空間開店診斷')" class="btn-secondary-hero">
+            預約【商業空間吸金動線診斷】
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p style="margin-bottom: 8px;"><strong>天空元素視覺空間設計 SKYet Space Scalpel Design</strong> ｜ 創辦人兼設計總監：陳鶴元 (Ho-Yuan Chen)</p>
+      <p>榮獲德國 iF Design Award、日本 Good Design Award、美國 IDA 銀獎、英國 London 金獎、義大利 A' Design 銀獎</p>
+      <p style="margin-top: 16px; opacity: 0.6;">© 2008-2026 SKYet Space Design. All Rights Reserved. 遵守特勞特定位理論大憲章。</p>
+    </div>
+  </footer>
+
+  <!-- Booking Modal -->
+  <div class="modal-backdrop" id="bookingModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;" id="modalTitle">預約 15 分鐘格局坪效線上審判</h3>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">大師親自審圖，為你一眼揪出戶型死穴，偷出 5 坪隱形機能：</p>
+      
+      <form onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label>您的姓名 / 稱呼</label>
+          <input type="text" class="form-control" placeholder="例：林先生 / 陳小姐" required>
+        </div>
+        
+        <div class="form-group">
+          <label>聯絡電話 / LINE ID</label>
+          <input type="text" class="form-control" placeholder="例：0912-345-678 或 LINE 帳號" required>
+        </div>
+        
+        <div class="form-group">
+          <label>案件類型與室內坪數</label>
+          <select class="form-control" required>
+            <option value="">請選擇空間類型...</option>
+            <option value="small">新成屋極小宅 (15~25 坪)</option>
+            <option value="old">30 年以上高齡老屋翻新</option>
+            <option value="commercial">新創餐飲/零售/旅店商業空間</option>
+            <option value="partner">新創品牌旗艦空間技術合夥</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>預計裝修預算區間</label>
+          <select class="form-control" required>
+            <option value="200-400">200 萬 ~ 400 萬</option>
+            <option value="400-800">400 萬 ~ 800 萬</option>
+            <option value="800+">800 萬以上 / 旗艦空間</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="btn-primary-hero" style="width: 100%; justify-content: center; margin-top: 12px;">
+          確認送出，鎖定大師親審名額
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Accordion Toggle
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        const isActive = item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+        if (!isActive) item.classList.add('active');
+      });
+    });
+
+    // Modal Control
+    function openModal(title) {
+      if (title) document.getElementById('modalTitle').innerText = title;
+      document.getElementById('bookingModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('bookingModal').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('bookingModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      alert('感謝您的預約！天空元素助理將於 24 小時內與您聯繫確認圖紙上傳與線上審判時段。');
+      closeModal();
+    }
+  </script>
+</body>
+</html>
