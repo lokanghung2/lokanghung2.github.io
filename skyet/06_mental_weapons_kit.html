@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>特勞特 8 大心智武器庫實戰手冊 (Mental Weapons Kit)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Mermaid.js -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  
+  <style>
+    :root {
+      --font-sans: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+      
+      /* Light Theme (預設：WCAG AAA 頂級高對比度商業色階) */
+      --bg-body: #ffffff;
+      --bg-surface: #f8fafc;
+      --bg-surface-elevated: #ffffff;
+      --bg-card: #ffffff;
+      --border-color: #cbd5e1;       /* 邊框清晰可見 */
+      --border-subtle: #e2e8f0;
+      
+      --text-main: #0f172a;          /* 極深炭黑，對比度 > 16:1 */
+      --text-muted: #334155;         /* 深板岩灰，對比度 > 9.5:1，杜絕淡灰 */
+      --text-dim: #475569;           /* 輔助標籤，對比度 > 7:1 */
+      
+      --primary: #1d4ed8;            /* 飽和深寶藍 (高對比) */
+      --primary-hover: #1e40af;
+      --primary-soft: #eff6ff;       /* 極淡藍底色 */
+      --accent: #6d28d9;             /* 皇家深紫 */
+      
+      --code-bg: #f1f5f9;
+      --code-color: #0f172a;
+      --pre-bg: #0f172a;
+      --pre-color: #f8fafc;
+      
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+    }
+
+    html.dark {
+      /* Dark Theme (夜間自適應：維持深底高對比) */
+      --bg-body: #0b0f19;
+      --bg-surface: #111827;
+      --bg-surface-elevated: #1f2937;
+      --bg-card: #131b2e;
+      --border-color: #334155;
+      --border-subtle: #1e293b;
+      
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --text-dim: #94a3b8;
+      
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --primary-soft: rgba(59, 130, 246, 0.14);
+      --accent: #a855f7;
+      
+      --code-bg: #1e293b;
+      --code-color: #e2e8f0;
+      --pre-bg: #030712;
+      --pre-color: #f8fafc;
+      
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.6);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.8;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      overflow-x: hidden;
+    }
+
+    /* Layout */
+    .app-container {
+      display: flex;
+      max-width: 1440px;
+      margin: 0 auto;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Sidebar / TOC */
+    .sidebar {
+      width: 320px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 32px 24px;
+      border-right: 1px solid var(--border-color);
+      flex-shrink: 0;
+      background: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar {
+        position: fixed;
+        left: -340px;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        box-shadow: var(--shadow-lg);
+      }
+      .sidebar.open {
+        left: 0;
+      }
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-badge {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 800;
+    }
+
+    .toc-title {
+      font-size: 0.8rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+
+    .toc-container {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .toc-container ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .toc-container li {
+      margin-bottom: 4px;
+    }
+
+    .toc-container a {
+      display: block;
+      padding: 7px 12px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .toc-container a:hover {
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .toc-container ul ul {
+      padding-left: 14px;
+      border-left: 2px solid var(--border-subtle);
+      margin-left: 8px;
+      margin-top: 4px;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+      padding: 40px 56px 80px;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 24px 20px 60px;
+      }
+    }
+
+    /* Top Action Bar (Mobile Nav & Theme Toggle) */
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+    }
+
+    @media (max-width: 1024px) {
+      .mobile-menu-btn {
+        display: inline-flex;
+        margin-right: auto;
+      }
+    }
+
+    /* Markdown Typography (WCAG AAA 高對比度標準) */
+    .markdown-body {
+      color: var(--text-main);
+    }
+
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3,
+    .markdown-body h4,
+    .markdown-body h5,
+    .markdown-body h6 {
+      color: #000000;
+      font-weight: 900;
+      line-height: 1.35;
+      margin-top: 2.2em;
+      margin-bottom: 0.8em;
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+
+    html.dark .markdown-body h1,
+    html.dark .markdown-body h2,
+    html.dark .markdown-body h3,
+    html.dark .markdown-body h4,
+    html.dark .markdown-body h5,
+    html.dark .markdown-body h6 {
+      color: #ffffff;
+    }
+
+    .markdown-body h1 {
+      font-size: 2.3rem;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 0.4em;
+      margin-top: 0;
+    }
+
+    .markdown-body h2 {
+      font-size: 1.7rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.3em;
+    }
+
+    .markdown-body h3 { font-size: 1.35rem; }
+    .markdown-body h4 { font-size: 1.15rem; }
+
+    .markdown-body p {
+      margin-bottom: 1.35em;
+      color: var(--text-main);
+      font-size: 1.02rem;
+    }
+
+    .markdown-body strong {
+      font-weight: 800;
+      color: #000000;
+    }
+    html.dark .markdown-body strong {
+      color: #ffffff;
+    }
+
+    .markdown-body a {
+      color: var(--primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .markdown-body a:hover {
+      color: var(--primary-hover);
+    }
+
+    .markdown-body hr {
+      border: 0;
+      height: 1px;
+      background: var(--border-color);
+      margin: 2.5em 0;
+    }
+
+    /* Lists */
+    .markdown-body ul,
+    .markdown-body ol {
+      margin-bottom: 1.35em;
+      padding-left: 1.6em;
+    }
+
+    .markdown-body li {
+      margin-bottom: 0.5em;
+      color: var(--text-main);
+    }
+
+    .markdown-body li > p {
+      margin-bottom: 0.5em;
+    }
+
+    /* Blockquotes */
+    .markdown-body blockquote {
+      border-left: 5px solid var(--primary);
+      background: var(--primary-soft);
+      padding: 18px 24px;
+      border-radius: 0 10px 10px 0;
+      margin: 1.8em 0;
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .markdown-body blockquote p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* GitHub-style Alerts (高對比強化版) */
+    .markdown-alert {
+      padding: 16px 22px;
+      margin-bottom: 22px;
+      border-left: 5px solid;
+      border-radius: 0 10px 10px 0;
+      font-size: 0.98rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .markdown-alert.alert-note {
+      border-left-color: #1d4ed8;
+      background: #eff6ff;
+      color: #1e3a8a;
+    }
+    .markdown-alert.alert-tip {
+      border-left-color: #047857;
+      background: #ecfdf5;
+      color: #064e3b;
+    }
+    .markdown-alert.alert-important {
+      border-left-color: #6d28d9;
+      background: #f5f3ff;
+      color: #4c1d95;
+    }
+    .markdown-alert.alert-warning {
+      border-left-color: #b45309;
+      background: #fffbeb;
+      color: #78350f;
+    }
+    .markdown-alert.alert-caution {
+      border-left-color: #b91c1c;
+      background: #fef2f2;
+      color: #7f1d1d;
+    }
+
+    /* 暗黑模式 Alerts 調整 */
+    html.dark .markdown-alert.alert-note { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-left-color: #3b82f6; }
+    html.dark .markdown-alert.alert-tip { background: rgba(16, 185, 129, 0.15); color: #a7f3d0; border-left-color: #10b981; }
+    html.dark .markdown-alert.alert-important { background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-left-color: #8b5cf6; }
+    html.dark .markdown-alert.alert-warning { background: rgba(245, 158, 11, 0.15); color: #fde68a; border-left-color: #f59e0b; }
+    html.dark .markdown-alert.alert-caution { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border-left-color: #ef4444; }
+
+    .markdown-alert-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+    .alert-note .markdown-alert-title { color: #1d4ed8; }
+    .alert-tip .markdown-alert-title { color: #047857; }
+    .alert-important .markdown-alert-title { color: #6d28d9; }
+    .alert-warning .markdown-alert-title { color: #b45309; }
+    .alert-caution .markdown-alert-title { color: #b91c1c; }
+
+    html.dark .alert-note .markdown-alert-title { color: #60a5fa; }
+    html.dark .alert-tip .markdown-alert-title { color: #34d399; }
+    html.dark .alert-important .markdown-alert-title { color: #a78bfa; }
+    html.dark .alert-warning .markdown-alert-title { color: #fbbf24; }
+    html.dark .alert-caution .markdown-alert-title { color: #f87171; }
+
+    /* Tables (高對比結構清晰) */
+    .markdown-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.8em 0;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      display: block;
+      overflow-x: auto;
+    }
+
+    .markdown-body th,
+    .markdown-body td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+    }
+
+    .markdown-body th {
+      background: #f1f5f9;
+      font-weight: 800;
+      color: #0f172a;
+      border-bottom: 2px solid var(--border-color);
+    }
+    html.dark .markdown-body th {
+      background: var(--bg-surface-elevated);
+      color: #ffffff;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .markdown-body tr:nth-child(even) {
+      background: var(--primary-soft);
+    }
+
+    .markdown-body tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Code & Syntax Highlighting */
+    .markdown-body code {
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+      padding: 3px 8px;
+      border-radius: 5px;
+      background: var(--code-bg);
+      color: var(--code-color);
+      border: 1px solid var(--border-color);
+    }
+
+    .code-block-wrapper {
+      position: relative;
+      margin: 1.8em 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      background: var(--pre-bg);
+    }
+
+    .code-block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #cbd5e1;
+    }
+
+    .btn-copy {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #e2e8f0;
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-copy:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .markdown-body pre {
+      margin: 0;
+      padding: 18px;
+      overflow-x: auto;
+      background: transparent;
+      color: var(--pre-color);
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .markdown-body pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      font-size: inherit;
+    }
+
+    /* Mermaid Diagrams */
+    .mermaid-wrapper {
+      margin: 2.2em 0;
+      padding: 24px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: auto;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mermaid {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Images */
+    .markdown-body img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1.5em 0;
+      border: 1px solid var(--border-color);
+    }
+
+    /* ========================================================================= */
+    /* 🛡️ 列印與轉出 PDF 專屬「純淨高對比印務裝甲」 (Print Shield)                 */
+    /* 無論當前網頁是什麼主題，輸出紙本/PDF 時強制純白底 (#ffffff) 搭配深黑文字   */
+    /* ========================================================================= */
+    @media print {
+      :root, html, html.dark, body {
+        --bg-body: #ffffff !important;
+        --bg-surface: #ffffff !important;
+        --bg-surface-elevated: #ffffff !important;
+        --bg-card: #ffffff !important;
+        --border-color: #cbd5e1 !important;
+        --border-subtle: #e2e8f0 !important;
+        --text-main: #0f172a !important;
+        --text-muted: #1e293b !important;
+        --text-dim: #334155 !important;
+        --code-bg: #f8fafc !important;
+        --code-color: #000000 !important;
+        --pre-bg: #f8fafc !important;
+        --pre-color: #000000 !important;
+        --primary-soft: #f8fafc !important;
+        color: #0f172a !important;
+        background: #ffffff !important;
+      }
+      
+      .sidebar, .top-bar, #sidebarOverlay { display: none !important; }
+      .app-container { display: block !important; }
+      .main-content { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+      
+      .markdown-body { color: #0f172a !important; }
+      .markdown-body h1, .markdown-body h2, .markdown-body h3, 
+      .markdown-body h4, .markdown-body h5, .markdown-body h6 {
+        color: #000000 !important;
+        page-break-after: avoid;
+      }
+      .markdown-body p, .markdown-body li, .markdown-body td {
+        color: #0f172a !important;
+      }
+      .markdown-body strong {
+        color: #000000 !important;
+        font-weight: 800 !important;
+      }
+      .markdown-body table {
+        border: 1px solid #cbd5e1 !important;
+        page-break-inside: avoid;
+      }
+      .markdown-body th {
+        background: #f1f5f9 !important;
+        color: #000000 !important;
+        border-bottom: 2px solid #64748b !important;
+        font-weight: 800 !important;
+      }
+      .markdown-body td {
+        border-bottom: 1px solid #e2e8f0 !important;
+      }
+      .markdown-body tr:nth-child(even) {
+        background: #f8fafc !important;
+      }
+      .markdown-body blockquote {
+        background: #f8fafc !important;
+        border-left: 5px solid #1d4ed8 !important;
+        color: #0f172a !important;
+      }
+      .markdown-alert {
+        background: #f8fafc !important;
+        color: #0f172a !important;
+        page-break-inside: avoid;
+      }
+      .markdown-alert-title {
+        font-weight: 900 !important;
+      }
+      .code-block-wrapper {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+      .markdown-body pre {
+        color: #000000 !important;
+      }
+      .markdown-body code {
+        background: #f1f5f9 !important;
+        color: #000000 !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+      .mermaid-wrapper {
+        border: 1px solid #cbd5e1 !important;
+        background: #ffffff !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar / TOC -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-title">
+          <span>06_mental_weapons_kit</span>
+          <span class="brand-badge">DOCS</span>
+        </div>
+      </div>
+      
+      <div class="toc-title">目錄大綱 (TOC)</div>
+      <div class="toc-container">
+        <div class="toc">
+<ul>
+<li><a href="#8-mental-weapons-kit">特勞特 8 大心智武器庫實戰手冊 (Mental Weapons Kit)</a><ul>
+<li><a href="#1">1. 武器總覽與心智進入路徑</a></li>
+<li><a href="#2-8">2. 8 大心智武器庫雙軌深度規格</a><ul>
+<li><a href="#1-the-verbal-nail">武器 1：【語言釘子 (The Verbal Nail)】</a></li>
+<li><a href="#2-the-visual-hammer">武器 2：【視覺錘 (The Visual Hammer)】</a></li>
+<li><a href="#3-the-category-coordinate">武器 3：【品類新坐標 (The Category Coordinate)】</a></li>
+<li><a href="#4-the-strategic-anti-position">武器 4：【戰略公敵標靶 (The Strategic Anti-Position)】</a></li>
+<li><a href="#5-the-3-rtbs">武器 5：【三大硬核信任狀 (The 3 RTBs)】</a></li>
+<li><a href="#6-objection-killers">武器 6：【致命異議爆破彈 (Objection Killers)】</a></li>
+<li><a href="#7-word-of-mouth-golden-phrases">武器 7：【市井轉述口金句 (Word-of-Mouth Golden Phrases)】</a></li>
+<li><a href="#8-pr-spike-industry-agenda">武器 8：【公關新聞引爆點 (PR Spike / Industry Agenda)】</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+      </div>
+    </aside>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="sidebarOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:900;" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Actions -->
+      <div class="top-bar">
+        <button class="btn-action mobile-menu-btn" onclick="toggleSidebar()" title="開啟目錄">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+
+        <button class="btn-action" onclick="window.print()" title="列印或匯出 PDF">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        </button>
+
+        <button class="btn-action" id="themeToggle" onclick="toggleTheme()" title="切換亮色/暗色主題">
+          <svg id="themeIconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </div>
+
+      <!-- Markdown Output -->
+      <article class="markdown-body">
+        <h1 id="8-mental-weapons-kit">特勞特 8 大心智武器庫實戰手冊 (Mental Weapons Kit)</h1>
+<blockquote>
+<p><strong>專案代號</strong>：<code>skyet</code>（天空元素視覺空間設計）<br />
+<strong>母體源頭</strong>：<code>_thinking/mental_weapons/weapons_matrix.yaml</code><br />
+<strong>雙階架構遵循</strong>：嚴格包含【階段 1 存量利基軌】與【階段 2 跨界合夥軌】</p>
+</blockquote>
+<hr />
+<h2 id="1">1. 武器總覽與心智進入路徑</h2>
+<div class="mermaid-wrapper">  <pre class="mermaid">
+flowchart TD
+    classDef entry fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#111827;
+    classDef battle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#111827;
+    classDef spread fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#111827;
+
+    subgraph MindEntry ["大腦進入層 (1~3 秒)"]
+        W1["1. 語言釘子 (Verbal Nail)&lt;br/&gt;反對只看不實用的樣品屋：18年iF大師，榨出雙倍坪效"]:::entry
+        W2["2. 視覺錘 (Visual Hammer)&lt;br/&gt;【空間透視解剖刀】：紅標無效面積 vs 綠標偷出5坪"]:::entry
+        W3["3. 品類新坐標 (Category Name)&lt;br/&gt;商業空間打卡架構師 ✕ 小宅老屋骨肉重構專家"]:::entry
+    end
+
+    subgraph MindBattle ["心智對決層 (3~10 秒)"]
+        W4["4. 戰略公敵標靶 (Anti-Position)&lt;br/&gt;踩死樣品屋欺詐、統包黑箱追加、菜鳥公版模組"]:::battle
+        W5["5. 三大硬核信任狀 (The 3 RTBs)&lt;br/&gt;六大國際大獎 ✕ 18年300+實體案例 ✕ 預算封頂契約"]:::battle
+        W6["6. 致命異議爆破彈 (Objection Killer)&lt;br/&gt;破除天價迷思、破除不實用恐懼、破除追加預算惡夢"]:::battle
+    end
+
+    subgraph MindSpread ["口碑與公關層 (自主傳播)"]
+        W7["7. 市井轉述口金句 (Social Currency)&lt;br/&gt;『我家才18坪，朋友來以為有30坪！』"]:::spread
+        W8["8. 公關新聞引爆點 (PR Spike)&lt;br/&gt;『反對樣品屋裝修審判風暴』"]:::spread
+    end
+
+    MindEntry --&gt; MindBattle --&gt; MindSpread
+  </pre></div>
+
+<hr />
+<h2 id="2-8">2. 8 大心智武器庫雙軌深度規格</h2>
+<h3 id="1-the-verbal-nail">武器 1：【語言釘子 (The Verbal Nail)】</h3>
+<ul>
+<li><strong>大腦核心總釘子</strong>：<blockquote>
+<p><strong>「反對只看不實用的樣品屋：18 年 iF 大獎設計師，為你把坪效榨出雙倍價值。」</strong></p>
+</blockquote>
+</li>
+<li><strong>【階段 1 存量軌】商業空間釘子</strong>：<blockquote>
+<p><strong>「讓店面自己抓客人：多賺 30% 坪效的商業空間架構師。」</strong></p>
+</blockquote>
+</li>
+<li><strong>【階段 1 存量軌】住宅空間釘子</strong>：<blockquote>
+<p><strong>「專治小宅壓迫與老屋暗坑：偷出 5 坪空間的骨肉重構師。」</strong></p>
+</blockquote>
+</li>
+<li><strong>【階段 2 跨界合夥軌】品牌旗艦合夥釘子</strong>：<blockquote>
+<p><strong>「新創品牌空間合夥人：用『空間即媒體』打造現象級旗艦店。」</strong></p>
+</blockquote>
+</li>
+</ul>
+<h3 id="2-the-visual-hammer">武器 2：【視覺錘 (The Visual Hammer)】</h3>
+<ul>
+<li><strong>超級視覺符號</strong>：<strong>【空間透視解剖刀 (Space Scalpel)】</strong>。</li>
+<li><strong>物理與視覺介面表現</strong>：</li>
+<li><strong>紅綠戶型手術刀透視圖</strong>：社群首圖、短影音封面與落地頁 H1，永遠使用一張極度殘酷的戶型平面圖對照── 左邊以刺眼紅框標示「傳統設計浪費的 4 坪死角走道」，右邊以翠綠色手術刀切角標示「天空元素偷出的 5 坪收納暗門與流動動線」。</li>
+<li><strong>72 小時透明材料封箱儀式</strong>：開工前將所有水電管線、板材油漆實體樣品裝入帶有編號的透明亞克力防偽箱中，與業主現場簽名封存。</li>
+<li><strong>深黑低奢光影張力</strong>：官網與頻道採用深色極簡風格（炭黑 <code>#0a0a0c</code> 搭配金屬冷光與高對比暖光），展現廣告 MV 級的美術指導氣場。</li>
+</ul>
+<h3 id="3-the-category-coordinate">武器 3：【品類新坐標 (The Category Coordinate)】</h3>
+<p>借用大腦已知概念，重新劃分新品類坐標：
+* <strong>【階段 1 存量商業空間】</strong>：
+  - 舊品類（對手）：一般室內美化設計、傳統商業裝修、工班裝潢。
+  - 新品類（我們）：<strong>「自帶打卡流量的商業空間架構師」</strong>（以空間動線拉高客單價 30%）。
+* <strong>【階段 1 存量住宅空間】</strong>：
+  - 舊品類（對手）：全案奢華設計、連鎖系統家具、泥作統包工程。
+  - 新品類（我們）：<strong>「小宅偷空間 ✕ 老屋零暗坑骨肉重構專家」</strong>（預算封頂、偷出 5 坪收納）。
+* <strong>【階段 2 跨界合夥空間】</strong>：
+  - 舊品類（對手）：外包空間設計顧問。
+  - 新品類（我們）：<strong>「空間即媒體 (Space as Media) 品牌旗艦合夥人」</strong>。</p>
+<h3 id="4-the-strategic-anti-position">武器 4：【戰略公敵標靶 (The Strategic Anti-Position)】</h3>
+<p>明確宣告選擇天空元素代表你在反抗市場上的什麼醜惡舊模式：
+1. <strong>公敵 ①：只顧拍照好看的「樣品屋空殼設計」</strong>：
+   - 罪狀：設計師為拍得獎美圖，電視牆打滿大理石，卻連鞋櫃、吸塵器收納都沒有，住半年滿屋雜物崩潰。
+2. <strong>公敵 ②：故意低價搶標的「水電黑箱惡意追加統包」</strong>：
+   - 罪狀：宣稱「免設計費」低價誘惑，開工拆牆後恐嚇業主管線爛掉，惡意追加 30~50 萬否則停工爛尾。
+3. <strong>公敵 ③：套用公版 Pinterest 流行模組的「菜鳥繪圖員」</strong>：
+   - 罪狀：不懂人體工學與商業客單動線，只會把外國網美圖照抄，導致小宅動線卡死、商業店面無人打卡。</p>
+<h3 id="5-the-3-rtbs">武器 5：【三大硬核信任狀 (The 3 RTBs)】</h3>
+<p>不可反悔的物理級事實證據鏈：
+1. <strong>權威背書 RTB</strong>：<strong>六大頂級國際設計大獎官方認證</strong>（德國 iF、日本 Good Design、美國 IDA 銀獎、英國 London 金獎）。
+2. <strong>經驗歷史 RTB</strong>：<strong>18 年 300+ 實體商業與住宅工程落地庫 ✕ 著作《小設計公司的生存之道》</strong>。
+3. <strong>制度約束 RTB</strong>：<strong>「預算封頂契約 ✕ 坪效保證條款」</strong>（非業主主動追加，超支由事務所全額承擔；小宅保證至少偷出 20% 有效可用收納機能）。</p>
+<h3 id="6-objection-killers">武器 6：【致命異議爆破彈 (Objection Killers)】</h3>
+<p>直球擊碎業主掏錢簽約前最後一秒的巨大恐懼：
+* <strong>異議 1：「得過國際大獎收費會不會是天價？我只是 20 坪小宅/小店面找得起嗎？」</strong>
+  - <strong>爆破彈</strong>：正因為得過大獎、有 18 年結構經驗，才能一眼看穿格局死穴！在 15~20 坪裡為你偷出 3~5 坪可用空間，以當前房價換算，直接幫你現賺 150~250 萬買房錢！省下的錢遠遠超過設計費！
+* <strong>異議 2：「會不會只顧搞藝術得獎，日常住起來打掃收納很不實用？」</strong>
+  - <strong>爆破彈</strong>：我們的核心旗幟就是「反對只看不實用的樣品屋」！每一個抽屜、暗門、插座高度都經過毫米級計算，專為台灣潮濕多雜物生活設計，保證住 10 年依然整齊不亂！
+* <strong>異議 3：「買了 40 年高齡老屋，開工後會不會被無底洞追加預算？」</strong>
+  - <strong>爆破彈</strong>：我們直接簽署「預算封頂契約」！開工前 72 小時進行管線內視鏡與結構全面透視，報價單逐項透明封箱；非您主動變更，超出一毛錢由天空元素全額承擔！</p>
+<h3 id="7-word-of-mouth-golden-phrases">武器 7：【市井轉述口金句 (Word-of-Mouth Golden Phrases)】</h3>
+<p>零行話、任何人轉述都不會走樣的口碑金句：
+* <strong>業主金句 ①</strong>：「我家才 18 坪，朋友來參觀都以為有 30 坪，收納神到看不見雜物！」
+* <strong>商空金句 ②</strong>：「找陳鶴元做店面，客人進來第一件事不是點餐，而是掏手機拍照發 IG！」
+* <strong>防坑金句 ③</strong>：「找天空元素最放心，合約寫明預算封頂，開工後一毛錢都沒被追加！」</p>
+<h3 id="8-pr-spike-industry-agenda">武器 8：【公關新聞引爆點 (PR Spike / Industry Agenda)】</h3>
+<ul>
+<li><strong>爭議性社會話題切角</strong>：<blockquote>
+<p><strong>「台灣房價每坪破百萬，你還在花幾百萬買『只能看不能住的樣品屋』？18 年 iF 大獎設計師發起『裝潢防坑審判』，誓死終結室內設計黑箱追加與小宅收納災難！」</strong></p>
+</blockquote>
+</li>
+</ul>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    // Initialize Mermaid with adaptive theme
+    document.addEventListener("DOMContentLoaded", function() {
+      const isDark = document.documentElement.classList.contains('dark');
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: isDark ? 'dark' : 'default',
+        securityLevel: 'loose',
+        fontFamily: 'Inter, Noto Sans TC, sans-serif'
+      });
+    });
+
+    // Theme Toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Check saved theme (預設為純淨白底 light)
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+
+    // Mobile Sidebar Toggle
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      if (sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        overlay.style.display = 'none';
+      } else {
+        sidebar.classList.add('open');
+        overlay.style.display = 'block';
+      }
+    }
+
+    // Copy Code Block Button
+    function copyCode(btn) {
+      const wrapper = btn.closest('.code-block-wrapper');
+      const code = wrapper.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = '已複製!';
+        setTimeout(() => {
+          btn.innerText = originalText;
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

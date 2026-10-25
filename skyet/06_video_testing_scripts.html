@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>實彈短影音打靶純文本心智子彈庫 (Video Testing Scripts)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Mermaid.js -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  
+  <style>
+    :root {
+      --font-sans: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+      
+      /* Light Theme (預設：WCAG AAA 頂級高對比度商業色階) */
+      --bg-body: #ffffff;
+      --bg-surface: #f8fafc;
+      --bg-surface-elevated: #ffffff;
+      --bg-card: #ffffff;
+      --border-color: #cbd5e1;       /* 邊框清晰可見 */
+      --border-subtle: #e2e8f0;
+      
+      --text-main: #0f172a;          /* 極深炭黑，對比度 > 16:1 */
+      --text-muted: #334155;         /* 深板岩灰，對比度 > 9.5:1，杜絕淡灰 */
+      --text-dim: #475569;           /* 輔助標籤，對比度 > 7:1 */
+      
+      --primary: #1d4ed8;            /* 飽和深寶藍 (高對比) */
+      --primary-hover: #1e40af;
+      --primary-soft: #eff6ff;       /* 極淡藍底色 */
+      --accent: #6d28d9;             /* 皇家深紫 */
+      
+      --code-bg: #f1f5f9;
+      --code-color: #0f172a;
+      --pre-bg: #0f172a;
+      --pre-color: #f8fafc;
+      
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+    }
+
+    html.dark {
+      /* Dark Theme (夜間自適應：維持深底高對比) */
+      --bg-body: #0b0f19;
+      --bg-surface: #111827;
+      --bg-surface-elevated: #1f2937;
+      --bg-card: #131b2e;
+      --border-color: #334155;
+      --border-subtle: #1e293b;
+      
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --text-dim: #94a3b8;
+      
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --primary-soft: rgba(59, 130, 246, 0.14);
+      --accent: #a855f7;
+      
+      --code-bg: #1e293b;
+      --code-color: #e2e8f0;
+      --pre-bg: #030712;
+      --pre-color: #f8fafc;
+      
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.6);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.8;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      overflow-x: hidden;
+    }
+
+    /* Layout */
+    .app-container {
+      display: flex;
+      max-width: 1440px;
+      margin: 0 auto;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Sidebar / TOC */
+    .sidebar {
+      width: 320px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 32px 24px;
+      border-right: 1px solid var(--border-color);
+      flex-shrink: 0;
+      background: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar {
+        position: fixed;
+        left: -340px;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        box-shadow: var(--shadow-lg);
+      }
+      .sidebar.open {
+        left: 0;
+      }
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-badge {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 800;
+    }
+
+    .toc-title {
+      font-size: 0.8rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+
+    .toc-container {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .toc-container ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .toc-container li {
+      margin-bottom: 4px;
+    }
+
+    .toc-container a {
+      display: block;
+      padding: 7px 12px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .toc-container a:hover {
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .toc-container ul ul {
+      padding-left: 14px;
+      border-left: 2px solid var(--border-subtle);
+      margin-left: 8px;
+      margin-top: 4px;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+      padding: 40px 56px 80px;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 24px 20px 60px;
+      }
+    }
+
+    /* Top Action Bar (Mobile Nav & Theme Toggle) */
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+    }
+
+    @media (max-width: 1024px) {
+      .mobile-menu-btn {
+        display: inline-flex;
+        margin-right: auto;
+      }
+    }
+
+    /* Markdown Typography (WCAG AAA 高對比度標準) */
+    .markdown-body {
+      color: var(--text-main);
+    }
+
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3,
+    .markdown-body h4,
+    .markdown-body h5,
+    .markdown-body h6 {
+      color: #000000;
+      font-weight: 900;
+      line-height: 1.35;
+      margin-top: 2.2em;
+      margin-bottom: 0.8em;
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+
+    html.dark .markdown-body h1,
+    html.dark .markdown-body h2,
+    html.dark .markdown-body h3,
+    html.dark .markdown-body h4,
+    html.dark .markdown-body h5,
+    html.dark .markdown-body h6 {
+      color: #ffffff;
+    }
+
+    .markdown-body h1 {
+      font-size: 2.3rem;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 0.4em;
+      margin-top: 0;
+    }
+
+    .markdown-body h2 {
+      font-size: 1.7rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.3em;
+    }
+
+    .markdown-body h3 { font-size: 1.35rem; }
+    .markdown-body h4 { font-size: 1.15rem; }
+
+    .markdown-body p {
+      margin-bottom: 1.35em;
+      color: var(--text-main);
+      font-size: 1.02rem;
+    }
+
+    .markdown-body strong {
+      font-weight: 800;
+      color: #000000;
+    }
+    html.dark .markdown-body strong {
+      color: #ffffff;
+    }
+
+    .markdown-body a {
+      color: var(--primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .markdown-body a:hover {
+      color: var(--primary-hover);
+    }
+
+    .markdown-body hr {
+      border: 0;
+      height: 1px;
+      background: var(--border-color);
+      margin: 2.5em 0;
+    }
+
+    /* Lists */
+    .markdown-body ul,
+    .markdown-body ol {
+      margin-bottom: 1.35em;
+      padding-left: 1.6em;
+    }
+
+    .markdown-body li {
+      margin-bottom: 0.5em;
+      color: var(--text-main);
+    }
+
+    .markdown-body li > p {
+      margin-bottom: 0.5em;
+    }
+
+    /* Blockquotes */
+    .markdown-body blockquote {
+      border-left: 5px solid var(--primary);
+      background: var(--primary-soft);
+      padding: 18px 24px;
+      border-radius: 0 10px 10px 0;
+      margin: 1.8em 0;
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .markdown-body blockquote p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* GitHub-style Alerts (高對比強化版) */
+    .markdown-alert {
+      padding: 16px 22px;
+      margin-bottom: 22px;
+      border-left: 5px solid;
+      border-radius: 0 10px 10px 0;
+      font-size: 0.98rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .markdown-alert.alert-note {
+      border-left-color: #1d4ed8;
+      background: #eff6ff;
+      color: #1e3a8a;
+    }
+    .markdown-alert.alert-tip {
+      border-left-color: #047857;
+      background: #ecfdf5;
+      color: #064e3b;
+    }
+    .markdown-alert.alert-important {
+      border-left-color: #6d28d9;
+      background: #f5f3ff;
+      color: #4c1d95;
+    }
+    .markdown-alert.alert-warning {
+      border-left-color: #b45309;
+      background: #fffbeb;
+      color: #78350f;
+    }
+    .markdown-alert.alert-caution {
+      border-left-color: #b91c1c;
+      background: #fef2f2;
+      color: #7f1d1d;
+    }
+
+    /* 暗黑模式 Alerts 調整 */
+    html.dark .markdown-alert.alert-note { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-left-color: #3b82f6; }
+    html.dark .markdown-alert.alert-tip { background: rgba(16, 185, 129, 0.15); color: #a7f3d0; border-left-color: #10b981; }
+    html.dark .markdown-alert.alert-important { background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-left-color: #8b5cf6; }
+    html.dark .markdown-alert.alert-warning { background: rgba(245, 158, 11, 0.15); color: #fde68a; border-left-color: #f59e0b; }
+    html.dark .markdown-alert.alert-caution { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border-left-color: #ef4444; }
+
+    .markdown-alert-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+    .alert-note .markdown-alert-title { color: #1d4ed8; }
+    .alert-tip .markdown-alert-title { color: #047857; }
+    .alert-important .markdown-alert-title { color: #6d28d9; }
+    .alert-warning .markdown-alert-title { color: #b45309; }
+    .alert-caution .markdown-alert-title { color: #b91c1c; }
+
+    html.dark .alert-note .markdown-alert-title { color: #60a5fa; }
+    html.dark .alert-tip .markdown-alert-title { color: #34d399; }
+    html.dark .alert-important .markdown-alert-title { color: #a78bfa; }
+    html.dark .alert-warning .markdown-alert-title { color: #fbbf24; }
+    html.dark .alert-caution .markdown-alert-title { color: #f87171; }
+
+    /* Tables (高對比結構清晰) */
+    .markdown-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.8em 0;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      display: block;
+      overflow-x: auto;
+    }
+
+    .markdown-body th,
+    .markdown-body td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+    }
+
+    .markdown-body th {
+      background: #f1f5f9;
+      font-weight: 800;
+      color: #0f172a;
+      border-bottom: 2px solid var(--border-color);
+    }
+    html.dark .markdown-body th {
+      background: var(--bg-surface-elevated);
+      color: #ffffff;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .markdown-body tr:nth-child(even) {
+      background: var(--primary-soft);
+    }
+
+    .markdown-body tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Code & Syntax Highlighting */
+    .markdown-body code {
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+      padding: 3px 8px;
+      border-radius: 5px;
+      background: var(--code-bg);
+      color: var(--code-color);
+      border: 1px solid var(--border-color);
+    }
+
+    .code-block-wrapper {
+      position: relative;
+      margin: 1.8em 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      background: var(--pre-bg);
+    }
+
+    .code-block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #cbd5e1;
+    }
+
+    .btn-copy {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #e2e8f0;
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-copy:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .markdown-body pre {
+      margin: 0;
+      padding: 18px;
+      overflow-x: auto;
+      background: transparent;
+      color: var(--pre-color);
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .markdown-body pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      font-size: inherit;
+    }
+
+    /* Mermaid Diagrams */
+    .mermaid-wrapper {
+      margin: 2.2em 0;
+      padding: 24px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: auto;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mermaid {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Images */
+    .markdown-body img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1.5em 0;
+      border: 1px solid var(--border-color);
+    }
+
+    /* ========================================================================= */
+    /* 🛡️ 列印與轉出 PDF 專屬「純淨高對比印務裝甲」 (Print Shield)                 */
+    /* 無論當前網頁是什麼主題，輸出紙本/PDF 時強制純白底 (#ffffff) 搭配深黑文字   */
+    /* ========================================================================= */
+    @media print {
+      :root, html, html.dark, body {
+        --bg-body: #ffffff !important;
+        --bg-surface: #ffffff !important;
+        --bg-surface-elevated: #ffffff !important;
+        --bg-card: #ffffff !important;
+        --border-color: #cbd5e1 !important;
+        --border-subtle: #e2e8f0 !important;
+        --text-main: #0f172a !important;
+        --text-muted: #1e293b !important;
+        --text-dim: #334155 !important;
+        --code-bg: #f8fafc !important;
+        --code-color: #000000 !important;
+        --pre-bg: #f8fafc !important;
+        --pre-color: #000000 !important;
+        --primary-soft: #f8fafc !important;
+        color: #0f172a !important;
+        background: #ffffff !important;
+      }
+      
+      .sidebar, .top-bar, #sidebarOverlay { display: none !important; }
+      .app-container { display: block !important; }
+      .main-content { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+      
+      .markdown-body { color: #0f172a !important; }
+      .markdown-body h1, .markdown-body h2, .markdown-body h3, 
+      .markdown-body h4, .markdown-body h5, .markdown-body h6 {
+        color: #000000 !important;
+        page-break-after: avoid;
+      }
+      .markdown-body p, .markdown-body li, .markdown-body td {
+        color: #0f172a !important;
+      }
+      .markdown-body strong {
+        color: #000000 !important;
+        font-weight: 800 !important;
+      }
+      .markdown-body table {
+        border: 1px solid #cbd5e1 !important;
+        page-break-inside: avoid;
+      }
+      .markdown-body th {
+        background: #f1f5f9 !important;
+        color: #000000 !important;
+        border-bottom: 2px solid #64748b !important;
+        font-weight: 800 !important;
+      }
+      .markdown-body td {
+        border-bottom: 1px solid #e2e8f0 !important;
+      }
+      .markdown-body tr:nth-child(even) {
+        background: #f8fafc !important;
+      }
+      .markdown-body blockquote {
+        background: #f8fafc !important;
+        border-left: 5px solid #1d4ed8 !important;
+        color: #0f172a !important;
+      }
+      .markdown-alert {
+        background: #f8fafc !important;
+        color: #0f172a !important;
+        page-break-inside: avoid;
+      }
+      .markdown-alert-title {
+        font-weight: 900 !important;
+      }
+      .code-block-wrapper {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+      .markdown-body pre {
+        color: #000000 !important;
+      }
+      .markdown-body code {
+        background: #f1f5f9 !important;
+        color: #000000 !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+      .mermaid-wrapper {
+        border: 1px solid #cbd5e1 !important;
+        background: #ffffff !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar / TOC -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-title">
+          <span>06_video_testing_scripts</span>
+          <span class="brand-badge">DOCS</span>
+        </div>
+      </div>
+      
+      <div class="toc-title">目錄大綱 (TOC)</div>
+      <div class="toc-container">
+        <div class="toc">
+<ul>
+<li><a href="#video-testing-scripts">實彈短影音打靶純文本心智子彈庫 (Video Testing Scripts)</a><ul>
+<li><a href="#1">步驟 1：雙階商業心智作戰主題定義</a></li>
+<li><a href="#2-30">步驟 2：核心標題庫 ── 雙階爆款直球標題矩陣 (30+ 條)</a><ul>
+<li><a href="#1-t1-t6">【階段 1 存量利基軌標題庫】：小宅老屋防坑 ＆ 商業吸金 (T1 ~ T6)</a><ul>
+<li><a href="#1_1">主題 ①：定位錨定（大師親操 ✕ 坪效翻倍）</a></li>
+<li><a href="#2">主題 ②：反傳統樹敵（打擊裝潢黑箱與惡意追加）</a></li>
+<li><a href="#3-5">主題 ③：小宅成果體驗（偷出 5 坪收納機能）</a></li>
+<li><a href="#4">主題 ④：定價異議爆破（貴得有理 ✕ 實則省錢）</a></li>
+<li><a href="#5">主題 ⑤：底層機制拆解（空間透視解剖刀工法）</a></li>
+<li><a href="#6">主題 ⑥：商業吸金動線（店面自帶打卡流量）</a></li>
+</ul>
+</li>
+<li><a href="#2-t7-t8">【階段 2 跨界合夥軌標題庫】：空間即媒體與品牌合夥 (T7 ~ T8)</a><ul>
+<li><a href="#7">主題 ⑦：新創品牌旗艦空間合夥</a></li>
+<li><a href="#8">主題 ⑧：拒絕盲目擴店與商業模式評估</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3-master-voiceover-scripts">步驟 3：四層認知遞進純文本大師口播深稿 (Master Voiceover Scripts)</a><ul>
+<li><a href="#1-1-155">示範深稿 1（階段 1 / 小宅極致坪效）：《反對樣品屋！室內15坪如何偷出5坪收納？》</a></li>
+<li><a href="#2-1">示範深稿 2（階段 1 / 老屋防坑避雷）：《低價統包的免設計費，到底藏了多少追加黑箱？》</a></li>
+<li><a href="#3-1-400">示範深稿 3（階段 1 / 商業空間吸金）：《為什麼你花 400 萬裝潢的餐廳，客人卻從不拍照打卡？》</a></li>
+<li><a href="#4-2">示範深稿 4（階段 2 / 跨界合夥孵化）：《新創開店別找普通設計師，你需要的是空間合夥人！》</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+      </div>
+    </aside>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="sidebarOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:900;" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Actions -->
+      <div class="top-bar">
+        <button class="btn-action mobile-menu-btn" onclick="toggleSidebar()" title="開啟目錄">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+
+        <button class="btn-action" onclick="window.print()" title="列印或匯出 PDF">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        </button>
+
+        <button class="btn-action" id="themeToggle" onclick="toggleTheme()" title="切換亮色/暗色主題">
+          <svg id="themeIconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </div>
+
+      <!-- Markdown Output -->
+      <article class="markdown-body">
+        <h1 id="video-testing-scripts">實彈短影音打靶純文本心智子彈庫 (Video Testing Scripts)</h1>
+<blockquote>
+<p><strong>專案代號</strong>：<code>skyet</code>（天空元素視覺空間設計）<br />
+<strong>母體源頭</strong>：<code>_thinking/mental_weapons/weapons_matrix.yaml</code><br />
+<strong>設計鐵律</strong>：單句標題嚴格 ≤ 15 個中文字；場景 ＋ 對立機制 ＋ 必然結果；全面貫穿雙階演化（【階段 1 存量軌】與【階段 2 跨界合夥軌】）。</p>
+</blockquote>
+<hr />
+<h2 id="1">步驟 1：雙階商業心智作戰主題定義</h2>
+<div class="mermaid-wrapper">  <pre class="mermaid">
+flowchart TD
+    classDef t1 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#111827;
+    classDef t2 fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#111827;
+
+    subgraph STAGE_1 ["【階段 1 存量作戰主題：標準高轉化交付】"]
+        T1["主題 ①：定位錨定 ── 18年iF大師反對樣品屋"]
+        T2["主題 ②：反傳統樹敵 ── 拆穿裝修黑箱惡意追加"]
+        T3["主題 ③：小宅成果體驗 ── 15坪住出30坪偷空間神術"]
+        T4["主題 ④：定價異議爆破 ── 得獎設計師反而幫你省房價"]
+        T5["主題 ⑤：底層機制拆解 ── 毫米級空間透視解剖刀"]
+        T6["主題 ⑥：老屋骨肉工法 ── 40年老公寓結構管線排雷"]
+    end:::t1
+
+    subgraph STAGE_2 ["【階段 2 跨界共創主題：空間即媒體與品牌合夥】"]
+        T7["主題 ⑦：跨界共創 ── 新創品牌旗艦空間合夥"]
+        T8["主題 ⑧：商業模式重構 ── 空間動線提升客單價30%"]
+    end:::t2
+  </pre></div>
+
+<hr />
+<h2 id="2-30">步驟 2：核心標題庫 ── 雙階爆款直球標題矩陣 (30+ 條)</h2>
+<p>每條標題嚴格遵守「≤ 15 字、大眾直球、絕無文青空話」原則：</p>
+<h3 id="1-t1-t6">【階段 1 存量利基軌標題庫】：小宅老屋防坑 ＆ 商業吸金 (T1 ~ T6)</h3>
+<h4 id="1_1">主題 ①：定位錨定（大師親操 ✕ 坪效翻倍）</h4>
+<ul>
+<li><code>T1-01</code>：<strong>反對樣品屋！18年大師親操小宅</strong></li>
+<li><code>T1-02</code>：<strong>買房每坪百萬，別買好看不實用</strong></li>
+<li><code>T1-03</code>：<strong>得過iF大獎，我只專注收納坪效</strong></li>
+<li><code>T1-04</code>：<strong>別讓設計師把家做成美圖空殼！</strong></li>
+<li><code>T1-05</code>：<strong>把18年大獎經驗，做成小宅神偷</strong></li>
+</ul>
+<h4 id="2">主題 ②：反傳統樹敵（打擊裝潢黑箱與惡意追加）</h4>
+<ul>
+<li><code>T2-01</code>：<strong>免設計費？開工追加50萬的騙局</strong></li>
+<li><code>T2-02</code>：<strong>裝潢蟑螂3大坑，這張水電單全露餡</strong></li>
+<li><code>T2-03</code>：<strong>不敢簽預算封頂？那肯定準備坑你</strong></li>
+<li><code>T2-04</code>：<strong>低價統包搶標，拆牆後翻臉要加錢</strong></li>
+<li><code>T2-05</code>：<strong>揭穿美圖謊言：住半年家裡全爆炸</strong></li>
+</ul>
+<h4 id="3-5">主題 ③：小宅成果體驗（偷出 5 坪收納機能）</h4>
+<ul>
+<li><code>T3-01</code>：<strong>室內僅15坪，神偷格局住出30坪</strong></li>
+<li><code>T3-02</code>：<strong>小宅別打滿櫃子！空間解剖偷5坪</strong></li>
+<li><code>T3-03</code>：<strong>省下200萬買房錢！小宅極致偷坪效</strong></li>
+<li><code>T3-04</code>：<strong>暗門地台借光法：小坪數完全不逼仄</strong></li>
+<li><code>T3-05</code>：<strong>朋友來家裡聚會，沒人相信才18坪</strong></li>
+</ul>
+<h4 id="4">主題 ④：定價異議爆破（貴得有理 ✕ 實則省錢）</h4>
+<ul>
+<li><code>T4-01</code>：<strong>找得獎大師很貴？算完帳反賺百萬</strong></li>
+<li><code>T4-02</code>：<strong>省了幾萬設計費，浪費兩坪等於虧</strong></li>
+<li><code>T4-03</code>：<strong>裝潢超支我兜底！這才是硬核大師</strong></li>
+<li><code>T4-04</code>：<strong>為什麼頂尖設計師，能替你省冤枉錢</strong></li>
+<li><code>T4-05</code>：<strong>別拿統包價格，來賭全家人十年生活</strong></li>
+</ul>
+<h4 id="5">主題 ⑤：底層機制拆解（空間透視解剖刀工法）</h4>
+<ul>
+<li><code>T5-01</code>：<strong>空間手術刀：三刀切掉無效死角走道</strong></li>
+<li><code>T5-02</code>：<strong>72小時材料封箱，杜絕偷工減料</strong></li>
+<li><code>T5-03</code>：<strong>打破垂直方盒子！斜角借光視覺放大</strong></li>
+<li><code>T5-04</code>：<strong>動線毫米級對位，掃地機器人不卡死</strong></li>
+<li><code>T5-05</code>：<strong>老屋翻新第一步：先拿內視鏡照水電</strong></li>
+</ul>
+<h4 id="6">主題 ⑥：商業吸金動線（店面自帶打卡流量）</h4>
+<ul>
+<li><code>T6-01</code>：<strong>店面沒人拍照？動線設計根本不及格</strong></li>
+<li><code>T6-02</code>：<strong>多賺30%客單價！商業空間吸金動線</strong></li>
+<li><code>T6-03</code>：<strong>省下百萬廣告費：讓店面自己抓客人</strong></li>
+<li><code>T6-04</code>：<strong>網紅排隊拍照的秘密，全在燈光角度</strong></li>
+<li><code>T6-05</code>：<strong>商業開店別瞎裝！坪效換算最高營收</strong></li>
+</ul>
+<hr />
+<h3 id="2-t7-t8">【階段 2 跨界合夥軌標題庫】：空間即媒體與品牌合夥 (T7 ~ T8)</h3>
+<h4 id="7">主題 ⑦：新創品牌旗艦空間合夥</h4>
+<ul>
+<li><code>T7-01</code>：<strong>新創開店找設計？不如找空間合夥人</strong></li>
+<li><code>T7-02</code>：<strong>用空間做媒體：打造現象級網紅首店</strong></li>
+<li><code>T7-03</code>：<strong>設計技術入股！陪新創品牌全台連鎖</strong></li>
+<li><code>T7-04</code>：<strong>72小時AI概念秒出，極速驗證店型</strong></li>
+<li><code>T7-05</code>：<strong>開旗艦店怕踩雷？3步評估翻桌坪效</strong></li>
+</ul>
+<h4 id="8">主題 ⑧：拒絕盲目擴店與商業模式評估</h4>
+<ul>
+<li><code>T8-01</code>：<strong>盲目花500萬開店？先做空間動線審查</strong></li>
+<li><code>T8-02</code>：<strong>把店面當媒體包裝，顧客進門自傳播</strong></li>
+<li><code>T8-03</code>：<strong>從單店到百店：商業空間模組化SOP</strong></li>
+<li><code>T8-04</code>：<strong>陳鶴元空間合夥室：只接有野心的品牌</strong></li>
+</ul>
+<hr />
+<h2 id="3-master-voiceover-scripts">步驟 3：四層認知遞進純文本大師口播深稿 (Master Voiceover Scripts)</h2>
+<p>所有口播嚴格遵循四層認知節奏：<strong>【第 1 層：逆常識 Hook】➔【第 2 層：機制利益鏈剖析】➔【第 3 層：防坑武器與信任狀】➔【第 4 層：必然收斂與 CTA 測謊】</strong>。</p>
+<hr />
+<h3 id="1-1-155">示範深稿 1（階段 1 / 小宅極致坪效）：《反對樣品屋！室內15坪如何偷出5坪收納？》</h3>
+<ul>
+<li><strong>【第 1 層：逆常識 Hook (0~5秒)】</strong>：<blockquote>
+<p>（鏡頭特寫：陳鶴元拿著紅筆在平面圖上重重打叉）<br />
+「花 2000 萬買房子，千萬別找設計師把它做成樣品屋！因為那些美圖拍得再好看，住進去半年，你連吸塵器和行李箱都找不到地方收！」</p>
+</blockquote>
+</li>
+<li><strong>【第 2 層：機制利益鏈剖析 (6~25秒)】</strong>：<blockquote>
+<p>（鏡頭切換：拿出綠色手術刀標示格局死角）<br />
+「為什麼台灣現在的小宅越住越像坐牢？因為傳統設計師只會沿著牆壁打滿系統櫃，把本來就只有 15 坪的室內切得七零八落。走道佔了 3 坪，開門撞冰箱，沙發擋住走廊。這不是收納，這叫花錢買木板坐牢！」</p>
+</blockquote>
+</li>
+<li><strong>【第 3 層：防坑武器與信任狀 (26~45秒)】</strong>：<blockquote>
+<p>（陳鶴元直視鏡頭，身後展示 iF 與 Good Design 國際獲獎證書）<br />
+「我是陳鶴元，做空間設計 18 年，拿過德國 iF 和日本 Good Design。我始終堅信：小宅的價值不是堆大理石，而是『結構性偷空間』！透過斜角 45 度借光、雙向暗門櫃體、加上高低差地台收納，我們在不破壞結構的前提下，實打實為屋主多偷出 5 坪可用空間！在台北這等於現省 300 萬買房錢！」</p>
+</blockquote>
+</li>
+<li><strong>【第 4 層：必然收斂與行動 CTA (46~60秒)】</strong>：<blockquote>
+<p>（亮出手機螢幕與測謊入口）<br />
+「別再花錢買好看不實用的樣品屋了！我們合約明定『預算封頂零追加』。現在點擊主頁連結，上傳你的格局平面圖，我親自為你做一次【15分鐘戶型坪效線上審判】，一眼幫你抓出格局死穴，偷出 5 坪隱形收納！」</p>
+</blockquote>
+</li>
+</ul>
+<hr />
+<h3 id="2-1">示範深稿 2（階段 1 / 老屋防坑避雷）：《低價統包的免設計費，到底藏了多少追加黑箱？》</h3>
+<ul>
+<li><strong>【第 1 層：逆常識 Hook (0~5秒)】</strong>：<blockquote>
+<p>（鏡頭拍攝敲破的斑駁老屋水電牆）<br />
+「老屋翻新最可怕的，不是老房子本身，而是工班跟你說的那句『免設計費，120 萬全包』！」</p>
+</blockquote>
+</li>
+<li><strong>【第 2 層：機制利益鏈剖析 (6~25秒)】</strong>：<blockquote>
+<p>「許多統包故意低價搶標，等開工把牆壁打爛後，才把你拉到工地：『老闆，你這電線全黑了、水管全爛了，不重拉會火災，要加 50 萬』。這時候你頭都洗一半了，只能含淚掏錢。最後 120 萬一路追加到 200 萬，還留下滿地壁癌漏水！」</p>
+</blockquote>
+</li>
+<li><strong>【第 3 層：防坑武器與信任狀 (26~45秒)】</strong>：<blockquote>
+<p>「18 年來我經手超過 300 個現場，我們絕不搞這種黑箱！天空元素推行『72 小時材料透明封箱』與『預算封頂契約』── 在開工前全面排查結構，報價單逐項鎖死。我們敢承諾：非業主主動追加，施工中若有設計漏算，超出一毛錢由天空元素全額吸收！」</p>
+</blockquote>
+</li>
+<li><strong>【第 4 層：必然收斂與行動 CTA (46~60秒)】</strong>：<blockquote>
+<p>「老房子裝修不要賭運氣。點擊首頁連結，下載【老屋裝潢防坑 10 大避雷清單】，或直接預約老屋體檢，讓大師為你的血汗錢徹底把關！」</p>
+</blockquote>
+</li>
+</ul>
+<hr />
+<h3 id="3-1-400">示範深稿 3（階段 1 / 商業空間吸金）：《為什麼你花 400 萬裝潢的餐廳，客人卻從不拍照打卡？》</h3>
+<ul>
+<li><strong>【第 1 層：逆常識 Hook (0~5秒)】</strong>：<blockquote>
+<p>（鏡頭走進一家暗淡無光的實體店面，陳鶴元搖頭）<br />
+「很多餐飲老闆每個月都在幫房東打工！你花了 400 萬裝潢，客人進來只顧低頭滑手機吃完就走，社群上完全零打卡。你知道你每個月多虧了多少廣告費嗎？」</p>
+</blockquote>
+</li>
+<li><strong>【第 2 層：機制利益鏈剖析 (6~25秒)】</strong>：<blockquote>
+<p>「在 IG 和 Threads 時代，實體店面必須是『自帶流量的吸金機器』！傳統設計師不懂商業，桌椅排得像食堂，打光讓食物拍起來像餿水。客人沒有拍照轉發的慾望，你就只能天天砸錢買臉書廣告！」</p>
+</blockquote>
+</li>
+<li><strong>【第 3 層：防坑武器與信任狀 (26~45秒)】</strong>：<blockquote>
+<p>「我以前在影視界做廣告 MV 美術指導。我們做商業空間，是把鏡頭光影、超級打卡符號、與動線翻桌率精準算進去！客人進門前三步一定會掏出手機拍照發動態，每張桌子都有自帶柔光的美食打光角度，讓進店人流自發成為你的百萬業務員！」</p>
+</blockquote>
+</li>
+<li><strong>【第 4 層：必然收斂與行動 CTA (46~60秒)】</strong>：<blockquote>
+<p>「讓店面自己抓客人，多賺 30% 坪效！點擊主頁連結，預約【商業空間吸金動線診斷】，下個月就讓你的店面自帶免費排隊流量！」</p>
+</blockquote>
+</li>
+</ul>
+<hr />
+<h3 id="4-2">示範深稿 4（階段 2 / 跨界合夥孵化）：《新創開店別找普通設計師，你需要的是空間合夥人！》</h3>
+<ul>
+<li><strong>【第 1 層：逆常識 Hook (0~5秒)】</strong>：<blockquote>
+<p>（陳鶴元在大螢幕前展示 AI 空間渲染圖）<br />
+「準備開第一間品牌旗艦店，你還在找外包設計師照抄網美模板嗎？外包只管把你預算花光，不管你店面能不能賺錢！」</p>
+</blockquote>
+</li>
+<li><strong>【第 2 層：機制利益鏈剖析 (6~25秒)】</strong>：<blockquote>
+<p>「一個真正能連鎖複製的品牌首店，必須兼具『空間即媒體的爆發力』與『坪效運營的極致理性』。如果你的設計師不懂商業模式、不懂客單價翻倍邏輯，你的旗艦店只會淪為昂貴的藝術擺設！」</p>
+</blockquote>
+</li>
+<li><strong>【第 3 層：防坑武器與信任狀 (26~45秒)】</strong>：<blockquote>
+<p>「天空元素正式啟動『新創空間技術共創室』！我們以 18 年國際大獎與影視美術資產，為有潛力的品牌提供『72 小時 AI 空間概念極速生成』與『空間技術入股合夥』。我們把設計費與你的門店收益深度綁定，共同把店型打磨成可快速複製的超級資產！」</p>
+</blockquote>
+</li>
+<li><strong>【第 4 層：必然收斂與行動 CTA (46~60秒)】</strong>：<blockquote>
+<p>「如果你是正準備開出第一間現象級門店的品牌創辦人，點擊主頁『空間合夥通道』，提交你的商業企劃書，我們每季僅限合夥 2 家品牌，用頂級空間戰略為你破局！」</p>
+</blockquote>
+</li>
+</ul>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    // Initialize Mermaid with adaptive theme
+    document.addEventListener("DOMContentLoaded", function() {
+      const isDark = document.documentElement.classList.contains('dark');
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: isDark ? 'dark' : 'default',
+        securityLevel: 'loose',
+        fontFamily: 'Inter, Noto Sans TC, sans-serif'
+      });
+    });
+
+    // Theme Toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Check saved theme (預設為純淨白底 light)
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+
+    // Mobile Sidebar Toggle
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      if (sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        overlay.style.display = 'none';
+      } else {
+        sidebar.classList.add('open');
+        overlay.style.display = 'block';
+      }
+    }
+
+    // Copy Code Block Button
+    function copyCode(btn) {
+      const wrapper = btn.closest('.code-block-wrapper');
+      const code = wrapper.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = '已複製!';
+        setTimeout(() => {
+          btn.innerText = originalText;
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
