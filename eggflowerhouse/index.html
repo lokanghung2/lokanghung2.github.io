@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>雞蛋花原型即食包 ｜ 臨床級三無原型餐 ‧ 10 分鐘找回真食物的滋味</title>
+  <meta name="description" content="專為重症病患、慢病照護家庭與純淨飲食者打造的三無（無糖、無奶、無麩質）原型即食餐。40年主廚手藝慢火細燉，小農契作鹿野黑羽土雞，121°C耐高溫無毒蒸煮袋，10分鐘加熱即享大廚鮮甜熱湯。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@500;600;700;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #8C533C;
+      --primary-dark: #6E3D29;
+      --primary-light: #B47963;
+      --primary-soft: #F5ECE8;
+      --sage: #4A7055;
+      --sage-dark: #37533F;
+      --sage-light: #EBF2EC;
+      --amber: #D97706;
+      --amber-soft: #FEF3C7;
+      --bg: #FDFBF7;
+      --surface: #FFFFFF;
+      --surface-alt: #F7F3EE;
+      --border: #E8E2D8;
+      --border-dark: #D4CBC0;
+      --text-main: #241E1A;
+      --text-muted: #665D55;
+      --text-light: #8E847B;
+      --shadow-sm: 0 2px 8px rgba(36, 30, 26, 0.05);
+      --shadow-md: 0 6px 20px rgba(36, 30, 26, 0.08);
+      --shadow-lg: 0 16px 36px rgba(36, 30, 26, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-full: 9999px;
+      --font-serif: 'Noto Serif TC', serif;
+      --font-sans: 'Noto Sans TC', sans-serif;
+      --font-en: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Announcement Bar */
+    .announcement-bar {
+      background: var(--primary-dark);
+      color: #FFF;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .announcement-bar .badge {
+      background: var(--amber);
+      color: #FFF;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+    }
+    .announcement-bar a {
+      color: #FCD34D;
+      text-decoration: underline;
+      margin-left: 6px;
+    }
+
+    /* Navbar */
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(253, 251, 247, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    .nav-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFF;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 12px rgba(140, 83, 60, 0.3);
+    }
+    .brand-text h1 {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: var(--primary-dark);
+      line-height: 1.2;
+    }
+    .brand-text span {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.96rem;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.96rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      border: none;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #FFF;
+      box-shadow: 0 4px 14px rgba(140, 83, 60, 0.35);
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(140, 83, 60, 0.45);
+    }
+    .btn-sage {
+      background: var(--sage);
+      color: #FFF;
+      box-shadow: 0 4px 14px rgba(74, 112, 85, 0.3);
+    }
+    .btn-sage:hover {
+      background: var(--sage-dark);
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--border-dark);
+      color: var(--text-main);
+    }
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    /* Hero Section */
+    section.hero-section {
+      padding: 64px 24px 80px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #FDFBF7 0%, #F5ECE8 100%);
+    }
+    .hero-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--sage-dark);
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .hero-tag span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--sage);
+      display: inline-block;
+    }
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: 3.1rem;
+      font-weight: 900;
+      line-height: 1.28;
+      color: var(--primary-dark);
+      margin-bottom: 22px;
+      letter-spacing: -0.5px;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+    }
+    .hero-title em::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: rgba(217, 119, 6, 0.25);
+      z-index: -1;
+      border-radius: 4px;
+    }
+    .hero-desc {
+      font-size: 1.12rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 32px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .hero-actions .subtext {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      display: block;
+      margin-top: 6px;
+    }
+    .hero-trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .trust-card {
+      background: var(--surface);
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .trust-card strong {
+      display: block;
+      font-size: 0.94rem;
+      color: var(--primary-dark);
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .trust-card span {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    /* Hero Visual Card */
+    .hero-visual {
+      position: relative;
+    }
+    .visual-frame {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .visual-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .visual-header .badge-live {
+      background: #DCFCE7;
+      color: #166534;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .soup-preview-img {
+      width: 100%;
+      height: 280px;
+      background: linear-gradient(135deg, #FFE8D6 0%, #DDBEA9 100%);
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-dark);
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .soup-art {
+      font-size: 4.5rem;
+      margin-bottom: 8px;
+      animation: floatSlow 4s ease-in-out infinite;
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .soup-preview-img h4 {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+    .soup-preview-img p {
+      font-size: 0.88rem;
+      color: #795548;
+    }
+    .visual-footer {
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface-alt);
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+    }
+    .price-tag .label {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      display: block;
+    }
+    .price-tag .amount {
+      font-family: var(--font-en);
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+    .price-tag .orig {
+      text-decoration: line-through;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      margin-left: 6px;
+    }
+
+    /* Comparison Section (Contrast) */
+    section.comparison-section {
+      padding: 88px 24px;
+      background: var(--surface);
+    }
+    .section-header {
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto 56px;
+    }
+    .section-subtitle {
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--sage);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+      line-height: 1.35;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+    .contrast-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .contrast-box {
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      position: relative;
+    }
+    .contrast-box.old-way {
+      background: #F9F9F9;
+      border: 1.5px solid #E5E5E5;
+    }
+    .contrast-box.new-way {
+      background: #FEF9F6;
+      border: 2px solid var(--primary-light);
+      box-shadow: 0 10px 30px rgba(140, 83, 60, 0.1);
+    }
+    .box-badge {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .old-way .box-badge {
+      background: #E5E7EB;
+      color: #4B5563;
+    }
+    .new-way .box-badge {
+      background: var(--primary);
+      color: #FFF;
+    }
+    .contrast-box h3 {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      margin-bottom: 18px;
+      color: var(--text-main);
+    }
+    .contrast-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .contrast-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+    .contrast-list li .icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Founder Story Section */
+    section.story-section {
+      padding: 96px 24px;
+      background: #F7F3EE;
+      position: relative;
+    }
+    .story-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .story-visual-card {
+      background: var(--surface);
+      padding: 32px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+    .story-quote-card {
+      background: var(--primary-soft);
+      border-left: 4px solid var(--primary);
+      padding: 20px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: 24px;
+      text-align: left;
+    }
+    .story-quote-card p {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+    .story-quote-card span {
+      font-size: 0.85rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .story-content h2 {
+      font-family: var(--font-serif);
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+      line-height: 1.35;
+      margin-bottom: 24px;
+    }
+    .story-content p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    /* Product Menu Grid */
+    section.menu-section {
+      padding: 96px 24px;
+      background: var(--surface);
+    }
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 44px;
+      flex-wrap: wrap;
+    }
+    .menu-tab-btn {
+      padding: 10px 22px;
+      border-radius: var(--radius-full);
+      background: var(--surface-alt);
+      border: 1.5px solid var(--border);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .menu-tab-btn.active, .menu-tab-btn:hover {
+      background: var(--primary);
+      color: #FFF;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(140, 83, 60, 0.25);
+    }
+    .products-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .product-card {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-light);
+    }
+    .product-img-wrapper {
+      height: 200px;
+      background: linear-gradient(135deg, #F5ECE8 0%, #E8E2D8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .product-img-icon {
+      font-size: 4rem;
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover .product-img-icon {
+      transform: scale(1.1);
+    }
+    .product-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(4px);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      border: 1px solid var(--border);
+    }
+    .product-body {
+      padding: 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-name {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    .product-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+    .product-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--surface-alt);
+      color: var(--text-muted);
+    }
+    .pill.green {
+      background: var(--sage-light);
+      color: var(--sage-dark);
+    }
+    .product-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px dashed var(--border);
+    }
+    .product-price {
+      font-family: var(--font-en);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+    .btn-buy {
+      padding: 8px 18px;
+      font-size: 0.88rem;
+      border-radius: var(--radius-full);
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid var(--primary-light);
+    }
+    .btn-buy:hover {
+      background: var(--primary);
+      color: #FFF;
+    }
+
+    /* 3-Tier Offer Packages */
+    section.pricing-packages {
+      padding: 96px 24px;
+      background: linear-gradient(180deg, #FDFBF7 0%, #F5ECE8 100%);
+    }
+    .packages-grid {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+    .package-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .package-card.highlight {
+      border: 2.5px solid var(--primary);
+      box-shadow: var(--shadow-lg);
+      transform: scale(1.03);
+    }
+    .package-card .ribbon {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--amber);
+      color: #FFF;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 4px 16px;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 10px rgba(217, 119, 6, 0.3);
+    }
+    .package-header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .package-title {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+    .package-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .package-price {
+      margin-top: 14px;
+    }
+    .package-price .cur {
+      font-size: 1.1rem;
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+    .package-price .val {
+      font-family: var(--font-en);
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+    }
+    .package-price .shipping-tag {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--sage);
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    .package-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 32px;
+      flex: 1;
+    }
+    .package-features li {
+      font-size: 0.93rem;
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .package-features li span.check {
+      color: var(--sage);
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    /* Testimonials / Real Caregiver Reviews */
+    section.testimonials-section {
+      padding: 96px 24px;
+      background: var(--surface);
+    }
+    .testimonials-grid {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .testimonial-card {
+      background: var(--surface-alt);
+      padding: 28px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .testimonial-stars {
+      color: #F59E0B;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+    .testimonial-text {
+      font-size: 0.98rem;
+      color: var(--text-main);
+      line-height: 1.75;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px dashed var(--border-dark);
+      padding-top: 14px;
+    }
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .author-info strong {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--text-main);
+    }
+    .author-info span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Food Safety & FAQ Accordion */
+    section.faq-section {
+      padding: 96px 24px;
+      background: #FDFBF7;
+    }
+    .faq-container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .accordion-item {
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .accordion-header {
+      padding: 18px 24px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--primary-dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s ease;
+    }
+    .accordion-header:hover {
+      background: var(--surface-alt);
+    }
+    .accordion-header .arrow {
+      transition: transform 0.3s ease;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+    .accordion-item.active .accordion-header .arrow {
+      transform: rotate(180deg);
+    }
+    .accordion-body {
+      padding: 0 24px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+    .accordion-item.active .accordion-body {
+      padding: 0 24px 20px;
+      max-height: 400px;
+    }
+
+    /* Footer */
+    footer.site-footer {
+      background: var(--primary-dark);
+      color: #E8E2D8;
+      padding: 64px 24px 32px;
+    }
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand h3 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: #FFF;
+      margin-bottom: 12px;
+    }
+    .footer-brand p {
+      font-size: 0.92rem;
+      color: #C8BFB5;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .footer-links h4 {
+      font-size: 1.05rem;
+      color: #FFF;
+      margin-bottom: 16px;
+    }
+    .footer-links ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      color: #C8BFB5;
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: color 0.2s ease;
+    }
+    .footer-links a:hover {
+      color: #FCD34D;
+    }
+    .footer-contact p {
+      font-size: 0.9rem;
+      color: #C8BFB5;
+      line-height: 1.8;
+    }
+    .footer-contact strong {
+      color: #FFF;
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      font-size: 0.82rem;
+      color: #A3978B;
+    }
+
+    /* Modal / Popup for Ordering */
+    .order-modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .order-modal {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      max-width: 520px;
+      width: 100%;
+      padding: 32px;
+      position: relative;
+      box-shadow: var(--shadow-lg);
+      animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-light);
+      cursor: pointer;
+    }
+    .modal-header h3 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+    .modal-header p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .contrast-grid {
+        grid-template-columns: 1fr;
+      }
+      .story-container {
+        grid-template-columns: 1fr;
+      }
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .packages-grid {
+        grid-template-columns: 1fr;
+      }
+      .package-card.highlight {
+        transform: none;
+      }
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-title {
+        font-size: 2.2rem;
+      }
+      .hero-trust-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <aside class="announcement-bar" aria-label="公告通知">
+    <span class="badge">限時優惠</span>
+    <span>首購專屬・【三日抗發炎照護嚐鮮組】超商冷凍免運只要 NT$ 549！</span>
+    <span>| 全館滿 NT$ 2,000 享黑貓低溫免運</span>
+    <a href="#packages">立即訂購 &rarr;</a>
+  </aside>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <div class="brand-icon">🌸</div>
+        <div class="brand-text">
+          <h1>雞蛋花原型即食包</h1>
+          <span>Egg Flower House ‧ 臨床級三無</span>
+        </div>
+      </a>
+      <nav aria-label="主要選單">
+        <ul class="nav-links">
+          <li><a href="#contrast">真食物對比</a></li>
+          <li><a href="#story">父親的心願</a></li>
+          <li><a href="#menu">真食物菜單</a></li>
+          <li><a href="#packages">超值優惠組</a></li>
+          <li><a href="#reviews">病友家屬回饋</a></li>
+          <li><a href="#faq">常見問題</a></li>
+        </ul>
+      </nav>
+      <div class="nav-cta">
+        <button class="btn btn-primary" onclick="openOrderModal('三日照護嚐鮮組 (NT$ 549)')">
+          🛒 搶先嚐鮮
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <span class="dot"></span>
+          陪伴 40 年名廚父親抗癌 5 年研發 ‧ 121°C 無毒耐熱真空蒸煮
+        </div>
+        <h2 class="hero-title">
+          藥物給病人，<br>
+          <em>好食物給所有人</em>。<br>
+          10 分鐘，找回真食物的滋味。
+        </h2>
+        <p class="hero-desc">
+          為癌症術後、慢病照護長輩與純淨飲食者量身打造的<strong>「臨床級三無（無糖、無奶、無麩質）原型即食餐」</strong>。
+          嚴選產銷履歷鹿野黑羽土雞與在地天然蔬果慢火細燉，不加一粒味精與防腐劑，隔水加熱 10 分鐘，讓每一口都是真正食物的溫潤甘甜。
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" onclick="openOrderModal('三日照護嚐鮮組 (NT$ 549)')">
+            🌿 立即下單・三日照護嚐鮮組 NT$ 549 含運
+          </button>
+          <a href="#menu" class="btn btn-outline">
+            查看全品項菜單 &darr;
+          </a>
+        </div>
+        <div class="hero-trust-grid">
+          <div class="trust-card">
+            <strong>0 精緻糖</strong>
+            <span>杜絕促發炎因子</span>
+          </div>
+          <div class="trust-card">
+            <strong>0 乳製品 / 0 麩質</strong>
+            <span>腸胃不脹氣無負擔</span>
+          </div>
+          <div class="trust-card">
+            <strong>低鉀 / 低磷專區</strong>
+            <span>慢性腎友精準控管</span>
+          </div>
+          <div class="trust-card">
+            <strong>121°C 耐高溫</strong>
+            <span>SGS 檢驗零塑化劑</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual -->
+      <div class="hero-visual">
+        <div class="visual-frame">
+          <div class="visual-header">
+            <span style="font-size: 0.9rem; font-weight: 700; color: var(--primary-dark);">🍲 本週現熬批次出鍋中</span>
+            <span class="badge-live">● 新竹工坊直送</span>
+          </div>
+          <div class="soup-preview-img">
+            <div class="soup-art">🍲</div>
+            <h4>招牌藥膳黑羽土雞燉湯</h4>
+            <p>鹿野黑羽土雞 ✕ 小農黃耆枸杞 ✕ 慢火清燉</p>
+          </div>
+          <div class="visual-footer">
+            <div class="price-tag">
+              <span class="label">首購嚐鮮套裝</span>
+              <span class="amount">NT$ 549</span>
+              <span class="orig">NT$ 720</span>
+            </div>
+            <button class="btn btn-sage" onclick="openOrderModal('三日照護嚐鮮組 (NT$ 549)')">超商含運搶購 &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contrast Section -->
+  <section class="comparison-section" id="contrast">
+    <div class="section-header">
+      <span class="section-subtitle">A BETTER WAY</span>
+      <h2 class="section-title">為什麼市售即食包與鐵罐配方飲，<br>讓生病的家人如此抗拒？</h2>
+      <p class="section-desc">化療與慢病患者的味蕾與口腔極其脆弱敏感。撕開假營養的表象，看清真食物與化學加工的本質差距。</p>
+    </div>
+
+    <div class="contrast-grid">
+      <div class="contrast-box old-way">
+        <span class="box-badge">傳統市售方案的無奈折磨</span>
+        <h3>市售鐵罐配方飲 ✕ 加工即食包</h3>
+        <ul class="contrast-list">
+          <li>
+            <span class="icon">❌</span>
+            <div>
+              <strong>化學金屬味與稠厚奶腥</strong>
+              <p>合成香料與人造維生素調味，病患口腔黏膜破皮喝一口痛徹心扉，甚至聞到就反胃想吐。</p>
+            </div>
+          </li>
+          <li>
+            <span class="icon">❌</span>
+            <div>
+              <strong>充斥多磷酸鈉保水劑與隱形糖</strong>
+              <p>超商雞胸肉與調理包為了保水多汁，添加化學保水劑與大量精緻糖，洗腎與重症患者指數反覆飆高。</p>
+            </div>
+          </li>
+          <li>
+            <span class="icon">❌</span>
+            <div>
+              <strong>照護者在廚房苦熬 3 小時心力交瘁</strong>
+              <p>白天奔波醫院、晚上洗切熬煮，滿頭大汗煮出一碗長輩卻吃不下兩口，躲在廚房默默流淚。</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="contrast-box new-way">
+        <span class="box-badge">雞蛋花的純淨真食物救贖</span>
+        <h3>臨床級三無原型即食包</h3>
+        <ul class="contrast-list">
+          <li>
+            <span class="icon">✅</span>
+            <div>
+              <strong>40 年主廚靈魂高湯，自然甘甜一嚐開胃</strong>
+              <p>純小農蔬果天然胺基酸析出，完全不加味精與精緻糖，溫潤順喉，連味覺遲鈍的長輩都一口氣喝光！</p>
+            </div>
+          </li>
+          <li>
+            <span class="icon">✅</span>
+            <div>
+              <strong>嚴苛恪守 3-Free ✕ 低鉀低磷透明化</strong>
+              <p>保證 0 糖、0 奶、0 麩質，專為腎友精算低鉀低磷數值，每一批出具檢驗報告，吃進身體最踏實。</p>
+            </div>
+          </li>
+          <li>
+            <span class="icon">✅</span>
+            <div>
+              <strong>10 分鐘隔水加熱，把時間留給深情陪伴</strong>
+              <p>省下每天 3 小時廚房苦工，坐在病床旁握著家人的手說說話，讓照護不再孤獨過勞。</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder Story Section -->
+  <section class="story-section" id="story">
+    <div class="story-container">
+      <div class="story-visual-card">
+        <div style="font-size: 5rem; margin-bottom: 14px;">👨‍🍳</div>
+        <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--primary-dark); margin-bottom: 6px;">
+          父親是 40 年資歷的傳統糕點名廚
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">
+          終其一生對食材品質苛求，卻因長期精緻飲食遭遇大腸癌考驗
+        </p>
+        <div class="story-quote-card">
+          <p>「藥物是給病人的，但好食物卻是適合全人類的！每個人都應該吃下好食物。」</p>
+          <span>— 雞蛋花創辦人 紀念父親之手記</span>
+        </div>
+      </div>
+
+      <div class="story-content">
+        <span class="section-subtitle">OUR ORIGIN STORY</span>
+        <h2>陪伴父親抗癌 5 年，<br>這碗湯，凝結了女兒所有的深情與手藝。</h2>
+        <p>
+          我的父親是一位擁有 40 年資歷的傳統糕點師傅。從小我看著他對麵粉、奶油與糖的品質極致挑剔。
+          然而，精緻糕餅的飲食習慣，讓祖父母與父親不知不覺面對了餐桌上的遺傳——大腸癌。
+        </p>
+        <p>
+          當父親確診時，我看著身為名廚、舌尖挑剔的他，在化療的摧殘下連喝一口水都痛苦萬分，醫院開的鐵罐營養品更讓他聞之卻步。
+          身為女兒，我決定走進廚房，投入營養學鑽研、自己種植天然香草、四處尋找無抗生素的鹿野土雞，堅持採用真空低溫慢燉，只為了讓深愛的父親能吃上一口<strong>「無糖、無奶、無麩質」</strong>兼具美味與尊嚴的真食物。
+        </p>
+        <p>
+          在父親離世後，我將這 5 年在病榻邊熬湯的千次心血化為「雞蛋花原型即食包」。
+          我想幫全台灣所有正在受苦的病友與心力交瘁的照護者，做一碗安心溫熱的大廚雞湯。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Menu Section -->
+  <section class="menu-section" id="menu">
+    <div class="section-header">
+      <span class="section-subtitle">WHOLE FOOD MENU</span>
+      <h2 class="section-title">主廚原型真食物菜單</h2>
+      <p class="section-desc">每一包都是小農原型食材與耐高溫急凍鎖鮮，不加味精、防腐劑與人造保水劑。</p>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="products-grid">
+      <!-- Item 1 -->
+      <article class="product-card">
+        <div class="product-img-wrapper">
+          <span class="product-tag">招牌滋補</span>
+          <div class="product-img-icon">🍲</div>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">藥膳黑羽土雞燉湯</h3>
+          <p class="product-desc">台東鹿野黑羽土雞厚切腿肉，小農有機黃耆、枸杞與老薑慢火細燉 4 小時，清甜潤喉。</p>
+          <div class="product-pills">
+            <span class="pill green">0 糖 0 奶 0 麩質</span>
+            <span class="pill">優質高蛋白</span>
+            <span class="pill">單人份 450g</span>
+          </div>
+          <div class="product-foot">
+            <span class="product-price">NT$ 240</span>
+            <button class="btn-buy" onclick="openOrderModal('藥膳黑羽土雞燉湯 (NT$ 240)')">+ 加入清單</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 2 -->
+      <article class="product-card">
+        <div class="product-img-wrapper">
+          <span class="product-tag">腎友安心</span>
+          <div class="product-img-icon">🥣</div>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">低鉀低磷草本清雞湯</h3>
+          <p class="product-desc">專為慢性腎臟病 (CKD) 研發，精準川燙去鉀技術，經化驗符合嚴苛磷鉀指標，鮮甜回甘。</p>
+          <div class="product-pills">
+            <span class="pill green">精準低鉀低磷</span>
+            <span class="pill">0 化學添加</span>
+            <span class="pill">單人份 400g</span>
+          </div>
+          <div class="product-foot">
+            <span class="product-price">NT$ 220</span>
+            <button class="btn-buy" onclick="openOrderModal('低鉀低磷草本清雞湯 (NT$ 220)')">+ 加入清單</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 3 -->
+      <article class="product-card">
+        <div class="product-img-wrapper">
+          <span class="product-tag">養生滋補</span>
+          <div class="product-img-icon">🫕</div>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">牛蒡排骨健胃養氣湯</h3>
+          <p class="product-desc">契作黃金牛蒡搭配台灣產銷履歷黑豬軟骨排，釋放天然多酚與水溶性纖維，溫潤健脾。</p>
+          <div class="product-pills">
+            <span class="pill green">0 精緻糖</span>
+            <span class="pill">富含天然多酚</span>
+            <span class="pill">單人份 450g</span>
+          </div>
+          <div class="product-foot">
+            <span class="product-price">NT$ 210</span>
+            <button class="btn-buy" onclick="openOrderModal('牛蒡排骨健胃養氣湯 (NT$ 210)')">+ 加入清單</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 4 -->
+      <article class="product-card">
+        <div class="product-img-wrapper">
+          <span class="product-tag">純淨蛋白質</span>
+          <div class="product-img-icon">🍗</div>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">香草低鈉舒肥雞胸肉</h3>
+          <p class="product-desc">告別超商保水劑與多磷酸鈉！以自種新鮮香草與低溫真空舒肥，保證多汁不乾柴，純粹原肉。</p>
+          <div class="product-pills">
+            <span class="pill green">0 保水劑</span>
+            <span class="pill">0 糖低鈉</span>
+            <span class="pill">蛋白質 24g</span>
+          </div>
+          <div class="product-foot">
+            <span class="product-price">NT$ 95</span>
+            <button class="btn-buy" onclick="openOrderModal('香草低鈉舒肥雞胸肉 (NT$ 95)')">+ 加入清單</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 5 -->
+      <article class="product-card">
+        <div class="product-img-wrapper">
+          <span class="product-tag">低碳主食</span>
+          <div class="product-img-icon">🍚</div>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">低敏高纖十穀紅藜飯</h3>
+          <p class="product-desc">嚴選無麩質穀物、台灣紅藜與糙米，慢火蒸煮真空急凍，富含植化素，電鍋加熱如現蒸軟糯。</p>
+          <div class="product-pills">
+            <span class="pill green">無小麥麩質</span>
+            <span class="pill">低 GI 慢碳水</span>
+            <span class="pill">單份 180g</span>
+          </div>
+          <div class="product-foot">
+            <span class="product-price">NT$ 55</span>
+            <button class="btn-buy" onclick="openOrderModal('低敏高纖十穀紅藜飯 (NT$ 55)')">+ 加入清單</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 6 -->
+      <article class="product-card">
+        <div class="product-img-wrapper">
+          <span class="product-tag">草本飲品</span>
+          <div class="product-img-icon">🍵</div>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">節氣芳香萬壽菊清涼茶</h3>
+          <p class="product-desc">新竹工坊自種無毒芳香萬壽菊，搭配薄荷與甘草，散發百香果般天然清香，解渴去膩不上火。</p>
+          <div class="product-pills">
+            <span class="pill green">0 咖啡因</span>
+            <span class="pill">0 人工甜味</span>
+            <span class="pill">瓶裝 350ml</span>
+          </div>
+          <div class="product-foot">
+            <span class="product-price">NT$ 65</span>
+            <button class="btn-buy" onclick="openOrderModal('節氣芳香萬壽菊清涼茶 (NT$ 65)')">+ 加入清單</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 3-Tier Offer Section -->
+  <section class="pricing-packages" id="packages">
+    <div class="section-header">
+      <span class="section-subtitle">BEST VALUE PACKAGES</span>
+      <h2 class="section-title">照護常備 ‧ 超值優惠組合</h2>
+      <p class="section-desc">從首購嚐鮮到整月安心調理，為您與家人省下每天 3 小時廚房辛苦。</p>
+    </div>
+
+    <div class="packages-grid">
+      <!-- Tier 1 -->
+      <div class="package-card">
+        <div class="package-header">
+          <h3 class="package-title">三日抗發炎照護嚐鮮組</h3>
+          <p class="package-subtitle">不用硬湊兩千！超商冷凍含運送到家</p>
+          <div class="package-price">
+            <span class="cur">NT$</span>
+            <span class="val">549</span>
+            <span class="shipping-tag">🚚 7-11 / 全家 冷凍含運</span>
+          </div>
+        </div>
+        <ul class="package-features">
+          <li><span class="check">✓</span> 藥膳黑羽土雞燉湯 1 包 (450g)</li>
+          <li><span class="check">✓</span> 香草低鈉舒肥雞胸 1 包 (120g)</li>
+          <li><span class="check">✓</span> 低敏高纖十穀紅藜飯 1 包 (180g)</li>
+          <li><span class="check">✓</span> 隨箱附贈「病友安心食用筆記」</li>
+          <li><span class="check">✓</span> 享回購常備箱 200 元折價券</li>
+        </ul>
+        <button class="btn btn-outline" style="width: 100%;" onclick="openOrderModal('三日抗發炎照護嚐鮮組 (NT$ 549)')">
+          立即搶購嚐鮮組
+        </button>
+      </div>
+
+      <!-- Tier 2 (Highlighted) -->
+      <div class="package-card highlight">
+        <div class="ribbon">★ 最多家庭回購常備推薦</div>
+        <div class="package-header">
+          <h3 class="package-title">每週家庭常備照護箱</h3>
+          <p class="package-subtitle">儲備一整週的純淨真食物高湯與主食</p>
+          <div class="package-price">
+            <span class="cur">NT$</span>
+            <span class="val">2,180</span>
+            <span class="shipping-tag">🚚 黑貓低溫宅急便免運</span>
+          </div>
+        </div>
+        <ul class="package-features">
+          <li><span class="check">✓</span> 主廚滋補/低鉀清湯 任意搭配 6 包</li>
+          <li><span class="check">✓</span> 低敏高纖十穀飯 / 低磷米飯 4 包</li>
+          <li><span class="check">✓</span> 香草低鈉舒肥雞胸 2 包</li>
+          <li><span class="check">✓</span> 節氣小農草本涼茶 2 瓶</li>
+          <li><span class="check">✓</span> 10 分鐘隔水加熱隨開即食，冰箱安全常備</li>
+        </ul>
+        <button class="btn btn-primary" style="width: 100%;" onclick="openOrderModal('每週家庭常備照護箱 (NT$ 2,180 免運)')">
+          訂購一週常備箱（免運）
+        </button>
+      </div>
+
+      <!-- Tier 3 -->
+      <div class="package-card">
+        <div class="package-header">
+          <h3 class="package-title">月度安心尊榮調理計劃</h3>
+          <p class="package-subtitle">癌症術後/放化療週期一對一定制配送</p>
+          <div class="package-price">
+            <span class="cur">NT$</span>
+            <span class="val">8,800</span>
+            <span class="shipping-tag">🚚 每週定期分批直送 ‧ 免運</span>
+          </div>
+        </div>
+        <ul class="package-features">
+          <li><span class="check">✓</span> 完整 30 份全套主廚燉湯＋主食飯</li>
+          <li><span class="check">✓</span> 專屬低鉀低磷 / 高蛋白配比調整</li>
+          <li><span class="check">✓</span> 每週分批冷鏈直送，不怕冰箱冰不下</li>
+          <li><span class="check">✓</span> 官方營養師線上諮詢與飲食關懷</li>
+        </ul>
+        <button class="btn btn-outline" style="width: 100%;" onclick="openOrderModal('月度安心尊榮調理計劃 (NT$ 8,800)')">
+          預約月度調理方案
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Real Reviews -->
+  <section class="testimonials-section" id="reviews">
+    <div class="section-header">
+      <span class="section-subtitle">REAL VOICES</span>
+      <h2 class="section-title">來自病友與照護家屬的真實感謝</h2>
+      <p class="section-desc">每一碗湯，都是為了一個正在康復中的生命與心力交瘁的陪伴者。</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div>
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            「公公做完第三次化療後，整整三天聞到飯味就乾嘔，醫院開的鐵罐營養品他喝一口就反胃推開。朋友推薦雞蛋花，我抱著試試看的心態隔水熱了一碗藥膳雞湯給他，公公竟然默默把整碗湯連肉全部吃光！我站在床邊差點哭出來……」
+          </p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">林</div>
+          <div class="author-info">
+            <strong>林小姐 (42歲)</strong>
+            <span>新北 ‧ 癌症化療病患家屬</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div>
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            「洗腎已經五年，醫生每次都嚴格警告不能碰高鉀高磷。市面上所有外食便當我連一口都不敢碰，太太每天為了洗菜燙菜忙到半夜。自從發現雞蛋花的低鉀低磷專區，我們定期訂購常備箱，太太終於可以提早休息，抽血指數也很穩定！」
+          </p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">陳</div>
+          <div class="author-info">
+            <strong>陳先生 (58歲)</strong>
+            <span>新竹 ‧ 慢性腎臟病洗腎友</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div>
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            「竹科高工時經常加班到半夜，胃痛與自律神經失調很嚴重。超商的舒肥肉看背面都是一堆看不懂的多磷酸鈉。雞蛋花的湯和十穀飯是我冰箱永遠的救星，十鐘電鍋蒸熱，喝下第一口胃裡暖洋洋的，是真正食物的感動！」
+          </p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">張</div>
+          <div class="author-info">
+            <strong>張工程師 (35歲)</strong>
+            <span>新竹科學園區資深研發</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion -->
+  <section class="faq-section" id="faq">
+    <div class="section-header">
+      <span class="section-subtitle">FAQ</span>
+      <h2 class="section-title">常見問題解答</h2>
+      <p class="section-desc">關於包裝安全、加熱方式與食材品質的透明解答</p>
+    </div>
+
+    <div class="faq-container">
+      <div class="accordion-item active">
+        <div class="accordion-header" onclick="toggleFaq(this)">
+          <span>Q1. 真空料理包直接隔水加熱，真的安全無塑化劑嗎？</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          請您百分之百放心！我們選用的是特製醫療等級<strong>「食品級 121°C 耐高溫專用蒸煮膜」</strong>，非一般家庭用保鮮膜或低溫塑膠袋。全批次通過 Intertek / SGS 檢驗，在 121°C 沸水加熱條件下零塑化劑、零重金屬溶出，直接隔水沸水煮 10 分鐘安全無虞。
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleFaq(this)">
+          <span>Q2. 標榜「無糖、無奶、無麩質」，沒加味精吃起來會不會很淡？</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          完全不會！真食物的自然鮮甜比味精鮮美十倍。創辦人的父親是 40 年糕點大廚，我們以整隻產銷履歷黑羽土雞搭配天然有機蔬果（胡蘿蔔、洋蔥、老薑、枸杞、黃耆）慢火細燉 4 小時以上，自然析出肉質與蔬果的鮮美胺基酸，溫潤回甘，連味覺遲鈍的長輩都讚不絕口。
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleFaq(this)">
+          <span>Q3. 收到後該如何保存？最佳的加熱食用方式是什麼？</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          本產品全程採 -18°C 急凍鎖鮮，未開封冷凍可保存 6 個月。食用時推薦兩種方式：<br>
+          1. <strong>隔水加熱（最推薦）</strong>：水滾後直接將未開封的蒸煮袋放入水中，中小火煮 8~10 分鐘剪開即可享用。<br>
+          2. <strong>電鍋加熱</strong>：剪開包裝倒入瓷碗，外鍋加 1 杯水，蒸跳起即可食用。
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleFaq(this)">
+          <span>Q4. 配送方式與運費如何計算？</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          我們提供兩種彈性配送方式：<br>
+          1. <strong>黑貓低溫宅急便</strong>：全館消費滿 NT$ 2,000 即享免運直送到府（未滿額運費 NT$ 180）。<br>
+          2. <strong>超商冷凍店到店</strong>：針對「三日照護嚐鮮組 (NT$ 549)」特別開放 7-11 / 全家冷凍取貨，直接含運免運費！
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h3>雞蛋花原型即食包</h3>
+        <p>
+          「藥物是給病人的，但好食物卻是適合全人類的！」<br>
+          我們堅持三無臨床標準與小農原型食材，為每一個需要營養修護的家庭，端上一碗熱氣蒸騰的大廚真食物。
+        </p>
+        <span style="font-size: 0.85rem; color: #FCD34D;">利百家綜合餐飲坊 ‧ 統一編號 72887554</span>
+      </div>
+
+      <div class="footer-links">
+        <h4>快速導覽</h4>
+        <ul>
+          <li><a href="#contrast">真食物對比</a></li>
+          <li><a href="#story">老廚師故事</a></li>
+          <li><a href="#menu">主廚原型菜單</a></li>
+          <li><a href="#packages">超值優惠組合</a></li>
+          <li><a href="#faq">食安與檢驗報告</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h4>工坊門市與客服</h4>
+        <p><strong>實體門市</strong>：新竹市東區建美路 45 號</p>
+        <p><strong>服務專線</strong>：03-572-5685</p>
+        <p><strong>客服信箱</strong>：eggflower51@gmail.com</p>
+        <p><strong>官方 LINE</strong>：<a href="https://line.me" target="_blank" rel="noopener" style="color: #FCD34D; text-decoration: underline;">@jbq2999k</a> (即時諮詢)</p>
+        <p><strong>營業時間</strong>：週一至週五 10:00 - 18:30</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; 2026 利百家綜合餐飲坊 (Egg Flower House). All Rights Reserved. 本產品投保富邦產物產品責任險 1,000 萬元。
+    </div>
+  </footer>
+
+  <!-- Order / Consultation Modal -->
+  <div class="order-modal-backdrop" id="orderModal" onclick="closeOrderModal(event)">
+    <div class="order-modal" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeOrderModal()">&times;</button>
+      <div class="modal-header">
+        <h3 id="modalPlanTitle">填寫預訂資料</h3>
+        <p>我們將有專人於 24 小時內與您確認配送超商或住址。</p>
+      </div>
+      <form class="modal-form" onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+          <label>您選擇的品項方案</label>
+          <input type="text" id="selectedPlanInput" readonly style="background: var(--surface-alt); font-weight: 700;">
+        </div>
+        <div class="form-group">
+          <label>聯絡人姓名 *</label>
+          <input type="text" required placeholder="例如：林小姐">
+        </div>
+        <div class="form-group">
+          <label>行動電話門號 (用於超商到貨簡訊通知) *</label>
+          <input type="tel" required placeholder="例如：0912-345-678">
+        </div>
+        <div class="form-group">
+          <label>取貨偏好 *</label>
+          <select id="shippingMethodSelect">
+            <option value="cvs">7-11 / 全家 冷凍店到店 (請於備註填寫門市名稱)</option>
+            <option value="home">黑貓低溫宅急便直送到府</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>特殊飲食需求或收件備註</label>
+          <input type="text" placeholder="例如：需要低鉀低磷專區 / 門市名稱代號">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1rem; margin-top: 8px;">
+          確認送出預訂單 &rarr;
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function toggleFaq(header) {
+      const item = header.parentElement;
+      item.classList.toggle('active');
+    }
+
+    function openOrderModal(planName) {
+      document.getElementById('selectedPlanInput').value = planName;
+      document.getElementById('modalPlanTitle').innerText = '預訂：' + planName;
+      document.getElementById('orderModal').style.display = 'flex';
+    }
+
+    function closeOrderModal(e) {
+      document.getElementById('orderModal').style.display = 'none';
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      alert('感謝您的預訂！我們的新竹工坊客服專員已收到您的資訊，將在 24 小時內發送簡訊與 LINE 訊息與您確認出貨事宜。祝您與家人健康平安！');
+      closeOrderModal();
+    }
+  </script>
+</body>
+</html>
