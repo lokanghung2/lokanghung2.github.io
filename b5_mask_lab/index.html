@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B5 原生修護實驗室 (B5 Lab) ｜ 臨床級零膠感屏障膜 ✕ 鎖水 72 小時真抗乾</title>
+  <meta name="description" content="不靠增稠劑假保濕！敷完不黏膩，鎖水 72 小時真抗乾！撕掉開架面膜 20 年遮羞布，0% 化學增稠膠 ✕ 5% 醫藥級純 B5 ✕ 3% 極地依克多因 ✕ 凍乾生物纖維膜布。">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --bg-surface: #0d121d;
+      --bg-card: rgba(16, 24, 40, 0.75);
+      --bg-card-hover: rgba(24, 34, 56, 0.85);
+      --border-glow: rgba(56, 189, 248, 0.3);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      
+      --cyan-primary: #06b6d4;
+      --cyan-light: #38bdf8;
+      --cyan-glow: rgba(6, 182, 212, 0.25);
+      --cyan-gradient: linear-gradient(135deg, #06b6d4 0%, #38bdf8 50%, #0284c7 100%);
+      
+      --emerald-accent: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --amber-accent: #f59e0b;
+      --red-accent: #f43f5e;
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+      --shadow-cyan: 0 0 25px rgba(56, 189, 248, 0.25);
+      
+      --font-heading: 'Outfit', 'Noto Sans TC', sans-serif;
+      --font-body: 'Noto Sans TC', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.06) 0%, transparent 40%),
+        linear-gradient(to bottom, #07090e, #0b101b);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 80px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header Nav */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(7, 9, 14, 0.85);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #fff;
+    }
+    .logo-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--cyan-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: var(--shadow-cyan);
+    }
+    .logo-text h1 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #fff 0%, #93c5fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .logo-text span {
+      font-size: 11px;
+      color: var(--cyan-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: var(--font-mono);
+      display: block;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover {
+      color: var(--cyan-light);
+    }
+    .nav-btn {
+      background: var(--cyan-gradient);
+      color: #04101f;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 9px 18px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      box-shadow: var(--shadow-cyan);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.45);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 90px 0 60px;
+      text-align: center;
+      position: relative;
+    }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid var(--border-glow);
+      color: var(--cyan-light);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      letter-spacing: 0.5px;
+    }
+    .hero-title {
+      font-size: 52px;
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
+      color: #fff;
+    }
+    .hero-title .highlight {
+      background: var(--cyan-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+    }
+    .hero-title .sub-highlight {
+      color: #38bdf8;
+      display: block;
+      font-size: 38px;
+      margin-top: 8px;
+    }
+    .hero-subtitle {
+      max-width: 820px;
+      margin: 0 auto 36px;
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 50px;
+    }
+    .btn-primary {
+      background: var(--cyan-gradient);
+      color: #04101f;
+      font-size: 16px;
+      font-weight: 800;
+      padding: 16px 32px;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(6, 182, 212, 0.4);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(6, 182, 212, 0.6);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-size: 16px;
+      font-weight: 600;
+      padding: 16px 28px;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--cyan-light);
+      color: var(--cyan-light);
+    }
+
+    /* Stats Banner */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 1040px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(10px);
+    }
+    .stat-item {
+      text-align: center;
+      padding: 10px;
+    }
+    .stat-number {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--cyan-light);
+      font-family: var(--font-mono);
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Section Styling */
+    .section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .section-header {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 50px;
+    }
+    .section-tag {
+      color: var(--cyan-light);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+      display: block;
+      font-family: var(--font-mono);
+    }
+    .section-title {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Diagnostic Interactive Canvas */
+    .diag-card {
+      background: linear-gradient(135deg, rgba(13, 20, 36, 0.9) 0%, rgba(16, 26, 48, 0.9) 100%);
+      border: 1px solid var(--border-glow);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-card), var(--shadow-cyan);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .diag-step-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    .step-pill {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-dim);
+      border: 1px solid var(--border-subtle);
+    }
+    .step-pill.active {
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--cyan-light);
+      border-color: var(--cyan-light);
+    }
+    .diag-question {
+      margin-bottom: 28px;
+    }
+    .diag-question h3 {
+      font-size: 20px;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .option-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: left;
+      color: var(--text-main);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .option-btn:hover {
+      background: rgba(6, 182, 212, 0.08);
+      border-color: var(--cyan-light);
+      transform: translateY(-1px);
+    }
+    .option-btn.selected {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: var(--cyan-light);
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+    }
+    .diag-result {
+      margin-top: 30px;
+      padding: 24px;
+      border-radius: var(--radius-md);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid var(--emerald-accent);
+      display: none;
+    }
+    .diag-result h4 {
+      color: var(--emerald-accent);
+      font-size: 18px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .diag-result p {
+      font-size: 15px;
+      color: #e2e8f0;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    /* 3-Way Battle Table */
+    .battle-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      background: var(--bg-card);
+    }
+    .battle-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    .battle-table th, .battle-table td {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 14px;
+    }
+    .battle-table th {
+      background: rgba(0, 0, 0, 0.3);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
+    .battle-table tr:last-child td {
+      border-bottom: none;
+    }
+    .col-highlight {
+      background: rgba(6, 182, 212, 0.08);
+      border-left: 2px solid var(--cyan-light);
+      border-right: 2px solid var(--cyan-light);
+      font-weight: 700;
+      color: #fff;
+    }
+    th.col-highlight {
+      color: var(--cyan-light);
+      font-size: 15px;
+    }
+
+    /* 8 Weapons Matrix */
+    .weapons-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .weapon-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .weapon-card:hover {
+      border-color: var(--cyan-light);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-cyan);
+    }
+    .weapon-num {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--cyan-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .weapon-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .weapon-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Video Scripts Tab Switcher */
+    .tabs-nav {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: var(--cyan-light);
+      color: var(--cyan-light);
+    }
+    .scripts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .script-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+    .script-card:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+    }
+    .script-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--cyan-light);
+      margin-bottom: 12px;
+    }
+    .script-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .script-hook {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 2px solid var(--cyan-primary);
+      padding-left: 10px;
+    }
+
+    /* Pricing Tiers */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+    .pricing-card.featured {
+      background: linear-gradient(135deg, rgba(16, 28, 52, 0.9) 0%, rgba(13, 20, 36, 0.9) 100%);
+      border: 2px solid var(--cyan-light);
+      box-shadow: var(--shadow-cyan), 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+      transform: scale(1.02);
+    }
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      right: 24px;
+      background: var(--cyan-gradient);
+      color: #04101f;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .pricing-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .pricing-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .pricing-price {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--cyan-light);
+      font-family: var(--font-mono);
+      margin-bottom: 24px;
+    }
+    .pricing-price span {
+      font-size: 14px;
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 30px;
+    }
+    .pricing-features li {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pricing-features li::before {
+      content: "✓";
+      color: var(--emerald-accent);
+      font-weight: 900;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 50px 0 20px;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .footer-links a:hover {
+      color: var(--cyan-light);
+    }
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .hero-title { font-size: 38px; }
+      .hero-title .sub-highlight { font-size: 26px; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .weapons-grid { grid-template-columns: 1fr 1fr; }
+      .scripts-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .options-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="container nav-inner">
+      <a href="#" class="brand-logo">
+        <div class="logo-badge">🧪</div>
+        <div class="logo-text">
+          <h1>B5 原生修護實驗室</h1>
+          <span>B5 LAB / DERMASHIELD</span>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="#diagnostic" class="nav-link">現場測謊</a>
+        <a href="#battle" class="nav-link">殘酷對決</a>
+        <a href="#weapons" class="nav-link">8大武器</a>
+        <a href="#scripts" class="nav-link">實彈腳本</a>
+        <a href="#pricing" class="nav-link">購買方案</a>
+        <a href="README.html" class="nav-btn">全案知識庫 ➔</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-pill">
+        <span>⚡ 告別化學增稠假水光 ✕ 臨床級 5% B5 ✕ 72h 真皮層鎖水</span>
+      </div>
+      <h1 class="hero-title">
+        不靠增稠劑假保濕！<br>
+        <span class="highlight">敷完不黏膩，鎖水 72 小時真抗乾！</span>
+        <span class="sub-highlight">撕掉開架面膜 20 年遮羞布 ✕ 臨床級零膠感屏障膜</span>
+      </h1>
+      <p class="hero-subtitle">
+        懂保養的人不看包裝廣告，只看全成分表！徹底揚棄卡波姆化學膠水，以 <strong>0% 增稠膠 ✕ 5% 醫藥級純 B5 ✕ 3% 極地依克多因 ✕ 凍乾生物纖維膜布</strong>，敷完乾爽免洗臉，鎖水整整三天！
+      </p>
+      <div class="hero-actions">
+        <a href="#diagnostic" class="btn-primary">
+          <span>⚡ 現場 5 題測謊：測測你的假保濕受害度</span>
+          <span>➔</span>
+        </a>
+        <a href="README.html" class="btn-secondary">
+          <span>📖 閱覽全案特勞特定位報告</span>
+        </a>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number">0%</div>
+          <div class="stat-label">化學增稠膠質 (SGS 檢驗未檢出)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">5.0%</div>
+          <div class="stat-label">醫藥級 D-Panthenol (超開架50倍)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">72h</div>
+          <div class="stat-label">Corneometer 實測持續保水力</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">NT$ 116</div>
+          <div class="stat-label">單片醫研輕奢價 (告別開架促銷紅海)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Diagnostic Section -->
+  <section class="section" id="diagnostic">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">INTERACTIVE SCIENTIFIC DIAGNOSTIC</span>
+        <h2 class="section-title">現場肌膚測謊：5 題直插面膜假保濕死穴</h2>
+        <p class="section-desc">與皮膚科配方師坐在一起！勾選您的真實敷臉體驗，系統將在 3 秒內為您出具「假保濕受害度診斷卡」！</p>
+      </div>
+
+      <div class="diag-card">
+        <div class="diag-step-indicator">
+          <span class="step-pill active">Q1. 敷後體感</span>
+          <span class="step-pill">Q2. 膚況痛點</span>
+          <span class="step-pill">Q3. 成分現狀</span>
+          <span class="step-pill">Q4. 期待體感</span>
+          <span class="step-pill">Q5. 預算心智</span>
+        </div>
+
+        <div class="diag-question" id="diag-q-wrap">
+          <h3 id="diag-q-title">Q1. 您平時敷完開架面膜撕下後的第一體感是什麼？</h3>
+          <div class="options-grid" id="diag-options">
+            <button class="option-btn" onclick="selectOption(this, 1)">
+              <span>💧</span> <span>滿臉黏糊糊像膠水，必須衝進浴室用洗面乳洗乾淨</span>
+            </button>
+            <button class="option-btn" onclick="selectOption(this, 1)">
+              <span>🏜️</span> <span>當下很水，但撕下 30 分鐘後兩頰立刻緊繃拔乾</span>
+            </button>
+            <button class="option-btn" onclick="selectOption(this, 1)">
+              <span>🛏️</span> <span>睡覺時臉頰黏在枕頭套上，沾了一堆棉絮與灰塵</span>
+            </button>
+            <button class="option-btn" onclick="selectOption(this, 1)">
+              <span>💥</span> <span>常常莫名其妙長閉口粉刺、悶痘，甚至刺痛泛紅</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="diag-result" id="diag-result-box">
+          <h4>🧪 診斷結果：重度「假性保濕」受害者 (受損指數 92%)</h4>
+          <p>
+            您的肌膚長期被開架面膜中的<strong>卡波姆 (Carbomer) 高分子增稠劑</strong>假象欺騙！表面看似濃郁水光，實為一層乾膠封膜阻礙毛孔呼吸，水分蒸發後更帶走角質層原有水分。您急需一片 <strong>0% 化學增稠劑、高滲透 5% 醫藥級純 B5</strong> 的真正真皮層修護膜！
+          </p>
+          <a href="#pricing" class="btn-primary" style="padding: 10px 20px; font-size: 14px;">立即領取 2 入無膠體驗裝 (NT$ 199 含運) ➔</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3-Way Battle Table Section -->
+  <section class="section" id="battle">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">MARKET COORDINATE CONTRAST</span>
+        <h2 class="section-title">殘酷三方對決：為什麼傳統面膜救不了你？</h2>
+        <p class="section-desc">我們不跟開架大廠打折比賤賣，也不跟專櫃品牌賣弄文青故事。以特勞特硬核科學與臨床配方，進行代差級降維打擊！</p>
+      </div>
+
+      <div class="battle-table-wrap">
+        <table class="battle-table">
+          <thead>
+            <tr>
+              <th>評估維度</th>
+              <th>傳統開架快銷面膜 (我的美麗日記/森田)</th>
+              <th>專櫃院線修護膜 (理膚寶水/修麗可)</th>
+              <th class="col-highlight">B5 原生修護實驗室 (B5 LAB)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>精華質地與成份</strong></td>
+              <td>濃稠拉絲、手感厚重 (添加 1% 卡波姆高分子膠)</td>
+              <td>略偏黏稠乳液相或甘油水相，含微量防腐劑</td>
+              <td class="col-highlight">0% 化學增稠膠質，如高山晨露清澈流動</td>
+            </tr>
+            <tr>
+              <td><strong>B5 活性添加濃度</strong></td>
+              <td>概念性微量 (< 0.1%，成分排在防腐劑後面)</td>
+              <td>標準濃度 1% ~ 2%，修護力中等</td>
+              <td class="col-highlight">臨床級 5% 醫藥級 D-Panthenol (皮膚科黃金劑量)</td>
+            </tr>
+            <tr>
+              <td><strong>鎖水輔助成分</strong></td>
+              <td>普通甘油、大分子玻尿酸 (僅在表層停留)</td>
+              <td>積雪草苷、微量菸鹼醯胺</td>
+              <td class="col-highlight">3% 德國專利極地依克多因 (細胞水合防護殼)</td>
+            </tr>
+            <tr>
+              <td><strong>膜布工藝材質</strong></td>
+              <td>廉價木漿纖維或不織布 (易乾裂、易倒吸水分)</td>
+              <td>加厚天絲棉或普通纖維布膜 (剪裁略不服貼)</td>
+              <td class="col-highlight">醫療人工皮同源凍乾生物纖維 (奈米級單向導入)</td>
+            </tr>
+            <tr>
+              <td><strong>敷後真實體感</strong></td>
+              <td>滿臉黏膩假滑，必須洗臉；洗後立刻打回原形</td>
+              <td>滋潤但有油感，需按摩許久才能吸收</td>
+              <td class="col-highlight">乾爽透氣軟嫩，免洗臉，不上乳霜鎖水 72 小時</td>
+            </tr>
+            <tr>
+              <td><strong>零售單片定價</strong></td>
+              <td>NT$ 39 ~ 49 / 片 (常態買一送一跳水促銷)</td>
+              <td>NT$ 200 ~ 350 / 片 (昂貴且難以高頻常態回購)</td>
+              <td class="col-highlight">NT$ 116 / 片 (5 入盒裝 NT$ 580，輕奢高毛利)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 Mental Weapons Section -->
+  <section class="section" id="weapons">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">THE 8 MENTAL WEAPONS ARSENAL</span>
+        <h2 class="section-title">特勞特定位 8 大實戰心智武器庫</h2>
+        <p class="section-desc">不賣弄空洞形容詞！將拍板之戰略無損結晶為 8 大隨取即用武器，貫穿全網與短影音商務場景。</p>
+      </div>
+
+      <div class="weapons-grid">
+        <div class="weapon-card">
+          <div class="weapon-num">WEAPON 01</div>
+          <h3 class="weapon-title">語言釘子</h3>
+          <p class="weapon-desc">「不靠增稠劑假保濕！敷完不黏膩，鎖水 72 小時真抗乾！」市井大白話一秒封喉，剔除生澀行銷黑話。</p>
+        </div>
+        <div class="weapon-card">
+          <div class="weapon-num">WEAPON 02</div>
+          <h3 class="weapon-title">視覺錘</h3>
+          <p class="weapon-desc">倒杯不殘膠水清流實驗 ✕ 72h 經皮水分散失 (TEWL) 雷達綠色鎖水盾。鏡頭前將開架拉絲對比晨露水相。</p>
+        </div>
+        <div class="weapon-card">
+          <div class="weapon-num">WEAPON 03</div>
+          <h3 class="weapon-title">品類新坐標</h3>
+          <p class="weapon-desc">【臨床級零膠感屏障膜】。擺脫開架化學增稠浸泡膜標籤，借大腦醫學認知開闢新物種第一階梯。</p>
+        </div>
+        <div class="weapon-card">
+          <div class="weapon-num">WEAPON 04</div>
+          <h3 class="weapon-title">戰略公敵標靶</h3>
+          <p class="weapon-desc">開架大牌的化學增稠劑假保濕黑箱！明確樹立對立面：假水光真黏膩、微量概念性添加、買一送一跳水賤賣。</p>
+        </div>
+        <div class="weapon-card">
+          <div class="weapon-num">WEAPON 05</div>
+          <h3 class="weapon-title">三大硬核信任狀</h3>
+          <p class="weapon-desc">SGS 檢驗 0% 聚丙烯酸鈉增稠劑 ＋ 5% 醫藥級 D-Panthenol ＋ 醫療人工皮同源凍乾生物纖維膜布，消滅懷疑者。</p>
+        </div>
+        <div class="weapon-card">
+          <div class="weapon-num">WEAPON 06</div>
+          <h3 class="weapon-title">致命異議爆破彈</h3>
+          <p class="weapon-desc">太稀像自來水？單片116元貴嗎？打完皮秒真能敷？三大直球質疑 5 秒內以臨床數據與安瓶換算法秒殺！</p>
+        </div>
+        <div class="weapon-card">
+          <div class="weapon-num">WEAPON 07</div>
+          <h3 class="weapon-title">市井轉述口金句</h3>
+          <p class="weapon-desc">「別再敷那些黏得像膠水一樣的面膜了！這款 0 膠感的 B5 膜敷完免洗臉，臉嫩到像剛做完醫美水光針！」</p>
+        </div>
+        <div class="weapon-card">
+          <div class="weapon-num">WEAPON 08</div>
+          <h3 class="weapon-title">公關新聞引爆點</h3>
+          <p class="weapon-desc">「【美妝打假實錄】撕開台灣面膜 20 年遮羞布：實測市售 10 款熱銷開架面膜，竟有 9 款全靠化學增稠膠水假保濕？！」</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Scripts Section -->
+  <section class="section" id="scripts">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">DIRECT VIDEO TESTING SCRIPTS</span>
+        <h2 class="section-title">破局短影音測試腳本庫 (36 條實彈矩陣)</h2>
+        <p class="section-desc">點擊下方分類，預覽四層認知遞進的大師級純文本口播深稿（逆常識 ➔ 底層機制 ➔ 避坑防線 ➔ 必然收斂）。</p>
+      </div>
+
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('all')">全部欄目 (36+)</button>
+        <button class="tab-btn" onclick="switchTab('fake')">💼 欄目 ①：撕開偽裝打假</button>
+        <button class="tab-btn" onclick="switchTab('urgent')">🔍 欄目 ②：20分鐘術後滅火</button>
+        <button class="tab-btn" onclick="switchTab('real')">💧 欄目 ③：告別黏枕頭真香</button>
+      </div>
+
+      <div class="scripts-grid" id="scripts-container">
+        <!-- Script Card 1 -->
+        <div class="script-card" data-cat="fake">
+          <div>
+            <span class="script-badge">欄目 ① 打假所 ✕ P-1 單人口播</span>
+            <h4 class="script-title">天天敷面膜皮膚還在乾癟脫皮？那是因為你這幾年全在給臉頰「刷膠水」！</h4>
+            <p class="script-hook">「如果你今晚敷完面膜上床，臉頰又黏在枕頭套上沾了一堆棉絮，請你現在立刻把手邊的面膜全部扔掉！因為你敷的根本不是精華液…」</p>
+          </div>
+        </div>
+        <!-- Script Card 2 -->
+        <div class="script-card" data-cat="fake">
+          <div>
+            <span class="script-badge">欄目 ① 打假所 ✕ P-2 實驗測謊</span>
+            <h4 class="script-title">全台灣第一個敢把精華液倒進杯子給你看的面膜！0 膠質清澈如晨露！</h4>
+            <p class="script-hook">（鏡頭前將開架面膜精華液倒出，黏稠拉絲掛杯；隨後將 B5 原生膜精華液倒出，如高山晨露般清澈透明流過鏡頭）「敢倒出來看的才是真精華…」</p>
+          </div>
+        </div>
+        <!-- Script Card 3 -->
+        <div class="script-card" data-cat="urgent">
+          <div>
+            <span class="script-badge">欄目 ② 術後急救 ✕ P-1 單人口播</span>
+            <h4 class="script-title">剛打完皮秒雷射千萬別碰開架！裡面的化學膠質會把發熱毛孔悶成大爛臉！</h4>
+            <p class="script-hook">「剛在診所打完皮秒雷射或水光針，千萬別隨便去藥妝店抓兩盒開架面膜！你以為在補水，實際上那些增稠劑正在把毛孔悶成大爆痘…」</p>
+          </div>
+        </div>
+        <!-- Script Card 4 -->
+        <div class="script-card" data-cat="urgent">
+          <div>
+            <span class="script-badge">欄目 ② 術後急救 ✕ P-4 反差對比</span>
+            <h4 class="script-title">皮秒術後 20 分鐘退紅滅火實錄：5% 醫藥級純 B5 搭配生纖膜，泛紅退散！</h4>
+            <p class="script-hook">「雷射後的肌膚屏障是敞開的脆弱狀態。這款 5% 醫藥級 D-Panthenol 搭配人工皮生纖膜，實測 20 分鐘壓制灼熱泛紅，72 小時水分散失降 84%！」</p>
+          </div>
+        </div>
+        <!-- Script Card 5 -->
+        <div class="script-card" data-cat="real">
+          <div>
+            <span class="script-badge">欄目 ③ 真香現場 ✕ P-4 前後對比</span>
+            <h4 class="script-title">敷完不用洗臉的面膜你見過嗎？揭下膜布 5 秒全被皮膚喝乾淨！</h4>
+            <p class="script-hook">「傳統面膜敷完必須衝進浴室把臉洗乾淨，洗完臉又變乾！我們的膜布揭開後輕輕按五秒全被吸收，乾爽透亮像剝殼雞蛋，不黏枕頭！」</p>
+          </div>
+        </div>
+        <!-- Script Card 6 -->
+        <div class="script-card" data-cat="real">
+          <div>
+            <span class="script-badge">欄目 ③ 真香現場 ✕ P-5 雙人過招</span>
+            <h4 class="script-title">一片賣 116 元憑什麼？算算你梳妝台上那瓶 2,500 元的修護霜怎麼省下來的！</h4>
+            <p class="script-hook">「買 10 片 40 元的開架膠水膜，不如敷 1 片真正 5% 醫藥級高純度純 B5！一片相當於專櫃 5 支頂級安瓶精華，敷一次管三天！」</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Tiers Section -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">TRANSPARENT SCIENTIFIC PRICING</span>
+        <h2 class="section-title">三級商業變現階梯與購買方案</h2>
+        <p class="section-desc">明碼標價、拒絕模糊！前端真金白銀測謊體驗，中端標準旗艦正裝，後端週期囤貨高額毛利保障。</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Tier 1 -->
+        <div class="pricing-card">
+          <div>
+            <h3 class="pricing-title">第一級：真金白銀測謊裝</h3>
+            <p class="pricing-subtitle">打破疑慮！用自己的臉蛋物理級測謊</p>
+            <div class="pricing-price">NT$ 199 <span>/ 2入體驗組 (含運)</span></div>
+            <ul class="pricing-features">
+              <li>2 片零膠感 B5 屏障修護膜 (體驗裝)</li>
+              <li>附贈『撕開假水光 ‧ 測謊實驗卡』</li>
+              <li>隨箱附『3 盒囤貨組折 200 元』回購碼</li>
+              <li>超商取貨付款免運費專案</li>
+              <li>不滿意免洗體感無條件全額退費</li>
+            </ul>
+          </div>
+          <a href="#" class="btn-secondary" style="text-align: center;">立即索取測謊包 ➔</a>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="pricing-card featured">
+          <div class="pricing-badge">最受歡迎 ✕ 醫研旗艦</div>
+          <div>
+            <h3 class="pricing-title">第二級：標準正裝旗艦盒</h3>
+            <p class="pricing-subtitle">1 週深層重構！告別假保濕日常必備</p>
+            <div class="pricing-price">NT$ 580 <span>/ 5入盒裝 (單片 NT$ 116)</span></div>
+            <ul class="pricing-features">
+              <li>5 片標準醫療級無菌生纖膜布正裝</li>
+              <li>0% 高分子增稠化學膠質 (SGS 檢驗 ND)</li>
+              <li>5% 醫藥級 D-Panthenol ＋ 3% 極地依克多因</li>
+              <li>醫療人工皮同源凍乾生物纖維膜布</li>
+              <li>敷後免清水洗臉，長效鎖水 72 小時</li>
+            </ul>
+          </div>
+          <a href="#" class="btn-primary" style="justify-content: center;">直接購買單盒正裝 ➔</a>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="pricing-card">
+          <div>
+            <h3 class="pricing-title">第三級：三盒高階週期囤貨組</h3>
+            <p class="pricing-subtitle">皮秒術後 ✕ 換季乾敏必備！整月穩定救星</p>
+            <div class="pricing-price">NT$ 1,480 <span>/ 15入 (單片僅 NT$ 98.6)</span></div>
+            <ul class="pricing-features">
+              <li>3 盒正裝 (共 15 片，立省 NT$ 260)</li>
+              <li>全台灣宅配 / 超商取貨全額免運費</li>
+              <li>贈送 1 只『專業雙頭高純度敷臉矽膠刷』</li>
+              <li>VIP 私域會員資格與皮秒術後諮詢指導</li>
+              <li>每 45 天自動配送享終身 88 折優惠</li>
+            </ul>
+          </div>
+          <a href="#" class="btn-secondary" style="text-align: center;">搶購三盒週期囤貨組 ➔</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="#diagnostic">現場測謊</a>
+        <a href="#battle">三方對決</a>
+        <a href="#weapons">8大武器庫</a>
+        <a href="#scripts">實彈腳本</a>
+        <a href="#pricing">購買方案</a>
+        <a href="README.html">專案全案知識庫門戶 (README.html)</a>
+      </div>
+      <p class="footer-copy">
+        © 2026 B5 原生修護實驗室 (B5 Lab / B5 DermaShield) ｜ 臨床級零膠感屏障膜 ✕ 特勞特定位戰略智庫<br>
+        不靠增稠劑假保濕！敷完不黏膩，鎖水 72 小時真抗乾！
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Diagnostic Interactive Logic
+    function selectOption(btn, step) {
+      const parent = btn.parentElement;
+      const buttons = parent.querySelectorAll('.option-btn');
+      buttons.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+
+      // Show result box with animation
+      const resultBox = document.getElementById('diag-result-box');
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Video Scripts Tab Filter Logic
+    function switchTab(category) {
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      tabBtns.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const cards = document.querySelectorAll('.script-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-cat') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
