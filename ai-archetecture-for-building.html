@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI-Native 智慧建築管理系統主架構規格書</title>
+  <title>Agentic AIoT 智慧物聯網架構設計規格書</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Mermaid.js CDN -->
@@ -11,7 +12,9 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
+    rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
@@ -39,37 +42,42 @@
       font-family: 'Inter', 'Noto Sans TC', sans-serif;
       scroll-behavior: smooth;
     }
+
     .mermaid svg {
       max-width: 100% !important;
       height: auto !important;
     }
   </style>
 </head>
+
 <body class="bg-slate-50 text-slate-800 antialiased">
 
   <!-- 頂部導覽列 -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-black text-xl shadow-md shadow-blue-500/30">
-          AI
+        <div
+          class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-black text-xl shadow-md shadow-blue-500/30">
+          AIoT
         </div>
         <div>
-          <h1 class="text-lg font-bold text-slate-900 leading-tight">AI-Native 智慧建築管理系統</h1>
-          <p class="text-xs text-slate-500 font-medium tracking-wide">系統主架構規格書 • Building as API</p>
+          <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">Agentic AIoT 智慧物聯網架構</h1>
+          <p class="text-xs text-slate-500 font-medium tracking-wide">系統主架構規格書 • 雙角色協同設計</p>
         </div>
       </div>
-      <nav class="hidden md:flex space-x-6 text-sm font-semibold text-slate-600">
-        <a href="#vision" class="hover:text-blue-600 transition">核心願景</a>
-        <a href="#architecture" class="hover:text-blue-600 transition">主架構圖</a>
-        <a href="#roles" class="hover:text-blue-600 transition">雙角色定義</a>
-        <a href="#mechanisms" class="hover:text-blue-600 transition">四大層次機制</a>
-        <a href="#lifecycle" class="hover:text-blue-600 transition">運作生命週期</a>
-        <a href="#algorithms" class="hover:text-blue-600 transition">演算法微服務</a>
+      <nav class="hidden lg:flex space-x-5 text-sm font-semibold text-slate-600">
+        <a href="#vision" class="hover:text-blue-600 transition">核心概念</a>
+        <a href="#architecture" class="hover:text-blue-600 transition">整體架構</a>
+        <a href="#roles" class="hover:text-blue-600 transition">兩大角色</a>
+        <a href="#iot-api" class="hover:text-blue-600 transition">IoT API 支柱</a>
+        <a href="#agents" class="hover:text-blue-600 transition">三種 Agent</a>
+        <a href="#lifecycle" class="hover:text-blue-600 transition">運作流程</a>
+        <a href="#future" class="hover:text-blue-600 transition">協同研究</a>
       </nav>
       <div class="flex items-center space-x-2">
-        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
-          ● IoT Gateway Ready
+        <span
+          class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+          ● Agentic AIoT v2.0
         </span>
       </div>
     </div>
@@ -79,103 +87,137 @@
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
 
     <!-- Hero / 願景區塊 -->
-    <section id="vision" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white p-8 sm:p-12 shadow-2xl">
-      <div class="relative z-10 max-w-3xl space-y-4">
-        <span class="inline-block px-3 py-1 rounded-md bg-blue-500/20 text-blue-300 text-xs font-bold tracking-wider uppercase border border-blue-400/30">
-          Building as API Paradigm
+    <section id="vision"
+      class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white p-8 sm:p-12 shadow-2xl">
+      <div class="relative z-10 max-w-4xl space-y-4">
+        <span
+          class="inline-block px-3 py-1 rounded-md bg-blue-500/20 text-blue-300 text-xs font-bold tracking-wider uppercase border border-blue-400/30">
+          Agentic AIoT Architecture Paradigm
         </span>
         <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
-          讓每一棟建築都成為<br class="hidden sm:inline"> AI 可以理解與管理的智慧體
+          讓 AI Agent 自主理解、組合能力、<br class="hidden sm:inline">動態建構事件並長期管理實體設備
         </h2>
         <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
-          不再需要工程師預先寫死所有管理功能。管理者只需告訴 AI 想達成什麼目標，AI 就能運用建築內既有的 IoT 設備與演算法能力，動態組裝出全新的智慧管理流程。
+          這不是單純透過 LLM 呼叫 IoT
+          設備，而是建立一個具有<strong>語意理解（Semantic）</strong>、<strong>情境判斷（Context）</strong>、<strong>按需外殼（Agent
+            Shell）</strong>、<strong>動態事件管理（Event）</strong>與<strong>長期任務閉環（Task Agent）</strong>能力的自主智慧物聯網體系。
         </p>
-        <div class="pt-4 flex flex-wrap gap-4">
-          <div class="flex items-center space-x-2 bg-white/10 px-4 py-2 rounded-xl backdrop-blur-sm border border-white/10 text-sm">
-            <span class="text-emerald-400 font-bold">✓ 典範轉移</span>
-            <span class="text-slate-200">人操作系統 ➔ 人定目標，AI 管理建築</span>
+        <div class="pt-4 flex flex-wrap gap-4 text-xs sm:text-sm">
+          <div
+            class="flex items-center space-x-2 bg-white/10 px-4 py-2 rounded-xl backdrop-blur-sm border border-white/10">
+            <span class="text-emerald-400 font-bold">✓ 基礎立足</span>
+            <span class="text-slate-200">API + Semantic + Context 數位能力</span>
           </div>
-          <div class="flex items-center space-x-2 bg-white/10 px-4 py-2 rounded-xl backdrop-blur-sm border border-white/10 text-sm">
-            <span class="text-amber-400 font-bold">✓ 現況突破</span>
-            <span class="text-slate-200">彌補 Gateway API 缺乏建築空間資訊的盲點</span>
+          <div
+            class="flex items-center space-x-2 bg-white/10 px-4 py-2 rounded-xl backdrop-blur-sm border border-white/10">
+            <span class="text-amber-400 font-bold">✓ 資源極致</span>
+            <span class="text-slate-200">Agent Shell 按需掛載，記憶與 Event 卸載長存</span>
+          </div>
+          <div
+            class="flex items-center space-x-2 bg-white/10 px-4 py-2 rounded-xl backdrop-blur-sm border border-white/10">
+            <span class="text-blue-400 font-bold">✓ 人機協同</span>
+            <span class="text-slate-200">明確定義業務管理者與建築語意架構師</span>
           </div>
         </div>
       </div>
-      <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none">
+      </div>
     </section>
 
     <!-- 系統主架構圖 (Mermaid) -->
     <section id="architecture" class="space-y-6">
       <div class="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h2 class="text-2xl font-bold text-slate-900">2. 系統核心主架構圖</h2>
-          <p class="text-slate-500 text-sm mt-1">呈現兩大人類角色、AI Orchestrator 大腦、雙支柱與既有 IoT Gateway 的端到端整合</p>
+          <h2 class="text-2xl font-bold text-slate-900">二、 整體架構圖</h2>
+          <p class="text-slate-500 text-sm mt-1">完整呈現兩大人類角色、三層 Agent、按需掛載 Agent Shell 與長效 Event 系統的協同關係</p>
         </div>
-        <span class="text-xs bg-slate-200 px-3 py-1 rounded-lg text-slate-700 font-mono">Mermaid Interactive Flowchart</span>
+        <span class="text-xs bg-slate-200 px-3 py-1 rounded-lg text-slate-700 font-mono">Mermaid Interactive
+          Flowchart</span>
       </div>
 
-      <div class="bg-white p-6 sm:p-10 rounded-2xl shadow-sm border border-slate-200 overflow-x-auto flex justify-center">
+      <div
+        class="bg-white p-6 sm:p-10 rounded-2xl shadow-sm border border-slate-200 overflow-x-auto flex justify-center">
         <div class="mermaid w-full max-w-4xl text-center">
-flowchart TD
-    %% 角色定義與樣式
-    subgraph RoleLayer1 ["【明確定義角色 1】業務管理者 / 營運主管 (Business Manager)"]
-        User["<b>👤 業務管理者</b><br/>• 職責：用自然語言下達管理目標（預冷、節能、查異常）<br/>• 決策：檢視 AI 效益預測報告，一鍵【核准放行】"]
-    end
+          flowchart TD
+          %% 人類角色與對話層
+          subgraph Role1Layer ["【角色 1 • 業務決策】業務管理者 / 營運主管"]
+          User["<b>👤 業務管理者 (Business Manager)</b><br />• 自然語言下達營運目標（預冷、節能、灌溉監控）<br />• 檢視 AI 方案模擬，一鍵【核准放行】"]
+          end
 
-    Orchestrator["<b>🧠 AI Orchestrator 核心大腦 (系統運作中樞)</b><br/>目標解析 ➔ 語意比對 ➔ 主動探詢缺漏 ➔ 自動組裝工作流"]
+          UserAgent["<b>① 使用者對話 Agent</b><br />• 理解使用者需求與偏好<br />• 維護長期對話記憶<br />• 決定是否建立並委派任務"]
 
-    subgraph DualCore ["系統核心雙支柱 (Core Pillars)"]
-        subgraph SemanticDomain ["🗺️ 建築語意圖譜層"]
-            Architect["<b>👤 【明確定義角色 2】建築語意架構師</b><br/>• 職責：為 IoT API 標註空間、樓層、用途與西曬特性<br/>• 定位：回應 AI 探詢，賦予設備『建築空間脈絡』"]
-            SemanticData["<b>空間圖譜數據</b><br/>(空間用途 / 設備拓撲 / 熱慣性)"]
-            Architect --> SemanticData
-        end
+          TaskAgent["<b>② Task Agent (任務核心)</b><br />• 任務記憶與多步驟推理<br />• 檢索 IoT API Registry 並組裝能力<br />• 向 Agent Shell
+          提出動態事件需求<br />• 接收事件並長期自主執行調適"]
 
-        subgraph AlgoDomain ["📐 演算法模型庫 API"]
-            AlgoAPIs["<b>數理與 ML 封裝之標準 API</b><br/>• 物理熱焓計算 API (自然冷源)<br/>• MPC 負載預測 API (預冷降載)<br/>• 卡爾曼濾波 API (CO₂動態需量)<br/>• C-TimeGAN API (數位雙生模擬)"]
-        end
-    end
+          %% 知識架構師與 IoT API
+          subgraph IoTLandscape ["<b>IoT API 數位能力層 (Building as API)</b>"]
+          direction TB
 
-    Gateway["<b>🔌 現有 IoT Gateway API 服務層 (既有資產)</b><br/>• 設備讀取 API (溫濕度/CO₂/電表)<br/>• 設備控制 API (VRV/ERV開關與溫度)<br/><i>(特性：僅含設備型號數據，無建築空間脈絡)</i>"]
+          subgraph KnowledgeInput ["【角色 2 • 知識架構】建築語意架構師"]
+          Architect["<b>👤 建築語意架構師 (Knowledge Architect)</b><br />• 依 CAD/BIM 建立空間層級、用途與西曬特性<br />• 為冷冰設備 API 標註 Context
+          拓撲與 Semantic 物理意義<br />• 回應 Task Agent / Shell 的『缺失主動探詢』"]
+          end
 
-    Devices["<b>🏢 現場實體設備</b><br/>VRV 空調、ERV 全熱交換器、智慧電表、環境感測器"]
+          subgraph IoTAPICore ["<b>IoT API 核心三要素</b>"]
+          direction LR
+          API_Part["<b>API</b><br />讀寫操作介面"]
+          Semantic_Part["<b>Semantic</b><br />物理量/單位/邊界"]
+          Context_Part["<b>Context</b><br />空間位置/用途/關聯"]
+          end
 
-    %% 運作連線
-    User -->|1. 下達目標| Orchestrator
-    Orchestrator -->|2. 發現缺少空間資訊，發起探詢| Architect
-    Architect -.->|3. 完成語意標註| Orchestrator
-    Orchestrator <-->|4. 傳遞數據精算與模擬| AlgoAPIs
-    Orchestrator -->|5. 呈報效益報告| User
-    User -->|6. 一鍵核准| Orchestrator
-    Orchestrator -->|7. 下發控制指令| Gateway
-    Gateway <-->|8. 設備通訊| Devices
+          KnowledgeInput -->|注入語意與空間脈絡| IoTAPICore
 
-    %% 樣式配置
-    style RoleLayer1 fill:#EBF3FF,stroke:#2962FF,stroke-width:2px,color:#000000
-    style User fill:#FFFFFF,stroke:#2962FF,stroke-width:1.5px,color:#000000
-    style Orchestrator fill:#FFF4D6,stroke:#C67D00,stroke-width:2px,color:#000000
-    style DualCore fill:#FAFAFA,stroke:#9E9E9E,stroke-width:1.5px,stroke-dasharray: 4 4,color:#000000
-    style SemanticDomain fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#000000
-    style Architect fill:#FFFFFF,stroke:#1B5E20,stroke-width:1.5px,color:#000000
-    style SemanticData fill:#C8E6C9,stroke:#2E7D32,stroke-width:1px,color:#000000
-    style AlgoDomain fill:#FCE4EC,stroke:#C2185B,stroke-width:2px,color:#000000
-    style AlgoAPIs fill:#FFFFFF,stroke:#880E4F,stroke-width:1.5px,color:#000000
-    style Gateway fill:#E0F7FA,stroke:#00838F,stroke-width:2px,color:#000000
-    style Devices fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#000000
+          AgentShell["<b>③ IoT API Agent Shell (按需掛載)</b><br />• 載入設備專屬記憶<br />• 與 Task Agent 深度互動協商<br />• 動態建立與管理設備層級
+          Event"]
+          IoTAPICore --- AgentShell
+          end
+
+          PhysicalDevices["<b>🏢 實體 IoT 設備</b><br />感測器、馬達、閥門、VRV 空調、智慧電表"]
+          EventSystem["<b>⚡ Event 事件系統 (獨立長效監控)</b><br />輕量化即時監控、條件觸發、發布與訂閱"]
+
+          %% 交互關係
+          User -->|❶ 下達目標| UserAgent
+          UserAgent -->|委派建立| TaskAgent
+          TaskAgent <-->|❷ 發現缺漏主動探詢 / 回應補齊| KnowledgeInput
+            TaskAgent <-->|❸ 檢索能力與調用操作| IoTAPICore
+              TaskAgent <-->|❹ 協商動態事件需求| AgentShell
+                AgentShell -->|❺ 註冊事件規則| EventSystem
+                IoTAPICore <-->|讀寫控制| PhysicalDevices
+                  PhysicalDevices -.->|數據採集| EventSystem
+                  EventSystem -->|❻ 條件成立通知| TaskAgent
+                  TaskAgent -->|❼ 呈報決策報告| User
+                  User -->|❽ 一鍵核准執行| TaskAgent
+
+                  %% 樣式設定
+                  style Role1Layer fill:#EBF3FF,stroke:#2962FF,stroke-width:2px,color:#000000
+                  style User fill:#FFFFFF,stroke:#2962FF,stroke-width:1.5px,color:#000000
+                  style UserAgent fill:#FFF4D6,stroke:#C67D00,stroke-width:2px,color:#000000
+                  style TaskAgent fill:#FFE082,stroke:#FF8F00,stroke-width:2px,color:#000000
+                  style IoTLandscape fill:#FAFAFA,stroke:#757575,stroke-width:1.5px,stroke-dasharray: 4 4,color:#000000
+                  style KnowledgeInput fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#000000
+                  style Architect fill:#FFFFFF,stroke:#1B5E20,stroke-width:1.5px,color:#000000
+                  style IoTAPICore fill:#FFFFFF,stroke:#374151,stroke-width:1.5px,color:#000000
+                  style API_Part fill:#F3F4F6,stroke:#4B5563,stroke-width:1px,color:#000000
+                  style Semantic_Part fill:#F3F4F6,stroke:#4B5563,stroke-width:1px,color:#000000
+                  style Context_Part fill:#F3F4F6,stroke:#4B5563,stroke-width:1px,color:#000000
+                  style AgentShell fill:#FCE4EC,stroke:#C2185B,stroke-width:2px,color:#000000
+                  style PhysicalDevices fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#000000
+                  style EventSystem fill:#E0F7FA,stroke:#00838F,stroke-width:2px,color:#000000
         </div>
       </div>
     </section>
 
-    <!-- 雙重人類角色職責規範 -->
+    <!-- 兩大人類角色規範 -->
     <section id="roles" class="space-y-6">
       <div class="border-b border-slate-200 pb-4">
-        <h2 class="text-2xl font-bold text-slate-900">3. 明確定義兩大人類角色規範 (Roles & Responsibilities)</h2>
-        <p class="text-slate-500 text-sm mt-1">架構上徹底區隔「業務經營」與「技術架構」，讓人與 AI 和諧共生、各司其職</p>
+        <h2 class="text-2xl font-bold text-slate-900">三、 明確定義兩大人類角色規範 (Roles & Responsibilities)</h2>
+        <p class="text-slate-500 text-sm mt-1">徹底區分「業務經營」與「知識架構」，讓人與 AI 各司其職，落實 Human-in-the-Loop 安全閉環</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- 角色 1 -->
-        <div class="bg-white rounded-2xl p-6 border-2 border-blue-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+        <div
+          class="bg-white rounded-2xl p-6 border-2 border-blue-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
           <div class="space-y-4">
             <div class="flex items-center justify-between">
               <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700">角色 1 • 業務決策</span>
@@ -185,37 +227,39 @@ flowchart TD
               <span>👤 業務管理者 / 營運主管</span>
             </h3>
             <p class="text-sm text-slate-600">
-              <strong class="text-slate-800">適合人選：</strong>總務主管、廠務處長、ESG 永續經理、大樓資產營運主管。
+              <strong class="text-slate-800">適合擔任人選：</strong>總務主管、廠務處長、ESG 永續經理、大樓/農場資產營運主管。
             </p>
             <div class="space-y-2 pt-2">
               <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">核心職責清單：</h4>
               <ul class="text-sm space-y-2 text-slate-700">
                 <li class="flex items-start space-x-2">
                   <span class="text-blue-500 font-bold">1.</span>
-                  <span><strong>動口下達戰略目標</strong>：使用白話輸入經營策略（如預冷、壓低尖峰、防超約）。</span>
+                  <span><strong>自然語言動口下目標</strong>：使用白話提出營運要求（如契約容量壓低、會議室預冷、自動灌溉維持含水）。</span>
                 </li>
                 <li class="flex items-start space-x-2">
                   <span class="text-blue-500 font-bold">2.</span>
-                  <span><strong>補齊業務情境資訊</strong>：回應 AI 主動提出的業務問題（如確認開會人數）。</span>
+                  <span><strong>補齊業務情境資訊</strong>：回應 Task Agent 主動提出的業務問題（如開會人數、品種特性）。</span>
                 </li>
                 <li class="flex items-start space-x-2">
                   <span class="text-blue-500 font-bold">3.</span>
-                  <span><strong>審核放行控制策略</strong>：檢視效益預測報告（省電率、舒適度），按下一鍵核准。</span>
+                  <span><strong>策略審核與一鍵核准</strong>：檢視效益模擬預測報告（省電率、成本、舒適度），按下一鍵核准放行。</span>
                 </li>
                 <li class="flex items-start space-x-2">
                   <span class="text-blue-500 font-bold">4.</span>
-                  <span><strong>固化長期自動化排程</strong>：將成效良好的調度流程保存為長期功能。</span>
+                  <span><strong>固化長期自動化規則</strong>：成效優異時，授權將任務保存為長期例行排程。</span>
                 </li>
               </ul>
             </div>
           </div>
-          <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-blue-600 font-semibold bg-blue-50/60 p-3 rounded-xl">
-            🔒 操作邊界：純業務視角，零技術門檻，完全不需接觸任何代碼與通訊協定。
+          <div
+            class="mt-6 pt-4 border-t border-slate-100 text-xs text-blue-600 font-semibold bg-blue-50/60 p-3 rounded-xl">
+            🔒 系統操作邊界：純業務與營運視角，零技術門檻，完全不接觸代碼、API 規格、通訊協定或硬體接線。
           </div>
         </div>
 
         <!-- 角色 2 -->
-        <div class="bg-white rounded-2xl p-6 border-2 border-emerald-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+        <div
+          class="bg-white rounded-2xl p-6 border-2 border-emerald-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
           <div class="space-y-4">
             <div class="flex items-center justify-between">
               <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">角色 2 • 知識架構</span>
@@ -225,32 +269,33 @@ flowchart TD
               <span>👤 建築語意架構師</span>
             </h3>
             <p class="text-sm text-slate-600">
-              <strong class="text-slate-800">適合人選：</strong>弱電/BMS 系統整合工程師 (SI)、BIM 建模師、建築設備工程師。
+              <strong class="text-slate-800">適合擔任人選：</strong>弱電/BMS 系統整合工程師 (SI)、BIM 建模師、物聯網機電架構師。
             </p>
             <div class="space-y-2 pt-2">
               <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">核心職責清單：</h4>
               <ul class="text-sm space-y-2 text-slate-700">
                 <li class="flex items-start space-x-2">
                   <span class="text-emerald-600 font-bold">1.</span>
-                  <span><strong>建立空間語意圖譜</strong>：依 CAD/BIM 圖面定義空間層級、用途與西曬/散熱特性。</span>
+                  <span><strong>建立空間情境（Context）</strong>：對照 CAD/BIM 定義空間層級、用途、西曬方位與服務拓撲。</span>
                 </li>
                 <li class="flex items-start space-x-2">
                   <span class="text-emerald-600 font-bold">2.</span>
-                  <span><strong>為 IoT API 標註脈絡</strong>：將 Gateway 冰冷代碼（DEV_001）綁定到實體會議室。</span>
+                  <span><strong>為 IoT API 標註脈絡</strong>：將 Gateway 冰冷代碼（DEV_001）綁定到實體會議室或植栽盆。</span>
                 </li>
                 <li class="flex items-start space-x-2">
                   <span class="text-emerald-600 font-bold">3.</span>
-                  <span><strong>回應 AI 主動探詢</strong>：當 AI 發現設備缺乏空間歸屬時，及時標註補充。</span>
+                  <span><strong>校準設備語意（Semantic）</strong>：定義物理量、測量單位（% VWC, kW, °C）、合理邊界與操作限制。</span>
                 </li>
                 <li class="flex items-start space-x-2">
                   <span class="text-emerald-600 font-bold">4.</span>
-                  <span><strong>賦予設備空間靈魂</strong>：使 AI 真正具備空間感知，從而能自主組裝流程。</span>
+                  <span><strong>回應 AI 大腦主動探詢</strong>：當 Task Agent 發現設備缺空間歸屬時，及時標註補充，賦予空間靈魂。</span>
                 </li>
               </ul>
             </div>
           </div>
-          <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-emerald-700 font-semibold bg-emerald-50/60 p-3 rounded-xl">
-            🔒 操作邊界：專注空間與拓撲正確性，不干涉日常經營決策與演算法內部運算。
+          <div
+            class="mt-6 pt-4 border-t border-slate-100 text-xs text-emerald-700 font-semibold bg-emerald-50/60 p-3 rounded-xl">
+            🔒 系統操作邊界：專注物理空間拓撲與設備語意的精確性，不負責日常業務運營決策。
           </div>
         </div>
       </div>
@@ -268,189 +313,202 @@ flowchart TD
           <tbody class="divide-y divide-slate-200">
             <tr>
               <td class="p-4 font-semibold text-slate-800">關注核心</td>
-              <td class="p-4 text-slate-600">節能效益、舒適度、電費成本、營運安全</td>
-              <td class="p-4 text-slate-600">空間拓撲、設備對應、西曬屬性、語意完整性</td>
+              <td class="p-4 text-slate-600">節能效益、生產產量、電費成本、營運安全</td>
+              <td class="p-4 text-slate-600">空間拓撲、設備對應、物理量語意、資料完整性</td>
             </tr>
             <tr>
               <td class="p-4 font-semibold text-slate-800">系統輸入</td>
-              <td class="p-4 text-slate-600">自然語言目標、會議人數、一鍵核准指令</td>
-              <td class="p-4 text-slate-600">CAD/BIM 空間定義、API 空間標籤、拓撲關係</td>
+              <td class="p-4 text-slate-600">自然語言目標、情境確認、一鍵核准指令</td>
+              <td class="p-4 text-slate-600">CAD/BIM 空間定義、API 空間標籤、物理邊界規則</td>
             </tr>
             <tr>
               <td class="p-4 font-semibold text-slate-800">技術門檻</td>
-              <td class="p-4 text-slate-600">完全無技術門檻（使用白話對話介面）</td>
-              <td class="p-4 text-slate-600">需具備建築空間識圖與弱電設備點位理解能力</td>
+              <td class="p-4 text-slate-600">完全無技術門檻（自然語言對話介面）</td>
+              <td class="p-4 text-slate-600">需具備建築空間識圖、弱電點位與物聯網理解能力</td>
             </tr>
             <tr>
               <td class="p-4 font-semibold text-slate-800">參與時機</td>
-              <td class="p-4 text-slate-600">日常營運、隨時下達目標、排程審核</td>
-              <td class="p-4 text-slate-600">系統初期建置、空間變更、回應 AI 語意探詢</td>
+              <td class="p-4 text-slate-600">日常營運、隨時下達目標、審核高風險任務</td>
+              <td class="p-4 text-slate-600">系統初期建置、空間/設備異動、回應 AI 語意缺失探詢</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- 四大核心層次機制 -->
-    <section id="mechanisms" class="space-y-6">
+    <!-- IoT API 三大支柱 -->
+    <section id="iot-api" class="space-y-6">
       <div class="border-b border-slate-200 pb-4">
-        <h2 class="text-2xl font-bold text-slate-900">4. 四大核心層次運作機制</h2>
-        <p class="text-slate-500 text-sm mt-1">從意圖到執行的模組化職責與分工</p>
+        <h2 class="text-2xl font-bold text-slate-900">四、 IoT API：將實體設備轉換成 AI 可理解的能力</h2>
+        <p class="text-slate-500 text-sm mt-1">IoT API 整合操作介面、語意與空間脈絡，讓 AI 正確發現與調用設備</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg">1</div>
-          <h3 class="text-base font-bold text-slate-900">管理者意圖層</h3>
-          <p class="text-xs text-slate-500 leading-relaxed">
-            告別複雜監控畫面。管理者僅需表達高階意圖（如：「降低尖峰避免超約」或「重要會議前預冷」），AI 自動處理其餘細節。
+          <div
+            class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-lg">1
+          </div>
+          <h3 class="text-base font-bold text-slate-900">API：操作介面 (Action)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            描述設備可以執行什麼操作、如何取得資料。如：<code>read_soil_moisture()</code>、<code>turn_on_pump()</code>、<code>set_vrv_temp()</code>。統一多元底層通訊協定。
           </p>
         </div>
 
         <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-lg">2</div>
-          <h3 class="text-base font-bold text-slate-900">AI Orchestrator 大腦</h3>
-          <p class="text-xs text-slate-500 leading-relaxed">
-            系統運作中樞。負責<strong>意圖拆解</strong>、<strong>主動缺失探詢</strong>（發現缺少感測器或空間語意時主動開口問人），並<strong>自動組裝流程鏈</strong>。
+          <div
+            class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">
+            2</div>
+          <h3 class="text-base font-bold text-slate-900">Semantic：語意描述 (Physics)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            說明「這個設備數據代表什麼物理意義」。包含測量對象、物理量（% VWC、kW、°C）、合理數值範圍與機械操作限制，防止 AI 指令失控。
           </p>
         </div>
 
         <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-lg">3</div>
-          <h3 class="text-base font-bold text-slate-900">語意圖譜 + 算法庫</h3>
-          <p class="text-xs text-slate-500 leading-relaxed">
-            <strong>雙支柱支撐</strong>：語意圖譜解決「去哪裡控制、控制誰」；演算法微服務 API 解決「設定多少數值才科學、最節能」。
-          </p>
-        </div>
-
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-lg">4</div>
-          <h3 class="text-base font-bold text-slate-900">現有 IoT Gateway API</h3>
-          <p class="text-xs text-slate-500 leading-relaxed">
-            現場既有資產。提供標準讀取（溫濕度、電表）與控制（開關、溫度、風閥開度）API，穩定執行 AI 下發的物理控制指令。
+          <div
+            class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-lg">
+            3</div>
+          <h3 class="text-base font-bold text-slate-900">Context：情境描述 (Space)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            說明「這個設備位於何處、服務什麼情境」。定義空間層級（12F 董事長辦公室 / 3 號番茄盆）、西曬方位、散熱慣性與上下游關聯管線。
           </p>
         </div>
       </div>
     </section>
 
-    <!-- 端到端生命週期 (Mermaid) -->
+    <!-- 三種 Agent 角色 -->
+    <section id="agents" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-2xl font-bold text-slate-900">五、 三種 Agent 的角色分工與按需掛載機制</h2>
+        <p class="text-slate-500 text-sm mt-1">分層負責對話、任務規劃與設備智能，實現資源效益最大化</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <span class="px-2.5 py-1 rounded bg-amber-100 text-amber-800 text-xs font-bold">Agent 1 • 常駐</span>
+          <h3 class="text-base font-bold text-slate-900">使用者對話 Agent</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            負責與業務管理者互動。理解自然語言需求、維護跨會話長期對話記憶、掌握使用者偏好，並決定何時建立與委派 Task Agent。
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <span class="px-2.5 py-1 rounded bg-orange-100 text-orange-800 text-xs font-bold">Agent 2 • 長期任務</span>
+          <h3 class="text-base font-bold text-slate-900">Task Agent (任務核心)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            針對特定目標動態建立。具備任務專屬記憶，負責檢索 IoT API Registry、組裝跨設備能力、協商動態 Event 訂閱，並在收到事件後持續調適策略。
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <span class="px-2.5 py-1 rounded bg-rose-100 text-rose-800 text-xs font-bold">Agent 3 • 按需掛載</span>
+          <h3 class="text-base font-bold text-slate-900">IoT API Agent Shell</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            附加在 IoT API 上的輕量智能外殼。僅在 Task Agent 前來協商需求時才動態掛載，載入設備記憶與 Semantic/Context，建立 Event 規則後即可卸載！
+          </p>
+        </div>
+      </div>
+
+      <!-- Agent Shell 3 種狀態 -->
+      <div class="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 space-y-4">
+        <h3 class="text-lg font-bold text-blue-300">⚡ Agent Shell 的三態生命週期（資源極致優化）</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div class="bg-white/10 p-4 rounded-xl border border-white/10 space-y-2">
+            <span class="text-emerald-400 font-bold text-sm">狀態一：待命 (Standby)</span>
+            <p class="text-slate-300">IoT API 正常提供，Agent Shell 未掛載。零 AI Token 與算力消耗。</p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-xl border border-white/10 space-y-2">
+            <span class="text-amber-400 font-bold text-sm">狀態二：智能互動 (Active)</span>
+            <p class="text-slate-300">Task Agent 前來，Shell 瞬間掛載！載入記憶、推理狀態、協商並註冊動態 Event。</p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-xl border border-white/10 space-y-2">
+            <span class="text-blue-400 font-bold text-sm">狀態三：卸載監控 (Unloaded)</span>
+            <p class="text-slate-300">Shell 釋放卸載，但設備記憶與已註冊 Event 持續由底層輕量引擎常駐監控！</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 端到端運作流程 (Mermaid) -->
     <section id="lifecycle" class="space-y-6">
       <div class="border-b border-slate-200 pb-4">
-        <h2 class="text-2xl font-bold text-slate-900">5. 端到端動態運作生命週期（以「會議前預冷」為例）</h2>
-        <p class="text-slate-500 text-sm mt-1">展示從管理者一句話，到 AI 主動探詢、架構師標註、演算法精算至落地的完整時序</p>
+        <h2 class="text-2xl font-bold text-slate-900">六、 完整端到端運作流程</h2>
+        <p class="text-slate-500 text-sm mt-1">展示從管理者一句話，到 AI 主動探詢、架構師標註、動態事件註冊至自主閉環調適的時序</p>
       </div>
 
-      <div class="bg-white p-6 sm:p-10 rounded-2xl shadow-sm border border-slate-200 overflow-x-auto flex justify-center">
+      <div
+        class="bg-white p-6 sm:p-10 rounded-2xl shadow-sm border border-slate-200 overflow-x-auto flex justify-center">
         <div class="mermaid w-full max-w-2xl text-center">
-flowchart TD
-    S1["<b>❶ 管理者下達意圖</b><br/>『下午 2 點 12 樓大會議室開會，請提前預冷並兼顧省電』"]
-    S2["<b>❷ AI 大腦解析意圖</b><br/>判定任務為『空間預冷 + 需量抑制優化』"]
-    S3{"<b>❸ 搜尋建築語意圖譜</b><br/>Gateway 有空調 API，但未標註空間歸屬！"}
-    S4["<b>❹ 觸發缺失探詢 ➔ 架構師進場標註</b><br/>架構師將 VRV_1201 綁定至『12 樓大會議室（西曬、高熱慣性、25坪）』"]
-    S5["<b>❺ AI 大腦調用【演算法模型庫 API】</b><br/>• MPC 預冷 API 精算：最佳開機時間 13:38，開會前 15 分鐘提前斷冷<br/>• C-TimeGAN 虛擬試車：確認無超約風險"]
-    S6["<b>❻ AI 大腦自動組裝流程並呈送預測</b><br/>『預計 13:38 啟動，可省電 18%，開會準時達標』"]
-    S7["<b>❼ 管理者一鍵【核准】</b><br/>管理者審核確認無誤，按下核准放行"]
-    S8["<b>❽ 執行與固化</b><br/>• 13:38 準時透過【IoT Gateway API】下發指令開機<br/>• 成效滿意，一鍵【保存為常態排程】，未來會議自動套用"]
+          flowchart TD
+          S1["<b>❶ 業務管理者下達意圖</b><br />『幫我維持番茄適當土壤濕度，有異常即刻通知』"]
+          S2["<b>❷ 對話 Agent 理解需求</b><br />委派建立專屬【Task Agent】"]
+          S3{"<b>❸ 檢索 IoT API Registry</b><br />發現感測器與水泵 API，但缺少空間拓撲歸屬！"}
+          S4["<b>❹ 觸發缺失探詢 ➔ 建築語意架構師標註</b><br />架構師完成 Context 標註：綁定 3 號植栽盆與供水閥門"]
+          S5["<b>❺ Task Agent 動態掛載 Agent Shell</b><br />• Shell 載入設備記憶，評估物理閾值<br />• 動態建立 Event：Event_Moisture_Low (VWC
+          &lt; 25%)"]
+          S6["<b>❻ Task Agent 訂閱事件；Shell 安全卸載</b><br />底層輕量化 Event 引擎開始持續毫秒級監控"]
+          S7["<b>❼ 業務管理者一鍵【核准】</b><br />檢視策略報告無誤，核准長效守護執行"]
+          S8["<b>❽ 實體事件觸發 ➔ 自主多維閉環</b><br />• 濕度低於 25% 喚醒 Task Agent<br />• 檢查水箱水位與水泵健康，確認安全後開閥灌溉<br />• 完成自動管理並向對話
+          Agent 回報"]
 
-    S1 --> S2
-    S2 --> S3
-    S3 -->|發現缺漏| S4
-    S4 -->|語意完整| S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> S8
+          S1 --> S2
+          S2 --> S3
+          S3 -->|發現缺漏| S4
+          S4 -->|情境齊全| S5
+          S5 --> S6
+          S6 --> S7
+          S7 --> S8
 
-    style S1 fill:#DCE8FF,stroke:#2962FF,stroke-width:1.5px,color:#000000
-    style S2 fill:#FFEBA3,stroke:#C67D00,stroke-width:1.5px,color:#000000
-    style S3 fill:#FFF3E0,stroke:#E65100,stroke-width:1.5px,color:#000000
-    style S4 fill:#C8E6C9,stroke:#1B5E20,stroke-width:1.5px,color:#000000
-    style S5 fill:#F8BBD0,stroke:#880E4F,stroke-width:1.5px,color:#000000
-    style S6 fill:#FFEBA3,stroke:#C67D00,stroke-width:1.5px,color:#000000
-    style S7 fill:#DCE8FF,stroke:#2962FF,stroke-width:1.5px,color:#000000
-    style S8 fill:#E0F7FA,stroke:#00838F,stroke-width:1.5px,color:#000000
+          style S1 fill:#DCE8FF,stroke:#2962FF,stroke-width:1.5px,color:#000000
+          style S2 fill:#FFF4D6,stroke:#C67D00,stroke-width:1.5px,color:#000000
+          style S3 fill:#FFF3E0,stroke:#E65100,stroke-width:1.5px,color:#000000
+          style S4 fill:#C8E6C9,stroke:#1B5E20,stroke-width:1.5px,color:#000000
+          style S5 fill:#F8BBD0,stroke:#880E4F,stroke-width:1.5px,color:#000000
+          style S6 fill:#E0F7FA,stroke:#00838F,stroke-width:1.5px,color:#000000
+          style S7 fill:#DCE8FF,stroke:#2962FF,stroke-width:1.5px,color:#000000
+          style S8 fill:#EDE7F6,stroke:#4527A0,stroke-width:1.5px,color:#000000
         </div>
       </div>
     </section>
 
-    <!-- 首批演算法模型庫 (Algorithm as API) -->
-    <section id="algorithms" class="space-y-6">
-      <div class="border-b border-slate-200 pb-4">
-        <h2 class="text-2xl font-bold text-slate-900">6. 首批演算法模型庫清單（Algorithm as API 規格）</h2>
-        <p class="text-slate-500 text-sm mt-1">將高深數理、熱力學與機器學習封裝為標準 API 微服務，供 AI 大腦自由調用</p>
+    <!-- 協同 AI 深度研究方向 -->
+    <section id="future" class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+      <div class="border-b border-slate-100 pb-3 flex items-center justify-between">
+        <h2 class="text-xl font-bold text-slate-900">七、 供另一個 AI 深入研究的 8 大方向</h2>
+        <span class="text-xs bg-blue-100 text-blue-800 font-bold px-3 py-1 rounded-full">協同研究基準</span>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- 演算法 1 -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2 hover:border-blue-300 transition">
-          <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800">API 1 • MPC 負載預測</span>
-          <h3 class="text-base font-bold text-slate-900">VRV 壓縮機預冷降載控制</h3>
-          <p class="text-xs text-slate-600 leading-relaxed">
-            結合天氣預報與空間熱慣性，提前精算預冷啟動時間，會議結束前 15 分鐘提前斷冷利用餘溫，平抑尖峰用電衝擊。
-          </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">1. IoT API 標準化描述</strong>
+          <p class="text-slate-600">以 OpenAPI / JSON-LD / Brick Schema 標準化定義 API + Semantic + Context。</p>
         </div>
-
-        <!-- 演算法 2 -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2 hover:border-blue-300 transition">
-          <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">API 2 • Free Cooling</span>
-          <h3 class="text-base font-bold text-slate-900">ERV 智慧空氣焓值旁通利用</h3>
-          <p class="text-xs text-slate-600 leading-relaxed">
-            即時計算室內外空氣焓值（Enthalpy），秋涼或早晚室外乾爽時自動開啟 ERV 旁通模式引進自然冷源，空調壓縮機降頻或停機。
-          </p>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">2. 語意圖譜與檢索</strong>
+          <p class="text-slate-600">Task Agent 如何藉由向量化與 Graph Query 毫秒級定位合適設備。</p>
         </div>
-
-        <!-- 演算法 3 -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2 hover:border-blue-300 transition">
-          <span class="text-xs font-bold px-2 py-0.5 rounded bg-indigo-100 text-indigo-800">API 3 • 卡爾曼濾波 + 模糊控制</span>
-          <h3 class="text-base font-bold text-slate-900">基於 CO₂ 累積速率之變頻通氣 (DCV)</h3>
-          <p class="text-xs text-slate-600 leading-relaxed">
-            分析 CO₂ 濃度上升/下降斜率，克服感測器反應延遲，精準預估人流變動，動態調整 ERV 變頻風量，節能又確保好空氣。
-          </p>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">3. Agent Shell 狀態機</strong>
+          <p class="text-slate-600">掛載、記憶加載、推理協商、事件委派與卸載之標準狀態轉移生命週期。</p>
         </div>
-
-        <!-- 演算法 4 -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2 hover:border-blue-300 transition">
-          <span class="text-xs font-bold px-2 py-0.5 rounded bg-rose-100 text-rose-800">API 4 • Deep RL (A3C)</span>
-          <h3 class="text-base font-bold text-slate-900">結合時間電價之尖峰負載轉移與輪卸</h3>
-          <p class="text-xs text-slate-600 leading-relaxed">
-            尖峰時段或即將超約時，自動對非核心區域（走廊、茶水間）VRV 進行 1°C 微幅上調輪換卸載，避開超約罰款與高尖峰電費。
-          </p>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">4. 設備專屬記憶結構</strong>
+          <p class="text-slate-600">如何結構化持久存儲設備的長期運行日誌、異常模式與老化補償參數。</p>
         </div>
-
-        <!-- 演算法 5 -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2 hover:border-blue-300 transition">
-          <span class="text-xs font-bold px-2 py-0.5 rounded bg-purple-100 text-purple-800">API 5 • C-TimeGAN 數位雙生</span>
-          <h3 class="text-base font-bold text-slate-900">虛擬試車與自適應調優模擬</h3>
-          <p class="text-xs text-slate-600 leading-relaxed">
-            控制指令下發前，先在數位鏡像中進行無風險虛擬試車，模擬溫度震盪與需量影響，能使實體大樓溫度震盪最高降低 52.1%。
-          </p>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">5. 輕量化 Event 引擎</strong>
+          <p class="text-slate-600">在邊緣端 Gateway 旁高效率執行複雜複合條件比對，不佔 LLM 算力。</p>
         </div>
-
-        <!-- 演算法 6 -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2 hover:border-blue-300 transition">
-          <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800">API 6 • XGBoost + CUSUM</span>
-          <h3 class="text-base font-bold text-slate-900">ISO 50001 動態能源基線與異常告警</h3>
-          <p class="text-xs text-slate-600 leading-relaxed">
-            排除氣溫與人流干擾建立動態基線，即時計算能耗累積偏差。當空調冷媒外洩或機械老化時，第一時間精準定位故障點。
-          </p>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">6. 跨 Agent 通訊規範</strong>
+          <p class="text-slate-600">Task Agent、對話 Agent 與 Agent Shell 間的標準 JSON/gRPC 訊息通訊格式。</p>
         </div>
-      </div>
-    </section>
-
-    <!-- 結論核心優勢 -->
-    <section class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-      <h2 class="text-xl font-bold text-slate-900">7. 結論：架構的核心優勢</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
-        <div class="space-y-1">
-          <h3 class="font-bold text-blue-600 text-sm">保護既有投資</h3>
-          <p class="text-xs text-slate-600 leading-relaxed">不推翻既有的 IoT Gateway 與硬體線路，站在現有設備 API 基礎上升維。</p>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">7. 長效任務容錯與恢復</strong>
+          <p class="text-slate-600">伺服器重啟或網路斷線時，長週期自主 Task Agent 的狀態快照與無損恢復機制。</p>
         </div>
-        <div class="space-y-1">
-          <h3 class="font-bold text-emerald-600 text-sm">免除寫死功能</h3>
-          <p class="text-xs text-slate-600 leading-relaxed">不再需要工程師逐一開發特定場景功能，只要語意標註完整，AI 大腦自主組裝流程。</p>
-        </div>
-        <div class="space-y-1">
-          <h3 class="font-bold text-purple-600 text-sm">人機職責純粹</h3>
-          <p class="text-xs text-slate-600 leading-relaxed">管理者管目標與核准，架構師管語意圖譜，算法庫管精算，AI 大腦管全域調度。</p>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">8. 安全互鎖防呆 (Guardrails)</strong>
+          <p class="text-slate-600">防止 AI 自主決策引發設備燒毀或工安跳電的物理硬性防呆規則庫。</p>
         </div>
       </div>
     </section>
@@ -460,8 +518,8 @@ flowchart TD
   <!-- 頁尾 -->
   <footer class="bg-slate-900 text-slate-400 py-8 text-center text-xs border-t border-slate-800">
     <div class="max-w-7xl mx-auto px-4 space-y-2">
-      <p class="font-semibold text-slate-300">AI-Native 智慧建築管理系統 • Building as API</p>
-      <p>專為高階架構評審、系統主管展示與專案導入設計之標準規格書</p>
+      <p class="font-semibold text-slate-300">Agentic AIoT 智慧物聯網架構設計規格書 • 雙角色與三層 Agent 協同規範</p>
+      <p>可直接作為系統開發、架構評審與跨 AI 協同研究的統一基準文檔</p>
     </div>
   </footer>
 
@@ -479,4 +537,5 @@ flowchart TD
     });
   </script>
 </body>
+
 </html>
