@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic AIoT 智能建築實戰作業手冊 (Work Manual)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Mermaid.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    code,
+    pre {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Mermaid 圖形高對比與純向量排版保護（嚴禁覆寫 white-space / word-break / font-size / padding） */
+    svg foreignObject {
+      overflow: visible;
+    }
+
+    .mermaid .nodeLabel,
+    .mermaid .label,
+    .mermaid text,
+    #modal-svg-wrapper .nodeLabel,
+    #modal-svg-wrapper .label,
+    #modal-svg-wrapper text {
+      color: #000000;
+      fill: #000000;
+    }
+
+    .mermaid svg {
+      display: block;
+      max-width: none;
+    }
+
+    /* 放大控制相關樣式 */
+    .mermaid-zoom-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+    }
+
+    .mermaid-viewport {
+      overflow: auto;
+      width: 100%;
+      min-height: 480px;
+      max-height: 80vh;
+      padding: 3rem 1.5rem 1.5rem;
+      cursor: grab;
+      user-select: none;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 #f8fafc;
+    }
+
+    .mermaid-viewport:active {
+      cursor: grabbing;
+    }
+
+    .mermaid-zoom-target {
+      width: max-content;
+      margin: 0 auto;
+    }
+
+    /* 全螢幕 Modal */
+    #mermaid-modal.active {
+      display: flex !important;
+    }
+
+    #modal-viewport {
+      cursor: grab;
+      user-select: none;
+    }
+
+    #modal-viewport:active {
+      cursor: grabbing;
+    }
+
+    #modal-svg-wrapper {
+      background-color: #ffffff;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      flex-shrink: 0;
+      will-change: transform;
+    }
+  </style>
+</head>
+
+<body
+  class="bg-slate-50 text-slate-800 antialiased selection:bg-teal-100 selection:text-teal-900 min-h-screen flex flex-col">
+
+  <!-- 頂部導覽列 -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span
+          class="text-2xl font-black bg-gradient-to-r from-teal-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">AIoT
+          Work Manual</span>
+        <span
+          class="text-xs bg-teal-50 text-teal-800 font-bold px-2.5 py-1 rounded-full border border-teal-200">智能建築實戰手冊</span>
+      </div>
+      <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium text-slate-600">
+        <a href="#principles" class="hover:text-teal-600 transition">一、彈性與極簡原則</a>
+        <a href="#concept-mapping" class="hover:text-teal-600 transition">二、架構師 UI 與概念圖落點</a>
+        <a href="#executive-ui" class="hover:text-teal-600 transition">三、業務主管 UI 設計</a>
+        <a href="#sop" class="hover:text-teal-600 transition">四、六階段建置 SOP</a>
+        <a href="#playbooks" class="hover:text-teal-600 transition">五、6+N 情境組裝配方</a>
+      </nav>
+      <div class="flex items-center gap-2 text-xs">
+        <a href="aiot-archetecture.html"
+          class="px-3 py-1.5 rounded-lg border border-slate-300 bg-slate-50 hover:bg-slate-100 font-semibold text-slate-700 transition">架構規格書</a>
+        <a href="aiot-workmanual.html"
+          class="px-3 py-1.5 rounded-lg border border-teal-200 bg-teal-50 hover:bg-teal-100 font-semibold text-teal-800 transition">實戰作業手冊</a>
+        <a href="aiot-ui-mockup.html"
+          class="px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 font-semibold text-slate-600 transition">畫面規格</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主要內容區 -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+    <!-- 頁頭標題區 -->
+    <div class="space-y-4 border-b border-slate-200 pb-8">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 text-teal-700 text-xs font-bold border border-teal-200">
+        <span>Smart Building Implementation Guide</span>
+        <span>•</span>
+        <span>BOS Gateway &amp; Pluggable AI Capabilities</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        Agentic AIoT 智能建築實戰作業手冊：架構師與業務主管協同指南
+      </h1>
+      <p class="text-base sm:text-lg text-slate-600 max-w-4xl leading-relaxed">
+        以智慧建築（結合 BOS Gateway 安全橋接與開放式演算法插件）為核心案例，明確規範<strong>「架構師 4
+          大工作台在整體概念架構圖中的實作落點」</strong>、<strong>「業務主管零門檻指揮艙」</strong>、<strong>「BOS Gateway IoT 健康監控」</strong>與<strong>「6
+          + N 彈性情境組裝流程」</strong>。
+      </p>
+    </div>
+
+    <!-- 一、 核心設計準則 -->
+    <section id="principles" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4 flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">一、 系統落地兩大核心準則：開放彈性掛載 ＋ 極簡 IoT 健康監控</h2>
+          <p class="text-slate-500 text-sm mt-1">避免發展成笨重寫死的傳統管理後台，保持核心純粹與無限擴充彈性</p>
+        </div>
+        <span class="text-xs bg-teal-100 text-teal-800 font-bold px-3 py-1 rounded-lg">Core Design Boundaries</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 sm:p-7 rounded-2xl bg-white border-2 border-purple-200 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full bg-purple-600 text-white text-xs font-bold">準則 1 • 無限擴充彈性</span>
+            <span class="text-xs text-purple-700 font-semibold">Pluggable Capability Registry</span>
+          </div>
+          <h3 class="text-lg font-black text-slate-900">開放式能力與演算法插件底座（不綁死固定 6 點）</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            系統絕不寫死為「6 個孤立的節能功能頁」。所有專用數值／機器學習演算法（MPC、焓值運算、Kalman+Fuzzy、Deep RL、C-TimeGAN、XGBoost，乃至未來第 7、第 8
+            個冰機群控、儲能調度、智慧照明模型）全部封裝為標準 <code>API + Semantic + Context</code> 插件隨插即用。首批 6
+            點需求只是驗證此彈性底座的<strong>「首批標竿任務配方」</strong>。
+          </p>
+        </div>
+
+        <div class="p-6 sm:p-7 rounded-2xl bg-white border-2 border-teal-200 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full bg-teal-600 text-white text-xs font-bold">準則 2 • 極簡基礎維運</span>
+            <span class="text-xs text-teal-700 font-semibold">BOS Gateway Health First</span>
+          </div>
+          <h3 class="text-lg font-black text-slate-900">基礎管理唯留「BOS Gateway 接入之 IoT 是否正常」</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            不重造工單、排班、人事財務等外圍系統（需要時一律以 MCP 外部掛載）。基本管理精準聚焦生命線：<strong>即時監控 BOS Gateway 通道心跳、點位連線存活、資料品質（有無卡死
+              Frozen／超界）與控制讀回確認（Read-back）</strong>；異常點位即時亮燈並自動隔離 AI 控制，確保 AI 絕不依據壞數據誤判。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 二、 架構師四大工作台與「整體概念架構圖」實作落點 -->
+    <section id="concept-mapping" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4 flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">二、 架構師 4 大工作台與「整體概念架構圖」實作落點映射</h2>
+          <p class="text-slate-500 text-sm mt-1">直接以規格書「三、整體概念架構圖 (Conceptual &amp; Agentic View)」為底圖，標明架構師 4 大管理 UI
+            分別在架構哪個位置發揮作用</p>
+        </div>
+        <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-3 py-1 rounded-lg">Conceptual View
+          Mapping</span>
+      </div>
+
+      <!-- 可放大縮小的 Mermaid 容器 -->
+      <div class="mermaid-zoom-container shadow-sm" data-diagram-title="二、架構師 4 大工作台於「整體概念架構圖」之實作落點">
+        <div
+          class="absolute top-3 right-3 flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-2.5 py-1.5 rounded-xl shadow-md border border-slate-200 z-10 text-xs">
+          <span class="text-slate-400 text-[11px] font-semibold pr-1">縮放控制:</span>
+          <button type="button"
+            class="btn-zoom-in px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition shadow-sm active:scale-95"
+            title="放大 (+25%)">＋</button>
+          <button type="button"
+            class="btn-zoom-out px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition shadow-sm active:scale-95"
+            title="縮小 (-25%)">－</button>
+          <button type="button"
+            class="btn-zoom-reset px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition shadow-sm active:scale-95"
+            title="重置為 100%">↺</button>
+          <span
+            class="zoom-badge text-slate-600 font-mono text-[11px] font-bold px-1.5 min-w-[42px] text-center">100%</span>
+          <div class="h-3.5 w-px bg-slate-200 mx-0.5"></div>
+          <button type="button"
+            class="btn-fullscreen px-3 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold transition flex items-center gap-1 shadow-sm active:scale-95"
+            title="以高解析全螢幕檢視此圖">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+            </svg>
+            <span>全螢幕檢視</span>
+          </button>
+        </div>
+
+        <div class="mermaid-viewport">
+          <div class="mermaid-zoom-target">
+            <div class="mermaid text-center">
+              flowchart TD
+              subgraph Role1Layer ["【角色 1 • 業務決策】業務管理者 / 營運主管"]
+              User["<b>👤 業務管理者 (Executive Portal)</b><br />• 一眼掌握 BOS Gateway / 全棟 IoT 健康燈號<br />• 自然語言下達目標 /
+              檢視預測卡【一鍵核准】<br />• 異常時隨時觸發【L4 一鍵緊急切回既有 BAS】"]
+              end
+
+              UserAgent["<b>① 使用者對話 Agent</b><br />• 理解業務目標與設備狀態查詢<br />• 維護對話記憶並委派任務"]
+
+              TaskAgent["<b>② Task Agent (任務編排核心)</b><br />• 動態挑選並組裝任意已掛載之 IoT / 外部 API / MCP / 演算法插件<br />• 嚴格依循 L0~L3
+              授權防線執行預測、建議或閉環調控"]
+
+              subgraph DigitalLayer ["統一數位能力與空間圖譜層 【全部以 API 為基準】"]
+              direction TB
+
+              subgraph KnowledgeInput ["【角色 2 • 知識架構】建築語意架構師 — 四大管理 UI 工作台"]
+              direction LR
+              WB1["<b>🛠️ 工作台 ①：BOS Gateway 接入與 IoT 健康監控台</b><br />• 監控通道心跳 / 點位資料品質 / 設定值讀回狀態<br />• 批次匯入點位並設定 Semantic
+              物理安全上下限"]
+              WB2["<b>🛠️ 工作台 ②：Block 空間拓撲與屬性畫布</b><br />• 拼裝樓層空間【堆疊 / 相連 / 內裝】<br />• 標註西曬熱慣性、人流特性、核心區 vs 彈性緩衝區<br />•
+              將正常運作之 IoT 拖入 Block 並綁定共軛迴路"]
+              WB3["<b>🛠️ 工作台 ③：開放式能力與演算法掛載中心</b><br />• 隨插即用註冊外部 API、MCP 與任意 AI 演算法插件<br />• 支援切換【虛擬試車沙盒模式】與正式執行模式"]
+              WB4["<b>🛠️ 工作台 ④：L0~L4 控制權限與生成式 UI 樣板台</b><br />• 設定唯讀 L0 ➔ 建議 L1 ➔ 核准 L2 ➔ 自治 L3 防線<br />•
+              與業務主管商談定稿卡片樣板並跨樓層批次套用"]
+              end
+
+              subgraph APICapabilities ["三大對等 API 能力來源 【Everything as API — 開放彈性掛載】"]
+              direction LR
+              IoTAPICore["<b>IoT API (BOS Gateway 點位封裝)</b><br />• API: 設備讀寫與讀回確認介面<br />• Semantic: 物理單位 / 安全上下限<br />•
+              <b>Structural Context: 迴路 / 共軛群組 / 空間歸屬</b>"]
+              ExtAPICore["<b>外部服務與演算法插件 API (無限擴充)</b><br />• 氣象局 / 台電時間電價 API<br />•
+              <b>可掛載演算法插件【MPC/焓值/RL/基線/未來第N種】</b><br />• Semantic & Context: 模型輸入輸出與適用條件"]
+              MCPCore["<b>外部 MCP 服務 (企業與擴充工具)</b><br />• 會議室行事曆 / 門禁到班人數 MCP<br />• <b>可擴充企業系統與模擬沙盒 MCP</b><br />•
+              Semantic & Context: 組織排程與權限邊界"]
+              end
+
+              subgraph BlockSubsystem ["Block 空間基元 【地理與視覺實體】"]
+              BlockCore["<b>Block 空間實體</b><br />• 堆疊 / 相連 / 內裝幾何拓撲<br />• 空間標籤【西曬熱慣性 / 需量紅綠分區】<br />• 驅動 AI
+              自動生成樓層分區熱力圖"]
+              end
+
+              subgraph ShellLayer ["通用 Agent Shell 智能外殼層 【按需掛載】"]
+              direction LR
+              IoTShell["<b>③ IoT Agent Shell</b><br />• <b>Runtime Context: 點位健康度 / 現場手動覆寫</b><br />• 異常點位自動隔離 / 協商設備動態
+              Event"]
+              ExtShell["<b>③ External & Algo Shell</b><br />• <b>Runtime Context: 配額快取 / 沙盒或正式狀態</b><br />• 協商氣象電價與演算法觸發
+              Event"]
+              MCPShell["<b>③ MCP Shell</b><br />• <b>Runtime Context: 工具自適應 / 排程狀態</b><br />• 協商會議與組織動態 Event"]
+              end
+
+              IoTAPICore ---|空間裝載與共軛關聯| BlockCore
+              ExtAPICore ---|區域與演算法情境對齊| BlockCore
+              MCPCore ---|會議與組織空間對齊| BlockCore
+
+              IoTAPICore --- IoTShell
+              ExtAPICore --- ExtShell
+              MCPCore --- MCPShell
+              end
+
+              PhysicalDevices["<b>🏢 實體現場設備 (由 BOS Gateway 安全橋接)</b><br />VRV 空調、ERV 全熱交換、冰水主機、電表、溫濕與 CO2 感測器"]
+              CloudAPIs["<b>☁️ 外部雲端 API 與自建演算法微服務</b><br />氣象局、台電電價、MPC / RL / C-TimeGAN / XGBoost 及新增模型容器"]
+              MCPServers["<b>🔌 第三方 MCP 伺服器</b><br />Google Calendar、門禁人流、未來擴充外部系統"]
+              EventSystem["<b>⚡ Event 事件系統 (獨立長效監控)</b><br />輕量化即時條件過濾、倒數計時觸發、發布與訂閱"]
+
+              %% 四大工作台在概念架構圖中的實作落點連線
+              WB1 ==>|實作落點 ①：匯入點位並定義 Semantic 安全上下限| IoTAPICore
+              WB1 -.->|實作落點 ①：監測 BOS 通道心跳與點位讀回健康度| PhysicalDevices
+              WB2 ==>|實作落點 ②：建構空間拓撲與紅綠分區屬性| BlockCore
+              WB2 -.->|實作落點 ②：拖拉綁定寫入 Structural Context| IoTAPICore
+              WB3 ==>|實作落點 ③：隨插即用註冊外部 API 與演算法插件| ExtAPICore
+              WB3 ==>|實作落點 ③：隨插即用註冊 MCP 工具插件| MCPCore
+              WB4 ==>|實作落點 ④：商談定稿並派發生成式 UI 樣板| User
+              WB4 ==>|實作落點 ④：管控 L0~L4 核准閘門與自治邊界| TaskAgent
+
+              %% 系統核心運作閉環
+              User -->|❶ 下達目標或查詢設備健康| UserAgent
+              UserAgent -->|委派建立任務| TaskAgent
+              TaskAgent -->|❸ 檢索設備能力與空間結構情境| IoTAPICore
+              TaskAgent -->|動態調用外部數據與演算法插件| ExtAPICore
+              TaskAgent -->|動態調用排程與人數 MCP| MCPCore
+              TaskAgent -->|檢索 Block 拓撲與分區標籤| BlockCore
+              TaskAgent -->|❹ 按需掛載協商動態事件| IoTShell
+
+              IoTShell -->|❺ 註冊設備監控事件| EventSystem
+              ExtShell -->|❺ 註冊氣象電價與模型事件| EventSystem
+              MCPShell -->|❺ 註冊會議排程事件| EventSystem
+
+              IoTAPICore -->|受控讀寫與設定值讀回| PhysicalDevices
+              ExtAPICore -->|REST 呼叫與演算法推論| CloudAPIs
+              MCPCore -->|MCP 標準協定| MCPServers
+
+              PhysicalDevices -.->|BOS 點位數據與品質標記| EventSystem
+              CloudAPIs -.->|輪詢與推播數據| EventSystem
+              MCPServers -.->|排程變更通知| EventSystem
+
+              EventSystem -->|❻ 條件成立精準喚醒| TaskAgent
+              TaskAgent -->|❼ 依樣板呈報預測與決策卡| User
+              User -->|❽ L2 一鍵核准或 L4 緊急接管| TaskAgent
+
+              %% 節點高對比樣式設定
+              style WB1 fill:#CCFBF1,stroke:#0F766E,stroke-width:2.5px,color:#000000
+              style WB2 fill:#FEF3C7,stroke:#D97706,stroke-width:2.5px,color:#000000
+              style WB3 fill:#EDE9FE,stroke:#6D28D9,stroke-width:2.5px,color:#000000
+              style WB4 fill:#DBEAFE,stroke:#1D4ED8,stroke-width:2.5px,color:#000000
+              style User fill:#FFFFFF,stroke:#2962FF,stroke-width:1.5px,color:#000000
+              style UserAgent fill:#FFF4D6,stroke:#C67D00,stroke-width:2px,color:#000000
+              style TaskAgent fill:#FFE082,stroke:#FF8F00,stroke-width:2px,color:#000000
+              style IoTAPICore fill:#F3F4F6,stroke:#0F766E,stroke-width:2px,color:#000000
+              style ExtAPICore fill:#F3F4F6,stroke:#6D28D9,stroke-width:2px,color:#000000
+              style MCPCore fill:#F3F4F6,stroke:#6D28D9,stroke-width:2px,color:#000000
+              style BlockCore fill:#FFF8E1,stroke:#D97706,stroke-width:2px,color:#000000
+              style IoTShell fill:#FCE4EC,stroke:#C2185B,stroke-width:1.5px,color:#000000
+              style ExtShell fill:#FCE4EC,stroke:#C2185B,stroke-width:1.5px,color:#000000
+              style MCPShell fill:#FCE4EC,stroke:#C2185B,stroke-width:1.5px,color:#000000
+              style PhysicalDevices fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#000000
+              style CloudAPIs fill:#E8EAF6,stroke:#3949AB,stroke-width:2px,color:#000000
+              style MCPServers fill:#E0F2F1,stroke:#00695C,stroke-width:2px,color:#000000
+              style EventSystem fill:#E0F7FA,stroke:#00838F,stroke-width:2px,color:#000000
+            </div>
+          </div>
+        </div>
+        <div
+          class="px-4 py-2 bg-slate-50 border-t border-slate-200 text-[11px] text-slate-500 flex justify-between items-center">
+          <span>💡 提示：可使用右上角 <b>＋ / －</b> 或 <b>Ctrl + 滾輪</b> 放大縮小，或點擊 <b>全螢幕檢視</b> 自由縮放與拖曳平移</span>
+          <span class="text-slate-400">粗箭頭 (==&gt;) 標示四大工作台在概念架構中的直接實作落點</span>
+        </div>
+      </div>
+
+      <!-- 四大工作台實作落點詳解卡片 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 工作台 1 -->
+        <div class="bg-teal-50/50 p-6 rounded-2xl border-2 border-teal-200 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-lg bg-teal-700 text-white text-xs font-bold">工作台 ①</span>
+            <span class="text-xs font-bold text-teal-800">落點：IoT API ⟷ 實體設備 ＆ IoT Shell</span>
+          </div>
+          <h3 class="text-base font-black text-slate-900">BOS Gateway 接入與 IoT 健康監控台</h3>
+          <ul class="text-xs text-slate-700 space-y-1.5 leading-relaxed list-disc pl-4">
+            <li><strong>概念圖實作位置</strong>：直接作用於 <code>IoT API (實體設備)</code> 節點與其對接 <code>🏢 實體現場設備</code> 的橋接線上，並將健康狀態同步至
+              <code>③ IoT Agent Shell</code> 的 <code>Runtime Context</code>。</li>
+            <li><strong>IoT 正常性監控</strong>：即時檢視 BOS Gateway 通道心跳、各點位是否斷線逾時（Stale）、數值卡死（Frozen）或讀回失敗（Read-back
+              Error）；異常點位自動隔離，禁止 AI 拿壞數據做控制。</li>
+            <li><strong>點位匯入與安全邊界</strong>：批次匯入 BOS 點位清冊，定義 <code>Semantic</code> 物理安全上下限（如 18~28°C、濕度 &lt; 65%、最短啟停間隔 5
+              分鐘）。</li>
+          </ul>
+        </div>
+
+        <!-- 工作台 2 -->
+        <div class="bg-amber-50/50 p-6 rounded-2xl border-2 border-amber-200 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-lg bg-amber-600 text-white text-xs font-bold">工作台 ②</span>
+            <span class="text-xs font-bold text-amber-800">落點：Block 空間實體 ＆ Structural Context</span>
+          </div>
+          <h3 class="text-base font-black text-slate-900">Block 空間拓撲與屬性畫布</h3>
+          <ul class="text-xs text-slate-700 space-y-1.5 leading-relaxed list-disc pl-4">
+            <li><strong>概念圖實作位置</strong>：直接建構 <code>Block 空間實體</code> 節點，以及 <code>三大 API --- Block</code> 的空間關聯線，並寫入
+              <code>IoT API</code> 的 <code>Structural Context（結構情境）</code>。</li>
+            <li><strong>幾何拼裝與空間標籤</strong>：拖拉完成樓層堆疊（Stack）、房間內裝（Nest）與走廊相連（Connect）；標註<strong>西曬熱慣性、人流變動特性、以及 DR 需量分區（🔴
+                核心保護區 vs. 🟢 彈性緩衝區）</strong>。</li>
+            <li><strong>設備拖拉裝載與共軛迴路</strong>：把確認健康的 IoT 設備拖進 Block，並指定跨設備共軛關係（如哪台 ERV 與哪幾台 VRV 共用供氣區）。</li>
+          </ul>
+        </div>
+
+        <!-- 工作台 3 -->
+        <div class="bg-purple-50/50 p-6 rounded-2xl border-2 border-purple-200 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-lg bg-purple-700 text-white text-xs font-bold">工作台 ③</span>
+            <span class="text-xs font-bold text-purple-800">落點：外部服務 API ＆ 外部 MCP 服務</span>
+          </div>
+          <h3 class="text-base font-black text-slate-900">開放式能力與演算法掛載中心 (Pluggable Registry)</h3>
+          <ul class="text-xs text-slate-700 space-y-1.5 leading-relaxed list-disc pl-4">
+            <li><strong>概念圖實作位置</strong>：直接作用於 <code>外部服務 API</code> 與 <code>外部 MCP 服務</code> 兩大支柱（含外掛的
+              <code>③ External / MCP Shell</code>）。</li>
+            <li><strong>演算法即插件（無限擴充彈性）</strong>：在 Everything as API 架構下，無論是氣象／電價 API、行事曆 MCP，或是<strong>任意專用 AI
+                演算法容器（MPC、焓值、Kalman+Fuzzy、Deep RL、C-TimeGAN、XGBoost 及未來第 7~N 種新模型）</strong>，皆以統一
+              <code>API + Semantic + Context</code> 標準註冊掛載，供 <code>Task Agent</code> 自由組合。</li>
+            <li><strong>虛擬試車沙盒模式切換</strong>：可將特定模型與樓層切為「沙盒模擬模式（不寫入 BOS Gateway）」，驗證穩定後再切回正式執行。</li>
+          </ul>
+        </div>
+
+        <!-- 工作台 4 -->
+        <div class="bg-blue-50/50 p-6 rounded-2xl border-2 border-blue-200 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-lg bg-blue-700 text-white text-xs font-bold">工作台 ④</span>
+            <span class="text-xs font-bold text-blue-800">落點：雙角色商談連線 ＆ Task Agent 核准防線</span>
+          </div>
+          <h3 class="text-base font-black text-slate-900">L0～L4 控制權限與生成式 UI 樣板台</h3>
+          <ul class="text-xs text-slate-700 space-y-1.5 leading-relaxed list-disc pl-4">
+            <li><strong>概念圖實作位置</strong>：橫跨 <code>👤 架構師 --- 👤 業務管理者</code> 商談線，以及
+              <code>② Task Agent ➔ ❼ 呈報決策卡 / ❽ 一鍵核准</code> 的治理閘門。</li>
+            <li><strong>L0～L4 分級治理防線</strong>：按區域設定 <code>L0 唯讀觀察</code> ➔ <code>L1 僅提建議</code> ➔ <code>L2 主管核准寫回</code>
+              ➔ <code>L3 白名單邊界自治</code>（並支援 <code>L4 緊急切回既有 BAS</code>）。</li>
+            <li><strong>UI 樣板共創與全棟複製</strong>：與業務主管商談定稿卡片樣板（JSON Schema），以 Block 為變數一鍵批次套用至全棟標準樓層。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 三、 業務主管專屬管理 UI 設計 -->
+    <section id="executive-ui" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4 flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">三、 業務主管專屬管理 UI 設計 (Executive AI BOS Portal)</h2>
+          <p class="text-slate-500 text-sm mt-1">零技術門檻：1 個常駐輕量指揮艙（含 BOS Gateway IoT 健康燈號）＋ 4 類按需浮現的生成式決策卡</p>
+        </div>
+        <span class="text-xs bg-blue-100 text-blue-800 font-bold px-3 py-1 rounded-lg">Zero-Friction Executive UI</span>
+      </div>
+
+      <!-- 模擬主管頂部常駐指揮艙 UI 預覽 -->
+      <div class="bg-slate-900 text-white p-5 sm:p-6 rounded-2xl shadow-lg space-y-4 border border-slate-700">
+        <div class="flex items-center justify-between flex-wrap gap-3 border-b border-slate-700/80 pb-4">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span
+              class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              BOS Gateway 正常 ｜ 全棟 IoT 99.4% 在線 (1 點位異常已自動隔離)
+            </span>
+            <span
+              class="px-3 py-1.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40 text-xs font-bold">
+              契約需量：742 / 850 kW (安全餘裕 12.7%)
+            </span>
+            <span
+              class="px-3 py-1.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-bold">
+              當前模式：L2 核准執行 ／ 部分常態 L3 自治
+            </span>
+          </div>
+          <button type="button"
+            class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-black shadow transition cursor-default">
+            🛑 L4 緊急接管：一鍵切回既有 BAS
+          </button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-300">
+          <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-1">
+            <div class="font-bold text-white">💬 自然語言雙向對話（Web / 手機連動）</div>
+            <p class="text-slate-400">直接詢問「12F 空調現在狀態正常嗎？」或下令「下午大會議室 30 人外賓預冷並壓低尖峰電費」。</p>
+          </div>
+          <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-1">
+            <div class="font-bold text-white">📡 極簡 IoT 異常透明化</div>
+            <p class="text-slate-400">點擊健康燈號即可查看哪顆感測器斷線或現場手動鎖定中，確保 AI 不會在設備故障時盲目調控。</p>
+          </div>
+          <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-1">
+            <div class="font-bold text-white">🔄 常駐任務開關抽屜</div>
+            <p class="text-slate-400">一覽目前運作中的長效節能與監控 Task Agent，主管可隨時暫停、調整目標或固化為常態規則。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 四大生成式決策卡片樣板 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-xs">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2.5">
+          <span class="px-2.5 py-0.5 rounded bg-blue-100 text-blue-800 font-bold">樣板 A • 事前排程決策</span>
+          <h3 class="text-sm font-bold text-slate-900">預測與排程核准卡</h3>
+          <p class="text-slate-600 leading-relaxed">呈現天氣＋排程推理依據、「傳統暴衝紅線 vs. AI 平穩預冷綠線」預測圖、舒適度滑桿與【✅ 一鍵核准】（執行後回報 BOS
+            讀回確認值）。</p>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2.5">
+          <span class="px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">樣板 B • 空間動態監控</span>
+          <h3 class="text-sm font-bold text-slate-900">樓層紅綠分區熱力圖</h3>
+          <p class="text-slate-600 leading-relaxed">由 Block 自動生成平面圖，直觀標示 🔴 核心保護區（恆溫不卸載）與 🟢 彈性緩衝區（10 分鐘接力微調 +1°C
+            卸載中）及換氣狀態。</p>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2.5">
+          <span class="px-2.5 py-0.5 rounded bg-purple-100 text-purple-800 font-bold">樣板 C • 變更前無風險驗證</span>
+          <h3 class="text-sm font-bold text-slate-900">虛擬試車驗收報告卡</h3>
+          <p class="text-slate-600 leading-relaxed">空間改裝或組織調整時，對比「現場盲測震盪 vs. 沙盒試車穩定曲線（如震盪降低 52.1%）」，主管確認後一鍵核准部署。</p>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2.5">
+          <span class="px-2.5 py-0.5 rounded bg-rose-100 text-rose-800 font-bold">樣板 D • 診斷與安全防線</span>
+          <h3 class="text-sm font-bold text-slate-900">基線偏離抓漏與險情卡</h3>
+          <p class="text-slate-600 leading-relaxed">呈現排除氣溫與人數干擾後的動態能源基線，當累積偏離超標或發生初期險情時，直接點名異常 Block 與疑似故障設備。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 四、 架構師端到端建置事項與六階段 SOP -->
+    <section id="sop" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4 flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">四、 架構師端到端建置事項與六階段推進流程 (SOP)</h2>
+          <p class="text-slate-500 text-sm mt-1">依循「先確認點位正常 (L0) ➔ 建空間語意 ➔ 掛載演算法插件 (L1) ➔ 樣板商談與受控寫回 (L2) ➔ 邊界自治全棟複製
+            (L3)」穩健推進</p>
+        </div>
+        <span class="text-xs bg-amber-100 text-amber-800 font-bold px-3 py-1 rounded-lg">Step-by-Step SOP</span>
+      </div>
+
+      <div class="mermaid-zoom-container shadow-sm" data-diagram-title="四、架構師端到端六階段建置與導入 SOP">
+        <div
+          class="absolute top-3 right-3 flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-2.5 py-1.5 rounded-xl shadow-md border border-slate-200 z-10 text-xs">
+          <span class="text-slate-400 text-[11px] font-semibold pr-1">縮放控制:</span>
+          <button type="button"
+            class="btn-zoom-in px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition shadow-sm active:scale-95"
+            title="放大 (+25%)">＋</button>
+          <button type="button"
+            class="btn-zoom-out px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition shadow-sm active:scale-95"
+            title="縮小 (-25%)">－</button>
+          <button type="button"
+            class="btn-zoom-reset px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition shadow-sm active:scale-95"
+            title="重置為 100%">↺</button>
+          <span
+            class="zoom-badge text-slate-600 font-mono text-[11px] font-bold px-1.5 min-w-[42px] text-center">100%</span>
+          <div class="h-3.5 w-px bg-slate-200 mx-0.5"></div>
+          <button type="button"
+            class="btn-fullscreen px-3 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold transition flex items-center gap-1 shadow-sm active:scale-95"
+            title="以高解析全螢幕檢視此圖">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+            </svg>
+            <span>全螢幕檢視</span>
+          </button>
+        </div>
+
+        <div class="mermaid-viewport">
+          <div class="mermaid-zoom-target">
+            <div class="mermaid text-center">
+              flowchart TD
+              P1["<b>階段 1：BOS Gateway 對接與點位健康確認【工作台 ① • L0 唯讀期】</b><br />• 連接 BOS Gateway，確認通道心跳、點位時間戳與資料品質正常<br />•
+              驗證現場 BAS 原生硬體連鎖保護完好，批次匯入點位並設定 Semantic 安全上下限"]
+
+              P2["<b>階段 2：示範樓層 Block 空間建模與分區標註【工作台 ②】</b><br />• 選取單一代表樓層拼裝 Block 拓撲【堆疊 / 相連 / 內裝】<br />•
+              標註外牆西曬熱慣性、高變動人流區、以及 🔴 核心保護區 vs 🟢 彈性緩衝區<br />• 將健康運作之 VRV / ERV / 電表 / 感測器拖入 Block 並綁定共軛迴路"]
+
+              P3["<b>階段 3：掛載外部資料源與 AI 演算法插件【工作台 ③】</b><br />• 掛載氣象局 API、台電時間電價 API、會議室行事曆與門禁人數 MCP<br />• 按需求彈性掛載演算法插件
+              API【MPC / 焓值 / Kalman+Fuzzy / RL / C-TimeGAN / XGBoost...】<br />• 地端 Ollama 自動完成所有 API 與空間情境之語意向量化建檔"]
+
+              P4["<b>階段 4：基線累積與「只讀不寫」建議校準【工作台 ③ & ④ • L0 ➔ L1 試運轉】</b><br />• 累積 2~4 週真實時序數據建立動態能源基線與空間熱力參數<br />• 切換為
+              L1 分析建議模式：驗證 Task Agent 預測準確度，補齊 AI 主動探詢之缺漏語意"]
+
+              P5["<b>階段 5：雙角色 UI 樣板商談、虛擬試車與受控寫回【工作台 ③ & ④ • L2 核准執行】</b><br />• 架構師與業務主管商談定稿決策卡與樓層熱力圖樣板<br />•
+              於沙盒模式完成虛擬試車調優後開啟 L2：主管點擊【一鍵核准】➔ 實測 BOS Gateway 寫回與讀回確認<br />• 實地演練【L4 一鍵緊急降級切回既有 BAS】確保絕對安全"]
+
+              P6["<b>階段 6：白名單邊界自治與跨樓層秒級複製【工作台 ④ • L3 規模化部署】</b><br />• 將驗證成熟之常態調控策略晉升 L3 白名單邊界內自動閉環執行<br />•
+              將示範樓層之【Block 結構範本 + 迴路規則 + UI 樣板】參數化一鍵套用至全棟樓層<br />• 日常僅需透過燈號監看 BOS Gateway 點位健康度，新需求隨時於工作台 ③ 掛載新插件"]
+
+              P1 --> P2
+              P2 --> P3
+              P3 --> P4
+              P4 --> P5
+              P5 --> P6
+
+              style P1 fill:#CCFBF1,stroke:#0F766E,stroke-width:2px,color:#000000
+              style P2 fill:#FEF3C7,stroke:#D97706,stroke-width:2px,color:#000000
+              style P3 fill:#EDE9FE,stroke:#6D28D9,stroke-width:2px,color:#000000
+              style P4 fill:#E0F2FE,stroke:#0284C7,stroke-width:2px,color:#000000
+              style P5 fill:#DBEAFE,stroke:#1D4ED8,stroke-width:2px,color:#000000
+              style P6 fill:#DCFCE7,stroke:#15803D,stroke-width:2px,color:#000000
+            </div>
+          </div>
+        </div>
+        <div
+          class="px-4 py-2 bg-slate-50 border-t border-slate-200 text-[11px] text-slate-500 flex justify-between items-center">
+          <span>💡 提示：可使用右上角 <b>＋ / －</b> 或 <b>Ctrl + 滾輪</b> 放大縮小，或點擊 <b>全螢幕檢視</b></span>
+          <span class="text-slate-400">先唯讀、後建議、安全邊界檢核、再受控寫回</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 五、 6 + N 情境組裝配方總表 -->
+    <section id="playbooks" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4 flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">五、 首批 6 大智慧建築需求組裝配方與「第 N 項新需求」擴充指南</h2>
+          <p class="text-slate-500 text-sm mt-1">不寫死單一功能模組：展示如何利用同一套 4 大工作台，彈性組裝出首批 6 點需求及未來任意新場景</p>
+        </div>
+        <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-lg">6 + N Composable
+          Playbooks</span>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden text-xs">
+        <table class="w-full text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+            <tr>
+              <th class="p-3.5 w-52">目標需求場景</th>
+              <th class="p-3.5 w-64">【工作台 ① &amp; ②】IoT 健康確認、Block 屬性與迴路配置</th>
+              <th class="p-3.5 w-64">【工作台 ③】掛載之外部源與演算法插件 API</th>
+              <th class="p-3.5">Task Agent 自主閉環邏輯 ＆【工作台 ④】主管體驗</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-600">
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">1. 熱負荷預測與 VRV 預冷降載控制</td>
+              <td class="p-3.5">確認 <code>VRV</code> 與室溫點位讀回正常；Block 標註<strong>西曬方位、建築熱慣性係數</strong>與壓縮機升載斜率限制。</td>
+              <td class="p-3.5">• 氣象預報 API、會議行事曆 MCP<br />• 插件：<code>MPC 熱負荷預測模型 API</code></td>
+              <td class="p-3.5">晨間平緩預冷防瞬間全開超約；會議前預冷、<strong>散會前 15 分鐘利用熱慣性提早關冷媒</strong>。主管於【樣板 A】檢視省電曲線核准放行。</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">2. ERV 智慧焓值旁通與自然冷源利用</td>
+              <td class="p-3.5">確認 <code>ERV</code>、<code>VRV</code>、室內外溫濕度正常；綁定<strong>同區 ERV ⟷ VRV
+                  共軛供氣迴路</strong>，設定防結露濕度上限。</td>
+              <td class="p-3.5">• 外部氣候趨勢 API<br />• 插件：<code>焓值運算與多變量決策樹 API</code></td>
+              <td class="p-3.5">早晚涼爽乾爽（外氣焓值低於室內）時，自動開啟 ERV <strong>Bypass 旁通引進自然冷源</strong>，同步將同區 VRV 降頻或停機省電。</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">3. 基於 CO₂ 斜率之 ERV 變頻需量通氣</td>
+              <td class="p-3.5">確認 <code>CO2 感測器</code>（無卡死飄移）與 <code>ERV 無段變頻風機</code> 正常；Block
+                標註<strong>高變動人流空間</strong>。</td>
+              <td class="p-3.5">• 插件：<code>Kalman Filter 去噪 + Fuzzy Logic 模糊控制 API</code></td>
+              <td class="p-3.5">追蹤 CO₂ 濃度變化斜率克服感測延遲，人潮湧入初期即平滑拉高外氣風量，人少時低速運轉降低風機與外氣熱負荷。</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">4. 時間電價與需量控制 (DR) 輪換卸載</td>
+              <td class="p-3.5">確認總電表與各區 VRV 正常；Block 標註 <strong>🔴 核心保護區（0°C 偏差禁卸載）</strong> vs. <strong>🟢 彈性緩衝區（允許
+                  +1°C 輪換）</strong>。</td>
+              <td class="p-3.5">• 台電 TOU 電價 API、DR 需量訊號<br />• 插件：<code>Deep RL (A3C) 雙目標輪換尋優 API</code></td>
+              <td class="p-3.5">逼近契約容量時保護紅區，對走廊／茶水間綠區執行<strong>每 10 分鐘接力微調 +1°C 或限功率</strong>；主管於【樣板 B】觀看分區熱力圖。</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">5. 數位雙生 (C-TimeGAN) 虛擬試車調優</td>
+              <td class="p-3.5">於畫布複製目標樓層 Block，修改隔間拓撲或新部門人數配置。</td>
+              <td class="p-3.5">• 插件：<code>Block 熱力鏡像 + C-TimeGAN + RL 虛擬沙盒 API</code>（切為沙盒模式）</td>
+              <td class="p-3.5">不碰觸實體 BOS Gateway，在沙盒模擬數千小時尋出最佳參數（降低溫度震盪達 52.1%）；主管於【樣板 C】驗收後一鍵核准部署。</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">6. ISO 50001 動態能源基線與異常告警</td>
+              <td class="p-3.5">確認分區智慧電表正常，建立電表對下游冰機／水泵／閥門之歸屬關係。</td>
+              <td class="p-3.5">• 室外氣溫 API、門禁到班人數 MCP、營運日曆<br />• 插件：<code>XGBoost 歸一化基線 + CUSUM 統計 API</code></td>
+              <td class="p-3.5">自動剔除氣溫與人數干擾建立動態基線；CUSUM 捕捉微小累積偏離時自動定位異常區域與設備，浮現【樣板 D】診斷卡。</td>
+            </tr>
+            <tr class="bg-purple-50/60">
+              <td class="p-3.5 font-black text-purple-900">🚀 第 7～N 項未來新需求<br /><span
+                  class="font-normal text-[11px] text-purple-700">（如冰機群控／儲能削峰／智慧照明）</span></td>
+              <td class="p-3.5 font-medium text-slate-800">於【工作台 ①】確認新接入 BOS 點位正常並設上下限；於【工作台 ②】拖入對應空間 Block。</td>
+              <td class="p-3.5 font-medium text-purple-900">於【工作台 ③】<strong>直接註冊新演算法容器 API 或新 MCP 工具</strong>（填寫標準
+                <code>API + Semantic + Context</code>）。</td>
+              <td class="p-3.5 font-medium text-slate-800"><strong>零核心程式碼修改</strong>：Task Agent
+                自動識別新插件語意並與既有氣象／電價／空間組合，套用【工作台 ④】樣板即刻上線！</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 全螢幕 Mermaid 檢視彈窗 (Lightbox Modal) -->
+  <div id="mermaid-modal"
+    class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex-col transition-opacity duration-200">
+    <div
+      class="h-14 bg-slate-900/95 border-b border-slate-800 px-6 flex items-center justify-between text-white shrink-0 select-none shadow-lg">
+      <div class="flex items-center gap-3">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-teal-400 animate-pulse"></span>
+        <span id="modal-title" class="font-bold text-sm text-slate-100 tracking-wide truncate max-w-md">架構圖全螢幕檢視</span>
+        <span id="modal-zoom-badge"
+          class="text-xs bg-slate-800 text-teal-400 font-mono px-2 py-0.5 rounded-full border border-slate-700 font-bold">100%</span>
+      </div>
+      <div class="flex items-center gap-2 text-xs">
+        <button id="modal-zoom-in"
+          class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-bold flex items-center gap-1 active:scale-95"
+          title="放大 (快捷鍵: +)">
+          <span>＋ 放大</span>
+        </button>
+        <button id="modal-zoom-out"
+          class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-bold flex items-center gap-1 active:scale-95"
+          title="縮小 (快捷鍵: -)">
+          <span>－ 縮小</span>
+        </button>
+        <button id="modal-zoom-reset"
+          class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-medium active:scale-95"
+          title="重置為 100% (快捷鍵: 0)">
+          <span>↺ 100%</span>
+        </button>
+        <button id="modal-zoom-fit"
+          class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-medium active:scale-95"
+          title="自動縮放至適合螢幕尺寸">
+          <span>⊡ 適合視窗</span>
+        </button>
+        <div class="h-4 w-px bg-slate-700 mx-1"></div>
+        <button id="modal-close"
+          class="px-3 py-1.5 rounded-lg bg-red-600/90 hover:bg-red-600 transition font-bold flex items-center gap-1 text-white shadow active:scale-95"
+          title="關閉全螢幕檢視 (ESC)">
+          <span>✕ 關閉</span>
+          <span class="text-[10px] opacity-75 font-mono">(ESC)</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="modal-viewport" class="flex-grow overflow-hidden relative flex items-center justify-center p-4">
+      <div id="modal-svg-wrapper"></div>
+      <div
+        class="absolute bottom-4 left-1/2 -translate-x-1/2 text-slate-300 text-xs bg-slate-900/90 backdrop-blur-sm px-4 py-2 rounded-full border border-slate-700/80 pointer-events-none shadow-xl flex items-center gap-3">
+        <span>🖱️ <b>滾輪</b>：縮放視角</span>
+        <span>•</span>
+        <span>🖐️ <b>拖曳</b>：平移畫布</span>
+        <span>•</span>
+        <span>👆 <b>雙擊</b>：適合視窗</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 頁尾 -->
+  <footer class="bg-slate-900 text-slate-400 py-8 text-center text-xs border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p class="font-semibold text-slate-300">Agentic AIoT 智能建築實戰作業手冊 • 架構師與業務主管協同規範</p>
+      <p>基於開放式 Everything as API 插件底座與 BOS Gateway IT/OT 安全橋接設計</p>
+    </div>
+  </footer>
+
+  <script>
+    // 初始化 Mermaid（所有字型、字級與色彩均由原生 themeVariables 注入 SVG 內部，確保量測與純向量縮放 100% 鎖定）
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'base',
+      securityLevel: 'loose',
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+        wrappingWidth: 900,
+        curve: 'basis',
+        padding: 18,
+        nodeSpacing: 45,
+        rankSpacing: 50
+      },
+      themeVariables: {
+        fontFamily: "'Noto Sans TC', 'Microsoft JhengHei', sans-serif",
+        fontSize: '14px',
+        primaryColor: '#ffffff',
+        primaryBorderColor: '#0f766e',
+        primaryTextColor: '#000000',
+        nodeTextColor: '#000000',
+        textColor: '#000000',
+        lineColor: '#334155',
+        clusterBkg: '#f8fafc',
+        clusterBorder: '#cbd5e1',
+        titleColor: '#0f172a',
+        edgeLabelBackground: '#ffffff'
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        if (document.fonts && document.fonts.ready) {
+          await Promise.race([
+            document.fonts.ready,
+            new Promise(resolve => setTimeout(resolve, 1500))
+          ]);
+        }
+      } catch (e) {
+        console.warn('Fonts ready check skipped', e);
+      }
+      await mermaid.run();
+
+      // 1. 本地卡片純向量尺寸縮放控制
+      const containers = document.querySelectorAll('.mermaid-zoom-container');
+      containers.forEach(container => {
+        const svg = container.querySelector('.mermaid svg');
+        if (!svg) return;
+
+        const badge = container.querySelector('.zoom-badge');
+        const btnIn = container.querySelector('.btn-zoom-in');
+        const btnOut = container.querySelector('.btn-zoom-out');
+        const btnReset = container.querySelector('.btn-zoom-reset');
+        const btnFullscreen = container.querySelector('.btn-fullscreen');
+        const viewport = container.querySelector('.mermaid-viewport');
+
+        const bbox = svg.viewBox && svg.viewBox.baseVal;
+        const vbWidth = (bbox && bbox.width > 0) ? bbox.width : (svg.clientWidth || 900);
+        const vbHeight = (bbox && bbox.height > 0) ? bbox.height : (svg.clientHeight || 600);
+        const aspectRatio = vbHeight / vbWidth;
+
+        svg.removeAttribute('width');
+        svg.removeAttribute('height');
+        svg.style.maxWidth = 'none';
+        svg.style.display = 'block';
+
+        const getFitWidth = () => {
+          const avail = Math.max((viewport.clientWidth || 900) - 48, 320);
+          return Math.min(vbWidth, avail);
+        };
+
+        let fitWidth = getFitWidth();
+        let currentScale = 1.0;
+
+        const applyZoom = (scale) => {
+          currentScale = Math.min(Math.max(scale, 0.4), 5.0);
+          badge.textContent = `${Math.round(currentScale * 100)}%`;
+
+          const targetW = Math.round(fitWidth * currentScale);
+          const targetH = Math.round(targetW * aspectRatio);
+          svg.style.width = `${targetW}px`;
+          svg.style.height = `${targetH}px`;
+        };
+
+        applyZoom(1.0);
+
+        window.addEventListener('resize', () => {
+          fitWidth = getFitWidth();
+          if (Math.abs(currentScale - 1.0) < 0.01) {
+            applyZoom(1.0);
+          }
+        });
+
+        btnIn?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          applyZoom(currentScale + 0.25);
+        });
+
+        btnOut?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          applyZoom(currentScale - 0.25);
+        });
+
+        btnReset?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          fitWidth = getFitWidth();
+          applyZoom(1.0);
+          viewport.scrollLeft = 0;
+          viewport.scrollTop = 0;
+        });
+
+        viewport?.addEventListener('wheel', (e) => {
+          if (!e.ctrlKey && !e.metaKey) return;
+          e.preventDefault();
+          const delta = e.deltaY < 0 ? 0.2 : -0.2;
+          applyZoom(currentScale + delta);
+        }, { passive: false });
+
+        let isDown = false;
+        let startX = 0;
+        let startY = 0;
+        let scrollLeft = 0;
+        let scrollTop = 0;
+
+        viewport?.addEventListener('mousedown', (e) => {
+          if (e.target.closest('button')) return;
+          isDown = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          scrollLeft = viewport.scrollLeft;
+          scrollTop = viewport.scrollTop;
+        });
+
+        window.addEventListener('mouseup', () => { isDown = false; });
+        viewport?.addEventListener('mouseleave', () => { isDown = false; });
+
+        viewport?.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          viewport.scrollLeft = scrollLeft - (e.clientX - startX);
+          viewport.scrollTop = scrollTop - (e.clientY - startY);
+        });
+
+        btnFullscreen?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const title = container.getAttribute('data-diagram-title') || '架構圖全螢幕檢視';
+          openMermaidModal(svg, title);
+        });
+      });
+
+      // 2. 全螢幕 Lightbox Modal 互動邏輯（純向量寬高縮放 + 純平移 translate）
+      const modal = document.getElementById('mermaid-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBadge = document.getElementById('modal-zoom-badge');
+      const modalViewport = document.getElementById('modal-viewport');
+      const modalSvgWrapper = document.getElementById('modal-svg-wrapper');
+      const btnModalClose = document.getElementById('modal-close');
+      const btnModalIn = document.getElementById('modal-zoom-in');
+      const btnModalOut = document.getElementById('modal-zoom-out');
+      const btnModalReset = document.getElementById('modal-zoom-reset');
+      const btnModalFit = document.getElementById('modal-zoom-fit');
+
+      let mScale = 1.0;
+      let mPanX = 0;
+      let mPanY = 0;
+      let mIsDragging = false;
+      let mStartX = 0;
+      let mStartY = 0;
+      let originalSvgWidth = 0;
+      let originalSvgHeight = 0;
+
+      const applyModalView = () => {
+        const activeSvg = modalSvgWrapper.querySelector('svg');
+        if (activeSvg && originalSvgWidth > 0 && originalSvgHeight > 0) {
+          activeSvg.style.width = `${Math.round(originalSvgWidth * mScale)}px`;
+          activeSvg.style.height = `${Math.round(originalSvgHeight * mScale)}px`;
+        }
+        modalSvgWrapper.style.transform = `translate(${Math.round(mPanX)}px, ${Math.round(mPanY)}px)`;
+        modalBadge.textContent = `${Math.round(mScale * 100)}%`;
+      };
+
+      const setModalScale = (newScale) => {
+        const clamped = Math.min(Math.max(newScale, 0.15), 6.0);
+        if (mScale > 0) {
+          const ratio = clamped / mScale;
+          mPanX *= ratio;
+          mPanY *= ratio;
+        }
+        mScale = clamped;
+        applyModalView();
+      };
+
+      const fitToModalWindow = () => {
+        if (!originalSvgWidth || !originalSvgHeight) return;
+        const vWidth = Math.max(modalViewport.clientWidth - 96, 200);
+        const vHeight = Math.max(modalViewport.clientHeight - 96, 200);
+        const scaleX = vWidth / (originalSvgWidth + 48);
+        const scaleY = vHeight / (originalSvgHeight + 48);
+        mScale = Math.min(scaleX, scaleY, 1.5);
+        mPanX = 0;
+        mPanY = 0;
+        applyModalView();
+      };
+
+      window.openMermaidModal = (sourceSvg, title) => {
+        modalTitle.textContent = title;
+        modalSvgWrapper.innerHTML = '';
+
+        const bbox = sourceSvg.viewBox && sourceSvg.viewBox.baseVal;
+        if (bbox && bbox.width > 0 && bbox.height > 0) {
+          originalSvgWidth = bbox.width;
+          originalSvgHeight = bbox.height;
+        } else {
+          const rect = sourceSvg.getBoundingClientRect();
+          originalSvgWidth = rect.width || 900;
+          originalSvgHeight = rect.height || 600;
+        }
+
+        const clone = sourceSvg.cloneNode(true);
+        clone.removeAttribute('width');
+        clone.removeAttribute('height');
+        clone.removeAttribute('style');
+        clone.style.display = 'block';
+        clone.style.maxWidth = 'none';
+        clone.style.maxHeight = 'none';
+        modalSvgWrapper.appendChild(clone);
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        requestAnimationFrame(() => {
+          fitToModalWindow();
+        });
+      };
+
+      const closeMermaidModal = () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      btnModalClose?.addEventListener('click', closeMermaidModal);
+      btnModalIn?.addEventListener('click', () => setModalScale(mScale * 1.25));
+      btnModalOut?.addEventListener('click', () => setModalScale(mScale / 1.25));
+      btnModalReset?.addEventListener('click', () => {
+        mScale = 1.0;
+        mPanX = 0;
+        mPanY = 0;
+        applyModalView();
+      });
+      btnModalFit?.addEventListener('click', fitToModalWindow);
+
+      modalViewport?.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const factor = e.deltaY < 0 ? 1.15 : 0.87;
+        setModalScale(mScale * factor);
+      }, { passive: false });
+
+      modalViewport?.addEventListener('mousedown', (e) => {
+        if (e.target.closest('button')) return;
+        mIsDragging = true;
+        mStartX = e.clientX - mPanX;
+        mStartY = e.clientY - mPanY;
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!mIsDragging) return;
+        mPanX = e.clientX - mStartX;
+        mPanY = e.clientY - mStartY;
+        applyModalView();
+      });
+
+      window.addEventListener('mouseup', () => { mIsDragging = false; });
+
+      modalViewport?.addEventListener('dblclick', (e) => {
+        if (e.target.closest('#modal-close') || e.target.closest('button')) return;
+        fitToModalWindow();
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape') closeMermaidModal();
+        if (e.key === '+' || e.key === '=') setModalScale(mScale * 1.2);
+        if (e.key === '-' || e.key === '_') setModalScale(mScale / 1.2);
+        if (e.key === '0') {
+          mScale = 1.0;
+          mPanX = 0;
+          mPanY = 0;
+          applyModalView();
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

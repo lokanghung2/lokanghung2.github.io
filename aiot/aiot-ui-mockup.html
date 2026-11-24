@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic AIoT 智能建築 — 全系統 10 大畫面互動式 UI 原型 (Live Mockup)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    }
+
+    code,
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .role-tab-active {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      border-color: #0f172a;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
+    }
+
+    .sub-tab-active {
+      background-color: #ffffff;
+      color: #0f172a;
+      font-weight: 800;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      border: 1px solid #cbd5e1;
+    }
+
+    .block-cell {
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .block-cell:hover {
+      transform: translateY(-2px);
+    }
+
+    .block-selected {
+      ring: 3px;
+      outline: 3px solid #2563eb;
+      outline-offset: 2px;
+    }
+
+    @keyframes pulse-soft {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.45;
+      }
+    }
+
+    .pulse-dot {
+      animation: pulse-soft 1.8s infinite;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+
+  <!-- 全域原型導覽頂欄 (Prototype Switcher Header) -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-3 flex items-center justify-between flex-wrap gap-3">
+      <div class="flex items-center gap-3">
+        <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white text-xs font-black tracking-wide">LIVE UI
+          MOCKUP</span>
+        <div>
+          <h1 class="text-sm sm:text-base font-extrabold text-slate-900 leading-tight">Agentic AIoT 智能建築 — 全系統 10
+            大畫面範例設計</h1>
+          <p class="text-[11px] text-slate-500">點擊下方角色與畫面頁籤，可直接體驗真實互動行為（篩選、Block 點選、掛載第 N 種演算法、預冷滑桿、BOS 讀回確認）</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 text-xs">
+        <a href="aiot-archetecture.html"
+          class="px-3 py-1.5 rounded-lg border border-slate-300 bg-slate-50 hover:bg-slate-100 font-semibold text-slate-700 transition">架構規格書</a>
+        <a href="aiot-workmanual.html"
+          class="px-3 py-1.5 rounded-lg border border-teal-200 bg-teal-50 hover:bg-teal-100 font-semibold text-teal-800 transition">實戰作業手冊</a>
+        <a href="aiot-ui-mockup.html"
+          class="px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 font-semibold text-slate-600 transition">畫面規格</a>
+      </div>
+    </div>
+
+    <!-- 三大端點切換列 -->
+    <div class="bg-slate-50 border-t border-slate-200">
+      <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between flex-wrap gap-3">
+        <div class="flex items-center gap-2 flex-wrap">
+          <button onclick="switchGroup('architect')" id="grp-architect"
+            class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-300 transition role-tab-active">
+            🛠️ 建築語意架構師端 (A1 ～ A4 四大工作台)
+          </button>
+          <button onclick="switchGroup('executive')" id="grp-executive"
+            class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 transition">
+            👔 業務主管端 (B1 常駐指揮艙 ＋ B2～B5 生成式視圖)
+          </button>
+          <button onclick="switchGroup('mobile')" id="grp-mobile"
+            class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 transition">
+            📱 行動端延伸 (M1 雙向訊息查詢 ＆ APP 確認控制)
+          </button>
+        </div>
+        <span id="current-screen-indicator"
+          class="text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full">
+          目前檢視：畫面 A1 — BOS Gateway 接入與 IoT 健康監控台
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Toast 互動回饋通知 -->
+  <div id="toast"
+    class="fixed bottom-5 right-5 z-50 hidden bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-2.5">
+    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+    <span id="toast-msg">操作已完成</span>
+  </div>
+
+  <!-- 主畫布容器 -->
+  <main class="flex-grow max-w-[1440px] w-full mx-auto px-4 sm:px-6 py-6">
+
+    <!-- ========================================================================= -->
+    <!-- 第一群組：建築語意架構師端 (Architect Studio: A1 ~ A4)                    -->
+    <!-- ========================================================================= -->
+    <div id="view-group-architect"
+      class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden min-h-[760px] flex flex-col lg:flex-row">
+
+      <!-- Architect Studio 左側系統側邊欄 -->
+      <aside class="w-full lg:w-64 bg-slate-900 text-slate-300 flex-shrink-0 flex flex-col justify-between p-4">
+        <div class="space-y-5">
+          <div class="px-2 pt-1 pb-3 border-b border-slate-800">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-black text-white tracking-wide">Architect Studio</span>
+              <span
+                class="text-[10px] px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30 font-bold">Role
+                2</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">建築語意建模與安全治理工作台</p>
+          </div>
+
+          <nav class="space-y-1.5 text-xs">
+            <button onclick="switchArchScreen('A1')" id="nav-A1"
+              class="w-full text-left px-3 py-2.5 rounded-xl bg-teal-600 text-white font-bold flex items-center justify-between transition">
+              <span>📡 A1. BOS 與 IoT 健康台</span>
+              <span class="px-1.5 py-0.5 text-[10px] rounded bg-rose-500 text-white font-mono">2異常</span>
+            </button>
+            <button onclick="switchArchScreen('A2')" id="nav-A2"
+              class="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 font-medium flex items-center justify-between transition">
+              <span>🧱 A2. Block 空間拓撲畫布</span>
+              <span class="text-[10px] text-slate-400">12F</span>
+            </button>
+            <button onclick="switchArchScreen('A3')" id="nav-A3"
+              class="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 font-medium flex items-center justify-between transition">
+              <span>🧩 A3. 能力與演算法插件庫</span>
+              <span id="plugin-count-badge"
+                class="px-1.5 py-0.5 text-[10px] rounded bg-purple-500/30 text-purple-200 font-mono">10</span>
+            </button>
+            <button onclick="switchArchScreen('A4')" id="nav-A4"
+              class="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 font-medium flex items-center justify-between transition">
+              <span>🛡️ A4. L0~L4 權限與樣板台</span>
+              <span id="ai-q-badge"
+                class="px-1.5 py-0.5 text-[10px] rounded bg-amber-500 text-slate-950 font-bold">1待辦</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- 底部基礎設施連線迷你狀態 -->
+        <div class="bg-slate-800/90 rounded-xl p-3 border border-slate-700/80 space-y-2 text-[11px]">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">BOS Gateway</span>
+            <span class="text-emerald-400 font-bold flex items-center gap-1"><span
+                class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></span>TAICS 11ms</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">地端 Ollama</span>
+            <span class="text-purple-300 font-mono">Qwen2.5 + BGE</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">NATS + pgvector</span>
+            <span class="text-emerald-400 font-mono">Synced</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Architect 主工作區 -->
+      <div class="flex-grow flex flex-col bg-slate-50/60 overflow-hidden">
+
+        <!-- ================= 畫面 A1：BOS Gateway 接入與 IoT 健康監控台 ================= -->
+        <section id="screen-A1" class="p-6 space-y-5 flex-grow overflow-auto">
+          <div class="flex items-center justify-between flex-wrap gap-3 border-b border-slate-200 pb-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded bg-teal-100 text-teal-800 text-[11px] font-bold">畫面 A1 • 概念圖落點：IoT API
+                  ⟷ 實體設備 ＆ IoT Shell</span>
+              </div>
+              <h2 class="text-xl font-extrabold text-slate-900 mt-1">📡 BOS Gateway 接入與 IoT 點位健康監控台</h2>
+              <p class="text-xs text-slate-500">極簡基礎管理：即時確認 BOS Gateway 進來的 IoT 點位是否正常；異常點位自動隔離 AI 控制，杜絕拿壞數據誤判</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="showToast('已觸發 BOS Gateway 全點位即時輪詢與時間戳校準！')"
+                class="px-3 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-bold text-slate-700 shadow-sm">🔄
+                立即重新巡檢</button>
+              <button onclick="document.getElementById('import-modal').classList.remove('hidden')"
+                class="px-3.5 py-2 rounded-xl bg-teal-700 hover:bg-teal-600 text-white text-xs font-bold shadow-sm">📥
+                批次匯入 BOS 點位表</button>
+            </div>
+          </div>
+
+          <!-- 頂部 4 格健康指標 -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <span class="text-[11px] text-slate-500 font-semibold">BOS Gateway 通道狀態</span>
+              <div class="mt-1 flex items-baseline justify-between">
+                <span class="text-lg font-black text-emerald-600">🟢 Online 正常</span>
+                <span class="text-xs mono text-slate-500">延遲 11ms</span>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-1">協定：TAICS Client 雙向加密｜緩存保護開啟</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <span class="text-[11px] text-slate-500 font-semibold">全棟 IoT 點位連線正常率</span>
+              <div class="mt-1 flex items-baseline justify-between">
+                <span class="text-lg font-black text-slate-900">99.6% <span
+                    class="text-xs font-semibold text-slate-500">(483/485)</span></span>
+                <span class="text-xs font-bold text-emerald-600">健康</span>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-1">涵蓋 VRV、ERV、冰機、智慧電表、溫濕/CO₂</p>
+            </div>
+            <div class="bg-rose-50/70 p-4 rounded-xl border border-rose-200 shadow-sm">
+              <span class="text-[11px] text-rose-700 font-bold">資料品質異常（自動隔離 AI）</span>
+              <div class="mt-1 flex items-baseline justify-between">
+                <span class="text-lg font-black text-rose-600">2 點位異常</span>
+                <span class="px-2 py-0.5 rounded bg-rose-600 text-white text-[10px] font-bold">已阻斷控制</span>
+              </div>
+              <p class="text-[11px] text-rose-700 mt-1">1 顆斷線逾時 (Stale)、1 顆數值卡死 (Frozen)</p>
+            </div>
+            <div class="bg-amber-50/70 p-4 rounded-xl border border-amber-200 shadow-sm">
+              <span class="text-[11px] text-amber-800 font-bold">設定值讀回確認 (Read-back)</span>
+              <div class="mt-1 flex items-baseline justify-between">
+                <span class="text-lg font-black text-slate-900">100% 讀回一致</span>
+                <span class="px-2 py-0.5 rounded bg-amber-200 text-amber-900 text-[10px] font-bold">1 手動覆寫</span>
+              </div>
+              <p class="text-[11px] text-amber-800 mt-1">1201 室現場面板被手動調為 22°C（AI 禮讓中）</p>
+            </div>
+          </div>
+
+          <!-- 左表 + 右側 Semantic 護欄編輯器 -->
+          <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
+            <div class="xl:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+              <div
+                class="p-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between flex-wrap gap-2">
+                <div class="flex items-center gap-1.5 text-xs">
+                  <button onclick="filterPoints('all')" id="flt-all" class="px-2.5 py-1 rounded-lg sub-tab-active">全部點位
+                    (7)</button>
+                  <button onclick="filterPoints('err')" id="flt-err"
+                    class="px-2.5 py-1 rounded-lg text-rose-700 hover:bg-rose-50 font-semibold">🔴 僅看異常 (2)</button>
+                  <button onclick="filterPoints('manual')" id="flt-manual"
+                    class="px-2.5 py-1 rounded-lg text-amber-700 hover:bg-amber-50 font-semibold">🟡 現場手動 (1)</button>
+                  <button onclick="filterPoints('ok')" id="flt-ok"
+                    class="px-2.5 py-1 rounded-lg text-emerald-700 hover:bg-emerald-50 font-semibold">🟢 正常運作
+                    (4)</button>
+                </div>
+                <span class="text-[11px] text-slate-400">點選任一列可於右側校準 Semantic 物理護欄</span>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-slate-100/80 text-slate-600 border-b border-slate-200">
+                    <tr>
+                      <th class="p-3">BOS 點位 ID / 名稱</th>
+                      <th class="p-3">即時讀值 / 讀回</th>
+                      <th class="p-3">更新時間戳</th>
+                      <th class="p-3">健康與資料品質</th>
+                      <th class="p-3">AI 調控狀態</th>
+                    </tr>
+                  </thead>
+                  <tbody id="points-tbody" class="divide-y divide-slate-100"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- 右側 Semantic 護欄設定抽屜 -->
+            <div class="bg-white rounded-xl border-2 border-teal-200 shadow-sm p-5 space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div>
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-teal-700">Semantic Guardrail
+                    Editor</span>
+                  <h3 id="sem-title" class="text-sm font-black text-slate-900 mt-0.5">12F-VRV-02 (大型會議室空調)</h3>
+                </div>
+                <span id="sem-badge"
+                  class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[11px] font-bold">🟢 正常</span>
+              </div>
+
+              <div class="space-y-3 text-xs">
+                <div>
+                  <label class="block text-slate-500 font-semibold mb-1">BOS Gateway 標準 API 路徑</label>
+                  <input id="sem-api" type="text" readonly value="POST /api/v1/bos/points/12F_VRV_02/setpoint"
+                    class="w-full px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 mono text-[11px] text-slate-700">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-slate-500 font-semibold mb-1">物理單位 (Unit)</label>
+                    <input id="sem-unit" type="text" value="°C (攝氏溫度)"
+                      class="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 font-semibold">
+                  </div>
+                  <div>
+                    <label class="block text-slate-500 font-semibold mb-1">最短控制間隔</label>
+                    <input id="sem-interval" type="text" value="300 秒 (保護壓縮機)"
+                      class="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 font-semibold">
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-slate-500 font-semibold mb-1">安全下限 (Min)</label>
+                    <input id="sem-min" type="text" value="19.0"
+                      class="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 mono font-bold text-blue-700">
+                  </div>
+                  <div>
+                    <label class="block text-slate-500 font-semibold mb-1">安全上限 (Max)</label>
+                    <input id="sem-max" type="text" value="27.5"
+                      class="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 mono font-bold text-rose-700">
+                  </div>
+                </div>
+                <div
+                  class="p-3 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 leading-relaxed">
+                  🛡️ <strong>硬體雙重防線：</strong>超出此上下限之 AI 指令將於 <code>API Server</code> 直接攔截；同時 <code>BOS Gateway</code>
+                  完整保留現場既有 BAS 連鎖保護。
+                </div>
+                <button onclick="showToast('已儲存 Semantic 物理安全上下限，並由地端 Ollama 更新語意向量索引！')"
+                  class="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold transition shadow">
+                  💾 儲存語意邊界並更新向量庫
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= 畫面 A2：Block 空間拓撲與屬性畫布 ================= -->
+        <section id="screen-A2" class="hidden p-6 space-y-5 flex-grow overflow-auto">
+          <div class="flex items-center justify-between flex-wrap gap-3 border-b border-slate-200 pb-4">
+            <div>
+              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[11px] font-bold">畫面 A2 • 概念圖落點：Block
+                空間實體 ＆ Structural Context</span>
+              <h2 class="text-xl font-extrabold text-slate-900 mt-1">🧱 Block 空間拓撲與分區屬性畫布</h2>
+              <p class="text-xs text-slate-500">以「堆疊 / 相連 / 內裝」拼裝空間，點選任一房間 Block 可編輯熱慣性、需量紅綠分區與 ERV⟷VRV 共軛迴路</p>
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="text-slate-500 font-semibold">切換堆疊樓層：</span>
+              <select onchange="showToast('已切換至 ' + this.value + ' 空間拓撲畫布')"
+                class="px-3 py-1.5 rounded-xl border border-slate-300 bg-white font-bold text-slate-800">
+                <option>13F 辦公標準層 (堆疊於 12F 之上)</option>
+                <option selected>12F 示範辦公與大型會議層 (當前編輯)</option>
+                <option>11F 辦公標準層 (堆疊於 10F 之上)</option>
+                <option>B2 中央冰水主機房層</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
+            <!-- 左欄：未裝載健康設備池 -->
+            <div class="xl:col-span-3 bg-white rounded-xl border border-slate-200 p-4 space-y-3 shadow-sm">
+              <div class="font-bold text-xs text-slate-800 flex items-center justify-between">
+                <span>📦 待裝載健康 IoT 池</span>
+                <span class="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-bold">僅顯示健康點位</span>
+              </div>
+              <p class="text-[11px] text-slate-500">點擊「裝載至選取 Block」即可寫入 Structural Context：</p>
+              <div class="space-y-2 text-xs">
+                <div class="p-2.5 rounded-lg border border-slate-200 bg-slate-50 flex items-center justify-between">
+                  <div>
+                    <div class="font-bold text-slate-800">🌡️ 12F-TEMP-09</div>
+                    <div class="text-[10px] text-slate-500">無線溫濕度計 (24.4°C)</div>
+                  </div>
+                  <button onclick="assignDeviceToBlock('12F-TEMP-09')"
+                    class="px-2 py-1 rounded bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-bold">+
+                    裝載</button>
+                </div>
+                <div class="p-2.5 rounded-lg border border-slate-200 bg-slate-50 flex items-center justify-between">
+                  <div>
+                    <div class="font-bold text-slate-800">⚡ 12F-PM-SUB3</div>
+                    <div class="text-[10px] text-slate-500">照明分路智慧電表</div>
+                  </div>
+                  <button onclick="assignDeviceToBlock('12F-PM-SUB3')"
+                    class="px-2 py-1 rounded bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-bold">+
+                    裝載</button>
+                </div>
+                <div class="p-2.5 rounded-lg border border-rose-200 bg-rose-50/60 opacity-75">
+                  <div class="font-bold text-rose-800">🚫 12F-CO2-ERR (卡死異常)</div>
+                  <div class="text-[10px] text-rose-600">於 A1 隔離中，禁止裝載入 AI 迴路</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 中欄：互動式 12F Block 平面網格 -->
+            <div class="xl:col-span-5 bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-3">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800">🗺️ 12F 大樓 Block 內裝與相連畫布（點選房間檢視/編輯）</span>
+                <span class="text-[11px] text-amber-700 font-semibold">☀️ 左側為西曬外牆</span>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 space-y-3">
+                <div class="grid grid-cols-3 gap-3">
+                  <div onclick="selectBlock('B1202')" id="blk-B1202"
+                    class="block-cell block-selected col-span-2 p-3.5 rounded-xl bg-rose-50 border-2 border-rose-400 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs font-black text-slate-900">1202 外賓大會議室</span>
+                      <span class="px-1.5 py-0.5 rounded bg-rose-600 text-white text-[10px] font-bold">🔴 核心區</span>
+                    </div>
+                    <p class="text-[11px] text-rose-900 font-medium">☀️ 西曬高熱慣性｜👥 高變動人流 (30人)</p>
+                    <div class="flex flex-wrap gap-1 pt-1 text-[10px] mono">
+                      <span class="px-1.5 py-0.5 bg-white rounded border border-rose-200">VRV-02</span>
+                      <span class="px-1.5 py-0.5 bg-white rounded border border-rose-200">ERV-12A</span>
+                      <span class="px-1.5 py-0.5 bg-white rounded border border-rose-200">CO2-02</span>
+                    </div>
+                  </div>
+
+                  <div onclick="selectBlock('B1201')" id="blk-B1201"
+                    class="block-cell p-3.5 rounded-xl bg-rose-50 border-2 border-rose-300 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs font-black text-slate-900">1201 高管室</span>
+                      <span class="px-1.5 py-0.5 rounded bg-rose-600 text-white text-[10px] font-bold">🔴 核心</span>
+                    </div>
+                    <p class="text-[11px] text-slate-600">0°C 偏差保護</p>
+                    <div class="text-[10px] mono"><span class="px-1.5 py-0.5 bg-white rounded border">VRV-01</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 中央相連走廊 -->
+                <div onclick="selectBlock('BCOR')" id="blk-BCOR"
+                  class="block-cell p-3 rounded-xl bg-emerald-50 border-2 border-emerald-400 flex items-center justify-between">
+                  <div>
+                    <span class="text-xs font-black text-slate-900">12F 中央相連走廊 (Corridor)</span>
+                    <span class="ml-2 text-[11px] text-emerald-800 font-semibold">↔ 與 1201 / 1202 / 辦公區 / 茶水間相連</span>
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-bold">🟢 彈性緩衝 T2
+                    (+1°C)</span>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                  <div onclick="selectBlock('BPAN')" id="blk-BPAN"
+                    class="block-cell p-3.5 rounded-xl bg-emerald-50 border-2 border-emerald-400 space-y-1">
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs font-black text-slate-900">茶水間 Pantry</span>
+                      <span class="px-1.5 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-bold">🟢 緩衝
+                        T1</span>
+                    </div>
+                    <p class="text-[11px] text-emerald-800">第一順位輪換卸載</p>
+                    <div class="text-[10px] mono"><span class="px-1.5 py-0.5 bg-white rounded border">VRV-05</span>
+                    </div>
+                  </div>
+
+                  <div onclick="selectBlock('BOFF')" id="blk-BOFF"
+                    class="block-cell p-3.5 rounded-xl bg-rose-50 border-2 border-rose-300 space-y-1">
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs font-black text-slate-900">開放辦公區</span>
+                      <span class="px-1.5 py-0.5 rounded bg-rose-600 text-white text-[10px] font-bold">🔴 核心</span>
+                    </div>
+                    <p class="text-[11px] text-slate-600">常駐 80 人｜DCV 通氣</p>
+                    <div class="text-[10px] mono"><span class="px-1.5 py-0.5 bg-white rounded border">VRV-03~04</span>
+                    </div>
+                  </div>
+
+                  <div onclick="selectBlock('BSRV')" id="blk-BSRV"
+                    class="block-cell p-3.5 rounded-xl bg-slate-800 text-white border-2 border-slate-900 space-y-1">
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs font-black">12F 弱電機房</span>
+                      <span class="px-1.5 py-0.5 rounded bg-rose-500 text-white text-[10px] font-bold">🔒 絕對保護</span>
+                    </div>
+                    <p class="text-[11px] text-slate-300">22°C 恆溫禁卸載</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 右欄：選中 Block 屬性與共軛迴路 -->
+            <div class="xl:col-span-4 bg-white rounded-xl border-2 border-amber-200 p-5 shadow-sm space-y-3.5 text-xs">
+              <div class="border-b border-slate-100 pb-2.5 flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-bold text-amber-700 uppercase">Block Structural Context</span>
+                  <h3 id="blk-editor-title" class="text-sm font-black text-slate-900">1202 外賓大會議室 (Block_1202)</h3>
+                </div>
+                <span id="blk-editor-zone"
+                  class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-[11px]">🔴 核心保護區</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-slate-500 font-semibold mb-1">日照與熱慣性</label>
+                  <select id="blk-editor-thermal"
+                    class="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 font-semibold">
+                    <option selected>西曬外牆 • 高熱慣性 (可提前15m斷冷)</option>
+                    <option>內區無日照 • 中熱慣性</option>
+                    <option>北向帷幕 • 低熱慣性</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-slate-500 font-semibold mb-1">DR 需量卸載分區</label>
+                  <select id="blk-editor-dr"
+                    class="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 font-semibold">
+                    <option selected>🔴 核心區 (0°C 偏差，禁止卸載)</option>
+                    <option>🟢 彈性緩衝 T1 (允許 +1°C 輪換)</option>
+                    <option>🟢 彈性緩衝 T2 (允許 +1°C 輪換)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="p-3 rounded-xl bg-amber-50/70 border border-amber-200 space-y-2">
+                <div class="font-bold text-amber-900">🔗 跨設備共軛供氣迴路綁定（支撐自然冷源與連動）</div>
+                <label class="flex items-center gap-2 text-slate-700">
+                  <input type="checkbox" checked class="rounded text-teal-600">
+                  <span>共軛綁定：<code>ERV-12A 全熱交換器</code> ⟷ <code>VRV-02 變頻空調</code></span>
+                </label>
+                <p class="text-[11px] text-slate-500">（綁定後，當外氣低焓值啟動 ERV Bypass 時，Task Agent 自動將同迴路 VRV-02 降頻停機）</p>
+              </div>
+
+              <div>
+                <div class="font-semibold text-slate-500 mb-1">已裝載於此 Block 之健康設備：</div>
+                <div id="blk-devices-list" class="flex flex-wrap gap-1.5 mono text-[11px]">
+                  <span class="px-2 py-1 rounded bg-slate-100 border border-slate-300">12F-VRV-02</span>
+                  <span class="px-2 py-1 rounded bg-slate-100 border border-slate-300">12F-ERV-12A</span>
+                  <span class="px-2 py-1 rounded bg-slate-100 border border-slate-300">12F-CO2-02</span>
+                </div>
+              </div>
+
+              <button onclick="showToast('已更新 Block 空間拓撲屬性與共軛迴路關係至 PostgreSQL JSONB 圖譜！')"
+                class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold shadow transition">
+                💾 儲存空間拓撲與 Structural Context
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= 畫面 A3：開放式能力與演算法插件掛載中心 ================= -->
+        <section id="screen-A3" class="hidden p-6 space-y-5 flex-grow overflow-auto">
+          <div class="flex items-center justify-between flex-wrap gap-3 border-b border-slate-200 pb-4">
+            <div>
+              <span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 text-[11px] font-bold">畫面 A3 • 概念圖落點：外部服務
+                API ＆ 外部 MCP 服務（開放式插件底座）</span>
+              <h2 class="text-xl font-extrabold text-slate-900 mt-1">🧩 開放式能力與演算法插件掛載中心 (Pluggable Registry)</h2>
+              <p class="text-xs text-slate-500">不寫死 6 大功能！所有外部 API、企業 MCP 與 AI 演算法容器皆以標準 API + Semantic + Context
+                隨插即用掛載，可無限擴充第 N 種能力</p>
+            </div>
+            <button onclick="document.getElementById('plugin-modal').classList.remove('hidden')"
+              class="px-4 py-2 rounded-xl bg-purple-700 hover:bg-purple-600 text-white text-xs font-bold shadow-sm">
+              ➕ 掛載第 N 種新能力／演算法插件
+            </button>
+          </div>
+
+          <!-- 虛擬試車沙盒展開面板 -->
+          <div id="sandbox-drawer"
+            class="bg-gradient-to-r from-purple-900 via-indigo-900 to-slate-900 text-white p-5 rounded-2xl shadow-md space-y-3">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[11px] font-black">🧪
+                  虛擬試車沙盒模式開啟中</span>
+                <span class="text-sm font-bold">C-TimeGAN + RL 數位雙生模擬器（目標：12F 研發部擴編 +25 人格局變更）</span>
+              </div>
+              <button onclick="showToast('已將虛擬試車收斂報告送交【業務主管端 畫面 B4】等待核准部署！')"
+                class="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black transition">
+                📤 送交業務主管驗收卡 (B4)
+              </button>
+            </div>
+            <p class="text-xs text-purple-200">沙盒狀態：已實體阻斷寫入 <code>BOS Gateway</code>｜已完成 2,400 小時熱力合成訓練 ➔
+              <strong>預測實體部署後溫度震盪降低 52.1%</strong>。
+            </p>
+          </div>
+
+          <!-- 插件卡片牆 -->
+          <div id="plugin-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 text-xs">
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+              <div class="flex justify-between items-center"><span
+                  class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-bold">外部數據 API</span><span
+                  class="text-emerald-600 font-bold">🟢 正常 (快取命中 88%)</span></div>
+              <h3 class="text-sm font-black text-slate-900">中央氣象局 ＋ 台電 TOU 時間電價 API</h3>
+              <p class="text-slate-500">提供每小時外氣溫濕度預報（計算外氣焓值）與尖半離峰電價時段費率。</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+              <div class="flex justify-between items-center"><span
+                  class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold">企業 MCP 工具</span><span
+                  class="text-emerald-600 font-bold">🟢 MCP Connected</span></div>
+              <h3 class="text-sm font-black text-slate-900">會議室行事曆 ＋ 門禁到班人數 MCP</h3>
+              <p class="text-slate-500">提供大型會議排程人數（供預冷）與每日實際到班人數（供能源基線排除干擾）。</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl border-2 border-purple-200 shadow-sm space-y-2">
+              <div class="flex justify-between items-center"><span
+                  class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-bold">演算法插件 #1</span><span
+                  class="text-emerald-600 font-bold">🟢 正式掛載</span></div>
+              <h3 class="text-sm font-black text-slate-900">MPC 建築熱負荷預測模型 API</h3>
+              <p class="text-slate-500">結合日照、人數與 Block 熱慣性，輸出晨間平緩預冷與散會前 15 分鐘斷冷曲線。</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl border-2 border-purple-200 shadow-sm space-y-2">
+              <div class="flex justify-between items-center"><span
+                  class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-bold">演算法插件 #2</span><span
+                  class="text-emerald-600 font-bold">🟢 正式掛載</span></div>
+              <h3 class="text-sm font-black text-slate-900">空氣焓值決策樹與自然冷源優化 API</h3>
+              <p class="text-slate-500">即時比較室內外焓值，動態優化 ERV Bypass 旁通風閥開度並連動同迴路 VRV 降載。</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl border-2 border-purple-200 shadow-sm space-y-2">
+              <div class="flex justify-between items-center"><span
+                  class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-bold">演算法插件 #3 &amp; #4</span><span
+                  class="text-emerald-600 font-bold">🟢 正式掛載</span></div>
+              <h3 class="text-sm font-black text-slate-900">Kalman+Fuzzy 變頻通氣 ＆ Deep RL 輪換卸載</h3>
+              <p class="text-slate-500">CO₂ 斜率濾波提前補風；尖峰需量以 A3C 強化學習對 🟢 彈性緩衝區執行 10 分鐘接力 +1°C。</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl border-2 border-purple-200 shadow-sm space-y-2">
+              <div class="flex justify-between items-center"><span
+                  class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-bold">演算法插件 #5 &amp; #6</span><span
+                  class="text-amber-600 font-bold">🧪 含沙盒模式</span></div>
+              <h3 class="text-sm font-black text-slate-900">C-TimeGAN 虛擬試車 ＆ XGBoost+CUSUM 基線</h3>
+              <p class="text-slate-500">數位雙生無風險策略調優；符合 ISO 50001 多變量歸一化動態基線與微小偏離累積抓漏。</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= 畫面 A4：L0~L4 控制權限與生成式 UI 樣板台 ================= -->
+        <section id="screen-A4" class="hidden p-6 space-y-6 flex-grow overflow-auto">
+          <div class="flex items-center justify-between flex-wrap gap-3 border-b border-slate-200 pb-4">
+            <div>
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[11px] font-bold">畫面 A4 • 概念圖落點：雙角色商談線 ＆
+                Task Agent L0~L4 核准防線</span>
+              <h2 class="text-xl font-extrabold text-slate-900 mt-1">🛡️ L0～L4 分級控制治理與生成式 UI 樣板工作坊</h2>
+              <p class="text-xs text-slate-500">設定「唯讀 ➔ 建議 ➔ 人工核准 ➔ 白名單自治」防線，並與業務主管共創卡片樣板、一鍵派發全棟標準層</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <!-- 左半：L0~L4 權限矩陣 + AI 主動提問匣 -->
+            <div class="space-y-4">
+              <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3 text-xs">
+                <h3 class="text-sm font-black text-slate-900">🔒 各樓層／子系統 L0～L4 控制授權矩陣</h3>
+                <div class="space-y-2.5">
+                  <div
+                    class="p-3 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between flex-wrap gap-2">
+                    <div>
+                      <div class="font-bold text-slate-900">12F 外賓會議預冷與需量輪換</div>
+                      <div class="text-[11px] text-slate-500">高關注區域：寫回 BOS Gateway 前需主管一鍵核准</div>
+                    </div>
+                    <select onchange="showToast('已更新 12F 授權等級為：' + this.value)"
+                      class="px-2.5 py-1.5 rounded-lg border border-blue-300 bg-blue-50 text-blue-900 font-bold">
+                      <option>L0 唯讀觀察</option>
+                      <option>L1 僅提建議</option>
+                      <option selected>L2 主管核准執行</option>
+                      <option>L3 白名單邊界自治</option>
+                    </select>
+                  </div>
+                  <div
+                    class="p-3 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between flex-wrap gap-2">
+                    <div>
+                      <div class="font-bold text-slate-900">3F～11F 常態 ERV 焓值旁通與 CO₂ 變頻通氣</div>
+                      <div class="text-[11px] text-slate-500">已穩定驗證：允許於 Semantic 安全上下限內自動調控</div>
+                    </div>
+                    <select onchange="showToast('已更新 3F~11F 授權等級為：' + this.value)"
+                      class="px-2.5 py-1.5 rounded-lg border border-emerald-300 bg-emerald-50 text-emerald-900 font-bold">
+                      <option>L1 僅提建議</option>
+                      <option>L2 主管核准執行</option>
+                      <option selected>L3 白名單邊界自治</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- AI 待補齊語意提問匣 -->
+              <div id="ai-question-box"
+                class="bg-amber-50 p-5 rounded-xl border-2 border-amber-300 shadow-sm space-y-3 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="px-2 py-0.5 rounded bg-amber-500 text-white font-bold text-[11px]">🤖 Task Agent 主動探詢待補齊
+                    (1)</span>
+                  <span class="text-[11px] text-amber-800">概念圖連線 ❷：發現缺漏主動探詢</span>
+                </div>
+                <p class="text-slate-800 font-medium leading-relaxed">
+                  「偵測到新匯入點位 <code>15F-ERV-02</code> 尚未指定共軛連動之 VRV 空調群組，請確認是否與 <code>15F-VRV-01~04</code> 綁定同一供氣區？」
+                </p>
+                <button onclick="resolveAiQuestion()"
+                  class="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-bold shadow-sm transition">
+                  ✔ 確認綁定並補齊 Structural Context
+                </button>
+              </div>
+            </div>
+
+            <!-- 右半：Generative UI 樣板設計與跨樓層派發 -->
+            <div class="bg-white p-5 rounded-xl border-2 border-blue-200 shadow-sm space-y-4 text-xs">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-bold text-blue-700 uppercase">Co-Design Template Studio</span>
+                  <h3 class="text-sm font-black text-slate-900">🎨 生成式 UI 標準樣板共創與全棟批次派發器</h3>
+                </div>
+                <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-mono text-[11px]">JSON Schema v2.1</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2.5">
+                <label
+                  class="p-2.5 rounded-lg border border-blue-300 bg-blue-50/50 flex items-center gap-2 font-bold text-slate-800">
+                  <input type="checkbox" checked> 樣板 A：事前預測與排程核准卡
+                </label>
+                <label
+                  class="p-2.5 rounded-lg border border-blue-300 bg-blue-50/50 flex items-center gap-2 font-bold text-slate-800">
+                  <input type="checkbox" checked> 樣板 B：Block 紅綠分區熱力圖
+                </label>
+                <label
+                  class="p-2.5 rounded-lg border border-blue-300 bg-blue-50/50 flex items-center gap-2 font-bold text-slate-800">
+                  <input type="checkbox" checked> 樣板 C：數位雙生虛擬試車驗收卡
+                </label>
+                <label
+                  class="p-2.5 rounded-lg border border-blue-300 bg-blue-50/50 flex items-center gap-2 font-bold text-slate-800">
+                  <input type="checkbox" checked> 樣板 D：ISO 50001 基線異常診斷卡
+                </label>
+              </div>
+
+              <div class="p-3.5 rounded-xl bg-slate-900 text-slate-200 mono text-[11px] space-y-1">
+                <div class="text-teal-400">// 參數化樣板變數（跨樓層自動替換，免重畫畫面）</div>
+                <div>"template_id": "std_office_floor_v2",</div>
+                <div>"bindings": { "floor_block": "${Floor_Block}", "vrv_group": "${Floor_VRVs}", "erv_unit":
+                  "${Floor_ERV}" }</div>
+              </div>
+
+              <div class="flex items-center gap-2 pt-1">
+                <button onclick="switchGroup('executive')"
+                  class="flex-1 py-2.5 rounded-xl border border-blue-300 bg-blue-50 hover:bg-blue-100 text-blue-800 font-bold transition">
+                  👁️ 切換至業務主管視角預覽 (B1~B5)
+                </button>
+                <button onclick="showToast('🚀 已將標準樓層 UI 樣板秒級派發套用至 3F～20F（共 18 個樓層）！')"
+                  class="flex-1 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-600 text-white font-bold shadow transition">
+                  🚀 一鍵套用至全棟 3F～20F
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- 第二群組：業務主管端 (Executive AI BOS Portal: B1 常駐艙 + B2~B5 動態視圖) -->
+    <!-- ========================================================================= -->
+    <div id="view-group-executive" class="hidden space-y-5">
+
+      <!-- 畫面 B1 頂部常駐脈搏列 (Executive Pulse Bar) -->
+      <div id="exec-pulse-bar"
+        class="bg-slate-900 text-white p-4 sm:p-5 rounded-2xl shadow-lg border border-slate-800 space-y-3">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <!-- 極簡 BOS Gateway IoT 健康燈號 -->
+            <button onclick="document.getElementById('iot-health-drawer').classList.toggle('hidden')"
+              class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold transition">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 pulse-dot"></span>
+              <span>BOS Gateway 正常 ｜ 全棟 IoT 99.6% 在線 (2 異常已自動隔離 ▾)</span>
+            </button>
+
+            <!-- 契約容量即時需量 -->
+            <div
+              class="px-3.5 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-xs flex items-center gap-2">
+              <span class="text-slate-400">即時總需量：</span>
+              <span class="font-black text-amber-300 mono">798 / 850 kW</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">尖峰守護中</span>
+            </div>
+
+            <div
+              class="px-3.5 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-xs hidden sm:flex items-center gap-1.5">
+              <span class="text-slate-400">本月 AI 節電：</span>
+              <span class="font-black text-emerald-400 mono">NT$ 148,600</span>
+            </div>
+          </div>
+
+          <!-- L4 緊急接管按鈕 -->
+          <button onclick="toggleL4Emergency()" id="btn-l4"
+            class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-black shadow-md transition">
+            🛑 L4 緊急接管：一鍵切回既有 BAS
+          </button>
+        </div>
+
+        <!-- 點開可見的極簡 IoT 異常隔離透明面板 -->
+        <div id="iot-health-drawer"
+          class="hidden p-3.5 rounded-xl bg-slate-800/95 border border-slate-700 text-xs text-slate-300 flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <strong class="text-emerald-300">🛡️ 設備異常自動保護機制運作中：</strong>
+            目前 <code>12F-CO2-ERR</code>（數值卡死）與 <code>B1-TEMP-04</code>（斷線逾時）已由系統自動暫停 AI 控制，改採現場 BAS 保底預設值運轉；另有
+            <code>1201 高管室</code> 為現場人員手動面板設定（AI 禮讓不覆蓋）。
+          </div>
+          <span class="text-[11px] text-slate-400">無需主管介入處理</span>
+        </div>
+
+        <!-- L4 啟動橫幅 -->
+        <div id="l4-banner"
+          class="hidden p-3 rounded-xl bg-rose-600 text-white text-xs font-bold flex items-center justify-between">
+          <span>⚠️ 【L4 緊急降級已啟動】全棟已暫停 AI 寫回，100% 交由現場既有遠傳 BAS 原生控制邏輯接管！</span>
+          <button onclick="toggleL4Emergency()" class="px-3 py-1 rounded-lg bg-white text-rose-700 font-black">恢復 AI
+            協同模式</button>
+        </div>
+      </div>
+
+      <!-- 畫面 B1 主體：左側自然語言對話 + 中央動態生成式決策視圖 (B2~B5 切換) + 右側常駐任務管家 -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+
+        <!-- 左欄：AI BOS 自然語言對話入口 (畫面 B1 常駐核心) -->
+        <div class="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-[640px]">
+          <div class="p-4 border-b border-slate-200 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] font-bold text-blue-600 uppercase">畫面 B1 • ① 使用者對話 Agent</span>
+              <h3 class="text-sm font-black text-slate-900">💬 AI BOS 自然語言決策助手</h3>
+            </div>
+            <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-semibold">零技術門檻</span>
+          </div>
+
+          <div id="exec-chat-log" class="flex-grow p-4 space-y-3 overflow-y-auto text-xs bg-slate-50/50">
+            <div
+              class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700 leading-relaxed">
+              早安！全棟 <strong>BOS Gateway 與 99.6% 設備連線正常</strong>。今日下午室外高溫預報 35°C，14:00 於 1202 大會議室有 30
+              人外賓會議，已為您備妥預冷省電方案（右側視圖 B2）。您也可以點選下方情境切換檢視各類動態生成式卡片：
+            </div>
+          </div>
+
+          <!-- 快捷情境觸發器（切換 B2 ~ B5 四種生成式視圖） -->
+          <div class="p-3 bg-slate-100/80 border-t border-slate-200 space-y-2">
+            <div class="text-[11px] font-bold text-slate-500">✨ 點擊模擬觸發 4 種「動態生成式決策視圖」：</div>
+            <div class="grid grid-cols-2 gap-1.5 text-[11px]">
+              <button onclick="switchExecCard('B2')" id="btn-card-B2"
+                class="px-2.5 py-2 rounded-lg sub-tab-active text-left truncate">📋 B2. 預冷排程核准卡</button>
+              <button onclick="switchExecCard('B3')" id="btn-card-B3"
+                class="px-2.5 py-2 rounded-lg bg-white/70 hover:bg-white text-slate-700 font-semibold text-left truncate">🗺️
+                B3. 紅綠分區輪換圖</button>
+              <button onclick="switchExecCard('B4')" id="btn-card-B4"
+                class="px-2.5 py-2 rounded-lg bg-white/70 hover:bg-white text-slate-700 font-semibold text-left truncate">🧪
+                B4. 虛擬試車驗收卡</button>
+              <button onclick="switchExecCard('B5')" id="btn-card-B5"
+                class="px-2.5 py-2 rounded-lg bg-white/70 hover:bg-white text-slate-700 font-semibold text-left truncate">🚨
+                B5. 基線抓漏與險情卡</button>
+            </div>
+            <div class="flex gap-2 pt-1">
+              <input id="exec-chat-input" type="text" placeholder="輸入自然語言目標，如：查詢 12F 空調狀態..."
+                class="flex-grow px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+              <button onclick="sendExecChat()"
+                class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold">發送</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 中右欄：動態生成式決策畫布 (B2 ~ B5) + 常駐任務小管家 -->
+        <div class="lg:col-span-8 space-y-5">
+
+          <!-- ========== 生成式視圖 B2：事前預測與排程核准卡 ========== -->
+          <div id="exec-card-B2" class="bg-white rounded-2xl border-2 border-blue-200 shadow-sm p-6 space-y-5">
+            <div class="flex items-start justify-between flex-wrap gap-2 border-b border-slate-100 pb-4">
+              <div>
+                <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[11px] font-bold">畫面 B2（動態生成視圖
+                  1）• 事前預測與排程核准卡</span>
+                <h2 class="text-lg font-black text-slate-900 mt-1">📋 1202 外賓大會議室 — MPC 錯峰平穩預冷與熱慣性節能方案</h2>
+              </div>
+              <span
+                class="px-2.5 py-1 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold">L2
+                等待主管核准</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200"><strong>📅 行事曆 MCP：</strong>14:00～16:00
+                重要外賓會議（30 人）</div>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200"><strong>☀️ 氣象 ＋ 空間：</strong>室外 35°C
+                西曬高熱慣性；13:00 起台電尖峰高電價</div>
+              <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900"><strong>💡 AI
+                  策略：</strong>12:35 離峰尾聲平緩預冷，<strong>15:45 散會前 15 分鐘提早關冷媒滑行</strong></div>
+            </div>
+
+            <!-- SVG 雙曲線預測對比圖 -->
+            <div class="p-4 rounded-xl bg-slate-900 text-white space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold">⚡ 電力負載預測曲線對比（傳統瞬間全開紅線 vs. AI MPC 平穩預冷綠線）</span>
+                <span class="text-emerald-400 font-mono font-bold" id="b2-saving-badge">預估單次省電 -24%（避免尖峰衝擊）</span>
+              </div>
+              <svg viewBox="0 0 640 170" class="w-full h-40">
+                <line x1="40" y1="32" x2="610" y2="32" stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="6 4" />
+                <text x="45" y="25" fill="#fda4af" font-size="11">台電契約容量警戒線</text>
+                <!-- 傳統紅線 -->
+                <path d="M 40 140 L 230 138 L 255 18 L 285 68 L 510 65 L 540 135 L 600 138" fill="none" stroke="#fb7185"
+                  stroke-width="2.5" />
+                <!-- AI MPC 綠線 -->
+                <path d="M 40 140 Q 140 138 180 95 Q 230 62 290 62 L 455 62 L 475 135 L 600 138" fill="none"
+                  stroke="#34d399" stroke-width="3" />
+                <circle cx="180" cy="95" r="4" fill="#34d399" />
+                <text x="115" y="85" fill="#6ee7b7" font-size="11">12:35 離峰平緩預冷</text>
+                <circle cx="455" cy="62" r="4" fill="#34d399" />
+                <text x="410" y="50" fill="#6ee7b7" font-size="11">15:45 提早15m斷冷(熱慣性)</text>
+                <text x="262" y="16" fill="#fda4af" font-size="11">14:00 傳統全開暴衝</text>
+              </svg>
+            </div>
+
+            <!-- 舒適 vs 省電微調滑桿 + 一鍵核准 -->
+            <div
+              class="p-4 rounded-xl bg-blue-50/60 border border-blue-200 flex items-center justify-between flex-wrap gap-4 text-xs">
+              <div class="space-y-1 flex-grow max-w-md">
+                <div class="flex justify-between font-bold text-slate-800">
+                  <span>❄️ 極致舒適 (23.0°C)</span>
+                  <span id="b2-slider-label" class="text-blue-700">目前設定目標：23.5°C（均衡推薦）</span>
+                  <span>🌱 極致省電 (25.0°C)</span>
+                </div>
+                <input type="range" min="23.0" max="25.0" step="0.5" value="23.5" oninput="updateB2Slider(this.value)"
+                  class="w-full accent-blue-600 cursor-pointer">
+              </div>
+
+              <div id="b2-action-area" class="flex items-center gap-2">
+                <button onclick="approveB2()"
+                  class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-black shadow-md transition">
+                  ✅ 一鍵核准執行 (經 BOS Gateway 受控寫回)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== 生成式視圖 B3：樓層紅綠分區輪換與換氣動態平面圖 ========== -->
+          <div id="exec-card-B3"
+            class="hidden bg-white rounded-2xl border-2 border-emerald-200 shadow-sm p-6 space-y-5">
+            <div class="flex items-start justify-between flex-wrap gap-2 border-b border-slate-100 pb-4">
+              <div>
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">畫面
+                  B3（動態生成視圖 2）• 由 Block 自動編譯之樓層分區熱力圖</span>
+                <h2 class="text-lg font-black text-slate-900 mt-1">🗺️ 12F 夏季尖峰需量防禦（紅綠分區無感輪換）＆ CO₂ 斜率預判通氣實況</h2>
+              </div>
+              <button onclick="rotateShedding()"
+                class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-sm transition">
+                🔄 模擬切換下一輪 10 分鐘接力輪換
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+              <div class="p-3 rounded-xl bg-rose-50 border border-rose-200"><strong class="text-rose-800">🔴 核心保護區（0
+                  客訴保證）：</strong>機房、高管室、主要辦公區維持恆溫 <code>0°C 偏差</code></div>
+              <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200"><strong class="text-emerald-800">🟢
+                  虛擬電池區（動態輪換）：</strong>非核心區每 10 分鐘接力微調 <code>+1°C</code>，已削峰 <strong>38.5 kW</strong></div>
+              <div class="p-3 rounded-xl bg-sky-50 border border-sky-200"><strong class="text-sky-800">🌬️ ERV
+                  變頻需量通氣：</strong>偵測 1202 室 CO₂ 斜率上升，風機已平滑拉升至 <strong>68%</strong></div>
+            </div>
+
+            <!-- 動態分區平面視覺圖 -->
+            <div class="p-5 rounded-2xl bg-slate-900 text-white space-y-3">
+              <div class="grid grid-cols-3 gap-3 text-xs">
+                <div
+                  class="col-span-2 p-4 rounded-xl bg-rose-950/80 border-2 border-rose-500/70 flex justify-between items-center">
+                  <div>
+                    <div class="font-black text-rose-200">🛡️ 1202 大會議室（核心保護區）</div>
+                    <div class="text-[11px] text-slate-300 mt-1">室溫 23.5°C 恆溫鎖定 ｜ CO₂ 640 ppm (斜率預判補風 ERV 68%)</div>
+                  </div>
+                  <span class="px-2.5 py-1 rounded bg-rose-600 text-white font-bold text-[11px]">禁止卸載</span>
+                </div>
+                <div class="p-4 rounded-xl bg-rose-950/80 border-2 border-rose-500/70">
+                  <div class="font-black text-rose-200">🛡️ 1201 高管室</div>
+                  <div class="text-[11px] text-slate-300 mt-1">22.0°C (現場手動禮讓中)</div>
+                </div>
+              </div>
+
+              <div id="shed-zone-2"
+                class="p-3.5 rounded-xl bg-slate-800 border-2 border-slate-600 flex items-center justify-between text-xs">
+                <span>🟢 <strong>T2 中央走廊 (彈性緩衝區)</strong> — 25.0°C</span>
+                <span class="shed-status px-2.5 py-0.5 rounded bg-slate-700 text-slate-300 font-bold">待命休整中</span>
+              </div>
+
+              <div class="grid grid-cols-3 gap-3 text-xs">
+                <div id="shed-zone-1" class="p-4 rounded-xl bg-emerald-900/80 border-2 border-emerald-400">
+                  <div class="font-black text-emerald-300">⚡ T1 茶水間 (緩衝區)</div>
+                  <div
+                    class="shed-status mt-1 inline-block px-2 py-0.5 rounded bg-emerald-400 text-slate-950 font-black text-[11px]">
+                    輪換降載中 (+1°C 限頻)</div>
+                </div>
+                <div class="p-4 rounded-xl bg-rose-950/80 border-2 border-rose-500/70">
+                  <div class="font-black text-rose-200">🛡️ 開放辦公區</div>
+                  <div class="text-[11px] text-slate-300 mt-1">24.0°C 恆溫保護 (0°C 偏差)</div>
+                </div>
+                <div id="shed-zone-3" class="p-4 rounded-xl bg-slate-800 border-2 border-slate-600">
+                  <div class="font-black text-slate-200">🟢 T3 梯廳大廳 (緩衝區)</div>
+                  <div
+                    class="shed-status mt-1 inline-block px-2 py-0.5 rounded bg-slate-700 text-slate-300 font-bold text-[11px]">
+                    待命休整中</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== 生成式視圖 B4：空間變更虛擬試車驗收對比卡 ========== -->
+          <div id="exec-card-B4" class="hidden bg-white rounded-2xl border-2 border-purple-200 shadow-sm p-6 space-y-5">
+            <div class="flex items-start justify-between flex-wrap gap-2 border-b border-slate-100 pb-4">
+              <div>
+                <span class="px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800 text-[11px] font-bold">畫面
+                  B4（動態生成視圖 3）• 數位雙生 C-TimeGAN + RL 虛擬試車驗收卡</span>
+                <h2 class="text-lg font-black text-slate-900 mt-1">🧪 12F 辦公格局調整（研發部擴編 +25 人）— 無風險虛擬試車驗收報告</h2>
+              </div>
+              <span
+                class="px-2.5 py-1 rounded-lg bg-purple-50 text-purple-800 font-black text-xs border border-purple-200">溫度震盪降低
+                52.1%</span>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900 text-white space-y-2">
+              <div class="flex justify-between text-xs">
+                <span class="font-bold">📈 部署初期室溫穩定度模擬對比（紅線：傳統現場盲測震盪 vs. 綠線：虛擬試車最佳化參數）</span>
+                <span class="text-emerald-400 font-bold">0 現場員工體感干擾</span>
+              </div>
+              <svg viewBox="0 0 640 150" class="w-full h-36">
+                <rect x="30" y="55" width="580" height="40" fill="#10b981" fill-opacity="0.15" />
+                <text x="40" y="78" fill="#6ee7b7" font-size="11">最佳舒適帶 (23.5°C ~ 24.5°C)</text>
+                <path
+                  d="M 30 75 L 70 20 L 105 130 L 140 28 L 175 122 L 215 38 L 255 112 L 300 50 L 350 98 L 410 65 L 600 76"
+                  fill="none" stroke="#fb7185" stroke-width="2" stroke-dasharray="4 2" />
+                <path d="M 30 75 Q 90 88 150 73 Q 240 68 340 75 T 600 74" fill="none" stroke="#34d399"
+                  stroke-width="3.5" />
+              </svg>
+            </div>
+
+            <div
+              class="flex items-center justify-between flex-wrap gap-3 p-4 rounded-xl bg-purple-50/60 border border-purple-200 text-xs">
+              <div class="space-y-1 text-slate-700">
+                <div>✅ <strong>安全邊界檢核通過：</strong>所有 VRV / ERV 參數均落於架構師定義之 Semantic 白名單內</div>
+                <div>✅ <strong>硬體保護確認：</strong>部署過程經由 BOS Gateway 分批平滑寫入，保留既有設備連鎖保護</div>
+              </div>
+              <button
+                onclick="this.textContent='✔ 已核准並透過 BOS Gateway 無縫部署完成！'; this.className='px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-black shadow';"
+                class="px-5 py-2.5 rounded-xl bg-purple-700 hover:bg-purple-600 text-white font-black shadow transition">
+                🚀 核准一鍵無縫部署至 12F 現場
+              </button>
+            </div>
+          </div>
+
+          <!-- ========== 生成式視圖 B5：ISO 50001 動態基線異常診斷 & 險情分診卡 ========== -->
+          <div id="exec-card-B5" class="hidden bg-white rounded-2xl border-2 border-rose-200 shadow-sm p-6 space-y-5">
+            <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-100 pb-3">
+              <div>
+                <span class="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[11px] font-bold">畫面 B5（動態生成視圖
+                  4）• 基線異常抓漏與重大險情分診</span>
+                <h2 class="text-lg font-black text-slate-900 mt-1">🚨 ISO 50001 動態能源基線異常定位 ＆ CEP 早期險情防護卡</h2>
+              </div>
+              <div class="flex gap-1.5 text-xs">
+                <button onclick="toggleB5Mode('cusum')" id="b5-btn-cusum" class="px-3 py-1 rounded-lg sub-tab-active">📊
+                  常態抓漏：ISO 50001 基線偏離</button>
+                <button onclick="toggleB5Mode('fire')" id="b5-btn-fire"
+                  class="px-3 py-1 rounded-lg bg-rose-50 text-rose-700 font-bold border border-rose-200">🔥
+                  緊急險情：初期火警複合預警</button>
+              </div>
+            </div>
+
+            <!-- B5 子模式 1：ISO 50001 XGBoost + CUSUM -->
+            <div id="b5-mode-cusum" class="space-y-4 text-xs">
+              <div
+                class="p-4 rounded-xl bg-amber-50 border border-amber-200 flex items-start justify-between flex-wrap gap-3">
+                <div class="space-y-1">
+                  <div class="font-black text-amber-900 text-sm">⚠️ CUSUM 累積偏離突破臨界值（自動排除外溫 34°C 與到班人數 92% 干擾後仍偏高 +15.2%）
+                  </div>
+                  <p class="text-slate-700">📍 <strong>Block 空間與迴路自動定位：</strong><code>B 棟 2F 空調箱室 (Block_B2_AHU)</code>
+                    ➔ 疑似 <strong>冰水控制閥門卡滯微漏或濾網堵塞</strong>，建議通知廠務檢修。</p>
+                </div>
+                <button onclick="showToast('已將異常診斷摘要與點位曲線匯出通知維運負責人！')"
+                  class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold shadow-sm">📤
+                  發送檢修通知與合規紀錄</button>
+              </div>
+              <div class="p-4 rounded-xl bg-slate-900 text-white">
+                <div class="text-[11px] text-slate-300 mb-2">藍線：AI 排除氣溫與人數干擾之 ISO 50001 動態能源基線 ｜ 橘線：實際耗電逐步隱性偏離（CUSUM
+                  累積觸發）</div>
+                <svg viewBox="0 0 640 120" class="w-full h-28">
+                  <path d="M 30 80 Q 120 75 210 82 T 390 78 T 600 80" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+                  <path d="M 30 82 Q 120 76 210 80 Q 320 72 430 52 L 540 34 L 600 26" fill="none" stroke="#fb923c"
+                    stroke-width="3" />
+                  <circle cx="540" cy="34" r="5" fill="#f43f5e" />
+                  <text x="430" y="24" fill="#fda4af" font-size="11">CUSUM 突破臨界！定位：2F 冰水閥異常</text>
+                </svg>
+              </div>
+            </div>
+
+            <!-- B5 子模式 2：CEP 火災早期預警 -->
+            <div id="b5-mode-fire"
+              class="hidden p-5 rounded-2xl bg-rose-950 text-white border-2 border-rose-500 space-y-4 text-xs">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <span class="px-3 py-1 rounded-full bg-rose-600 text-white font-black">🔥 P1 最高優先級 • CEP 跨感測複合推論預警（信心度
+                  94%）</span>
+                <span class="mono text-rose-300">Block_1202 ➔ 12F 走廊</span>
+              </div>
+              <p class="text-sm font-bold leading-relaxed">
+                偵測到 <code>1202 會議室</code> 室溫斜率 &gt; 2.8°C/min 急升 ＋ 相鄰走廊微溫升 ＋ 該迴路電流瞬間歸零（疑似插座短路初期悶燒）！
+              </p>
+              <div class="flex items-center gap-3 flex-wrap">
+                <button onclick="showToast('🛑 已透過 BOS Gateway 緊急關閉 12F ERV 外氣風閥斷氧並切斷該分路空調！')"
+                  class="px-5 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-400 text-white font-black shadow-lg">
+                  ✅ 一鍵核准緊急聯動（關閉 12F ERV 斷氧 ＋ 區域降級隔離）
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 常駐 AI 任務管家 (畫面 B1 下方常駐精簡列) -->
+          <div
+            class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 flex items-center justify-between flex-wrap gap-3 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="font-black text-slate-900">🤖 長效運行中 Task Agents：</span>
+              <span
+                class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">●
+                晨間平穩預冷 [L3 自治]</span>
+              <span
+                class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">●
+                外氣低焓值自然冷源 [L3 自治]</span>
+              <span class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-800 border border-blue-200 font-semibold">●
+                夏季尖峰防超約守護 [L2 核准]</span>
+            </div>
+            <span class="text-[11px] text-slate-400">Event 系統獨立監控中（地端 GPU 待機功耗 0%）</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- 第三群組：手機行動端延伸 (畫面 M1：雙向即時訊息查詢 ＆ APP 內安全確認控制)   -->
+    <!-- ========================================================================= -->
+    <div id="view-group-mobile" class="hidden py-4">
+      <div class="max-w-5xl mx-auto space-y-6">
+        <div class="text-center space-y-1">
+          <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold">畫面 M1 • 行動端雙向互動與受控確認（對齊陽明
+            AI BOS 行動場景）</span>
+          <h2 class="text-2xl font-black text-slate-900">📱 主管外出／巡場行動端：自然語言秒級查詢 ＆ APP 安全核准寫回</h2>
+          <p class="text-xs text-slate-500">簡訊僅傳送告警與 AI 摘要；設備控制於 APP 內經權限與安全邊界檢核後一鍵執行，並由 BOS Gateway 讀回設定值確認</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start justify-items-center">
+
+          <!-- 左手機：零學習成本雙向即時對話 -->
+          <div class="w-full max-w-[360px] bg-slate-900 rounded-[2.5rem] p-3.5 shadow-2xl border-4 border-slate-800">
+            <div class="bg-slate-50 rounded-[2rem] overflow-hidden flex flex-col h-[580px]">
+              <div class="bg-white px-5 py-3.5 border-b border-slate-200 flex items-center justify-between">
+                <span class="text-xs font-bold text-blue-600">‹ 訊息</span>
+                <div class="text-center">
+                  <div class="text-xs font-black text-slate-900">AI BOS 智慧助理</div>
+                  <div class="text-[10px] text-emerald-600 font-semibold">● BOS Gateway 即時連線</div>
+                </div>
+                <span class="text-xs text-slate-400">•••</span>
+              </div>
+
+              <div id="m1-chat-box" class="flex-grow p-4 space-y-3 overflow-y-auto text-xs">
+                <div class="flex justify-end">
+                  <div class="bg-blue-600 text-white px-3.5 py-2 rounded-2xl rounded-br-sm max-w-[80%]">查詢空調狀態</div>
+                </div>
+                <div class="flex justify-start">
+                  <div
+                    class="bg-white border border-slate-200 text-slate-800 px-3.5 py-2.5 rounded-2xl rounded-bl-sm shadow-sm max-w-[85%] leading-relaxed">
+                    <strong>A1 空調（BOS 即時讀值）：</strong><br />• 狀態：🟢 運轉正常<br />• 冰水出水：6.8°C<br />• 目前負載：72%
+                  </div>
+                </div>
+                <div class="flex justify-end">
+                  <div class="bg-blue-600 text-white px-3.5 py-2 rounded-2xl rounded-br-sm max-w-[80%]">查看告警</div>
+                </div>
+                <div class="flex justify-start">
+                  <div
+                    class="bg-white border border-slate-200 text-slate-800 px-3.5 py-2 rounded-2xl rounded-bl-sm shadow-sm">
+                    目前全棟核心設備無異常（BOS 在線率 99.6%）。</div>
+                </div>
+              </div>
+
+              <div class="p-3 bg-white border-t border-slate-200 space-y-2">
+                <div class="text-[10px] text-slate-400 font-semibold">點擊快速測試手機對話指令：</div>
+                <div class="flex flex-wrap gap-1.5">
+                  <button onclick="sendMobileQuick('調高 A1 空調 1°C')"
+                    class="px-2.5 py-1 rounded-full bg-blue-50 hover:bg-blue-100 text-blue-700 text-[11px] font-bold">調高
+                    A1 空調 1°C</button>
+                  <button onclick="sendMobileQuick('12F 大會議室狀態')"
+                    class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-semibold">12F
+                    會議室狀態</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右手機：告警摘要推播 ➔ APP 內安全確認控制與讀回 -->
+          <div class="w-full max-w-[360px] bg-slate-900 rounded-[2.5rem] p-3.5 shadow-2xl border-4 border-slate-800">
+            <div class="bg-slate-100 rounded-[2rem] overflow-hidden flex flex-col h-[580px]">
+              <div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between">
+                <span class="text-xs text-slate-300">‹ 返回</span>
+                <span class="text-xs font-black">AI BOS APP 內確認控制</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-teal-500/30 text-teal-300">L2 受控</span>
+              </div>
+
+              <div class="p-4 space-y-3.5 overflow-y-auto text-xs flex-grow">
+                <!-- 告警與 AI 判讀摘要卡 -->
+                <div class="bg-white p-3.5 rounded-2xl border border-amber-200 shadow-sm space-y-1.5">
+                  <div class="flex justify-between items-center">
+                    <span
+                      class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-[10px]">【空調偏離告警】AHU-02</span>
+                    <span class="text-[10px] text-slate-400 mono">16:20</span>
+                  </div>
+                  <p class="text-slate-700">異常：下午人員離場後室溫偏低浪費冷能（目前 23.2°C｜尖峰時段）。</p>
+                  <p class="text-slate-500 text-[11px] bg-slate-50 p-2 rounded-lg">🤖 <strong>AI
+                      判讀摘要：</strong>建議微幅調升設定溫度至 24.5°C，預估可降載 14% 並維持舒適。</p>
+                </div>
+
+                <!-- 受控寫回確認卡 -->
+                <div class="bg-white p-4 rounded-2xl border-2 border-blue-200 shadow-sm space-y-3">
+                  <div class="font-black text-slate-900 text-sm">AI BOS 建議執行提案</div>
+                  <div class="p-3 rounded-xl bg-blue-50 text-center">
+                    <span class="text-slate-500 line-through mr-2">原設定 24.0°C</span>
+                    <span class="text-base font-black text-blue-700">➔ 24.5°C</span>
+                  </div>
+                  <div class="space-y-1.5 text-[11px] text-emerald-800 font-semibold">
+                    <div>✅ 角色權限與 Semantic 安全範圍 (19~27.5°C) 檢核通過</div>
+                    <div>✅ 保留現場 BOS Gateway 與 BAS 原生連鎖保護</div>
+                  </div>
+
+                  <div id="m1-confirm-btns" class="grid grid-cols-2 gap-2 pt-1">
+                    <button onclick="confirmMobileWriteback()"
+                      class="py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black shadow transition">確認執行</button>
+                    <button onclick="showToast('已取消此次調控提案')"
+                      class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold transition">取消</button>
+                  </div>
+
+                  <!-- BOS Gateway 讀回回報區 -->
+                  <div id="m1-readback-box"
+                    class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 space-y-1">
+                    <div class="font-black">✔ BOS Gateway 設定值讀回：24.5°C</div>
+                    <div class="text-[11px]">TAICS 寫入與點位讀回確認一致｜操作稽核紀錄已建立</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 彈窗 1：A1 批次匯入 BOS 點位表 -->
+  <div id="import-modal"
+    class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-200 text-xs">
+      <h3 class="text-base font-black text-slate-900">📥 批次匯入 BOS Gateway 點位清冊</h3>
+      <p class="text-slate-600 leading-relaxed">支援直接從 <code>BOS Gateway</code> API 同步最新 TAICS 點位表，或上傳 Excel / JSON
+        點位對應檔：</p>
+      <div class="p-4 rounded-xl bg-slate-50 border border-dashed border-slate-300 text-center space-y-1">
+        <div class="font-bold text-slate-700">📄 YangMing_BOS_Points_v3.xlsx (已偵測 485 筆點位)</div>
+        <div class="text-[11px] text-slate-400">自動檢查時間戳、單位與預設安全上下限</div>
+      </div>
+      <div class="flex justify-end gap-2">
+        <button onclick="document.getElementById('import-modal').classList.add('hidden')"
+          class="px-4 py-2 rounded-xl bg-slate-100 font-bold text-slate-600">關閉</button>
+        <button
+          onclick="document.getElementById('import-modal').classList.add('hidden'); showToast('已成功同步並驗證 485 筆 BOS Gateway 點位！')"
+          class="px-4 py-2 rounded-xl bg-teal-700 text-white font-bold">開始匯入並驗證健康度</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 彈窗 2：A3 動態掛載第 N 種新能力／演算法插件 -->
+  <div id="plugin-modal"
+    class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-purple-200 text-xs">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-black text-slate-900">➕ 掛載第 N 種新能力／演算法插件（零改版彈性擴充）</h3>
+        <span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-bold">Everything as API</span>
+      </div>
+      <div class="space-y-3">
+        <div>
+          <label class="block text-slate-500 font-semibold mb-1">新插件名稱</label>
+          <input id="new-plg-name" type="text" value="冰水主機群控 COP 最佳化尋優模型 API"
+            class="w-full px-3 py-2 rounded-lg border border-slate-300 font-bold">
+        </div>
+        <div>
+          <label class="block text-slate-500 font-semibold mb-1">API / MCP 端點位址</label>
+          <input id="new-plg-url" type="text" value="http://algo-cluster.local:8090/v1/chiller-cop-optimize"
+            class="w-full px-3 py-2 rounded-lg border border-slate-300 mono text-[11px]">
+        </div>
+        <div>
+          <label class="block text-slate-500 font-semibold mb-1">Semantic 語意與適用 Context 描述（供 Task Agent 自動理解與調用）</label>
+          <textarea id="new-plg-desc" rows="2"
+            class="w-full px-3 py-2 rounded-lg border border-slate-300">根據冰水出入水溫與負載率，計算多台冰水主機最佳加減載組合以極大化全系統 COP，適用於機房 Block。</textarea>
+        </div>
+      </div>
+      <div class="flex justify-end gap-2">
+        <button onclick="document.getElementById('plugin-modal').classList.add('hidden')"
+          class="px-4 py-2 rounded-xl bg-slate-100 font-bold text-slate-600">取消</button>
+        <button onclick="addNewPlugin()"
+          class="px-4 py-2 rounded-xl bg-purple-700 hover:bg-purple-600 text-white font-bold shadow">立即註冊掛載並寫入向量庫</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 範例 BOS Gateway 點位健康清單資料
+    const bosPoints = [
+      { id: '12F-VRV-02', name: '1202 大會議室變頻空調', val: '24.0°C (讀回一致)', ts: '2 秒前', status: 'ok', statusLabel: '🟢 連線與品質正常', ai: 'L2 受控待命', unit: '°C (攝氏溫度)', min: '19.0', max: '27.5', interval: '300 秒' },
+      { id: '12F-ERV-12A', name: '12F 全熱交換器風閥/風機', val: '風量 68% / 旁通關', ts: '1 秒前', status: 'ok', statusLabel: '🟢 連線與品質正常', ai: 'L3 邊界自治中', unit: '% (風機轉速)', min: '20', max: '100', interval: '60 秒' },
+      { id: '12F-CO2-ERR', name: '12F 北側備用 CO₂ 感測器', val: '412 ppm (持續 4h 未變)', ts: '3 秒前', status: 'err', statusLabel: '🔴 數值卡死 (Frozen)', ai: '🚫 已自動隔離 AI 控制', unit: 'ppm (二氧化碳)', min: '350', max: '2000', interval: '唯讀感測' },
+      { id: 'B1-TEMP-04', name: 'B1 停車場排風溫度計', val: '-- (無回應)', ts: '18 分鐘前', status: 'err', statusLabel: '🔴 斷線逾時 (Stale)', ai: '🚫 已自動隔離 AI 控制', unit: '°C (攝氏溫度)', min: '0', max: '50', interval: '唯讀感測' },
+      { id: '12F-VRV-01', name: '1201 高管室空調面板', val: '22.0°C (現場手調)', ts: '4 秒前', status: 'manual', statusLabel: '🟡 現場手動覆寫中', ai: '⏸️ AI 禮讓暫停 60m', unit: '°C (攝氏溫度)', min: '18.5', max: '27.0', interval: '300 秒' },
+      { id: 'MAIN-PM-01', name: '全棟高壓總盤智慧電表', val: '798.4 kW', ts: '1 秒前', status: 'ok', statusLabel: '🟢 連線與品質正常', ai: '⚡ 即時需量監控中', unit: 'kW (實功需量)', min: '0', max: '850', interval: '唯讀感測' },
+      { id: '12F-VRV-05', name: '12F 茶水間空調室內機', val: '25.5°C (讀回一致)', ts: '2 秒前', status: 'ok', statusLabel: '🟢 連線與品質正常', ai: '🟢 緩衝區輪換就緒', unit: '°C (攝氏溫度)', min: '20.0', max: '28.0', interval: '300 秒' }
+    ];
+
+    const blockData = {
+      B1202: { title: '1202 外賓大會議室 (Block_1202)', zone: '🔴 核心保護區', zoneCls: 'bg-rose-100 text-rose-800', drIdx: 0, thermalIdx: 0, devs: ['12F-VRV-02', '12F-ERV-12A', '12F-CO2-02'] },
+      B1201: { title: '1201 高管會議室 (Block_1201)', zone: '🔴 核心保護區', zoneCls: 'bg-rose-100 text-rose-800', drIdx: 0, thermalIdx: 1, devs: ['12F-VRV-01'] },
+      BCOR: { title: '12F 中央相連走廊 (Block_Corridor)', zone: '🟢 彈性緩衝區 T2', zoneCls: 'bg-emerald-100 text-emerald-800', drIdx: 2, thermalIdx: 1, devs: ['12F-VRV-COR'] },
+      BPAN: { title: '12F 茶水間 Pantry (Block_Pantry)', zone: '🟢 彈性緩衝區 T1', zoneCls: 'bg-emerald-100 text-emerald-800', drIdx: 1, thermalIdx: 1, devs: ['12F-VRV-05'] },
+      BOFF: { title: '12F 開放辦公區 (Block_OpenOffice)', zone: '🔴 核心保護區', zoneCls: 'bg-rose-100 text-rose-800', drIdx: 0, thermalIdx: 0, devs: ['12F-VRV-03', '12F-VRV-04', '12F-ERV-12B'] },
+      BSRV: { title: '12F 弱電機房 (Block_ServerRoom)', zone: '🔒 絕對保護區', zoneCls: 'bg-slate-800 text-white', drIdx: 0, thermalIdx: 1, devs: ['12F-CRAC-01'] }
+    };
+
+    let selectedBlockId = 'B1202';
+    let currentFilter = 'all';
+    let shedStep = 0;
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = msg;
+      t.classList.remove('hidden');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => t.classList.add('hidden'), 3200);
+    }
+
+    function renderPointsTable() {
+      const tbody = document.getElementById('points-tbody');
+      const rows = bosPoints.filter(p => currentFilter === 'all' || p.status === currentFilter);
+      tbody.innerHTML = rows.map(p => `
+        <tr onclick="selectPoint('${p.id}')" class="hover:bg-teal-50/50 cursor-pointer transition ${p.status === 'err' ? 'bg-rose-50/40' : ''}">
+          <td class="p-3"><div class="font-bold text-slate-900 mono">${p.id}</div><div class="text-[11px] text-slate-500">${p.name}</div></td>
+          <td class="p-3 mono font-semibold text-slate-800">${p.val}</td>
+          <td class="p-3 text-slate-500">${p.ts}</td>
+          <td class="p-3 font-bold ${p.status === 'err' ? 'text-rose-600' : p.status === 'manual' ? 'text-amber-700' : 'text-emerald-700'}">${p.statusLabel}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded text-[11px] font-semibold ${p.status === 'err' ? 'bg-rose-100 text-rose-800' : 'bg-slate-100 text-slate-700'}">${p.ai}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function filterPoints(flt) {
+      currentFilter = flt;
+      ['all', 'err', 'manual', 'ok'].forEach(k => {
+        const btn = document.getElementById('flt-' + k);
+        btn.classList.toggle('sub-tab-active', k === flt);
+      });
+      renderPointsTable();
+    }
+
+    function selectPoint(id) {
+      const p = bosPoints.find(x => x.id === id);
+      if (!p) return;
+      document.getElementById('sem-title').textContent = `${p.id} (${p.name})`;
+      document.getElementById('sem-api').value = `POST /api/v1/bos/points/${p.id.replace(/-/g, '_')}/value`;
+      document.getElementById('sem-unit').value = p.unit;
+      document.getElementById('sem-min').value = p.min;
+      document.getElementById('sem-max').value = p.max;
+      document.getElementById('sem-interval').value = p.interval;
+      const badge = document.getElementById('sem-badge');
+      badge.textContent = p.status === 'err' ? '🔴 隔離中' : p.status === 'manual' ? '🟡 手動禮讓' : '🟢 正常';
+      badge.className = `px-2 py-0.5 rounded text-[11px] font-bold ${p.status === 'err' ? 'bg-rose-100 text-rose-800' : p.status === 'manual' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}`;
+    }
+
+    function switchGroup(grp) {
+      ['architect', 'executive', 'mobile'].forEach(g => {
+        document.getElementById('view-group-' + g).classList.toggle('hidden', g !== grp);
+        const btn = document.getElementById('grp-' + g);
+        if (g === grp) {
+          btn.classList.add('role-tab-active');
+          btn.classList.remove('bg-white', 'text-slate-700');
+        } else {
+          btn.classList.remove('role-tab-active');
+          btn.classList.add('bg-white', 'text-slate-700');
+        }
+      });
+      const ind = document.getElementById('current-screen-indicator');
+      if (grp === 'architect') ind.textContent = '目前檢視：建築語意架構師端 (A1 ～ A4 工作台)';
+      if (grp === 'executive') ind.textContent = '目前檢視：業務主管端 — 畫面 B1 常駐指揮艙 ＋ 動態生成式決策卡 (B2～B5)';
+      if (grp === 'mobile') ind.textContent = '目前檢視：畫面 M1 — 手機雙向對話查詢 ＆ APP 內安全確認控制';
+    }
+
+    function switchArchScreen(code) {
+      const titles = {
+        A1: '畫面 A1 — BOS Gateway 接入與 IoT 健康監控台',
+        A2: '畫面 A2 — Block 空間拓撲與分區屬性畫布',
+        A3: '畫面 A3 — 開放式能力與演算法插件掛載中心',
+        A4: '畫面 A4 — L0～L4 控制權限與生成式 UI 樣板台'
+      };
+      ['A1', 'A2', 'A3', 'A4'].forEach(c => {
+        document.getElementById('screen-' + c).classList.toggle('hidden', c !== code);
+        const nav = document.getElementById('nav-' + c);
+        if (c === code) {
+          nav.className = 'w-full text-left px-3 py-2.5 rounded-xl bg-teal-600 text-white font-bold flex items-center justify-between transition';
+        } else {
+          nav.className = 'w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 font-medium flex items-center justify-between transition';
+        }
+      });
+      document.getElementById('current-screen-indicator').textContent = '目前檢視：' + titles[code];
+    }
+
+    function selectBlock(bid) {
+      selectedBlockId = bid;
+      Object.keys(blockData).forEach(k => {
+        document.getElementById('blk-' + k).classList.toggle('block-selected', k === bid);
+      });
+      const d = blockData[bid];
+      document.getElementById('blk-editor-title').textContent = d.title;
+      const z = document.getElementById('blk-editor-zone');
+      z.textContent = d.zone;
+      z.className = `px-2 py-0.5 rounded font-bold text-[11px] ${d.zoneCls}`;
+      document.getElementById('blk-editor-dr').selectedIndex = d.drIdx;
+      document.getElementById('blk-editor-thermal').selectedIndex = d.thermalIdx;
+      document.getElementById('blk-devices-list').innerHTML = d.devs.map(x => `<span class="px-2 py-1 rounded bg-slate-100 border border-slate-300">${x}</span>`).join('');
+    }
+
+    function assignDeviceToBlock(devId) {
+      const d = blockData[selectedBlockId];
+      if (!d.devs.includes(devId)) d.devs.push(devId);
+      selectBlock(selectedBlockId);
+      showToast(`已將健康點位 ${devId} 裝載入 ${d.title}！`);
+    }
+
+    function addNewPlugin() {
+      const name = document.getElementById('new-plg-name').value.trim();
+      const desc = document.getElementById('new-plg-desc').value.trim();
+      if (!name) return;
+      const grid = document.getElementById('plugin-grid');
+      const card = document.createElement('div');
+      card.className = 'bg-purple-50/70 p-4 rounded-xl border-2 border-purple-400 shadow-sm space-y-2';
+      card.innerHTML = `
+        <div class="flex justify-between items-center"><span class="px-2 py-0.5 rounded bg-purple-600 text-white font-bold">新掛載插件 #N</span><span class="text-emerald-700 font-bold">🟢 隨插即用就緒</span></div>
+        <h3 class="text-sm font-black text-slate-900">${name}</h3>
+        <p class="text-slate-600">${desc}</p>
+      `;
+      grid.appendChild(card);
+      const badge = document.getElementById('plugin-count-badge');
+      badge.textContent = String(parseInt(badge.textContent, 10) + 1);
+      document.getElementById('plugin-modal').classList.add('hidden');
+      showToast(`🎉 已動態掛載「${name}」，Task Agent 即刻可納入跨域任務編排！`);
+    }
+
+    function resolveAiQuestion() {
+      const box = document.getElementById('ai-question-box');
+      box.className = 'bg-emerald-50 p-5 rounded-xl border border-emerald-200 text-xs text-emerald-900 font-bold';
+      box.innerHTML = '✔ 已補齊 15F-ERV-02 ⟷ 15F-VRV-01~04 共軛迴路語意，目前無待辦 AI 探詢事項！';
+      document.getElementById('ai-q-badge').textContent = '0待辦';
+      document.getElementById('ai-q-badge').className = 'px-1.5 py-0.5 text-[10px] rounded bg-emerald-500/30 text-emerald-200 font-mono';
+      showToast('已回覆 Task Agent 並更新 Structural Context！');
+    }
+
+    function switchExecCard(code) {
+      const names = {
+        B2: '畫面 B1 + B2 — 事前預測與排程核准卡',
+        B3: '畫面 B1 + B3 — 樓層紅綠分區輪換與換氣動態平面圖',
+        B4: '畫面 B1 + B4 — 空間變更虛擬試車驗收對比卡',
+        B5: '畫面 B1 + B5 — ISO 50001 基線異常診斷與險情分診卡'
+      };
+      ['B2', 'B3', 'B4', 'B5'].forEach(c => {
+        document.getElementById('exec-card-' + c).classList.toggle('hidden', c !== code);
+        const btn = document.getElementById('btn-card-' + c);
+        if (c === code) {
+          btn.className = 'px-2.5 py-2 rounded-lg sub-tab-active text-left truncate';
+        } else {
+          btn.className = 'px-2.5 py-2 rounded-lg bg-white/70 hover:bg-white text-slate-700 font-semibold text-left truncate';
+        }
+      });
+      document.getElementById('current-screen-indicator').textContent = '目前檢視：' + names[code];
+    }
+
+    function updateB2Slider(val) {
+      const savings = { '23.0': '-18%', '23.5': '-24%', '24.0': '-29%', '24.5': '-34%', '25.0': '-38%' };
+      document.getElementById('b2-slider-label').textContent = `目前設定目標：${parseFloat(val).toFixed(1)}°C`;
+      document.getElementById('b2-saving-badge').textContent = `預估單次省電 ${savings[parseFloat(val).toFixed(1)] || '-24%'}（避免尖峰衝擊）`;
+    }
+
+    function approveB2() {
+      document.getElementById('b2-action-area').innerHTML = `
+        <div class="px-4 py-2 rounded-xl bg-emerald-600 text-white font-black text-xs shadow">
+          ✔ 已核准！BOS Gateway 寫入並讀回確認：1202 室排程已生效
+        </div>`;
+      showToast('已透過 API Server 檢核簽章並經 BOS Gateway 完成受控寫回與讀回驗證！');
+    }
+
+    function rotateShedding() {
+      shedStep = (shedStep + 1) % 3;
+      const zones = ['shed-zone-1', 'shed-zone-2', 'shed-zone-3'];
+      zones.forEach((zid, idx) => {
+        const el = document.getElementById(zid);
+        const st = el.querySelector('.shed-status');
+        if (idx === shedStep) {
+          el.className = zid === 'shed-zone-2'
+            ? 'p-3.5 rounded-xl bg-emerald-900/80 border-2 border-emerald-400 flex items-center justify-between text-xs'
+            : 'p-4 rounded-xl bg-emerald-900/80 border-2 border-emerald-400';
+          st.className = 'shed-status px-2.5 py-0.5 rounded bg-emerald-400 text-slate-950 font-black text-[11px]';
+          st.textContent = '輪換降載中 (+1°C 限頻)';
+        } else {
+          el.className = zid === 'shed-zone-2'
+            ? 'p-3.5 rounded-xl bg-slate-800 border-2 border-slate-600 flex items-center justify-between text-xs'
+            : 'p-4 rounded-xl bg-slate-800 border-2 border-slate-600';
+          st.className = 'shed-status px-2.5 py-0.5 rounded bg-slate-700 text-slate-300 font-bold text-[11px]';
+          st.textContent = '恢復舒適休整中';
+        }
+      });
+      showToast(`已接力切換至 T${shedStep + 1} 彈性緩衝區微調 +1°C，核心辦公區維持 0°C 偏差！`);
+    }
+
+    function toggleB5Mode(mode) {
+      document.getElementById('b5-mode-cusum').classList.toggle('hidden', mode !== 'cusum');
+      document.getElementById('b5-mode-fire').classList.toggle('hidden', mode !== 'fire');
+      document.getElementById('b5-btn-cusum').classList.toggle('sub-tab-active', mode === 'cusum');
+      document.getElementById('b5-btn-fire').classList.toggle('sub-tab-active', mode === 'fire');
+    }
+
+    function toggleL4Emergency() {
+      const banner = document.getElementById('l4-banner');
+      const isActivating = banner.classList.contains('hidden');
+      banner.classList.toggle('hidden');
+      showToast(isActivating ? '🛑 已啟動 L4 緊急降級：全棟切回既有遠傳 BAS 控制！' : '🟢 已恢復 AI BOS 協同守護模式！');
+    }
+
+    function sendExecChat() {
+      const inp = document.getElementById('exec-chat-input');
+      const txt = inp.value.trim();
+      if (!txt) return;
+      const log = document.getElementById('exec-chat-log');
+      log.innerHTML += `<div class="bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none ml-8 shadow-sm">${txt}</div>`;
+      log.innerHTML += `<div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700 mr-4">收到指令！<strong>對話 Agent</strong> 已查詢 <code>BOS Gateway</code> 即時狀態：12F 在線設備全數正常（室溫 24.0°C、需量餘裕充足），並已同步更新右側生成式決策視圖。</div>`;
+      inp.value = '';
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function sendMobileQuick(cmd) {
+      const box = document.getElementById('m1-chat-box');
+      box.innerHTML += `<div class="flex justify-end"><div class="bg-blue-600 text-white px-3.5 py-2 rounded-2xl rounded-br-sm max-w-[80%]">${cmd}</div></div>`;
+      const reply = cmd.includes('調高')
+        ? '<strong>BOS Gateway 受控執行完成：</strong><br/>• A1 冰水出水設定已調整 +1.0°C<br/>• 實際讀回確認值：<strong>7.8°C（執行中）</strong>'
+        : '<strong>1202 大會議室實況：</strong><br/>• 室溫 23.5°C｜CO₂ 640 ppm<br/>• ERV 變頻補風 68% 正常運轉中';
+      box.innerHTML += `<div class="flex justify-start"><div class="bg-white border border-slate-200 text-slate-800 px-3.5 py-2.5 rounded-2xl rounded-bl-sm shadow-sm max-w-[85%] leading-relaxed">${reply}</div></div>`;
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function confirmMobileWriteback() {
+      document.getElementById('m1-confirm-btns').classList.add('hidden');
+      document.getElementById('m1-readback-box').classList.remove('hidden');
+      showToast('📱 APP 確認執行成功！BOS Gateway 已讀回設定值 24.5°C！');
+    }
+
+    // 初始化渲染點位表
+    renderPointsTable();
+  </script>
+</body>
+
+</html>

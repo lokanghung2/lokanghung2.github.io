@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic AIoT 智慧物聯網架構設計規格書</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Mermaid.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    code,
+    pre {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Mermaid 圖形高對比與純向量排版保護（嚴禁覆寫 white-space / word-break / font-size / padding） */
+    svg foreignObject {
+      overflow: visible;
+    }
+
+    .mermaid .nodeLabel,
+    .mermaid .label,
+    .mermaid text,
+    #modal-svg-wrapper .nodeLabel,
+    #modal-svg-wrapper .label,
+    #modal-svg-wrapper text {
+      color: #000000;
+      fill: #000000;
+    }
+
+    .mermaid svg {
+      display: block;
+      max-width: none;
+    }
+
+    /* 放大控制相關樣式 */
+    .mermaid-zoom-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+    }
+
+    .mermaid-viewport {
+      overflow: auto;
+      width: 100%;
+      min-height: 480px;
+      max-height: 78vh;
+      padding: 3rem 1.5rem 1.5rem;
+      cursor: grab;
+      user-select: none;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 #f8fafc;
+    }
+
+    .mermaid-viewport:active {
+      cursor: grabbing;
+    }
+
+    .mermaid-zoom-target {
+      width: max-content;
+      margin: 0 auto;
+    }
+
+    /* 全螢幕 Modal */
+    #mermaid-modal.active {
+      display: flex !important;
+    }
+
+    #modal-viewport {
+      cursor: grab;
+      user-select: none;
+    }
+
+    #modal-viewport:active {
+      cursor: grabbing;
+    }
+
+    #modal-svg-wrapper {
+      background-color: #ffffff;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      flex-shrink: 0;
+      will-change: transform;
+    }
+  </style>
+</head>
+
+<body
+  class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900 min-h-screen flex flex-col">
+
+  <!-- 頂部導覽列 -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span
+          class="text-2xl font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-amber-600 bg-clip-text text-transparent">AIoT
+          2.0</span>
+        <span
+          class="text-xs bg-slate-100 text-slate-600 font-semibold px-2.5 py-1 rounded-full border border-slate-300">Whitepaper
+          & Spec</span>
+      </div>
+      <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+        <a href="#roles" class="hover:text-blue-600 transition">一、兩大人類角色</a>
+        <a href="#vision" class="hover:text-blue-600 transition">二、定位與原則</a>
+        <a href="#architecture" class="hover:text-blue-600 transition">三、概念架構圖</a>
+        <a href="#infra" class="hover:text-blue-600 transition">四、Infra 架構圖</a>
+        <a href="#api-context" class="hover:text-blue-600 transition">五、雙層 Context</a>
+        <a href="#shell" class="hover:text-blue-600 transition">六、Agent Shell</a>
+        <a href="#block" class="hover:text-blue-600 transition">七、Block 空間基元</a>
+        <a href="#generative-ui" class="hover:text-blue-600 transition">八、生成式 UI</a>
+        <a href="#lifecycle" class="hover:text-blue-600 transition">九、端到端流程</a>
+      </nav>
+      <div class="flex items-center gap-2 text-xs">
+        <a href="aiot-archetecture.html"
+          class="px-3 py-1.5 rounded-lg border border-slate-300 bg-slate-50 hover:bg-slate-100 font-semibold text-slate-700 transition">架構規格書</a>
+        <a href="aiot-workmanual.html"
+          class="px-3 py-1.5 rounded-lg border border-teal-200 bg-teal-50 hover:bg-teal-100 font-semibold text-teal-800 transition">實戰作業手冊</a>
+        <a href="aiot-ui-mockup.html"
+          class="px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 font-semibold text-slate-600 transition">畫面規格</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主要內容區 -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+    <!-- 頁頭標題區 -->
+    <div class="space-y-4 border-b border-slate-200 pb-8">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200">
+        <span>系統架構設計規格書</span>
+        <span>•</span>
+        <span>Human-in-the-Loop & Everything as API</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        Agentic AIoT 智慧物聯網系統架構設計規格書
+      </h1>
+      <p class="text-base sm:text-lg text-slate-600 max-w-4xl leading-relaxed">
+        規範兩大人類角色分工、雙層 Context 模型（結構情境 vs. 運行情境）、Everything as API 平權、通用 Agent Shell、Block 空間基元，以及涵蓋 Web/API Server、自建 AI
+        模型服務（Ollama）、BOS Gateway（IT/OT 安全邊界）、NATS Event-Bus 與 PostgreSQL 三態合一底座的完整工程架構。
+      </p>
+    </div>
+
+    <!-- 一、 明確定義兩大人類角色規範 (Roles & Responsibilities) -> 放在最第一位！ -->
+    <section id="roles" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4 flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">一、 明確定義兩大人類角色規範 (Roles & Responsibilities)</h2>
+          <p class="text-slate-500 text-sm mt-1">落實 Human-in-the-Loop 與以人為本，嚴格區隔「業務管理」與「知識語意」權責</p>
+        </div>
+        <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-3 py-1 rounded-lg">Core Human Factors</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- 角色 1 -->
+        <div class="bg-blue-50/50 p-6 sm:p-8 rounded-2xl border-2 border-blue-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full bg-blue-600 text-white font-bold text-xs">角色 1 • 業務決策</span>
+            <span class="text-xs text-blue-700 font-semibold">最終決策與放行者</span>
+          </div>
+          <h3 class="text-xl font-black text-slate-900">業務管理者 / 營運主管</h3>
+          <p class="text-xs text-slate-500">Business Manager / Facility Director</p>
+          <div class="space-y-3 text-xs text-slate-700 leading-relaxed pt-2">
+            <p><strong>適合人選：</strong>總務處長、廠務主管、ESG 永續經理、大樓物業營運總監。</p>
+            <p><strong>核心職責：</strong></p>
+            <ul class="list-disc pl-5 space-y-1.5 text-slate-600">
+              <li><strong>自然語言動口下目標</strong>：直接以業務目標溝通（「壓低夏季尖峰」、「依會議排程預冷兼顧電費」）。</li>
+              <li><strong>補齊業務情境資訊</strong>：空間無感測器時，回答 AI 主動探詢的預估人數與場地用途。</li>
+              <li><strong>策略審核與一鍵核准</strong>：檢視 AI 方案與預測曲線，點擊【一鍵核准】放行。</li>
+              <li><strong>商談介面需求與驗收樣板</strong>：表達日常監控偏好，體驗並驗收商談生成的「介面樣板」。</li>
+            </ul>
+            <p class="text-blue-900 font-semibold bg-white p-3 rounded-xl border border-blue-200">
+              💡 <strong>操作邊界：</strong>純業務與效益視角，零技術門檻，完全不接觸程式碼、API 規格或配線。
+            </p>
+          </div>
+        </div>
+
+        <!-- 角色 2 -->
+        <div class="bg-emerald-50/50 p-6 sm:p-8 rounded-2xl border-2 border-emerald-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full bg-emerald-600 text-white font-bold text-xs">角色 2 • 知識架構</span>
+            <span class="text-xs text-emerald-700 font-semibold">空間建模與語意轉譯者</span>
+          </div>
+          <h3 class="text-xl font-black text-slate-900">建築語意架構師</h3>
+          <p class="text-xs text-slate-500">Building Knowledge Architect</p>
+          <div class="space-y-3 text-xs text-slate-700 leading-relaxed pt-2">
+            <p><strong>適合人選：</strong>弱電/BMS 系統整合工程師 (SI)、BIM 建模師、機電物聯網架構師。</p>
+            <p><strong>核心職責：</strong></p>
+            <ul class="list-disc pl-5 space-y-1.5 text-slate-600">
+              <li><strong>Block 空間畫布建模</strong>：在視覺畫布上拼裝 Block（堆疊、相連、內裝），定義幾何拓撲。</li>
+              <li><strong>全域 API 裝載與情境綁定</strong>：將 IoT API 拖入 Block，為外部 API/MCP 設定區域與業務情境。</li>
+              <li><strong>校準語意與邊界 (Semantic)</strong>：定義物理量、單位、保護邊界與外部 API 費用配額。</li>
+              <li><strong>打造與維護「介面樣板」</strong>：與主管商談對齊需求，發布標準樣板並批次套用到全棟標準層。</li>
+            </ul>
+            <p class="text-emerald-900 font-semibold bg-white p-3 rounded-xl border border-emerald-200">
+              💡 <strong>操作邊界：</strong>專注於空間拓撲、Block 與全域 API 語意的精確性，不負責日常營運放行。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 角色對照表格 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden text-xs">
+        <table class="w-full text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+            <tr>
+              <th class="p-3.5">比較維度</th>
+              <th class="p-3.5 text-blue-700">角色 1：業務管理者 / 營運主管</th>
+              <th class="p-3.5 text-emerald-700">角色 2：建築語意架構師</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-600">
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">關注核心</td>
+              <td class="p-3.5">節能效益、生產產量、電費成本、營運安全</td>
+              <td class="p-3.5">空間拓撲、全域 API 對應、物理量語意、Block 完整性</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">系統輸入</td>
+              <td class="p-3.5">自然語言目標、業務情境確認、一鍵核准指令</td>
+              <td class="p-3.5">Block 空間建模、API/MCP 裝載綁定、介面樣板生成</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">操作介面</td>
+              <td class="p-3.5">生成式決策卡片、效益滑桿、危機分診面板</td>
+              <td class="p-3.5">Block 視覺化畫布、拖拉綁定抽屜、樣板配置器</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">參與時機</td>
+              <td class="p-3.5">日常營運、隨時下達目標、審核高風險任務</td>
+              <td class="p-3.5">系統初期建置、空間/設備異動、外部 API/MCP 接入</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 二、 系統總體定位與架構設計願景 -->
+    <section id="vision" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-2xl font-bold text-slate-900">二、 系統總體定位與架構設計願景 (Vision & Design Principles)</h2>
+        <p class="text-slate-500 text-sm mt-1">融合多 Agent 協同、語意驅動與動態事件的自主閉環生態系</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2">
+          <span class="text-amber-600 font-bold text-xs uppercase tracking-wider">Everything as API</span>
+          <h3 class="text-base font-bold text-slate-900">全部以 API 為基準</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            IoT 設備、外部氣象/電價服務與企業 MCP 服務完全平等對待，統一定義為 <code>API + Semantic + Context</code>，AI 面向統一能力庫流暢推理。
+          </p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2">
+          <span class="text-blue-600 font-bold text-xs uppercase tracking-wider">Two-Tier Context</span>
+          <h3 class="text-base font-bold text-slate-900">雙層 Context 架構</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            API 層固化「結構情境（Structural Context）」供秒級檢索；Shell 層承載「運行情境（Runtime Context）」供決策守護，徹底消除冷啟動死結。
+          </p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2">
+          <span class="text-emerald-600 font-bold text-xs uppercase tracking-wider">Universal Agent Shell</span>
+          <h3 class="text-base font-bold text-slate-900">通用智能外殼與 Event</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Agent Shell 按需掛載，將被動外部 API 轉化為主動動態 Event；完成協商後安全卸載，事件由輕量骨幹獨立守護。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 三、 整體概念架構圖 (Mermaid + 可放大互動卡片) -->
+    <section id="architecture" class="space-y-6">
+      <div class="flex items-center justify-between flex-wrap gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">三、 整體概念架構圖 (Conceptual & Agentic View)</h2>
+          <p class="text-slate-500 text-sm mt-1">展示業務管理者、語意架構師、三層 Agent、三大 API 能力來源與 Block 空間基元的抽象關係（支援放大、縮小、拖曳平移與全螢幕檢視）
+          </p>
+        </div>
+        <span class="text-xs bg-blue-100 text-blue-800 font-bold px-3 py-1 rounded-lg">High-Level Conceptual View</span>
+      </div>
+
+      <!-- 可放大縮小的 Mermaid 容器 -->
+      <div class="mermaid-zoom-container shadow-sm" data-diagram-title="三、整體概念架構圖 (Conceptual & Agentic View)">
+        <!-- 浮動放大操作工具列 -->
+        <div
+          class="absolute top-3 right-3 flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-2.5 py-1.5 rounded-xl shadow-md border border-slate-200 z-10 text-xs">
+          <span class="text-slate-400 text-[11px] font-semibold pr-1">縮放控制:</span>
+          <button type="button"
+            class="btn-zoom-in px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition shadow-sm active:scale-95"
+            title="放大 (+20%)">＋</button>
+          <button type="button"
+            class="btn-zoom-out px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition shadow-sm active:scale-95"
+            title="縮小 (-20%)">－</button>
+          <button type="button"
+            class="btn-zoom-reset px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition shadow-sm active:scale-95"
+            title="重置為 100%">↺</button>
+          <span
+            class="zoom-badge text-slate-600 font-mono text-[11px] font-bold px-1.5 min-w-[42px] text-center">100%</span>
+          <div class="h-3.5 w-px bg-slate-200 mx-0.5"></div>
+          <button type="button"
+            class="btn-fullscreen px-3 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold transition flex items-center gap-1 shadow-sm active:scale-95"
+            title="以高解析全螢幕檢視此圖">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+            </svg>
+            <span>全螢幕檢視</span>
+          </button>
+        </div>
+
+        <!-- 視窗滾動區 -->
+        <div class="mermaid-viewport">
+          <div class="mermaid-zoom-target">
+            <div class="mermaid text-center">
+              flowchart TD
+              subgraph Role1Layer ["【角色 1 • 業務決策】業務管理者 / 營運主管"]
+              User["<b>👤 業務管理者 (Business Manager)</b><br />• 自然語言下達營運目標（預冷、節能、灌溉監控）<br />• 與架構師商談介面需求，檢視 AI
+              方案並一鍵【核准放行】"]
+              end
+
+              UserAgent["<b>① 使用者對話 Agent</b><br />• 理解使用者需求與偏好<br />• 維護長期對話記憶<br />• 決定是否建立並委派任務"]
+
+              TaskAgent["<b>② Task Agent (任務核心)</b><br />• 任務記憶與多步驟推理<br />• 跨域組裝三大能力（IoT、外部 API、MCP）<br />•
+              協商動態事件並長效自主閉環"]
+
+              subgraph DigitalLayer ["統一數位能力與空間圖譜層 【全部以 API 為基準】"]
+              direction TB
+
+              subgraph KnowledgeInput ["【角色 2 • 知識架構】建築語意架構師"]
+              Architect["<b>👤 建築語意架構師 (Knowledge Architect)</b><br />• 視覺化拼裝 Block（堆疊、相連、內裝）<br />• 校準 IoT / 外部 API /
+              MCP 之語意與情境<br />• 與業務主管商談，打造【標準介面樣板】"]
+              end
+
+              subgraph APICapabilities ["三大對等 API 能力來源 【Everything as API】"]
+              direction LR
+              IoTAPICore["<b>IoT API (實體設備)</b><br />• API: 讀寫操作介面<br />• Semantic: 物理量/單位/安全限制<br />• <b>Context
+                (結構情境): 設備拓撲/迴路/服務對象</b>"]
+              ExtAPICore["<b>外部服務 API (氣象/台電)</b><br />• API: 查詢與 Webhook 介面<br />• Semantic: 數據時效/呼叫配額<br />•
+              <b>Context (時空情境): 區域經緯/費率時段</b>"]
+              MCPCore["<b>外部 MCP 服務 (企業系統)</b><br />• API: MCP Tools & Prompts<br />• Semantic: 業務語意/權限邊界<br />•
+              <b>Context (組織情境): 會議時程/部門範疇</b>"]
+              end
+
+              subgraph BlockSubsystem ["Block 空間基元 【地理與視覺實體】"]
+              BlockCore["<b>Block 空間實體</b><br /><i>(可有可無・按需啟用：可堆疊 / 可相連 / 可內裝)</i><br />• IoT 地理化定錨<br />• 驅動 AI
+              自動生成視覺化建築圖與熱力圖"]
+              end
+
+              IoTAPICore ---|按需裝載與空間關聯| BlockCore
+              ExtAPICore ---|區域情境對齊| BlockCore
+              MCPCore ---|會議空間對齊| BlockCore
+
+              Architect -->|定義語意與拓撲| IoTAPICore
+              Architect -->|建模空間畫布| BlockCore
+
+              subgraph ShellLayer ["通用 Agent Shell 智能外殼層 【按需掛載】"]
+              direction LR
+              IoTShell["<b>③ IoT Agent Shell</b><br />• <b>Runtime Context: 任務記憶/設備運行傾向</b><br />• 協商設備專屬動態 Event"]
+              ExtShell["<b>③ External Shell</b><br />• <b>Runtime Context: 即時限流/快取狀態</b><br />• 協商氣象/電價動態 Event"]
+              MCPShell["<b>③ MCP Shell</b><br />• <b>Runtime Context: 工具自適應/會議狀態</b><br />• 協商會議動態 Event"]
+              end
+
+              IoTAPICore --- IoTShell
+              ExtAPICore --- ExtShell
+              MCPCore --- MCPShell
+              end
+
+              PhysicalDevices["<b>🏢 實體現場設備</b><br />VRV 空調、水泵、電表、感測器"]
+              CloudAPIs["<b>☁️ 外部雲端 API 服務</b><br />中央氣象局、台電時間電價、碳排資料庫"]
+              MCPServers["<b>🔌 第三方 MCP 伺服器</b><br />Google Calendar MCP、ERP、Slack"]
+
+              EventSystem["<b>⚡ Event 事件系統 (獨立長效監控)</b><br />輕量化即時監控、條件觸發、發布與訂閱"]
+
+              %% 交互關係 (嚴格標準節點連線)
+              User -->|❶ 下達目標| UserAgent
+              UserAgent -->|委派建立| TaskAgent
+              User ---|商談介面需求| Architect
+              TaskAgent ---|❷ 發現缺漏主動探詢/補齊| Architect
+              TaskAgent -->|❸ 檢索 Structural Context 跨域組裝| IoTAPICore
+              TaskAgent -->|檢索 Block 拓撲| BlockCore
+              TaskAgent -->|❹ 掛載並協商動態事件| IoTShell
+
+              IoTShell -->|❺ 註冊事件規則| EventSystem
+              ExtShell -->|❺ 註冊氣象電價事件| EventSystem
+              MCPShell -->|❺ 註冊排程事件| EventSystem
+
+              IoTAPICore -->|讀寫控制| PhysicalDevices
+              ExtAPICore -->|REST 呼叫| CloudAPIs
+              MCPCore -->|MCP 協定| MCPServers
+
+              PhysicalDevices -.->|數據採集| EventSystem
+              CloudAPIs -.->|輪詢/Webhooks| EventSystem
+              MCPServers -.->|通知回調| EventSystem
+
+              EventSystem -->|❻ 條件成立通知| TaskAgent
+              TaskAgent -->|❼ 呈報決策報告| User
+              User -->|❽ 一鍵核准執行| TaskAgent
+
+              %% 樣式設定 (僅對 Node 節點進行染色，避免語法崩潰)
+              style User fill:#FFFFFF,stroke:#2962FF,stroke-width:1.5px,color:#000000
+              style UserAgent fill:#FFF4D6,stroke:#C67D00,stroke-width:2px,color:#000000
+              style TaskAgent fill:#FFE082,stroke:#FF8F00,stroke-width:2px,color:#000000
+              style Architect fill:#FFFFFF,stroke:#1B5E20,stroke-width:1.5px,color:#000000
+              style IoTAPICore fill:#F3F4F6,stroke:#4B5563,stroke-width:1.5px,color:#000000
+              style ExtAPICore fill:#F3F4F6,stroke:#4B5563,stroke-width:1.5px,color:#000000
+              style MCPCore fill:#F3F4F6,stroke:#4B5563,stroke-width:1.5px,color:#000000
+              style BlockCore fill:#FFF8E1,stroke:#F57F17,stroke-width:1.5px,color:#000000
+              style IoTShell fill:#FCE4EC,stroke:#C2185B,stroke-width:1.5px,color:#000000
+              style ExtShell fill:#FCE4EC,stroke:#C2185B,stroke-width:1.5px,color:#000000
+              style MCPShell fill:#FCE4EC,stroke:#C2185B,stroke-width:1.5px,color:#000000
+              style PhysicalDevices fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#000000
+              style CloudAPIs fill:#E8EAF6,stroke:#3949AB,stroke-width:2px,color:#000000
+              style MCPServers fill:#E0F2F1,stroke:#00695C,stroke-width:2px,color:#000000
+              style EventSystem fill:#E0F7FA,stroke:#00838F,stroke-width:2px,color:#000000
+            </div>
+          </div>
+        </div>
+        <div
+          class="px-4 py-2 bg-slate-50 border-t border-slate-200 text-[11px] text-slate-500 flex justify-between items-center">
+          <span>💡 提示：可使用右上角 <b>＋ / －</b> 放大縮小，或點擊 <b>全螢幕檢視</b> 進行滑鼠滾輪縮放與自由拖曳平移</span>
+          <span class="text-slate-400">滑鼠按住可橫向平移</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 四、 基礎建設 Infra 架構專區 (Mermaid + 可放大互動卡片) -->
+    <section id="infra" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4 flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">四、 基礎建設 Infra 工程架構圖 (Infrastructure & Pipeline View)</h2>
+          <p class="text-slate-500 text-sm mt-1">完整呈現 Web/API Server、自建 AI Model 服務 (Ollama)、BOS Gateway (IT/OT 安全邊界與標準
+            API 橋接)、NATS + 輕量規則評估器、PostgreSQL 全能底座與早期火災 CEP 推論（支援放大縮小與全螢幕檢視）</p>
+        </div>
+        <span class="text-xs bg-amber-100 text-amber-800 font-bold px-3 py-1 rounded-lg">Enterprise Engineering & IT/OT
+          Infra</span>
+      </div>
+
+      <!-- 可放大縮小的 Mermaid 容器 -->
+      <div class="mermaid-zoom-container shadow-sm"
+        data-diagram-title="四、基礎建設 Infra 工程架構圖 (Infrastructure & Pipeline View)">
+        <!-- 浮動放大操作工具列 -->
+        <div
+          class="absolute top-3 right-3 flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-2.5 py-1.5 rounded-xl shadow-md border border-slate-200 z-10 text-xs">
+          <span class="text-slate-400 text-[11px] font-semibold pr-1">縮放控制:</span>
+          <button type="button"
+            class="btn-zoom-in px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition shadow-sm active:scale-95"
+            title="放大 (+25%)">＋</button>
+          <button type="button"
+            class="btn-zoom-out px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition shadow-sm active:scale-95"
+            title="縮小 (-25%)">－</button>
+          <button type="button"
+            class="btn-zoom-reset px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition shadow-sm active:scale-95"
+            title="重置為 100%">↺</button>
+          <span
+            class="zoom-badge text-slate-600 font-mono text-[11px] font-bold px-1.5 min-w-[42px] text-center">100%</span>
+          <div class="h-3.5 w-px bg-slate-200 mx-0.5"></div>
+          <button type="button"
+            class="btn-fullscreen px-3 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold transition flex items-center gap-1 shadow-sm active:scale-95"
+            title="以高解析全螢幕檢視此圖">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+            </svg>
+            <span>全螢幕檢視</span>
+          </button>
+        </div>
+
+        <!-- 視窗滾動區 -->
+        <div class="mermaid-viewport">
+          <div class="mermaid-zoom-target">
+            <div class="mermaid text-center">
+              flowchart TD
+              subgraph ClientTier ["👥 終端互動與外部推播層 【Client & Webhook Ingress】"]
+              direction LR
+              UI_Manager["<b>👤 業務主管終端 (Generative UI)</b><br />• 行動端 / 瀏覽器決策面板<br />• 檢視預測曲線與【一鍵核准】"]
+              UI_Architect["<b>👤 架構師終端 (Block Studio)</b><br />• Block 空間拓撲拖拉畫布<br />• API 語意標註與介面樣板配置"]
+              Ext_Webhook["<b>🔔 外部主動推播源 (Webhooks)</b><br />• 行事曆變更 / 企業系統回調<br />• 需量反應即時通知"]
+              end
+
+              subgraph WebApiTier ["🌐 接入與應用閘道層 【Web & API Server Tier】"]
+              direction LR
+              Web_Server["<b>🌐 Web Server (Nginx / Caddy)</b><br />• 前端 SPA 靜態資源託管<br />• HTTPS/TLS 加密與反向代理<br />•
+              內外網安全隔離與負載平衡"]
+              API_Server["<b>⚙️ API Server (FastAPI / Go 統一閘道)</b><br />• RBAC 雙角色權限與憑證保險箱 (Vault)<br />• <b>HITL
+                人工核准閘門與操作審計 (Audit)</b><br />• Block/API 資產管理與 WebSocket/SSE 推播"]
+              MCP_Connector["<b>🔗 MCP Host 與外部 API 連接器</b><br />• 第三方 MCP 伺服器協定維持<br />• 外部 REST 呼叫配額限流與快取"]
+              end
+
+              subgraph AgentAiTier ["🧠 Agent 運行時與自建 AI 模型層 【Agent Runtime & Local AI】"]
+              direction LR
+              Agent_Runtime["<b>🧠 Agent Runtime 執行引擎</b><br />• ① 對話 Agent / ② Task Agent 協調運作<br />• ③ 通用 Agent Shell
+              按需毫秒級掛載"]
+              Local_AI["<b>🤖 自建 AI Model 服務 (Ollama / vLLM)</b><br />• <b>主力推理模型</b>：意圖解析 / 跨域規劃 / Tool Calling<br />•
+              <b>輕量 SLM 模型</b>：Agent Shell 低延遲協商<br />• <b>本地 Embedding</b>：設備語意與情境向量化"]
+              end
+
+              subgraph EventBusTier ["⚡ 中樞事件骨幹與即時規則過濾層 【NATS Event-Bus & Rule Filter】"]
+              direction LR
+              NATS_Router["<b>動態主題路由器 (Subject Router)</b><br />• 萬用字元路由 (events.block_1202.*)<br />• 毫秒級記憶體極速推播"]
+              Rule_Eval["<b>⚡ 輕量動態事件規則評估器</b><br />• 記憶體級比對 Agent Shell 監控條件<br />• <b>條件成立才喚醒 Agent【保護地端 GPU】</b>"]
+              NATS_KV["<b>NATS KV 狀態快取庫</b><br />• 存放 Shell Runtime Context<br />• 存放動態事件監控規則表"]
+              NATS_JetStream["<b>JetStream 持久化訊息流</b><br />• 尖峰訊息緩衝池【保護資料庫】<br />• 消費者分流與歷史重播"]
+              end
+
+              subgraph SouthboundTier ["🛡️ 南向 IT/OT 安全橋接與定時採集層 【BOS Gateway & Scheduler】"]
+              direction LR
+              BOS_Gateway["<b>🛡️ BOS Gateway (IT/OT 安全邊界網關)</b><br />• <b>直接接入 IoT/BAS 並透過標準 API 雙向通訊</b><br />•
+              南向工業協定轉換 (TAICS / BACnet / Modbus)<br />• 點位映射、資料緩存防衝擊、讀回確認與保留硬體連鎖保護"]
+              OT_Devices["<b>🏢 現場 BAS / 實體 IoT 機電設備</b><br />• VRV 空調、ERV 全熱交換、冰水主機、電表<br />• 設備狀態回報與受控物理執行"]
+              Timer_Engine["<b>⏰ Timer Trigger 定時調度引擎</b><br />• 週期拉取被動外部 API / 點位巡檢<br />• 會議預冷倒數鬧鐘 / 逾時防呆保護"]
+              External_Systems["<b>☁️ 外部雲端 API 與第三方 MCP 伺服器</b><br />• 中央氣象局 / 台電時間電價 API<br />• Google Calendar MCP /
+              ERP / Slack"]
+              end
+
+              subgraph StorageCepTier ["💾 三態合一資料底座與複合推論層 【Unified PostgreSQL & CEP】"]
+              direction TB
+              Ingest_Consumer["<b>📥 Ingestion Consumer 批次寫入服務</b><br />• 從 JetStream 批次打包高速 Flush 入庫"]
+
+              subgraph DatabaseCore ["💾 PostgreSQL 全能資料底座 【TimescaleDB + JSONB + pgvector】"]
+              direction LR
+              DB_TS["<b>時序超表 (TimescaleDB)</b><br />• 海量歷史能耗與溫濕度<br />• 動態能源基線與斜率分析"]
+              DB_Rel["<b>關聯與 JSONB 核心庫</b><br />• Block 拓撲與 Structural Context<br />• <b>UI 樣板倉庫、任務狀態與審計軌跡</b>"]
+              DB_Vec["<b>語意向量庫 (pgvector)</b><br />• 三大 API 語意與情境向量索引<br />• 支撐毫秒級自然語言工具檢索"]
+              end
+
+              CEP_Engine["<b>🚨 CEP 複合事件推論引擎</b><br />• 確定性演算法跨維度交叉比對【溫升斜率 + 電流 + VOC】<br />• 結合 Block 空間相鄰傳遞判定 ➔
+              <b>早期火災 / 冷媒外洩警報</b>"]
+              end
+
+              %% 1. 北向接入與反向代理
+              UI_Manager -->|HTTPS 與 WSS 決策及核准| Web_Server
+              UI_Architect -->|HTTPS 與 WSS 建模及樣板| Web_Server
+              Ext_Webhook -->|HTTPS Webhook 主動推播| Web_Server
+              Web_Server -->|反向代理轉發| API_Server
+
+              %% 2. API Server 核心樞紐關聯
+              API_Server -->|對話與任務調度| Agent_Runtime
+              API_Server -->|讀寫拓撲與樣板及審計| DB_Rel
+              API_Server -->|語意文本向量化| Local_AI
+              API_Server -->|更新語意索引| DB_Vec
+              API_Server -->|憑證注入與限流代理| MCP_Connector
+
+              %% 3. Agent 與地端自建 AI 算力協同
+              Agent_Runtime -->|LLM 推理與 Tool Calling| Local_AI
+              Agent_Runtime -->|語意檢索 API 與情境| DB_Vec
+              Agent_Runtime -->|讀寫 Runtime Context 與規則| NATS_KV
+              Agent_Runtime -->|提出受控執行與外部查詢| API_Server
+
+              %% 4. 南向 BOS Gateway (IT/OT 安全雙向閉環) 與外部連接
+              API_Server -->|核准檢核後透過標準 API 下發指令| BOS_Gateway
+              BOS_Gateway -->|工業協定轉換讀寫與保留連鎖保護| OT_Devices
+              OT_Devices -->|點位狀態回報與設定值讀回| BOS_Gateway
+              BOS_Gateway -->|API 與事件推播設備數據及告警| NATS_Router
+
+              MCP_Connector -->|REST 與 MCP 協定雙向通訊| External_Systems
+              Timer_Engine -->|週期觸發被動採集| MCP_Connector
+              MCP_Connector -->|發布外部採集數據| NATS_Router
+              Timer_Engine -->|發送倒數鬧鐘與逾時事件| NATS_Router
+
+              %% 5. 事件中樞過濾與雙軌分流
+              NATS_Router -->|原始數據流高速比對| Rule_Eval
+              NATS_KV -.->|載入動態監控條件| Rule_Eval
+              Rule_Eval -->|條件成立精準喚醒【Fast Path】| Agent_Runtime
+              NATS_Router -->|關鍵告警即時串流| API_Server
+              NATS_Router -->|寫入持久化訊息流| NATS_JetStream
+
+              %% 6. 儲存與 CEP 複合推論軌
+              NATS_JetStream -->|批次拉取消費| Ingest_Consumer
+              Ingest_Consumer -->|批次高效寫入| DB_TS
+              DB_TS ---|時序結合空間拓撲| DB_Rel
+              DB_TS -->|滑動窗口與斜率掃描| CEP_Engine
+              CEP_Engine -->|偵測重大險情發布高優預警| NATS_Router
+
+              %% 節點高對比樣式設定 (僅對 Node 設定，嚴格確保語法相容)
+              style UI_Manager fill:#FFFFFF,stroke:#2962FF,stroke-width:1.5px,color:#000000
+              style UI_Architect fill:#FFFFFF,stroke:#1B5E20,stroke-width:1.5px,color:#000000
+              style Ext_Webhook fill:#F3F4F6,stroke:#4B5563,stroke-width:1px,color:#000000
+              style Web_Server fill:#E0F2FE,stroke:#0284C7,stroke-width:1.5px,color:#000000
+              style API_Server fill:#DBEAFE,stroke:#1D4ED8,stroke-width:2px,color:#000000
+              style MCP_Connector fill:#E0E7FF,stroke:#4338CA,stroke-width:1.5px,color:#000000
+              style Agent_Runtime fill:#FFE082,stroke:#FF8F00,stroke-width:2px,color:#000000
+              style Local_AI fill:#EDE9FE,stroke:#6D28D9,stroke-width:2px,color:#000000
+              style NATS_Router fill:#FFF8E1,stroke:#F57F17,stroke-width:1.5px,color:#000000
+              style Rule_Eval fill:#FEF3C7,stroke:#D97706,stroke-width:2px,color:#000000
+              style NATS_KV fill:#FFFFFF,stroke:#F57F17,stroke-width:1px,color:#000000
+              style NATS_JetStream fill:#FFFFFF,stroke:#F57F17,stroke-width:1px,color:#000000
+              style BOS_Gateway fill:#CCFBF1,stroke:#0F766E,stroke-width:2px,color:#000000
+              style OT_Devices fill:#F3E5F5,stroke:#6A1B9A,stroke-width:1.5px,color:#000000
+              style Timer_Engine fill:#E0F7FA,stroke:#00838F,stroke-width:1.5px,color:#000000
+              style External_Systems fill:#E8EAF6,stroke:#3949AB,stroke-width:1px,color:#000000
+              style Ingest_Consumer fill:#FFFFFF,stroke:#1B5E20,stroke-width:1px,color:#000000
+              style DB_TS fill:#F1F8E9,stroke:#33691E,stroke-width:1.5px,color:#000000
+              style DB_Rel fill:#F1F8E9,stroke:#33691E,stroke-width:1.5px,color:#000000
+              style DB_Vec fill:#ECFDF5,stroke:#047857,stroke-width:1.5px,color:#000000
+              style CEP_Engine fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#000000
+            </div>
+          </div>
+        </div>
+        <div
+          class="px-4 py-2 bg-slate-50 border-t border-slate-200 text-[11px] text-slate-500 flex justify-between items-center">
+          <span>💡 提示：可使用右上角 <b>＋ / －</b> 或 <b>Ctrl + 滾輪</b> 放大縮小，或點擊 <b>全螢幕檢視</b> 自由縮放與拖曳平移</span>
+          <span class="text-slate-400">滑鼠按住可自由平移畫布</span>
+        </div>
+      </div>
+
+      <!-- Infra 核心組件選型與職責矩陣表 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden text-xs">
+        <table class="w-full text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+            <tr>
+              <th class="p-3.5 w-44">基礎設施組件</th>
+              <th class="p-3.5 w-52">推薦技術選型</th>
+              <th class="p-3.5">工程職責、跨元件關聯與資安防護設計</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-600">
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">🌐 Web Server &amp; ⚙️ API Server</td>
+              <td class="p-3.5"><code>Nginx / Caddy</code> + <code>FastAPI / Go</code></td>
+              <td class="p-3.5">Web Server 負責前端 SPA 託管、HTTPS 終端加密、Webhook 接收與內外網隔離；API Server 統籌 <strong>RBAC
+                  雙角色權限、憑證保險箱 (Secret Vault)、HITL 人工核准閘門 (L0~L4 分級防線)、操作審計 (Audit Log)</strong> 與 WebSocket/SSE 推播。</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-purple-900">🤖 自建 AI Model 服務</td>
+              <td class="p-3.5"><code>Ollama / vLLM</code> (地端私有叢集)</td>
+              <td class="p-3.5">敏感場域與建築拓撲<strong>資料不出內網、斷網可自主運作</strong>。統一透過 OpenAI 相容介面提供三類模型：<strong>主力推理與
+                  Tool-Calling 模型</strong>（對話 / Task Agent）、<strong>輕量 SLM</strong>（Agent Shell 秒級協商）、<strong>本地
+                  Embedding</strong>（設備語意向量化）。</td>
+            </tr>
+            <tr class="bg-teal-50/40">
+              <td class="p-3.5 font-bold text-teal-900">🛡️ BOS Gateway</td>
+              <td class="p-3.5"><code>BOS Gateway</code> (IT/OT 安全護城河)</td>
+              <td class="p-3.5"><strong>直接接入現場 IoT / BAS 設備，北向以標準 API 與上層通訊</strong>；南向透過工業標準協定（<strong>TAICS / BACnet /
+                  Modbus</strong>）執行點位映射、資料緩存（防止瞬間查詢衝擊底層控制器）、指令轉送與<strong>設定值讀回確認
+                  (Read-back)</strong>，並完整保留現場既有設備原生連鎖保護。</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">🔗 MCP 與外部連接器</td>
+              <td class="p-3.5"><code>MCP Client Host</code> &amp; <code>HTTP Proxy</code></td>
+              <td class="p-3.5">落地「三大能力對稱」，管理第三方 MCP Server（Google Calendar / ERP）與外部雲端 API（氣象局 / 台電）連線池、配額限流與快取。</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-amber-900">⚡ Event-Bus + 即時規則評估器</td>
+              <td class="p-3.5"><code>NATS (JetStream + KV)</code> + <code>Rule Worker</code></td>
+              <td class="p-3.5">NATS KV 存放 Agent Shell 的 <code>Runtime Context</code>
+                與動態事件規則；<strong>輕量動態規則評估器</strong>於記憶體中毫秒級過濾原始數據，<strong>唯有條件成立才喚醒 Task Agent，徹底保護地端 Ollama GPU
+                  不被高頻感測流灌爆</strong>。</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-emerald-900">💾 PostgreSQL 全能資料底座</td>
+              <td class="p-3.5"><code>TimescaleDB</code> + <code>JSONB</code> + <code>pgvector</code></td>
+              <td class="p-3.5">單一資料庫叢集三態合一：<strong>時序超表</strong>存放海量歷史能耗與動態基線；<strong>關聯/JSONB</strong>存放 Block
+                拓撲、<code>Structural Context</code>、<strong>UI 樣板倉庫</strong>與審計日誌；<strong>pgvector</strong>存放 API
+                語意向量支援毫秒級工具檢索。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 三大工程閉環與火災推論實例卡 -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- 雙軌資料流 -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <span class="px-2.5 py-1 rounded bg-blue-100 text-blue-800 text-xs font-bold">資料流雙軌閉環</span>
+          <h3 class="text-base font-bold text-slate-900">極速反應軌 vs. 深度分析軌</h3>
+          <ul class="text-xs text-slate-600 space-y-2 leading-relaxed">
+            <li><strong>⚡ 極速反應軌 (Fast Path，&lt; 5ms)</strong>：設備 ➔ BOS Gateway ➔ NATS ➔ 輕量規則評估器命中 ➔ 喚醒 Task Agent
+              決策，繞過資料庫且不浪費 GPU。</li>
+            <li><strong>💾 深度分析軌 (Analytical Path)</strong>：NATS JetStream ➔ Ingestion 批次寫入 ➔ TimescaleDB 累積歷史基線，供 CEP
+              進行跨時空複合推論。</li>
+          </ul>
+        </div>
+
+        <!-- IT/OT 安全受控寫回軌 -->
+        <div class="bg-teal-50/50 p-6 rounded-2xl border border-teal-200 shadow-sm space-y-3">
+          <span class="px-2.5 py-1 rounded bg-teal-100 text-teal-800 text-xs font-bold">IT / OT 可治理自動化閉環</span>
+          <h3 class="text-base font-bold text-slate-900">BOS Gateway 安全受控寫回軌</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            嚴格遵循<strong>「先讀取 ➔ 後建議 ➔ 安全邊界檢核 ➔ 再受控寫回」</strong>：Task Agent 提案經 <strong>API Server</strong> 檢核角色權限、L0~L4
+            分級護欄與主管核准簽章並記錄 Audit 後，透過標準 API 交由 <strong>BOS Gateway</strong>
+            轉譯為工業協定寫入設備（保留原生硬體連鎖保護），並<strong>讀回設定值確認回報</strong>。
+          </p>
+        </div>
+
+        <!-- 火災早期預警實例 -->
+        <div class="bg-rose-50/50 p-6 rounded-2xl border border-rose-200 shadow-sm space-y-3">
+          <span class="px-2.5 py-1 rounded bg-rose-100 text-rose-800 text-xs font-bold">高階 CEP 推論實例</span>
+          <h3 class="text-base font-bold text-slate-900">火災早期複合預警 (Fire Early Warning)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            確定性 CEP 融合<strong>「時間斜率（室溫 &gt;
+              2.5°C/min）」</strong>＋<strong>「空間相鄰（走廊微溫升）」</strong>＋<strong>「交叉比對（電流歸零＋VOC上升）」</strong>判定初期火警，喚醒 Task
+            Agent 呼叫地端 <strong>Ollama</strong> 產出【火災緊急防護卡】，經主管核准即刻由 <strong>BOS Gateway</strong> 連動關閉 ERV 風閥斷氧。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 五、 全部以 API 為基準與雙層 Context 模型 -->
+    <section id="api-context" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-2xl font-bold text-slate-900">五、 全部以 API 為基準（Everything as API）與雙層 Context 模型</h2>
+        <p class="text-slate-500 text-sm mt-1">統一能力描述公式：<code>能力 = API + Semantic + Context</code></p>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden text-xs">
+        <table class="w-full text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+            <tr>
+              <th class="p-3.5">API 類型</th>
+              <th class="p-3.5">來源範例</th>
+              <th class="p-3.5">API (操作/查詢)</th>
+              <th class="p-3.5">Semantic (語意與限制)</th>
+              <th class="p-3.5 text-blue-700">Structural Context (結構情境)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-600">
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">現場 IoT API</td>
+              <td class="p-3.5">VRV 空調、水泵、電表</td>
+              <td class="p-3.5"><code>set_temperature(23)</code></td>
+              <td class="p-3.5">單位 °C、安全範圍 18~28、調溫滯後 5 分鐘</td>
+              <td class="p-3.5 font-medium text-slate-800">拓撲：冷卻水迴路 #2、服務對象：12F 辦公區、(按需)裝載於【1202 會議室 Block】</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">外部服務 API</td>
+              <td class="p-3.5">氣象局、台電即時電價</td>
+              <td class="p-3.5"><code>get_current_tariff()</code></td>
+              <td class="p-3.5">氣溫 °C、尖離峰電價 (NTD/kWh)、呼叫配額</td>
+              <td class="p-3.5 font-medium text-slate-800">區域：台北大安區、費率：經常契約夏季高壓時段、碳排：台電基準因子</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold text-slate-900">外部 MCP 服務</td>
+              <td class="p-3.5">Google Calendar、ERP</td>
+              <td class="p-3.5"><code>list_room_bookings()</code></td>
+              <td class="p-3.5">會議時間、進駐人數、VIP 等級說明</td>
+              <td class="p-3.5 font-medium text-slate-800">組織：產品研發處、會議室：12F 大會議室專用行事曆、業務：外賓接待流程</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 雙層 Context 深度對比卡 -->
+      <div
+        class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 sm:p-8 rounded-2xl border border-blue-200 shadow-sm space-y-4">
+        <h3 class="text-lg font-bold text-slate-900">核心架構突破：Context 的「靜動分離（Two-Tier Context）」</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          若將 Context 只交給 Agent Shell，Task Agent 找設備時會遇到「冷啟動陷阱」（必須喚醒大樓 500 台冷氣的 Shell 挨個詢問），且 Shell 卸載時設備將失憶；反之若全寫死在 API
+          靜態定義中，則動態任務記憶無處安放。因此系統確立了清晰的雙層劃分：
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-2">
+          <div class="bg-white p-4 rounded-xl border border-blue-200 space-y-1.5">
+            <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold">第 1 層：結構情境 (Structural Context)</span>
+            <p><strong>載體：</strong>固化於 <code>IoT / 外部 API</code> 資產目錄與圖譜。</p>
+            <p><strong>本質：</strong>靜態客觀事實（設備迴路、服務區域、所屬系統、可選關聯 Block）。</p>
+            <p><strong>使命：</strong>供 Task Agent 做<strong>秒級全域檢索與空間推理</strong>（零 AI 算力開銷）。</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border border-indigo-200 space-y-1.5">
+            <span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold">第 2 層：運行情境 (Runtime Context &
+              Memory)</span>
+            <p><strong>載體：</strong>動態載入於 <code>Agent Shell</code> 內部（存於 NATS KV 快取）。</p>
+            <p><strong>本質：</strong>動態主觀記憶（當前 VIP 任務鎖定、設備運作延遲傾向、API 呼叫配額餘額）。</p>
+            <p><strong>使命：</strong>供 Agent 做<strong>即時決策與智慧護航</strong>（任務結束後沉澱至日誌）。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 六、 通用 Agent Shell 智能外殼機制 -->
+    <section id="shell" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-2xl font-bold text-slate-900">六、 通用 Agent Shell 智能外殼機制</h2>
+        <p class="text-slate-500 text-sm mt-1">按需掛載、創造動態 Event、管理快取限流，並在任務完成後安全卸載</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="font-bold text-blue-600 block text-sm">1. 動態事件創造者 (Event Emulation)</span>
+          <p class="text-slate-600 leading-relaxed">
+            氣象局或行事曆本身是「被動」的。Shell 掛載後，讀取外部資料並在底層事件系統註冊「開會前 20 分鐘鬧鐘」或「紫外線危險級通知」，隨即卸載。<strong>把被動 API 轉化為主動
+              Event！</strong>
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="font-bold text-indigo-600 block text-sm">2. 限流、費用與快取專屬記憶</span>
+          <p class="text-slate-600 leading-relaxed">
+            為外部商業 API 守門。記錄「氣象資料 30 分鐘才更新，3 分鐘前才抓過，直接命中快取」，並在 API 費用達預算 80% 時自動實施退避降頻保護。
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="font-bold text-emerald-600 block text-sm">3. MCP 工具自適應打量 (Introspection)</span>
+          <p class="text-slate-600 leading-relaxed">
+            MCP Shell 連接外部 MCP Server，自動打量並自適應其 Tools 與 Prompts，將原生協定轉譯為系統標準 <code>API + Semantic + Context</code> 目錄。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 七、 Block 空間基元 -->
+    <section id="block" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-2xl font-bold text-slate-900">七、 Block 空間基元（可有可無・按需啟用）</h2>
+        <p class="text-slate-500 text-sm mt-1">單一空間載體：可堆疊、可相連、可內裝，與 API 同級對等</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="font-bold text-amber-700 block text-sm">內裝 (Nest / Contain)</span>
+          <p class="text-slate-600 leading-relaxed">
+            支援無窮層級碎形包含：<strong>園區 Block ➔ 大樓 Block ➔ 12樓 Block ➔ 1202大會議室 Block</strong>。
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="font-bold text-amber-700 block text-sm">堆疊 (Stack)</span>
+          <p class="text-slate-600 leading-relaxed">
+            垂直空間堆疊：12 樓 Block 堆疊於 11 樓之上，輔助推算熱浮效應與管路垂直水壓。
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="font-bold text-amber-700 block text-sm">相連 (Connect / Adjacent)</span>
+          <p class="text-slate-600 leading-relaxed">
+            水平空間相鄰：1201 會議室與 1202 辦公室相連，輔助推算隔牆熱傳導與冷氣借冷擴散。
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-amber-50/50 p-6 rounded-2xl border border-amber-200 shadow-sm text-xs text-slate-700 space-y-2">
+        <strong class="text-slate-900 block text-sm">💡 解耦哲學：為什麼 Block 是「可有可無、按需啟用」？</strong>
+        <p>
+          流動感測器、氣象局天氣 API、測試工作台設備等，皆可完全脫離 Block，依靠自身 <code>API + Semantic + Context</code>
+          獨立自主運作！只有當系統需要<strong>地理拓撲空間推理（相鄰借冷、熱傳導）</strong>或需要<strong>驅動 AI 自動生成樓層平面圖/熱力圖/拖拉畫布</strong>時，才將 API 裝載於
+          Block！
+        </p>
+      </div>
+    </section>
+
+    <!-- 八、 生成式介面與樣板機制 -->
+    <section id="generative-ui" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-2xl font-bold text-slate-900">八、 生成式人機介面（Generative UI）與介面樣板機制</h2>
+        <p class="text-slate-500 text-sm mt-1">平日無干擾動態島守護，決策時 AI 即時組裝效益卡片與危機分診面板</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="px-2.5 py-1 rounded bg-blue-100 text-blue-800 font-bold">按需生成哲學</span>
+          <h3 class="text-base font-bold text-slate-900">Just-in-Time Micro-Surfaces</h3>
+          <p class="text-slate-600 leading-relaxed">
+            摒棄幾百頁繁複的固定 SCADA 介面。任務平穩時收攏為懸浮膠囊動態島；管理者下達意圖或尖峰即將超約時，AI 現場動態拼裝出專屬的「意圖落地卡」或「危機分診面板」，提供效益滑桿與一鍵核准放行。
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="px-2.5 py-1 rounded bg-emerald-100 text-emerald-800 font-bold">商談與派發循環</span>
+          <h3 class="text-base font-bold text-slate-900">樣板倉庫 (Template Registry)</h3>
+          <p class="text-slate-600 leading-relaxed">
+            架構師與主管商談對齊監控偏好後，在 Block 畫布上打造標準樣板（沉澱為 Declarative JSON Schema），並一鍵【套用到 13F~22F】，全棟標準層數百個房間的監控微介面秒級批量部署完畢。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 九、 端到端運作流程 (Mermaid + 可放大互動卡片) -->
+    <section id="lifecycle" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4 flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">九、 完整端到端運作流程（以跨域會議預冷為例）</h2>
+          <p class="text-slate-500 text-sm mt-1">展示結合行事曆 MCP、氣象 API、電價 API 與空調 IoT API 的全域閉環調度時序（支援放大縮小與全螢幕檢視）</p>
+        </div>
+        <span class="text-xs bg-indigo-100 text-indigo-800 font-bold px-3 py-1 rounded-lg">End-to-End
+          Orchestration</span>
+      </div>
+
+      <!-- 可放大縮小的 Mermaid 容器 -->
+      <div class="mermaid-zoom-container shadow-sm" data-diagram-title="九、完整端到端運作流程（跨域會議預冷閉環時序）">
+        <!-- 浮動放大操作工具列 -->
+        <div
+          class="absolute top-3 right-3 flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-2.5 py-1.5 rounded-xl shadow-md border border-slate-200 z-10 text-xs">
+          <span class="text-slate-400 text-[11px] font-semibold pr-1">縮放控制:</span>
+          <button type="button"
+            class="btn-zoom-in px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition shadow-sm active:scale-95"
+            title="放大 (+20%)">＋</button>
+          <button type="button"
+            class="btn-zoom-out px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition shadow-sm active:scale-95"
+            title="縮小 (-20%)">－</button>
+          <button type="button"
+            class="btn-zoom-reset px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition shadow-sm active:scale-95"
+            title="重置為 100%">↺</button>
+          <span
+            class="zoom-badge text-slate-600 font-mono text-[11px] font-bold px-1.5 min-w-[42px] text-center">100%</span>
+          <div class="h-3.5 w-px bg-slate-200 mx-0.5"></div>
+          <button type="button"
+            class="btn-fullscreen px-3 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold transition flex items-center gap-1 shadow-sm active:scale-95"
+            title="以高解析全螢幕檢視此圖">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+            </svg>
+            <span>全螢幕檢視</span>
+          </button>
+        </div>
+
+        <!-- 視窗滾動區 -->
+        <div class="mermaid-viewport">
+          <div class="mermaid-zoom-target">
+            <div class="mermaid text-center">
+              flowchart TD
+              S1["<b>❶ 業務管理者下達意圖</b><br />『下午 12 樓大會議室有重要外賓，請預冷並兼顧尖峰電費』"]
+              S2["<b>❷ 對話 Agent 理解需求</b><br />委派建立專屬【會議預冷 Task Agent】"]
+              S3["<b>❸ Task Agent 統一檢索 API 能力庫與 Structural Context</b><br />• Google Calendar MCP：14:00 有 30 人 VIP
+              會議<br />• 氣象局 API：室外高溫 35°C<br />• 台電電價 API：13:00~15:00 為尖峰昂貴費率<br />• Block 拓撲：確認西曬高熱慣性與迴路"]
+              S4["<b>❹ 通用 Agent Shell 掛載 ➔ 建立動態 Event</b><br />• 行事曆 Shell 建立：Event_Precool_Trigger (13:30 觸發)<br />• 空調
+              Shell 建立：壓縮機安全防護 Event<br />• Shell 安全卸載，事件系統獨立長效守護"]
+              S5["<b>❺ 介面生成預測卡 ➔ 業務管理者一鍵【核准】</b><br />檢視省電率與溫度曲線無誤，管理者一鍵核准執行"]
+              S6["<b>❻ 事件系統於 13:30 精準喚醒 Task Agent</b><br />觸發預冷調度流程"]
+              S7["<b>❼ 自主多維閉環調控</b><br />• 調用 VRV 空調 API 提前啟動預冷<br />• 開會前 15 分鐘提早斷冷利用熱慣性，避開尖峰電價<br />• 完成自動管理並向對話 Agent
+              回報"]
+
+              S1 --> S2
+              S2 --> S3
+              S3 --> S4
+              S4 --> S5
+              S5 --> S6
+              S6 --> S7
+
+              style S1 fill:#DCE8FF,stroke:#2962FF,stroke-width:1.5px,color:#000000
+              style S2 fill:#FFF4D6,stroke:#C67D00,stroke-width:1.5px,color:#000000
+              style S3 fill:#FFF3E0,stroke:#E65100,stroke-width:1.5px,color:#000000
+              style S4 fill:#F8BBD0,stroke:#880E4F,stroke-width:1.5px,color:#000000
+              style S5 fill:#DCE8FF,stroke:#2962FF,stroke-width:1.5px,color:#000000
+              style S6 fill:#E0F7FA,stroke:#00838F,stroke-width:1.5px,color:#000000
+              style S7 fill:#EDE7F6,stroke:#4527A0,stroke-width:1.5px,color:#000000
+            </div>
+          </div>
+        </div>
+        <div
+          class="px-4 py-2 bg-slate-50 border-t border-slate-200 text-[11px] text-slate-500 flex justify-between items-center">
+          <span>💡 提示：可使用右上角 <b>＋ / －</b> 放大縮小，或點擊 <b>全螢幕檢視</b> 進行滑鼠滾輪縮放與自由拖曳平移</span>
+          <span class="text-slate-400">滑鼠按住可橫向平移</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 十、 協同 AI 深度研究方向 -->
+    <section id="future" class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+      <div class="border-b border-slate-100 pb-3 flex items-center justify-between">
+        <h2 class="text-xl font-bold text-slate-900">十、 供另一個 AI 深入研究的 8 大方向</h2>
+        <span class="text-xs bg-blue-100 text-blue-800 font-bold px-3 py-1 rounded-full">協同研究基準</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">1. NATS JetStream 主題拓撲與動態權限</strong>
+          <p class="text-slate-600">AI 如何在 NATS 中以最小權限動態申請 Subject 註冊、快取存取與消費。</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">2. TimescaleDB 連續聚合與 CEP 推論</strong>
+          <p class="text-slate-600">如何在資料庫時序超表層實現毫秒級火災斜率與空間傳遞交叉偵測。</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">3. MCP 協定與 API 統一描述模型</strong>
+          <p class="text-slate-600">如何以 OpenAPI / JSON-LD / MCP Tools 統一標準化定義 API + Semantic + Context。</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">4. 通用 Agent Shell 動態事件演算法</strong>
+          <p class="text-slate-600">Shell 如何將被動外部 API / MCP 查詢自動轉譯為底層輕量 Cron / Webhook Event。</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">5. 外部 API 費用與限流快取狀態機</strong>
+          <p class="text-slate-600">在 Agent Shell 中實作配額估算、動態降頻與快取命中策略，避免爆額超支。</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">6. Block 圖譜向量檢索 (Graph RAG)</strong>
+          <p class="text-slate-600">Task Agent 如何在 Block 圖譜中結合氣象與電價，秒級定位熱負荷空間。</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">7. A2UI 協議與動態渲染規範</strong>
+          <p class="text-slate-600">AI 如何輸出結構化 JSON UI Blocks，由前端引擎動態渲染決策卡與熱力圖。</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <strong class="text-slate-900 block text-sm">8. UI 樣板倉庫與參數化機制</strong>
+          <p class="text-slate-600">樣板如何將 Block 與設備 API 變數化，實現跨樓層跨場域秒級派發。</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 全螢幕 Mermaid 檢視彈窗 (Lightbox Modal) -->
+  <div id="mermaid-modal"
+    class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex-col transition-opacity duration-200">
+    <!-- Modal 頂部控制列 -->
+    <div
+      class="h-14 bg-slate-900/95 border-b border-slate-800 px-6 flex items-center justify-between text-white shrink-0 select-none shadow-lg">
+      <div class="flex items-center gap-3">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
+        <span id="modal-title" class="font-bold text-sm text-slate-100 tracking-wide truncate max-w-md">架構圖全螢幕檢視</span>
+        <span id="modal-zoom-badge"
+          class="text-xs bg-slate-800 text-blue-400 font-mono px-2 py-0.5 rounded-full border border-slate-700 font-bold">100%</span>
+      </div>
+      <div class="flex items-center gap-2 text-xs">
+        <button id="modal-zoom-in"
+          class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-bold flex items-center gap-1 active:scale-95"
+          title="放大 (快捷鍵: +)">
+          <span>＋ 放大</span>
+        </button>
+        <button id="modal-zoom-out"
+          class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-bold flex items-center gap-1 active:scale-95"
+          title="縮小 (快捷鍵: -)">
+          <span>－ 縮小</span>
+        </button>
+        <button id="modal-zoom-reset"
+          class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-medium active:scale-95"
+          title="重置為 100% (快捷鍵: 0)">
+          <span>↺ 100%</span>
+        </button>
+        <button id="modal-zoom-fit"
+          class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition font-medium active:scale-95"
+          title="自動縮放至適合螢幕尺寸">
+          <span>⊡ 適合視窗</span>
+        </button>
+        <div class="h-4 w-px bg-slate-700 mx-1"></div>
+        <button id="modal-close"
+          class="px-3 py-1.5 rounded-lg bg-red-600/90 hover:bg-red-600 transition font-bold flex items-center gap-1 text-white shadow active:scale-95"
+          title="關閉全螢幕檢視 (ESC)">
+          <span>✕ 關閉</span>
+          <span class="text-[10px] opacity-75 font-mono">(ESC)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal 畫布與自由平移縮放區 -->
+    <div id="modal-viewport" class="flex-grow overflow-hidden relative flex items-center justify-center p-4">
+      <div id="modal-svg-wrapper">
+        <!-- SVG 將動態注入於此 -->
+      </div>
+      <!-- 底部提示條 -->
+      <div
+        class="absolute bottom-4 left-1/2 -translate-x-1/2 text-slate-300 text-xs bg-slate-900/90 backdrop-blur-sm px-4 py-2 rounded-full border border-slate-700/80 pointer-events-none shadow-xl flex items-center gap-3">
+        <span>🖱️ <b>滾輪</b>：縮放視角</span>
+        <span>•</span>
+        <span>🖐️ <b>拖曳</b>：平移畫布</span>
+        <span>•</span>
+        <span>👆 <b>雙擊</b>：重置 100%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 頁尾 -->
+  <footer class="bg-slate-900 text-slate-400 py-8 text-center text-xs border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p class="font-semibold text-slate-300">Agentic AIoT 智慧物聯網架構設計規格書 • 概念與 Infra 基礎建設全景規範</p>
+      <p>可直接作為系統開發、架構評審與跨 AI 協同研究的統一基準文檔</p>
+    </div>
+  </footer>
+
+  <script>
+    // 初始化 Mermaid（所有字型、字級與色彩均由原生 themeVariables 注入 SVG 內部，確保量測與縮放 100% 一致）
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'base',
+      securityLevel: 'loose',
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+        wrappingWidth: 900,
+        curve: 'basis',
+        padding: 18,
+        nodeSpacing: 45,
+        rankSpacing: 50
+      },
+      themeVariables: {
+        fontFamily: "'Noto Sans TC', 'Microsoft JhengHei', sans-serif",
+        fontSize: '14px',
+        primaryColor: '#ffffff',
+        primaryBorderColor: '#2563eb',
+        primaryTextColor: '#000000',
+        nodeTextColor: '#000000',
+        textColor: '#000000',
+        lineColor: '#334155',
+        clusterBkg: '#f8fafc',
+        clusterBorder: '#cbd5e1',
+        titleColor: '#0f172a',
+        edgeLabelBackground: '#ffffff'
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      // 等待字型就緒後再執行 Mermaid Dagre 量測（最多等待 1.5 秒，避免離線或內網環境卡住）
+      try {
+        if (document.fonts && document.fonts.ready) {
+          await Promise.race([
+            document.fonts.ready,
+            new Promise(resolve => setTimeout(resolve, 1500))
+          ]);
+        }
+      } catch (e) {
+        console.warn('Fonts ready check skipped', e);
+      }
+      await mermaid.run();
+
+      // 1. 本地卡片純向量尺寸縮放控制（不使用 transform: scale，直接等比縮放 SVG 寬高）
+      const containers = document.querySelectorAll('.mermaid-zoom-container');
+      containers.forEach(container => {
+        const svg = container.querySelector('.mermaid svg');
+        if (!svg) return;
+
+        const badge = container.querySelector('.zoom-badge');
+        const btnIn = container.querySelector('.btn-zoom-in');
+        const btnOut = container.querySelector('.btn-zoom-out');
+        const btnReset = container.querySelector('.btn-zoom-reset');
+        const btnFullscreen = container.querySelector('.btn-fullscreen');
+        const viewport = container.querySelector('.mermaid-viewport');
+
+        const bbox = svg.viewBox && svg.viewBox.baseVal;
+        const vbWidth = (bbox && bbox.width > 0) ? bbox.width : (svg.clientWidth || 900);
+        const vbHeight = (bbox && bbox.height > 0) ? bbox.height : (svg.clientHeight || 600);
+        const aspectRatio = vbHeight / vbWidth;
+
+        svg.removeAttribute('width');
+        svg.removeAttribute('height');
+        svg.style.maxWidth = 'none';
+        svg.style.display = 'block';
+
+        const getFitWidth = () => {
+          const avail = Math.max((viewport.clientWidth || 900) - 48, 320);
+          return Math.min(vbWidth, avail);
+        };
+
+        let fitWidth = getFitWidth();
+        let currentScale = 1.0;
+
+        const applyZoom = (scale) => {
+          currentScale = Math.min(Math.max(scale, 0.4), 5.0);
+          badge.textContent = `${Math.round(currentScale * 100)}%`;
+
+          const targetW = Math.round(fitWidth * currentScale);
+          const targetH = Math.round(targetW * aspectRatio);
+          svg.style.width = `${targetW}px`;
+          svg.style.height = `${targetH}px`;
+        };
+
+        applyZoom(1.0);
+
+        window.addEventListener('resize', () => {
+          fitWidth = getFitWidth();
+          if (Math.abs(currentScale - 1.0) < 0.01) {
+            applyZoom(1.0);
+          }
+        });
+
+        btnIn?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          applyZoom(currentScale + 0.25);
+        });
+
+        btnOut?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          applyZoom(currentScale - 0.25);
+        });
+
+        btnReset?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          fitWidth = getFitWidth();
+          applyZoom(1.0);
+          viewport.scrollLeft = 0;
+          viewport.scrollTop = 0;
+        });
+
+        // 支援 Ctrl + 滑鼠滾輪直接在卡片內縮放
+        viewport?.addEventListener('wheel', (e) => {
+          if (!e.ctrlKey && !e.metaKey) return;
+          e.preventDefault();
+          const delta = e.deltaY < 0 ? 0.2 : -0.2;
+          applyZoom(currentScale + delta);
+        }, { passive: false });
+
+        // 支援滑鼠按住拖曳平移 (Pan within viewport)
+        let isDown = false;
+        let startX = 0;
+        let startY = 0;
+        let scrollLeft = 0;
+        let scrollTop = 0;
+
+        viewport?.addEventListener('mousedown', (e) => {
+          if (e.target.closest('button')) return;
+          isDown = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          scrollLeft = viewport.scrollLeft;
+          scrollTop = viewport.scrollTop;
+        });
+
+        window.addEventListener('mouseup', () => { isDown = false; });
+        viewport?.addEventListener('mouseleave', () => { isDown = false; });
+
+        viewport?.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          viewport.scrollLeft = scrollLeft - (e.clientX - startX);
+          viewport.scrollTop = scrollTop - (e.clientY - startY);
+        });
+
+        // 全螢幕按鈕觸發
+        btnFullscreen?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const title = container.getAttribute('data-diagram-title') || '架構圖全螢幕檢視';
+          openMermaidModal(svg, title);
+        });
+      });
+
+      // 2. 全螢幕 Lightbox Modal 互動邏輯（純向量寬高縮放 + 純平移 translate，徹底杜絕字框脫鉤）
+      const modal = document.getElementById('mermaid-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBadge = document.getElementById('modal-zoom-badge');
+      const modalViewport = document.getElementById('modal-viewport');
+      const modalSvgWrapper = document.getElementById('modal-svg-wrapper');
+      const btnModalClose = document.getElementById('modal-close');
+      const btnModalIn = document.getElementById('modal-zoom-in');
+      const btnModalOut = document.getElementById('modal-zoom-out');
+      const btnModalReset = document.getElementById('modal-zoom-reset');
+      const btnModalFit = document.getElementById('modal-zoom-fit');
+
+      let mScale = 1.0;
+      let mPanX = 0;
+      let mPanY = 0;
+      let mIsDragging = false;
+      let mStartX = 0;
+      let mStartY = 0;
+      let originalSvgWidth = 0;
+      let originalSvgHeight = 0;
+
+      const applyModalView = () => {
+        const activeSvg = modalSvgWrapper.querySelector('svg');
+        if (activeSvg && originalSvgWidth > 0 && originalSvgHeight > 0) {
+          activeSvg.style.width = `${Math.round(originalSvgWidth * mScale)}px`;
+          activeSvg.style.height = `${Math.round(originalSvgHeight * mScale)}px`;
+        }
+        modalSvgWrapper.style.transform = `translate(${Math.round(mPanX)}px, ${Math.round(mPanY)}px)`;
+        modalBadge.textContent = `${Math.round(mScale * 100)}%`;
+      };
+
+      const setModalScale = (newScale) => {
+        const clamped = Math.min(Math.max(newScale, 0.15), 6.0);
+        if (mScale > 0) {
+          const ratio = clamped / mScale;
+          mPanX *= ratio;
+          mPanY *= ratio;
+        }
+        mScale = clamped;
+        applyModalView();
+      };
+
+      const fitToModalWindow = () => {
+        if (!originalSvgWidth || !originalSvgHeight) return;
+        const vWidth = Math.max(modalViewport.clientWidth - 96, 200);
+        const vHeight = Math.max(modalViewport.clientHeight - 96, 200);
+        const scaleX = vWidth / (originalSvgWidth + 48);
+        const scaleY = vHeight / (originalSvgHeight + 48);
+        mScale = Math.min(scaleX, scaleY, 1.5);
+        mPanX = 0;
+        mPanY = 0;
+        applyModalView();
+      };
+
+      window.openMermaidModal = (sourceSvg, title) => {
+        modalTitle.textContent = title;
+        modalSvgWrapper.innerHTML = '';
+
+        const bbox = sourceSvg.viewBox && sourceSvg.viewBox.baseVal;
+        if (bbox && bbox.width > 0 && bbox.height > 0) {
+          originalSvgWidth = bbox.width;
+          originalSvgHeight = bbox.height;
+        } else {
+          const rect = sourceSvg.getBoundingClientRect();
+          originalSvgWidth = rect.width || 900;
+          originalSvgHeight = rect.height || 600;
+        }
+
+        const clone = sourceSvg.cloneNode(true);
+        clone.removeAttribute('width');
+        clone.removeAttribute('height');
+        clone.removeAttribute('style');
+        clone.style.display = 'block';
+        clone.style.maxWidth = 'none';
+        clone.style.maxHeight = 'none';
+        modalSvgWrapper.appendChild(clone);
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        requestAnimationFrame(() => {
+          fitToModalWindow();
+        });
+      };
+
+      const closeMermaidModal = () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      btnModalClose?.addEventListener('click', closeMermaidModal);
+      btnModalIn?.addEventListener('click', () => setModalScale(mScale * 1.25));
+      btnModalOut?.addEventListener('click', () => setModalScale(mScale / 1.25));
+      btnModalReset?.addEventListener('click', () => {
+        mScale = 1.0;
+        mPanX = 0;
+        mPanY = 0;
+        applyModalView();
+      });
+      btnModalFit?.addEventListener('click', fitToModalWindow);
+
+      modalViewport?.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const factor = e.deltaY < 0 ? 1.15 : 0.87;
+        setModalScale(mScale * factor);
+      }, { passive: false });
+
+      modalViewport?.addEventListener('mousedown', (e) => {
+        if (e.target.closest('button')) return;
+        mIsDragging = true;
+        mStartX = e.clientX - mPanX;
+        mStartY = e.clientY - mPanY;
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!mIsDragging) return;
+        mPanX = e.clientX - mStartX;
+        mPanY = e.clientY - mStartY;
+        applyModalView();
+      });
+
+      window.addEventListener('mouseup', () => { mIsDragging = false; });
+
+      modalViewport?.addEventListener('dblclick', (e) => {
+        if (e.target.closest('#modal-close') || e.target.closest('button')) return;
+        fitToModalWindow();
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape') closeMermaidModal();
+        if (e.key === '+' || e.key === '=') setModalScale(mScale * 1.2);
+        if (e.key === '-' || e.key === '_') setModalScale(mScale / 1.2);
+        if (e.key === '0') {
+          mScale = 1.0;
+          mPanX = 0;
+          mPanY = 0;
+          applyModalView();
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>\n
