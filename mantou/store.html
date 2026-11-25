@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>慢酵所 MANXIAO LAB｜12h 預分解回彈老麵・配黑咖啡也不悶脹的東方蒸製酸種</title>
+  <meta name="description" content="承襲新竹竹北30年老麵原型工藝。12~16小時野生酵母與乳酸菌慢發酵預分解大分子澱粉，0泡打粉、壓扁3秒瞬間回彈、電鍋外鍋半杯水免顧火蒸透即食。首購$499超商冷凍免運，試吃2顆不滿意免退回全額退費！">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #FAF7F0;
+      --bg-warm: #F3ECE0;
+      --bg-card: #FFFFFF;
+      --ink-dark: #1E2822;
+      --ink-forest: #263B2F;
+      --ink-muted: #5C6660;
+      --amber-gold: #C68332;
+      --amber-deep: #A6651B;
+      --amber-soft: #FDF3E4;
+      --sage-green: #3A6B4C;
+      --sage-light: #E8F3EC;
+      --danger-soft: #FEECEC;
+      --danger-ink: #B43838;
+      --border-warm: #E5DDD0;
+      --shadow-soft: 0 12px 32px rgba(30, 40, 34, 0.07);
+      --shadow-hover: 0 18px 42px rgba(30, 40, 34, 0.13);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--ink-dark);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, .serif { font-family: 'Noto Serif TC', serif; }
+
+    .top-bar {
+      background: var(--ink-forest);
+      color: #F7EFE2;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+    .top-bar span { color: #F5C478; font-weight: 700; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 247, 240, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-warm);
+    }
+    .nav-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--ink-dark);
+    }
+    .logo-seal {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--ink-forest);
+      color: #F6D59E;
+      display: grid;
+      place-items: center;
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 900;
+      font-size: 1.15rem;
+      border: 1px solid rgba(246, 213, 158, 0.35);
+    }
+    .logo-text strong {
+      display: block;
+      font-size: 1.25rem;
+      letter-spacing: 0.08em;
+      line-height: 1.2;
+    }
+    .logo-text small {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.12em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink-dark);
+      font-size: 0.94rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amber-deep); }
+    .nav-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cart-trigger {
+      background: var(--bg-card);
+      border: 1px solid var(--border-warm);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--ink-dark);
+    }
+    .cart-badge {
+      background: var(--amber-gold);
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 1px 7px;
+      border-radius: 999px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--amber-gold), var(--amber-deep));
+      color: #FFFFFF;
+      text-decoration: none;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(166, 101, 27, 0.28);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(166, 101, 27, 0.38);
+    }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      color: var(--ink-forest);
+      border: 1.5px solid var(--ink-forest);
+      padding: 13px 24px;
+      border-radius: 999px;
+      font-size: 0.96rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-outline:hover {
+      background: var(--ink-forest);
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    section { padding: 84px 0; }
+
+    .hero {
+      padding: 56px 0 76px;
+      background: radial-gradient(circle at 80% 20%, #F5E9D4 0%, var(--bg-cream) 60%);
+      border-bottom: 1px solid var(--border-warm);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .heritage-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--amber-soft);
+      border: 1px solid #E9CFA8;
+      color: var(--amber-deep);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: clamp(2.1rem, 3.8vw, 3.15rem);
+      line-height: 1.24;
+      color: var(--ink-dark);
+      margin-bottom: 18px;
+      font-weight: 900;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--amber-deep);
+      text-decoration: underline;
+      text-decoration-color: rgba(198, 131, 50, 0.35);
+      text-underline-offset: 6px;
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--ink-muted);
+      margin-bottom: 26px;
+      max-width: 580px;
+    }
+    .trust-chips {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+    .trust-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border-warm);
+      padding: 12px 15px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .trust-chip span.icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--sage-light);
+      color: var(--sage-green);
+      display: grid;
+      place-items: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+    .guarantee-note {
+      margin-top: 14px;
+      font-size: 0.86rem;
+      color: var(--sage-green);
+      font-weight: 600;
+    }
+
+    .rebound-lab-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-warm);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+    }
+    .lab-badge {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--border-warm);
+    }
+    .lab-badge strong { font-size: 1rem; color: var(--ink-forest); }
+    .timer-pill {
+      font-family: monospace;
+      background: var(--ink-forest);
+      color: #F6D59E;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .bun-stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 20px 0;
+    }
+    .bun-box {
+      background: var(--bg-cream);
+      border-radius: 16px;
+      padding: 20px 14px 16px;
+      text-align: center;
+      border: 1px solid var(--border-warm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      min-height: 215px;
+    }
+    .bun-box.ours {
+      background: #FFFDF9;
+      border: 2px solid var(--amber-gold);
+    }
+    .bun-visual {
+      width: 124px;
+      height: 86px;
+      border-radius: 62px 62px 22px 22px;
+      position: relative;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), height 0.35s;
+      transform-origin: bottom center;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .bun-visual.fast-yeast {
+      background: linear-gradient(180deg, #EFECE6 0%, #D9D3C7 100%);
+      box-shadow: inset 0 -6px 12px rgba(0,0,0,0.08);
+    }
+    .bun-visual.slow-ferment {
+      background: linear-gradient(180deg, #FFF9EC 0%, #F2DFBE 100%);
+      box-shadow: 0 8px 18px rgba(198, 131, 50, 0.18), inset 0 -6px 12px rgba(198, 131, 50, 0.12);
+    }
+    .cheese-dots span {
+      position: absolute;
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+      background: #E89B25;
+      opacity: 0.85;
+    }
+    .cheese-dots span:nth-child(1) { top: 28px; left: 30px; }
+    .cheese-dots span:nth-child(2) { top: 44px; left: 62px; background: #F4C44E; }
+    .cheese-dots span:nth-child(3) { top: 26px; right: 28px; }
+    .cheese-dots span:nth-child(4) { top: 52px; left: 38px; background: #8C6239; width: 9px; height: 9px; border-radius: 50%; }
+
+    .bun-visual.pressed-dead { transform: scaleY(0.32) scaleX(1.18); }
+    .bun-visual.pressed-active { transform: scaleY(0.28) scaleX(1.22); }
+    .bun-visual.rebounding {
+      transition: transform 2.6s cubic-bezier(0.18, 1.25, 0.32, 1);
+      transform: scaleY(1) scaleX(1);
+    }
+    .bun-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; }
+    .bun-status { font-size: 0.8rem; color: var(--ink-muted); min-height: 38px; }
+    .bun-box.ours .bun-status { color: var(--sage-green); font-weight: 700; }
+
+    .press-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      background: var(--ink-forest);
+      color: #F8E7C9;
+      font-size: 0.98rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .press-btn:hover { background: #18271E; }
+
+    .sec-head {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 52px;
+    }
+    .sec-tag {
+      display: inline-block;
+      color: var(--amber-deep);
+      font-weight: 700;
+      font-size: 0.86rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .sec-head h2 {
+      font-size: clamp(1.75rem, 3vw, 2.4rem);
+      color: var(--ink-dark);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    .sec-head p { color: var(--ink-muted); font-size: 1.04rem; }
+
+    .pain-sec { background: var(--bg-warm); }
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .pain-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 30px 26px;
+      border: 1px solid var(--border-warm);
+      box-shadow: var(--shadow-soft);
+    }
+    .pain-time {
+      display: inline-block;
+      background: var(--danger-soft);
+      color: var(--danger-ink);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+    .pain-card h3 { font-size: 1.22rem; margin-bottom: 10px; }
+    .pain-card p { color: var(--ink-muted); font-size: 0.95rem; }
+
+    .science-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+    }
+    .sci-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-lg);
+      padding: 32px 26px;
+      position: relative;
+    }
+    .sci-num {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: var(--amber-gold);
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+    .sci-card h3 { font-size: 1.24rem; margin-bottom: 10px; }
+    .sci-card p { color: var(--ink-muted); font-size: 0.95rem; }
+
+    .compare-sec { background: #FFFDF9; border-top: 1px solid var(--border-warm); border-bottom: 1px solid var(--border-warm); }
+    .table-scroll { overflow-x: auto; }
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+    .comp-table th, .comp-table td {
+      padding: 18px 20px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-warm);
+      font-size: 0.95rem;
+    }
+    .comp-table thead th {
+      background: var(--ink-forest);
+      color: #fff;
+      font-weight: 700;
+    }
+    .comp-table thead th.highlight {
+      background: var(--amber-deep);
+      color: #FFF8EC;
+      font-size: 1.05rem;
+    }
+    .comp-table td.highlight {
+      background: #FFF9EF;
+      font-weight: 700;
+      color: var(--ink-dark);
+    }
+
+    .flavor-tabs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+    .flavor-tab {
+      padding: 9px 20px;
+      border-radius: 999px;
+      border: 1px solid var(--border-warm);
+      background: var(--bg-card);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--ink-muted);
+    }
+    .flavor-tab.active {
+      background: var(--ink-forest);
+      color: #fff;
+      border-color: var(--ink-forest);
+    }
+    .flavor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .flavor-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .flavor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .flavor-tag {
+      background: var(--sage-light);
+      color: var(--sage-green);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .flavor-tag.hot {
+      background: var(--amber-soft);
+      color: var(--amber-deep);
+    }
+    .flavor-card h3 { font-size: 1.25rem; margin-bottom: 8px; }
+    .flavor-desc { color: var(--ink-muted); font-size: 0.94rem; margin-bottom: 16px; }
+    .clean-ing {
+      background: var(--bg-cream);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 0.84rem;
+      color: var(--ink-dark);
+      border-left: 3px solid var(--sage-green);
+    }
+
+    .microwave-sec {
+      background: var(--ink-forest);
+      color: #F8F3E9;
+    }
+    .microwave-sec .sec-tag { color: #F5C478; }
+    .microwave-sec .sec-head h2 { color: #FFFFFF; }
+    .microwave-sec .sec-head p { color: #CBD5CE; }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .step-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+    .step-badge {
+      display: inline-block;
+      background: #F5C478;
+      color: var(--ink-forest);
+      font-weight: 900;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      margin-bottom: 14px;
+    }
+    .step-card h3 { font-size: 1.2rem; margin-bottom: 10px; color: #fff; }
+    .step-card p { color: #D5DFD8; font-size: 0.94rem; }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .review-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      box-shadow: var(--shadow-soft);
+    }
+    .stars { color: #E59819; font-size: 1rem; margin-bottom: 10px; }
+    .review-card p { font-size: 0.95rem; color: var(--ink-dark); margin-bottom: 16px; }
+    .reviewer {
+      font-size: 0.84rem;
+      color: var(--ink-muted);
+      font-weight: 700;
+      border-top: 1px solid var(--border-warm);
+      padding-top: 12px;
+    }
+
+    .pricing-sec { background: var(--bg-warm); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+      align-items: stretch;
+    }
+    .price-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-warm);
+      border-radius: 24px;
+      padding: 32px 26px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .price-card.featured {
+      border: 2.5px solid var(--amber-gold);
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+    }
+    .pop-ribbon {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--amber-deep);
+      color: #fff;
+      padding: 5px 18px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .price-title { font-size: 1.32rem; margin-bottom: 6px; }
+    .price-sub { font-size: 0.88rem; color: var(--ink-muted); margin-bottom: 18px; }
+    .price-num {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--ink-dark);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .price-num small { font-size: 1rem; font-weight: 500; color: var(--ink-muted); }
+    .per-bun {
+      display: inline-block;
+      background: var(--sage-light);
+      color: var(--sage-green);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+      margin-bottom: 18px;
+    }
+    .box-list {
+      list-style: none;
+      margin-bottom: 24px;
+      border-top: 1px dashed var(--border-warm);
+      padding-top: 16px;
+    }
+    .box-list li {
+      font-size: 0.92rem;
+      margin-bottom: 10px;
+      padding-left: 22px;
+      position: relative;
+    }
+    .box-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--sage-green);
+      font-weight: 900;
+    }
+
+    .promise-banner {
+      margin-top: 42px;
+      background: var(--bg-card);
+      border: 2px solid var(--sage-green);
+      border-radius: var(--radius-lg);
+      padding: 26px 32px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+    .promise-seal {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--sage-light);
+      color: var(--sage-green);
+      display: grid;
+      place-items: center;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+
+    .faq-list { max-width: 820px; margin: 0 auto; }
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .faq-q {
+      width: 100%;
+      padding: 20px 24px;
+      background: none;
+      border: none;
+      text-align: left;
+      font-size: 1.04rem;
+      font-weight: 700;
+      color: var(--ink-dark);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-a {
+      display: none;
+      padding: 0 24px 20px;
+      color: var(--ink-muted);
+      font-size: 0.95rem;
+      border-top: 1px dashed var(--border-warm);
+      padding-top: 14px;
+    }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-icon { transition: transform 0.2s; font-size: 1.3rem; color: var(--amber-deep); }
+
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 18, 0.55);
+      z-index: 200;
+      display: none;
+      justify-content: flex-end;
+    }
+    .drawer-backdrop.open { display: flex; }
+    .cart-drawer {
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-card);
+      height: 100%;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+    .order-bump {
+      background: var(--amber-soft);
+      border: 1.5px dashed var(--amber-gold);
+      border-radius: 12px;
+      padding: 14px;
+      margin: 16px 0;
+      font-size: 0.88rem;
+    }
+    .order-bump label {
+      display: flex;
+      gap: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--ink-dark);
+    }
+
+    footer {
+      background: #161F1A;
+      color: #B4C0B8;
+      padding: 52px 0 36px;
+      font-size: 0.88rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+    footer h4 { color: #fff; margin-bottom: 12px; font-size: 1rem; }
+    .legal-note {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 20px;
+      font-size: 0.8rem;
+      color: #849289;
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid, .pain-grid, .science-grid, .steps-grid, .reviews-grid, .pricing-grid, .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links { display: none; }
+      .price-card.featured { transform: none; }
+      .promise-banner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    🔥 本週新鮮老麵培養出籠批次預訂中｜首購 <span>$499 超商冷凍免運</span>・試吃 2 顆不回彈或悶脹<span>免退回全額退費</span>！
+  </div>
+
+  <header>
+    <div class="nav-wrap">
+      <a href="#" class="brand-logo">
+        <div class="logo-seal">慢</div>
+        <div class="logo-text">
+          <strong>慢酵所 MANXIAO LAB</strong>
+          <small>12H 預分解老麵輕主食</small>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="#science">12h 不悶脹原理</a>
+        <a href="#flavors">大老麵 ✕ 迷你小慢包</a>
+        <a href="#microwave">極致彈潤蒸製法</a>
+        <a href="#pricing">免運常備箱選購</a>
+        <a href="#faq">常見問題</a>
+      </nav>
+      <div class="nav-cta-group">
+        <button class="cart-trigger" onclick="toggleCart(true)">
+          🛒 選購箱 <span class="cart-badge" id="cartCount">1</span>
+        </button>
+        <a href="#pricing" class="btn-primary" style="padding: 10px 20px; font-size: 0.9rem;">立即搶訂</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="heritage-pill">🏛️ 承襲新竹竹北 30 年老字號老麵原型工藝・在地萬人零悶脹口碑</div>
+        <h1>壓扁 3 秒彈回來！<br>配黑咖啡也不悶脹的<em>東方蒸製酸種</em></h1>
+        <p class="hero-sub">
+          受夠了早上吃完吐司麵包，10 點開會就胃脹打嗝嗎？【慢酵所】堅持 12~16 小時天然野生酵母與乳酸菌慢發酵，替你先把大分子澱粉預分解。100% 純水蒸、0 泡打粉，早晨電鍋外鍋半杯水蒸透即刻開動。
+        </p>
+        <div class="trust-chips">
+          <div class="trust-chip"><span class="icon">⏱️</span> 12~16h 乳酸菌慢發酵預分解</div>
+          <div class="trust-chip"><span class="icon">🧪</span> SGS 檢驗 0 泡打粉・0 防腐劑</div>
+          <div class="trust-chip"><span class="icon">🧀</span> 經典大老麵 ✕ 一口回彈迷你包</div>
+          <div class="trust-chip"><span class="icon">⚡</span> 免顧火！電鍋 8 分鐘蒸透即食</div>
+        </div>
+        <div class="hero-actions">
+          <a href="#pricing" class="btn-primary">👉 搶訂 $499 免運雙享受破冰箱（大6＋小12）</a>
+          <a href="#flavors" class="btn-outline">查看 7 款精選品項與價格</a>
+        </div>
+        <p class="guarantee-note">🛡️ 安心試吃承諾：收到先吃 2 顆，若壓扁不回彈或覺得悶脹不合胃口，免寄回直接全額退費！</p>
+      </div>
+
+      <div class="rebound-lab-card">
+        <div class="lab-badge">
+          <strong>🔬 線上實測：真假老麵 3 秒指壓檢驗台</strong>
+          <span class="timer-pill" id="reboundTimer">READY 0.0s</span>
+        </div>
+        <p style="font-size: 0.88rem; color: var(--ink-muted);">
+          為什麼市售速發麵包饅頭容易脹氣？點擊下方按鈕模擬手掌重壓到底，觀察氣孔筋膜結構差異：
+        </p>
+        <div class="bun-stage">
+          <div class="bun-box">
+            <div class="bun-visual fast-yeast" id="fastBun"></div>
+            <div class="bun-title">一般 30 分鐘速發饅頭</div>
+            <div class="bun-status" id="fastStatus">泡打粉虛胖大氣泡<br>等待按壓測試</div>
+          </div>
+          <div class="bun-box ours">
+            <div class="bun-visual slow-ferment cheese-dots" id="slowBun">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="bun-title">慢酵所 12h 預分解老麵</div>
+            <div class="bun-status" id="slowStatus">千萬立體活氣孔筋膜<br>等待按壓測試</div>
+          </div>
+        </div>
+        <button class="press-btn" id="pressBtn" onclick="runReboundTest()">👇 點此用力壓扁兩顆饅頭（實測 3 秒回彈）</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="pain-sec">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-tag">MORNING DILEMMA</span>
+        <h2>不是你的胃太嬌貴，是你吃進了「趕時間未分解」的澱粉</h2>
+        <p>全台灣每 4 個成年人就有 1 人在早餐後感到悶脹不適。看看這三個早晨場景，是不是也是你的日常？</p>
+      </div>
+      <div class="pain-grid">
+        <div class="pain-card">
+          <span class="pain-time">上午 10:15 會議室</span>
+          <h3>喝黑咖啡配吐司，開會狂吞氣</h3>
+          <p>早上趕打卡買了生吐司、可頌或超商包子配美式咖啡，結果十點胃裡像塞了氣球一樣鼓脹頂喉嚨，一整天專注力全毀。</p>
+        </div>
+        <div class="pain-card">
+          <span class="pain-time">歐包與網紅包的兩難</span>
+          <h3>歐包硬到刮嘴，流沙包油到泛酸</h3>
+          <p>聽說歐式酸種麵包（Sourdough）好消化，買一顆 160 元卻硬得像石頭刮破上顎；改買網紅爆漿流沙老麵捲，高油高糖吃完反而更火燒心！</p>
+        </div>
+        <div class="pain-card">
+          <span class="pain-time">早上 06:50 家庭廚房</span>
+          <h3>阿公怕甜、小孩挑嘴、早餐天天像打仗</h3>
+          <p>不敢天天買早餐店乳瑪琳鐵板麵給孩子，水煮蛋配冷地瓜像在吃減肥餐沒人肯吃；慢酵所老麵外鍋半杯水按下去，免顧火刷牙洗臉出來全家開動！</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="science">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-tag">12H SLOW FERMENTATION SCIENCE</span>
+        <h2>我們在發酵室多等 12 小時，幫你的胃省下一半力氣</h2>
+        <p>結合竹北 30 年傳承老麵菌種與現代恆溫發酵管理，打造專屬於亞洲人早晨的「100% 純水蒸東方酸種輕主食」。</p>
+      </div>
+      <div class="science-grid">
+        <div class="sci-card">
+          <div class="sci-num">01 / 預分解</div>
+          <h3>野生酵母＋活性乳酸菌慢發酵</h3>
+          <p>拒絕 30 分鐘商業速發催熟。長達 12~16 小時的恆溫慢發酵中，天然乳酸菌與酵素已預先將難消化的大分子支鏈澱粉與麩質剪切為小分子，進入胃部不再劇烈產氣。</p>
+        </div>
+        <div class="sci-card">
+          <div class="sci-num">02 / 純水蒸</div>
+          <h3>100°C 溫潤水蒸 vs 230°C 燥熱烘烤</h3>
+          <p>同樣具備歐美精品酸種麵包的好消化特性，但我們採用 100°C 純水蒸熟成——0 奶油酥油塗抹、0 烤焦燥熱，保水度高達 42%，外彈內潤連長輩小孩都好咬！</p>
+        </div>
+        <div class="sci-card">
+          <div class="sci-num">03 / 真切丁</div>
+          <h3>只放原塊真食材，0 滴化學流沙醬</h3>
+          <p>全系列通過無防腐劑、無泡打粉檢驗。堅持將雙色起司、大甲芋頭、台灣地瓜切成飽滿方丁揉入麵糰，保留食材原型營養與自然微甜，絕不添加傷胃人造奶油餡。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="compare-sec">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-tag">SIDE-BY-SIDE COMPARISON</span>
+        <h2>一張表看懂：慢酵所與市售早餐麵食的本質差異</h2>
+      </div>
+      <div class="table-scroll">
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>比較項目</th>
+              <th class="highlight">🌾 慢酵所 12h 預分解老麵</th>
+              <th>一般超商／速發麵包饅頭</th>
+              <th>市售網紅爆漿流沙捲</th>
+              <th>歐式酸種硬麵包 (Sourdough)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>發酵時間與菌種</strong></td>
+              <td class="highlight">✅ 12~16 小時野生酵母＋乳酸菌預分解</td>
+              <td>❌ 30~50 分鐘商業酵母＋泡打粉催熟</td>
+              <td>⚠️ 外皮老麵，但內餡高糖高油</td>
+              <td>✅ 長時酸種發酵</td>
+            </tr>
+            <tr>
+              <td><strong>手指壓扁回彈實測</strong></td>
+              <td class="highlight">✅ 壓到底 3 秒 100% 飽滿回彈（活氣孔）</td>
+              <td>❌ 一捏即塌成黏牙死麵餅</td>
+              <td>❌ 一壓爆漿塌陷無法回彈</td>
+              <td>⚠️ 外殼堅硬按不動、易刮上顎</td>
+            </tr>
+            <tr>
+              <td><strong>配黑咖啡餐後體感</strong></td>
+              <td class="highlight">✅ 溫和好消化，一整個上午清爽平坦</td>
+              <td>❌ 極易胃悶脹、打嗝泛酸</td>
+              <td>❌ 精製糖油易誘發火燒心不適</td>
+              <td>✅ 不易脹氣，但偏酸偏冷硬</td>
+            </tr>
+            <tr>
+              <td><strong>早晨覆熱便利度</strong></td>
+              <td class="highlight">✅ 電鍋外鍋半杯水免顧火 8 分鐘，出籠極致彈潤</td>
+              <td>✅ 超商微波方便（但易乾硬）</td>
+              <td>❌ 需顧火加水慢蒸</td>
+              <td>❌ 需噴水進烤箱回烤 10 分鐘</td>
+            </tr>
+            <tr>
+              <td><strong>單份日常花費</strong></td>
+              <td class="highlight">💰 <strong>大顆 NT$ 20~40（6入包 $120 起）｜迷你一口包 $13.3/粒</strong></td>
+              <td>NT$ 15 ~ 35（精製澱粉與添加物）</td>
+              <td>NT$ 42 ~ 58 / 顆</td>
+              <td>NT$ 140 ~ 220 / 顆（昂貴）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="flavors">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-tag">CURATED ARTISAN MENU</span>
+        <h2>慢酵所精選品項：大老麵 ✕ 迷你一口包 雙規格矩陣</h2>
+        <p>承襲竹北 30 年原型工藝，嚴格剔除油蔥重鹹易反酸品項，精選 5 大經典主食老麵與 2 大全新行銷一口小慢包。</p>
+      </div>
+
+      <div class="flavor-tabs">
+        <button class="flavor-tab active" onclick="filterFlavors('all', this)">全部 7 款精選</button>
+        <button class="flavor-tab" onclick="filterFlavors('regular', this)">🥖 經典大老麵系列 (5款)</button>
+        <button class="flavor-tab" onclick="filterFlavors('mini', this)">👶 一口回彈小慢包系列 (2款)</button>
+        <button class="flavor-tab" onclick="filterFlavors('coffee', this)">☕ 黑咖啡絕配</button>
+      </div>
+
+      <div class="flavor-grid" id="flavorGrid">
+        <div class="flavor-card" data-tags="regular coffee">
+          <div>
+            <div class="flavor-header">
+              <h3>① 雙色切丁起司老麵</h3>
+              <span class="flavor-tag hot">🔥 食記人氣 NO.1 ｜ 6入 $240</span>
+            </div>
+            <p class="flavor-desc">門市單顆 $40，6 入家庭包 $240。雙色起司實心切丁均勻揉入 12h 老麵，蒸熱後鹹香微牽絲不油膩，高鈣營養，挑嘴孩子與白領秒殺。</p>
+          </div>
+          <div class="clean-ing">
+            <strong>純淨成分：</strong>無漂白小麥麵粉、12h 老麵種、過濾水、雙色切丁乾酪、微量海鹽（0 泡打粉・0 人造奶油）
+          </div>
+        </div>
+
+        <div class="flavor-card" data-tags="regular coffee">
+          <div>
+            <div class="flavor-header">
+              <h3>② 純白原麥回彈老麵</h3>
+              <span class="flavor-tag">🌿 0糖0油白月光 ｜ 6入 $120</span>
+            </div>
+            <p class="flavor-desc">門市單顆 $15，6 入家庭包 $120（無糖／微甜可選）。0 餡料、0 油脂干擾，最能體會老麵自然回甘與 3 秒回彈筋性。極度敏感胃與副食品首選，百搭夾蛋。</p>
+          </div>
+          <div class="clean-ing">
+            <strong>純淨成分：</strong>無漂白小麥麵粉、12h 老麵種、過濾水（全素・0 糖 0 油・極簡 3 成分）
+          </div>
+        </div>
+
+        <div class="flavor-card" data-tags="regular">
+          <div>
+            <div class="flavor-header">
+              <h3>③ 黑金剛・古法黑糖老麵</h3>
+              <span class="flavor-tag hot">🏆 30年鎮店招牌 ｜ 6入 $180</span>
+            </div>
+            <p class="flavor-desc">門市單顆 $30，6 入家庭包 $180。傳承 30 年不敗招牌，嚴選古法柴燒黑糖融入老麵發酵，濃醇蔗香自然回甘，早晨溫潤暖胃首選。</p>
+          </div>
+          <div class="clean-ing">
+            <strong>純淨成分：</strong>無漂白小麥麵粉、12h 老麵種、古法黑糖、過濾水（全素・自然蔗香回甘）
+          </div>
+        </div>
+
+        <div class="flavor-card" data-tags="regular">
+          <div>
+            <div class="flavor-header">
+              <h3>④ 黃金番薯地瓜捲老麵</h3>
+              <span class="flavor-tag">🍠 產地原型粗糧 ｜ 6入 $150</span>
+            </div>
+            <p class="flavor-desc">門市單顆 $25，6 入家庭包 $150。嚴選台灣台農 57 號黃金番薯地瓜原塊切丁與地瓜泥捲入麵糰，滿滿膳食纖維，微甜香軟好消化。</p>
+          </div>
+          <div class="clean-ing">
+            <strong>純淨成分：</strong>無漂白小麥麵粉、12h 老麵種、台農57號地瓜、過濾水（全素・粗糧膳食纖維）
+          </div>
+        </div>
+
+        <div class="flavor-card" data-tags="regular coffee">
+          <div>
+            <div class="flavor-header">
+              <h3>⑤ 全麥多穀養生堅果老麵</h3>
+              <span class="flavor-tag">🥑 慢碳好油脂 ｜ 6入 $210</span>
+            </div>
+            <p class="flavor-desc">門市全麥 $29 升級款，6 入家庭包 $210（單顆約 $35）。揉入整顆核桃、南瓜子、葵花籽，天然好油脂越嚼越香，放涼吃依然 Q 彈，黑咖啡絕配。</p>
+          </div>
+          <div class="clean-ing">
+            <strong>純淨成分：</strong>全麥粉、無漂白麵粉、12h 老麵種、核桃、南瓜子、葵花籽、微量冰糖（全素・慢碳首選）
+          </div>
+        </div>
+
+        <div class="flavor-card" data-tags="mini">
+          <div>
+            <div class="flavor-header">
+              <h3>⑥ 迷你黑金剛一口包 (12粒入)</h3>
+              <span class="flavor-tag hot">✨ 零浪費下午茶神器 ｜ NT$ 160</span>
+            </div>
+            <p class="flavor-desc">每袋 12 粒入僅 NT$ 160（每粒約 $13.3）。專為小手掌與辦公族研發，孩子吃剛好不浪費，上班族下午 3 點低罪惡感防血糖震盪，電鍋 5 分鐘或微量噴水加熱即食！</p>
+          </div>
+          <div class="clean-ing">
+            <strong>規格包裝：</strong>12 粒獨立一口尺寸袋裝、古法黑糖老麵（全素・下午茶一口一顆剛剛好）
+          </div>
+        </div>
+
+        <div class="flavor-card" data-tags="mini">
+          <div>
+            <div class="flavor-header">
+              <h3>⑦ 綜合回彈小慢包分享袋 (約2台斤)</h3>
+              <span class="flavor-tag">🧺 野餐露營分享首選 ｜ NT$ 120</span>
+            </div>
+            <p class="flavor-desc">特大分享袋約 2 台斤重（含純白、黑糖等多重口味迷你小饅頭）僅售 NT$ 120！全家分次享用、露營野餐、氣炸或沾無糖優格一口一個，無負擔快樂首選。</p>
+          </div>
+          <div class="clean-ing">
+            <strong>規格包裝：</strong>大容量約 2 台斤分享袋、多口味混合一口小饅頭（全素・居家常備點心）
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="microwave" class="microwave-sec">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-tag">PERFECT STEAMING GUIDE</span>
+        <h2>蒸出老麵靈魂：電鍋免顧火 8 分鐘極致彈潤指南</h2>
+        <p>100% 東方純水蒸是老麵最迷人的熟成方式！水蒸氣滲透千萬個立體活氣孔，外彈內潤，放涼吃依然 Q 彈。</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-badge">STEP 01（免退冰）</span>
+          <h3>冷凍直接取出・放上蒸盤</h3>
+          <p>早上起床不必提前退冰！直接從冷凍庫取出慢酵所老麵，放在電鍋蒸架或蒸盤上（盤底建議墊烘焙紙或蒸籠布防沾黏）。</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge">STEP 02（8~10 分鐘）</span>
+          <h3>外鍋半杯水・按下開關免顧火</h3>
+          <p>大同電鍋外鍋倒入約半杯水（約 80~100ml）按下開關即可。這段時間您可安心刷牙洗臉換衣服，開關跳起即大功告成！</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge">STEP 03（彈潤享用）</span>
+          <h3>開蓋熱氣直竄・壓扁 3 秒瞬間回彈</h3>
+          <p>掀開鍋蓋撲鼻而來天然純粹麥香！切丁雙色起司微牽絲、地瓜鬆軟，配上一杯黑咖啡或豆漿，開啟全天舒坦清爽的高效專注。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-tag">REAL VOICES FROM ZHUBEI & TAIPEI</span>
+        <h2>從竹科工程師到三代家庭媽媽的真實回購見證</h2>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>「在竹科寫 Code 壓力大，以前早上喝美式只要配吐司或蛋餅，10 點開週會一定悶脹泛酸。換成慢酵所的雙色起司跟堅果老麵，早上電鍋外鍋半杯水蒸一下就能吃，真的壓扁會彈回來，重點是一整個早上肚子超平超舒服！」</p>
+          <div class="reviewer">陳先生（36歲・新竹竹北 IC 設計工程師）｜已連續訂購月配箱 4 期</div>
+        </div>
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>「這家的配方就是我們竹北人吃了幾十年的老字號水準！我公婆早上吃純白跟地瓜捲再也沒喊過礙胃，讀小二的兒子每天指定要吃切丁起司，成分乾淨完全沒泡打粉，電鍋外鍋倒水按下去刷牙洗臉出來剛好開動，媽媽終於能多睡 20 分鐘！」</p>
+          <div class="reviewer">林太太（41歲・雙薪二寶媽）｜回購 24 入三代安心常備箱</div>
+        </div>
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>「以前為了怕脹氣都去買一顆 180 元的歐式酸種麵包，吃到嘴巴快破掉又好貴。慢酵所完全就是溫柔水蒸版的東方酸種！芋頭跟地瓜是真的咬得到一塊塊方丁，冷掉吃居然還超 Q 彈！」</p>
+          <div class="reviewer">吳小姐（32歲・台北信義區外商行銷）｜首購 $499 破冰箱後轉訂常備箱</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="pricing-sec">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-tag">CHOOSE YOUR MORNING BOX</span>
+        <h2>選擇適合您冷凍庫的早安慢碳常備箱</h2>
+        <p>每週新鮮恆溫慢發酵出籠、黃金 30 分鐘內 -35°C 急凍鎖鮮直送。全系列皆通過無防腐劑檢驗，安心低溫宅配到府。</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div>
+            <h3 class="price-title">【雙享受破冰體驗箱】大6＋小12</h3>
+            <p class="price-sub">大老麵配咖啡 ＋ 一口包當點心・大小一次吃齊</p>
+            <div class="price-num">NT$ 499 <small>/ 箱</small></div>
+            <span class="per-bun">🚚 7-11 / 全家冷凍超取免運（原低溫運費 $120 我們出！）</span>
+            <ul class="box-list">
+              <li><strong>回彈大老麵 6 入</strong>（純白、黑金剛、地瓜、堅果、起司×2）</li>
+              <li><strong>迷你黑金剛一口包 6 粒</strong>（小孩小手剛好、下午茶零罪惡）</li>
+              <li><strong>綜合回彈小慢包 6 粒</strong>（一口一顆，氣炸沾優格超讚）</li>
+              <li>享「試吃 2 顆不回彈或悶脹免退回全額退」絕對保障</li>
+            </ul>
+          </div>
+          <button class="btn-outline" style="width:100%;" onclick="selectBox('【雙享受破冰體驗箱】大6+小12免運組', 499)">加入選購箱 — NT$ 499 免運</button>
+        </div>
+
+        <div class="price-card featured">
+          <div class="pop-ribbon">👑 最多家庭與白領選購・單顆僅 $40.8</div>
+          <div>
+            <h3 class="price-title">【三代安心自選常備箱】24 入</h3>
+            <p class="price-sub">自由任選 4 組 6 入家庭包・一箱搞定全家早晨</p>
+            <div class="price-num">NT$ 980 <small>/ 箱</small></div>
+            <span class="per-bun">🚚 超商冷凍免運（可備註任搭口味）</span>
+            <ul class="box-list">
+              <li><strong>自由任選 4 組 6 入家庭包</strong>（共 24 顆大老麵）</li>
+              <li>純白($120) / 地瓜($150) / 黑金剛($180) / 堅果($210) / 起司($240)</li>
+              <li>可將 1 組換為「迷你黑金剛 12 入」或「綜合小慢包分享袋」</li>
+              <li>平均單顆僅 <strong>NT$ 40.8</strong> 含免運，比買生吐司歐包省一半！</li>
+              <li>隨箱附贈《早安咖啡百搭與創意夾食手冊》</li>
+            </ul>
+          </div>
+          <button class="btn-primary" style="width:100%;" onclick="selectBox('【三代安心自選常備箱】24入免運組', 980)">立即選購主力箱 — NT$ 980 免運</button>
+        </div>
+
+        <div class="price-card">
+          <div>
+            <h3 class="price-title">【東方酸種月配箱】36 入定期配</h3>
+            <p class="price-sub">每月新鮮出籠黑貓免運直送・隨時可暫停</p>
+            <div class="price-num">NT$ 1,380 <small>/ 月</small></div>
+            <span class="per-bun">❄️ 黑貓低溫宅配到府全免運・最划算 $38.3/顆</span>
+            <ul class="box-list">
+              <li><strong>任選 6 組 6 入大老麵（可自由混搭一口包袋裝）</strong></li>
+              <li>每月固定保留最新鮮出籠批次，免搶單不斷糧</li>
+              <li>零綁約壓力：出貨前 3 天於 LINE 隨時可改期、換口味或取消</li>
+            </ul>
+          </div>
+          <button class="btn-outline" style="width:100%;" onclick="selectBox('【東方酸種月配箱】36入黑貓免運組', 1380)">開啟月配優惠 — NT$ 1,380 免運</button>
+        </div>
+      </div>
+
+      <div class="promise-banner">
+        <div class="promise-seal">🛡️</div>
+        <div>
+          <h3 style="margin-bottom: 4px;">慢酵所「雙重安心試吃兜底承諾」</h3>
+          <p style="color: var(--ink-muted); font-size: 0.94rem;">
+            我們對 12 小時老麵慢發酵工藝有絕對底氣！首次訂購收到商品 7 日內，請先品嚐 2 顆——若您發現<strong>壓扁後無法回彈</strong>，或是<strong>配早餐吃完仍覺得沉重悶脹不合胃口</strong>，無需將剩餘冷凍饅頭寄回，直接私訊官方 LINE 客服，我們於 24 小時內無條件全額退款！
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-tag">FREQUENTLY ASKED QUESTIONS</span>
+        <h2>下單前常見問題直球解答</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Q1：為什麼慢酵所的老麵饅頭吃完比較不會覺得胃悶脹？ <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            市售快速麵包與饅頭多使用商業酵母與泡打粉在 30~50 分鐘內催熟，小麥中的大分子支鏈澱粉與麩質尚未充分分解，進入胃部後容易繼續發酵產氣。慢酵所承襲竹北 30 年天然老麵菌種，經過 12~16 小時恆溫慢發酵，讓野生酵母與活性乳酸菌預先將大分子切碎為好吸收的小分子，大幅減輕早晨消化負擔。
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Q2：冷凍可以保存多久？大老麵跟迷你一口包怎麼挑？ <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            因為我們堅持 0 防腐劑，出籠後急速冷凍鎖鮮，冷凍（-18°C）可安心保存 45 天（冷藏建議 3 天內食用完畢）。「經典大老麵」單顆飽足感強，適合大人早晨配黑咖啡或夾蛋主食；「迷你黑金剛一口包（12粒入 $160）」與「綜合小慢包分享袋（$120）」一粒剛好一口，專治小朋友吃不完浪費與辦公室下午 3 點嘴饞！
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Q3：電鍋加熱需要多久？可以用微波爐或氣炸鍋嗎？ <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            最推薦使用電鍋蒸熱：免退冰放進蒸盤，外鍋加約半杯水（約 80~100ml），按下開關 8~10 分鐘跳起即可，水分最充足、筋膜最彈潤！若在公司或趕時間使用微波爐，建議在饅頭表面噴灑少許水珠，並加蓋微波專用保鮮蓋，中火微波約 40~50 秒（迷你小慢包約 20 秒），避免直接長時間大火加熱抽乾水分。
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Q4：幾歲的小朋友或長輩、素食者可以吃嗎？為什麼沒有賣肉包或筍捲？ <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            滿 1 歲以上開始銜接主食的幼兒與高齡長輩都非常適合！為了維持 100% 清爽好消化、不誘發泛酸的潔淨品質，我們刻意剔除傳統重油重蔥的筍捲與鹹肉餡。全店【純白原麥、黑金剛黑糖、黃金番薯地瓜捲、全麥堅果、迷你黑金剛、綜合小慢包】6 款皆為「全素（純素）」，【雙色切丁起司】為「奶素」，0 泡打粉、0 人工香精。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="drawer-backdrop" id="cartBackdrop" onclick="if(event.target===this) toggleCart(false)">
+    <div class="cart-drawer">
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; border-bottom:1px solid var(--border-warm);">
+          <h3 class="serif">🛒 您的慢酵所早安選購箱</h3>
+          <button onclick="toggleCart(false)" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">×</button>
+        </div>
+
+        <div style="padding: 18px 0; border-bottom: 1px dashed var(--border-warm);">
+          <div style="font-weight:700; font-size:1.02rem;" id="selectedItemName">【雙享受破冰體驗箱】大6+小12免運組</div>
+          <div style="color:var(--sage-green); font-size:0.84rem; margin: 4px 0 8px;">✓ 含超商冷凍免運 ｜ ✓ 享試吃 2 顆不滿意全額退</div>
+          <div style="font-weight:900; font-size:1.2rem; color:var(--amber-deep);">NT$ <span id="selectedItemPrice">499</span></div>
+        </div>
+
+        <div class="order-bump">
+          <label>
+            <input type="checkbox" id="bumpCheck" onchange="updateTotal()" style="margin-top:4px; transform:scale(1.2);">
+            <span>🔥 <strong>首購順手帶（免加運費 +NT$ 160）</strong>：加購人氣點心《迷你黑金剛一口包 12 粒入》（原店人氣爆款・一口一顆剛剛好！）</span>
+          </label>
+        </div>
+
+        <div style="margin-top: 16px;">
+          <label style="display:block; font-size:0.86rem; font-weight:700; margin-bottom:6px;">收件人姓名</label>
+          <input type="text" id="buyerName" placeholder="請輸入真實姓名" style="width:100%; padding:11px; border-radius:8px; border:1px solid var(--border-warm); margin-bottom:12px;">
+          <label style="display:block; font-size:0.86rem; font-weight:700; margin-bottom:6px;">手機號碼（發送出籠與超商取貨簡訊）</label>
+          <input type="tel" id="buyerPhone" placeholder="09xx-xxx-xxx" style="width:100%; padding:11px; border-radius:8px; border:1px solid var(--border-warm); margin-bottom:12px;">
+          <label style="display:block; font-size:0.86rem; font-weight:700; margin-bottom:6px;">取貨／配送方式</label>
+          <select style="width:100%; padding:11px; border-radius:8px; border:1px solid var(--border-warm);">
+            <option>7-11 冷凍店到店（免運費 $0）</option>
+            <option>全家 冷凍店到店（免運費 $0）</option>
+            <option>黑貓低溫宅配到府（36入月配免運 / 其他+$99）</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--border-warm); padding-top:16px; margin-top:20px;">
+        <div style="display:flex; justify-content:space-between; font-size:1.15rem; font-weight:900; margin-bottom:14px;">
+          <span>免運結帳總金額</span>
+          <span style="color:var(--amber-deep);">NT$ <span id="cartTotal">499</span></span>
+        </div>
+        <button class="btn-primary" style="width:100%;" onclick="submitOrder()">🔒 確認預訂本週新鮮出籠批次</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>慢酵所 MANXIAO LAB｜12h 預分解老麵輕主食</h4>
+          <p>承襲新竹竹北 30 年老字號天然老麵原型工藝。我們堅持多等 12 小時恆溫慢發酵，不加一克泡打粉與人工香精，只為換您與家人一整個上午的清爽舒適。</p>
+        </div>
+        <div>
+          <h4>產品與安心承諾</h4>
+          <p>• SGS 無防腐劑／無化學膨脹劑檢驗合格<br>• 食品業者登錄字號與產品責任險投保<br>• 首購試吃 2 顆不滿意 24h 全額退費保障</p>
+        </div>
+        <div>
+          <h4>顧客服務專線</h4>
+          <p>• 官方 LINE 客服：@manxiaolab<br>• 出貨時間：每週二、五新鮮出籠急凍寄出<br>• 產地：台灣新竹竹北發酵工坊直送</p>
+        </div>
+      </div>
+      <div class="legal-note">
+        © 2026 慢酵所 MANXIAO LAB All Rights Reserved. 本產品為純天然老麵發酵一般食品，提供日常溫和好消化之飲食選擇，非藥品亦不具醫療效能；若有持續性腸胃疾病症狀請諮詢專業醫師。
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let isTesting = false;
+    function runReboundTest() {
+      if (isTesting) return;
+      isTesting = true;
+      const fastBun = document.getElementById('fastBun');
+      const slowBun = document.getElementById('slowBun');
+      const fastStatus = document.getElementById('fastStatus');
+      const slowStatus = document.getElementById('slowStatus');
+      const timer = document.getElementById('reboundTimer');
+      const btn = document.getElementById('pressBtn');
+
+      slowBun.classList.remove('rebounding');
+      fastBun.classList.add('pressed-dead');
+      slowBun.classList.add('pressed-active');
+      fastStatus.innerHTML = '⬇️ 重壓到底中...';
+      slowStatus.innerHTML = '⬇️ 重壓成 1.5cm 薄餅...';
+      timer.textContent = 'PRESSING...';
+      btn.textContent = '⏳ 鬆開手！觀察 3 秒回彈表現...';
+
+      setTimeout(() => {
+        slowBun.classList.remove('pressed-active');
+        slowBun.classList.add('rebounding');
+        fastStatus.innerHTML = '❌ 塌陷成黏牙死麵糰<br>（進胃易結塊產氣）';
+        fastStatus.style.color = '#B43838';
+
+        let elapsed = 0;
+        const interval = setInterval(() => {
+          elapsed += 0.1;
+          timer.textContent = 'REBOUND ' + elapsed.toFixed(1) + 's';
+          if (elapsed >= 3.0) {
+            clearInterval(interval);
+            timer.textContent = '✅ 3.0s 100% 回彈！';
+            slowStatus.innerHTML = '✅ 100% 彈回圓潤飽滿！<br>（12h 預分解活氣孔）';
+            btn.textContent = '🔄 再壓一次實測 3 秒回彈';
+            isTesting = false;
+          }
+        }, 90);
+      }, 650);
+    }
+
+    function filterFlavors(tag, btnEl) {
+      document.querySelectorAll('.flavor-tab').forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
+      document.querySelectorAll('.flavor-card').forEach(card => {
+        if (tag === 'all' || card.dataset.tags.includes(tag)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function toggleFaq(btnEl) {
+      btnEl.parentElement.classList.toggle('open');
+    }
+
+    let currentBasePrice = 499;
+    function toggleCart(open) {
+      document.getElementById('cartBackdrop').classList.toggle('open', open);
+    }
+    function selectBox(name, price) {
+      currentBasePrice = price;
+      document.getElementById('selectedItemName').textContent = name;
+      document.getElementById('selectedItemPrice').textContent = price.toLocaleString();
+      updateTotal();
+      toggleCart(true);
+    }
+    function updateTotal() {
+      const bump = document.getElementById('bumpCheck').checked ? 160 : 0;
+      const total = currentBasePrice + bump;
+      document.getElementById('cartTotal').textContent = total.toLocaleString();
+      document.getElementById('cartCount').textContent = bump ? '2' : '1';
+    }
+    function submitOrder() {
+      const name = document.getElementById('buyerName').value.trim();
+      const phone = document.getElementById('buyerPhone').value.trim();
+      if (!name || !phone) {
+        alert('請填寫收件人姓名與手機號碼，以便發送新鮮出籠與超商取貨通知！');
+        return;
+      }
+      const total = document.getElementById('cartTotal').textContent;
+      alert('🎉 感謝您的預訂，' + name + '！\n\n已為您保留本週【慢酵所 12h 預分解老麵】新鮮出籠名額（結帳金額 NT$ ' + total + ' 免運）。出貨簡訊將發送至 ' + phone + '！');
+      toggleCart(false);
+    }
+  </script>
+</body>
+</html>
