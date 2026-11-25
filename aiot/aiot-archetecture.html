@@ -711,43 +711,43 @@
       </div>
     </section>
 
-    <!-- 五、 全部以 API 為基準與雙層 Context 模型 -->
+    <!-- 五、 全部以物件與 API 為基準與雙層 Context 模型 -->
     <section id="api-context" class="space-y-6">
       <div class="border-b border-slate-200 pb-4">
-        <h2 class="text-2xl font-bold text-slate-900">五、 全部以 API 為基準（Everything as API）與雙層 Context 模型</h2>
-        <p class="text-slate-500 text-sm mt-1">統一能力描述公式：<code>能力 = API + Semantic + Context</code></p>
+        <h2 class="text-2xl font-bold text-slate-900">五、 全部以物件與 API 為基準（Everything as IoT API Object）與雙層 Context 模型</h2>
+        <p class="text-slate-500 text-sm mt-1">統一能力物件描述公式：<code>IoT API Object = Properties (屬性) + Methods (方法/API) + Context (情境)</code></p>
       </div>
 
       <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden text-xs">
         <table class="w-full text-left border-collapse">
           <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
             <tr>
-              <th class="p-3.5">API 類型</th>
-              <th class="p-3.5">來源範例</th>
-              <th class="p-3.5">API (操作/查詢)</th>
-              <th class="p-3.5">Semantic (語意與限制)</th>
+              <th class="p-3.5">能力物件類型</th>
+              <th class="p-3.5">實體來源範例</th>
+              <th class="p-3.5">Methods (操作方法 / API)</th>
+              <th class="p-3.5">Properties & Semantic (屬性與語意限制)</th>
               <th class="p-3.5 text-blue-700">Structural Context (結構情境)</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100 text-slate-600">
             <tr>
-              <td class="p-3.5 font-bold text-slate-900">現場 IoT API</td>
+              <td class="p-3.5 font-bold text-slate-900">現場 IoT API Object</td>
               <td class="p-3.5">VRV 空調、水泵、電表</td>
-              <td class="p-3.5"><code>set_temperature(23)</code></td>
-              <td class="p-3.5">單位 °C、安全範圍 18~28、調溫滯後 5 分鐘</td>
+              <td class="p-3.5 font-mono text-blue-600">.set_temperature(23)<br/>.turn_on_pump()<br/>.get_diagnostics()</td>
+              <td class="p-3.5">溫度 °C、功率 kW、安全範圍 18~28、調溫滯後 5 分鐘</td>
               <td class="p-3.5 font-medium text-slate-800">拓撲：冷卻水迴路 #2、服務對象：12F 辦公區、(按需)裝載於【1202 會議室 Block】</td>
             </tr>
             <tr>
-              <td class="p-3.5 font-bold text-slate-900">外部服務 API</td>
+              <td class="p-3.5 font-bold text-slate-900">外部服務 API Object</td>
               <td class="p-3.5">氣象局、台電即時電價</td>
-              <td class="p-3.5"><code>get_current_tariff()</code></td>
+              <td class="p-3.5 font-mono text-emerald-600">.get_outdoor_weather()<br/>.get_current_tariff()</td>
               <td class="p-3.5">氣溫 °C、尖離峰電價 (NTD/kWh)、呼叫配額</td>
               <td class="p-3.5 font-medium text-slate-800">區域：台北大安區、費率：經常契約夏季高壓時段、碳排：台電基準因子</td>
             </tr>
             <tr>
-              <td class="p-3.5 font-bold text-slate-900">外部 MCP 服務</td>
+              <td class="p-3.5 font-bold text-slate-900">外部 MCP Service Object</td>
               <td class="p-3.5">Google Calendar、ERP</td>
-              <td class="p-3.5"><code>list_room_bookings()</code></td>
+              <td class="p-3.5 font-mono text-purple-600">.list_room_bookings()<br/>.post_slack_alert()</td>
               <td class="p-3.5">會議時間、進駐人數、VIP 等級說明</td>
               <td class="p-3.5 font-medium text-slate-800">組織：產品研發處、會議室：12F 大會議室專用行事曆、業務：外賓接待流程</td>
             </tr>
@@ -760,21 +760,20 @@
         class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 sm:p-8 rounded-2xl border border-blue-200 shadow-sm space-y-4">
         <h3 class="text-lg font-bold text-slate-900">核心架構突破：Context 的「靜動分離（Two-Tier Context）」</h3>
         <p class="text-xs text-slate-600 leading-relaxed">
-          若將 Context 只交給 Agent Shell，Task Agent 找設備時會遇到「冷啟動陷阱」（必須喚醒大樓 500 台冷氣的 Shell 挨個詢問），且 Shell 卸載時設備將失憶；反之若全寫死在 API
-          靜態定義中，則動態任務記憶無處安放。因此系統確立了清晰的雙層劃分：
+          若將 Context 只交給 Agent Shell，Task Agent 找設備時會遇到「冷啟動陷阱」（必須喚醒大樓 500 台冷氣的 Shell 挨個詢問），且 Shell 卸載時設備將失憶；反之若全寫死在靜態物件定義中，則動態任務記憶無處安放。因此系統確立了清晰的雙層劃分：
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-2">
           <div class="bg-white p-4 rounded-xl border border-blue-200 space-y-1.5">
             <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold">第 1 層：結構情境 (Structural Context)</span>
-            <p><strong>載體：</strong>固化於 <code>IoT / 外部 API</code> 資產目錄與圖譜。</p>
-            <p><strong>本質：</strong>靜態客觀事實（設備迴路、服務區域、所屬系統、可選關聯 Block）。</p>
+            <p><strong>載體：</strong>固化於 <code>IoT API Object / 外部能力物件</code> 資產目錄與圖譜。</p>
+            <p><strong>本質：</strong>靜態客觀事實（設備迴路、服務區域、物理西曬特性、可選關聯 Block）。</p>
             <p><strong>使命：</strong>供 Task Agent 做<strong>秒級全域檢索與空間推理</strong>（零 AI 算力開銷）。</p>
           </div>
           <div class="bg-white p-4 rounded-xl border border-indigo-200 space-y-1.5">
             <span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold">第 2 層：運行情境 (Runtime Context &
               Memory)</span>
             <p><strong>載體：</strong>動態載入於 <code>Agent Shell</code> 內部（存於 NATS KV 快取）。</p>
-            <p><strong>本質：</strong>動態主觀記憶（當前 VIP 任務鎖定、設備運作延遲傾向、API 呼叫配額餘額）。</p>
+            <p><strong>本質：</strong>動態主觀記憶（當前 VIP 任務鎖定、參與哪些 Flow、為什麼當初有這些決策的因果溯源）。</p>
             <p><strong>使命：</strong>供 Agent 做<strong>即時決策與智慧護航</strong>（任務結束後沉澱至日誌）。</p>
           </div>
         </div>
@@ -784,28 +783,33 @@
     <!-- 六、 通用 Agent Shell 智能外殼機制 -->
     <section id="shell" class="space-y-6">
       <div class="border-b border-slate-200 pb-4">
-        <h2 class="text-2xl font-bold text-slate-900">六、 通用 Agent Shell 智能外殼機制</h2>
-        <p class="text-slate-500 text-sm mt-1">按需掛載、創造動態 Event、管理快取限流，並在任務完成後安全卸載</p>
+        <h2 class="text-2xl font-bold text-slate-900">六、 通用 Agent Shell 智能外殼機制（裝飾器模式 Decorator Pattern）</h2>
+        <p class="text-slate-500 text-sm mt-1">掛載於 IoT API Object 之上的專屬智慧代理人：如同一輛頂級汽車（Object）派駐了專屬司機（Agent Shell）</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-          <span class="font-bold text-blue-600 block text-sm">1. 動態事件創造者 (Event Emulation)</span>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="font-bold text-indigo-700 block text-sm">1. 意圖溯源與因果記憶 (Explainability)</span>
           <p class="text-slate-600 leading-relaxed">
-            氣象局或行事曆本身是「被動」的。Shell 掛載後，讀取外部資料並在底層事件系統註冊「開會前 20 分鐘鬧鐘」或「紫外線危險級通知」，隨即卸載。<strong>把被動 API 轉化為主動
-              Event！</strong>
+            記錄參與哪些 Flow、為什麼當初有這些決策（如：因 Google 行事曆外賓會議與高溫而建立預冷排程），面對稽核與管理者以自然語言 100% 還原決策脈絡。
           </p>
         </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-          <span class="font-bold text-indigo-600 block text-sm">2. 限流、費用與快取專屬記憶</span>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="font-bold text-blue-600 block text-sm">2. 動態事件創造者 (Event Emulation)</span>
+          <p class="text-slate-600 leading-relaxed">
+            IoT 設備與氣象 API 本身是「被動」的。Shell 掛載後，在底層事件系統註冊「開會前 20 分鐘計時器」或「紫外線危險通知」後隨即卸載。<strong>化被動為主動 Event！</strong>
+          </p>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="font-bold text-emerald-600 block text-sm">3. 限流、費用與快取專屬記憶</span>
           <p class="text-slate-600 leading-relaxed">
             為外部商業 API 守門。記錄「氣象資料 30 分鐘才更新，3 分鐘前才抓過，直接命中快取」，並在 API 費用達預算 80% 時自動實施退避降頻保護。
           </p>
         </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-          <span class="font-bold text-emerald-600 block text-sm">3. MCP 工具自適應打量 (Introspection)</span>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <span class="font-bold text-purple-600 block text-sm">4. MCP 工具自適應打量 (Introspection)</span>
           <p class="text-slate-600 leading-relaxed">
-            MCP Shell 連接外部 MCP Server，自動打量並自適應其 Tools 與 Prompts，將原生協定轉譯為系統標準 <code>API + Semantic + Context</code> 目錄。
+            MCP Shell 連接外部 MCP Server，自動打量其 Tools 與 Prompts，將原生 JSON-RPC 協定轉譯為系統標準 <code>Object Methods + Context</code> 目錄。
           </p>
         </div>
       </div>

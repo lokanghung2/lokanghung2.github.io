@@ -368,16 +368,14 @@
         <div class="bg-teal-50/50 p-6 rounded-2xl border-2 border-teal-200 shadow-sm space-y-3">
           <div class="flex items-center justify-between">
             <span class="px-2.5 py-1 rounded-lg bg-teal-700 text-white text-xs font-bold">工作台 ①</span>
-            <span class="text-xs font-bold text-teal-800">落點：IoT API ⟷ 實體設備 ＆ IoT Shell</span>
+            <span class="text-xs font-bold text-teal-800">落點：IoT API Object ⟷ 實體設備 ＆ IoT Shell</span>
           </div>
-          <h3 class="text-base font-black text-slate-900">BOS Gateway 接入與 IoT 健康監控台</h3>
+          <h3 class="text-base font-black text-slate-900">BOS Gateway 接入與 IoT API Object 建構台</h3>
           <ul class="text-xs text-slate-700 space-y-1.5 leading-relaxed list-disc pl-4">
-            <li><strong>概念圖實作位置</strong>：直接作用於 <code>IoT API (實體設備)</code> 節點與其對接 <code>🏢 實體現場設備</code> 的橋接線上，並將健康狀態同步至
-              <code>③ IoT Agent Shell</code> 的 <code>Runtime Context</code>。</li>
-            <li><strong>IoT 正常性監控</strong>：即時檢視 BOS Gateway 通道心跳、各點位是否斷線逾時（Stale）、數值卡死（Frozen）或讀回失敗（Read-back
-              Error）；異常點位自動隔離，禁止 AI 拿壞數據做控制。</li>
-            <li><strong>點位匯入與安全邊界</strong>：批次匯入 BOS 點位清冊，定義 <code>Semantic</code> 物理安全上下限（如 18~28°C、濕度 &lt; 65%、最短啟停間隔 5
-              分鐘）。</li>
+            <li><strong>概念圖實作位置</strong>：直接作用於 <code>IoT API Object (實體設備物件化)</code> 節點與其對接 <code>🏢 實體現場設備</code> 的橋接線上，並將即時屬性與健康狀態同步至
+              <code>③ IoT Agent Shell</code>。</li>
+            <li><strong>物件化實例建構</strong>：將實體冷氣/電表封裝為單一物件實體，綁定 <code>Properties</code>（即時遙測值）與 <code>Methods</code>（控制方法群，如 <code>.set_temperature()</code>）。</li>
+            <li><strong>點位匯入與安全邊界</strong>：批次匯入 BOS 點位清冊，定義物理安全上下限（如 18~28°C、最短啟停間隔 5 分鐘），異常點位自動隔離保護。</li>
           </ul>
         </div>
 
@@ -385,15 +383,13 @@
         <div class="bg-amber-50/50 p-6 rounded-2xl border-2 border-amber-200 shadow-sm space-y-3">
           <div class="flex items-center justify-between">
             <span class="px-2.5 py-1 rounded-lg bg-amber-600 text-white text-xs font-bold">工作台 ②</span>
-            <span class="text-xs font-bold text-amber-800">落點：Block 空間實體 ＆ Structural Context</span>
+            <span class="text-xs font-bold text-amber-800">落點：Block 空間實體容器 ＆ Structural Context</span>
           </div>
           <h3 class="text-base font-black text-slate-900">Block 空間拓撲與屬性畫布</h3>
           <ul class="text-xs text-slate-700 space-y-1.5 leading-relaxed list-disc pl-4">
-            <li><strong>概念圖實作位置</strong>：直接建構 <code>Block 空間實體</code> 節點，以及 <code>三大 API --- Block</code> 的空間關聯線，並寫入
-              <code>IoT API</code> 的 <code>Structural Context（結構情境）</code>。</li>
-            <li><strong>幾何拼裝與空間標籤</strong>：拖拉完成樓層堆疊（Stack）、房間內裝（Nest）與走廊相連（Connect）；標註<strong>西曬熱慣性、人流變動特性、以及 DR 需量分區（🔴
-                核心保護區 vs. 🟢 彈性緩衝區）</strong>。</li>
-            <li><strong>設備拖拉裝載與共軛迴路</strong>：把確認健康的 IoT 設備拖進 Block，並指定跨設備共軛關係（如哪台 ERV 與哪幾台 VRV 共用供氣區）。</li>
+            <li><strong>概念圖實作位置</strong>：建構 <code>Block 空間實體容器</code> 節點，並寫入 <code>IoT API Object</code> 的 <code>Structural Context（結構情境）</code>。</li>
+            <li><strong>幾何拼裝與空間標籤</strong>：拖拉完成樓層堆疊（Stack）、房間內裝（Nest）與走廊相連（Connect）；標註<strong>西曬熱慣性、人流變動特性、以及 DR 需量分區（🔴 核心保護區 vs. 🟢 彈性緩衝區）</strong>。</li>
+            <li><strong>物件拖拉裝載與共軛迴路</strong>：把確認健康的 <code>IoT API Object</code> 拖進 Block 空間容器內裝，並指定跨設備共軛關係（如哪台 ERV 與哪幾台 VRV 共用供氣區）。</li>
           </ul>
         </div>
 
@@ -401,16 +397,13 @@
         <div class="bg-purple-50/50 p-6 rounded-2xl border-2 border-purple-200 shadow-sm space-y-3">
           <div class="flex items-center justify-between">
             <span class="px-2.5 py-1 rounded-lg bg-purple-700 text-white text-xs font-bold">工作台 ③</span>
-            <span class="text-xs font-bold text-purple-800">落點：外部服務 API ＆ 外部 MCP 服務</span>
+            <span class="text-xs font-bold text-purple-800">落點：能力外殼 (Agent Shell) ＆ 外部演算法插件</span>
           </div>
-          <h3 class="text-base font-black text-slate-900">開放式能力與演算法掛載中心 (Pluggable Registry)</h3>
+          <h3 class="text-base font-black text-slate-900">開放式能力外殼與演算法掛載中心 (Pluggable Registry)</h3>
           <ul class="text-xs text-slate-700 space-y-1.5 leading-relaxed list-disc pl-4">
-            <li><strong>概念圖實作位置</strong>：直接作用於 <code>外部服務 API</code> 與 <code>外部 MCP 服務</code> 兩大支柱（含外掛的
-              <code>③ External / MCP Shell</code>）。</li>
-            <li><strong>演算法即插件（無限擴充彈性）</strong>：在 Everything as API 架構下，無論是氣象／電價 API、行事曆 MCP，或是<strong>任意專用 AI
-                演算法容器（MPC、焓值、Kalman+Fuzzy、Deep RL、C-TimeGAN、XGBoost 及未來第 7~N 種新模型）</strong>，皆以統一
-              <code>API + Semantic + Context</code> 標準註冊掛載，供 <code>Task Agent</code> 自由組合。</li>
-            <li><strong>虛擬試車沙盒模式切換</strong>：可將特定模型與樓層切為「沙盒模擬模式（不寫入 BOS Gateway）」，驗證穩定後再切回正式執行。</li>
+            <li><strong>概念圖實作位置</strong>：作用於為 <code>IoT API Object</code> 掛載專屬的 <code>Agent Shell</code> 智慧外殼（車輛配司機模式），並擴充外部服務與演算法插件。</li>
+            <li><strong>意圖溯源與因果記錄</strong>：Agent Shell 在此註冊參與哪些業務 Flow，並永久長存「當初為什麼要建立這些排程與事件（決策由來）」，支援 XAI 可解釋性。</li>
+            <li><strong>演算法即插件（無限擴充彈性）</strong>：在 Everything as Object 架構下，無論是氣象／電價 API、行事曆 MCP，或是<strong>任意專用 AI 演算法容器（MPC、焓值、Kalman+Fuzzy、Deep RL、C-TimeGAN、XGBoost 及未來第 7~N 種新模型）</strong>，皆以標準物件方法介面註冊掛載。</li>
           </ul>
         </div>
 
@@ -607,8 +600,8 @@
           <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
             <tr>
               <th class="p-3.5 w-52">目標需求場景</th>
-              <th class="p-3.5 w-64">【工作台 ① &amp; ②】IoT 健康確認、Block 屬性與迴路配置</th>
-              <th class="p-3.5 w-64">【工作台 ③】掛載之外部源與演算法插件 API</th>
+              <th class="p-3.5 w-64">【工作台 ① &amp; ②】IoT API Object 實體、屬性、Block 空間容器與迴路配置</th>
+              <th class="p-3.5 w-64">【工作台 ③】掛載之 Agent Shell、外部 API / MCP 與演算法插件</th>
               <th class="p-3.5">Task Agent 自主閉環邏輯 ＆【工作台 ④】主管體驗</th>
             </tr>
           </thead>
