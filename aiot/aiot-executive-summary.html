@@ -53,7 +53,8 @@
   <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-blue-600 text-white font-black text-lg shadow-md shadow-blue-500/20">
+        <span
+          class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-blue-600 text-white font-black text-lg shadow-md shadow-blue-500/20">
           AI
         </span>
         <div>
@@ -67,23 +68,36 @@
 
       <!-- 快捷跳轉 -->
       <nav class="hidden lg:flex items-center gap-1 text-xs font-semibold">
-        <a href="#step1" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-blue-600 hover:bg-slate-100 transition">1. IoT變API</a>
-        <a href="#step2" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-slate-100 transition">2. 掛載Context</a>
-        <a href="#step3" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-emerald-600 hover:bg-slate-100 transition">3. 空間Block</a>
-        <a href="#step4" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-purple-600 hover:bg-slate-100 transition">4. Agent Shell</a>
-        <a href="#step5" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-orange-600 hover:bg-slate-100 transition">5. 外部API與MCP</a>
-        <a href="#gen-ui" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-amber-600 hover:bg-slate-100 transition">動態UI</a>
-        <a href="#faq" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-slate-100 transition">主管質疑</a>
+        <a href="#step1"
+          class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-blue-600 hover:bg-slate-100 transition">1.
+          IoT變API</a>
+        <a href="#step2"
+          class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-slate-100 transition">2.
+          掛載Context</a>
+        <a href="#step3"
+          class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-emerald-600 hover:bg-slate-100 transition">3.
+          空間Block</a>
+        <a href="#step4"
+          class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-purple-600 hover:bg-slate-100 transition">4. Agent
+          Shell</a>
+        <a href="#step5"
+          class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-orange-600 hover:bg-slate-100 transition">5.
+          外部API與MCP</a>
+        <a href="#gen-ui"
+          class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-amber-600 hover:bg-slate-100 transition">動態UI</a>
+        <a href="#faq"
+          class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-slate-100 transition">主管質疑</a>
       </nav>
 
-      <div class="flex items-center gap-2">
-        <a href="aiot-executive-summary.md" target="_blank"
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
-          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
-          Markdown 檔
-        </a>
+      <div class="flex items-center gap-2 text-xs">
+        <a href="aiot-executive-summary.html"
+          class="px-3 py-1.5 rounded-lg border border-blue-200 bg-blue-50 hover:bg-blue-100 font-semibold text-blue-800 transition">概念簡報</a>
+        <a href="aiot-archetecture.html"
+          class="px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 font-semibold text-slate-600 transition">架構規格書</a>
+        <a href="aiot-workmanual.html"
+          class="px-3 py-1.5 rounded-lg border border-teal-200 bg-teal-50 hover:bg-teal-100 font-semibold text-teal-800 transition">實戰作業手冊</a>
+        <a href="aiot-ui-mockup.html"
+          class="px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 font-semibold text-slate-600 transition">畫面規格</a>
       </div>
     </div>
   </header>
@@ -92,46 +106,54 @@
   <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-12">
 
     <!-- 頂部：5 步演進路線全景圖 (Executive Stepper) -->
-    <section class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+    <section
+      class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
       <div class="max-w-3xl space-y-3 relative z-10">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-semibold border border-blue-400/30">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-semibold border border-blue-400/30">
           <span>🚀 主管報告核心邏輯：5 步循序漸進</span>
         </div>
         <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
           從單點設備到全域智能：架構演進的 5 個關鍵步驟
         </h2>
         <p class="text-slate-300 text-sm leading-relaxed">
-          不用一開始就跟主管講複雜的微服務，我們按照<strong>「設備轉 API ➔ 加上戶籍 Context ➔ 依需求拼空間 Block ➔ 穿上外殼主動對話 ➔ 擴展外部能力大腦」</strong>的順序，條理清晰、說服力十足！
+          不用一開始就跟主管講複雜的微服務，我們按照<strong>「設備轉 API ➔ 加上戶籍 Context ➔ 依需求拼空間 Block ➔ 穿上外殼主動對話 ➔
+            擴展外部能力大腦」</strong>的順序，條理清晰、說服力十足！
         </p>
       </div>
 
       <!-- 5 步進度卡列 -->
       <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 relative z-10">
-        <a href="#step1" class="p-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-blue-400 transition group">
+        <a href="#step1"
+          class="p-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-blue-400 transition group">
           <div class="text-[11px] font-bold text-blue-400 font-mono mb-1">STEP 01</div>
           <div class="text-sm font-bold text-white group-hover:text-blue-300 transition">IoT 變 API 物件</div>
           <div class="text-[11px] text-slate-400 mt-1">多個 API 聚合封裝為單一數位物件實體</div>
         </a>
 
-        <a href="#step2" class="p-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-sky-400 transition group">
+        <a href="#step2"
+          class="p-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-sky-400 transition group">
           <div class="text-[11px] font-bold text-sky-400 font-mono mb-1">STEP 02</div>
           <div class="text-sm font-bold text-white group-hover:text-sky-300 transition">物件掛載 Context</div>
           <div class="text-[11px] text-slate-400 mt-1">為設備物件辦好戶口與西曬情境，免算力直達</div>
         </a>
 
-        <a href="#step3" class="p-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-emerald-400 transition group">
+        <a href="#step3"
+          class="p-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-emerald-400 transition group">
           <div class="text-[11px] font-bold text-emerald-400 font-mono mb-1">STEP 03 · 按需</div>
           <div class="text-sm font-bold text-white group-hover:text-emerald-300 transition">空間 Block 基元</div>
           <div class="text-[11px] text-slate-400 mt-1">可有可無樂高積木，AI 自動畫平面圖</div>
         </a>
 
-        <a href="#step4" class="p-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-purple-400 transition group">
+        <a href="#step4"
+          class="p-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-purple-400 transition group">
           <div class="text-[11px] font-bold text-purple-400 font-mono mb-1">STEP 04</div>
           <div class="text-sm font-bold text-white group-hover:text-purple-300 transition">掛載 Agent Shell</div>
           <div class="text-[11px] text-slate-400 mt-1">穿上智慧外殼主動通報，協商完即卸載</div>
         </a>
 
-        <a href="#step5" class="p-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-orange-400 transition group">
+        <a href="#step5"
+          class="p-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-orange-400 transition group">
           <div class="text-[11px] font-bold text-orange-400 font-mono mb-1">STEP 05</div>
           <div class="text-sm font-bold text-white group-hover:text-orange-300 transition">外部 API 與 MCP</div>
           <div class="text-[11px] text-slate-400 mt-1">氣象/電價/行事曆全平權，跨域決策</div>
@@ -143,11 +165,14 @@
     <section id="step1" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
         <div>
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-bold mb-2">
+          <div
+            class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-bold mb-2">
             步驟 1 · 奠定標準基石
           </div>
-          <h3 class="text-2xl font-black text-slate-900 tracking-tight">1. IoT 變 API 化 ➔ 封裝為「IoT API 物件」（打破硬體品牌碎片化壁壘）</h3>
-          <p class="text-sm text-slate-500 mt-1"><strong class="text-blue-600 font-bold">核心重點：</strong>一個實體 IoT 有多個 API，但 API 化後整體聚合封裝為單一「IoT API 物件」，具備狀態屬性與多個操作方法</p>
+          <h3 class="text-2xl font-black text-slate-900 tracking-tight">1. IoT 變 API 化 ➔ 封裝為「IoT API 物件」（打破硬體品牌碎片化壁壘）
+          </h3>
+          <p class="text-sm text-slate-500 mt-1"><strong class="text-blue-600 font-bold">核心重點：</strong>一個實體 IoT 有多個
+            API，但 API 化後整體聚合封裝為單一「IoT API 物件」，具備狀態屬性與多個操作方法</p>
         </div>
         <div class="text-xs font-semibold text-slate-600 bg-slate-50 px-3 py-2 rounded-xl border border-slate-200">
           主管白話：整台設備被打包成標準的軟體物件，隨調隨用！
@@ -175,7 +200,8 @@
 
           <!-- 轉換閘道 -->
           <div class="md:col-span-2 text-center py-2">
-            <div class="w-12 h-12 mx-auto rounded-full bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/40 text-lg">
+            <div
+              class="w-12 h-12 mx-auto rounded-full bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/40 text-lg">
               ➔
             </div>
             <div class="text-[11px] text-blue-300 font-bold mt-1">BOS Gateway</div>
@@ -183,13 +209,15 @@
           </div>
 
           <!-- 封裝為單一 IoT API 物件 -->
-          <div class="md:col-span-6 bg-gradient-to-br from-blue-950 to-slate-800 p-4 rounded-xl border-2 border-blue-500 space-y-3">
+          <div
+            class="md:col-span-6 bg-gradient-to-br from-blue-950 to-slate-800 p-4 rounded-xl border-2 border-blue-500 space-y-3">
             <div class="flex justify-between items-center">
               <div class="flex items-center gap-2">
                 <span class="text-xs font-extrabold text-blue-300 uppercase">封裝為單一【IoT API 物件】</span>
                 <span class="text-[10px] bg-blue-500/20 text-blue-200 px-2 py-0.5 rounded font-mono">VRV_AC_1202</span>
               </div>
-              <span class="text-[10px] text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800 font-bold">物件導向標準化</span>
+              <span
+                class="text-[10px] text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800 font-bold">物件導向標準化</span>
             </div>
 
             <!-- 物件內部：屬性 Properties -->
@@ -215,7 +243,8 @@
           </div>
         </div>
 
-        <div class="mt-4 p-3 bg-blue-950/60 rounded-xl border border-blue-700/60 text-xs text-blue-200 flex items-center gap-2">
+        <div
+          class="mt-4 p-3 bg-blue-950/60 rounded-xl border border-blue-700/60 text-xs text-blue-200 flex items-center gap-2">
           <span class="text-sm">💡</span>
           <span><strong>核心觀念</strong>：一個實體設備有多條 API，但整體在系統中**就是一個高內聚的「IoT API 物件」**，就像軟體程式裡的物件一樣整組帶著走！</span>
         </div>
@@ -226,7 +255,8 @@
     <section id="step2" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
         <div>
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 text-xs font-bold mb-2">
+          <div
+            class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 text-xs font-bold mb-2">
             步驟 2 · 賦予客觀認知
           </div>
           <h3 class="text-2xl font-black text-slate-900 tracking-tight">2. 開始對「IoT API 物件」掛載 Context（靜態客觀情境）</h3>
@@ -270,8 +300,10 @@
           </div>
         </div>
 
-        <div class="mt-4 p-3 bg-sky-950/60 rounded-xl border border-sky-700/60 text-xs text-sky-200 flex items-center justify-between">
-          <span>🎯 <strong>綜效</strong>：主 Task Agent 在排程時，查表 1 毫秒內鎖定「服務 12 樓西曬房間的冷氣物件」，<strong>Token 浪費 = 0</strong>！</span>
+        <div
+          class="mt-4 p-3 bg-sky-950/60 rounded-xl border border-sky-700/60 text-xs text-sky-200 flex items-center justify-between">
+          <span>🎯 <strong>綜效</strong>：主 Task Agent 在排程時，查表 1 毫秒內鎖定「服務 12 樓西曬房間的冷氣物件」，<strong>Token 浪費 =
+              0</strong>！</span>
         </div>
       </div>
     </section>
@@ -280,7 +312,8 @@
     <section id="step3" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
         <div>
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-2">
+          <div
+            class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-2">
             步驟 3 · 敏捷空間載體
           </div>
           <h3 class="text-2xl font-black text-slate-900 tracking-tight">3. 空間 Block Context 建立（可有可無・按需啟用）</h3>
@@ -295,7 +328,8 @@
       <div class="bg-slate-900 text-white rounded-2xl p-6 relative overflow-hidden">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
           <!-- 直通路徑 -->
-          <div class="bg-slate-800/60 p-5 rounded-2xl border border-dashed border-slate-600 flex flex-col justify-between">
+          <div
+            class="bg-slate-800/60 p-5 rounded-2xl border border-dashed border-slate-600 flex flex-col justify-between">
             <div>
               <div class="flex justify-between items-center mb-2">
                 <span class="text-sm font-bold text-slate-200">無空間需求 ➔ 直通大道 (Bypass)</span>
@@ -311,7 +345,8 @@
           </div>
 
           <!-- 裝載入 Block -->
-          <div class="bg-gradient-to-br from-emerald-950 to-slate-800 p-5 rounded-2xl border-2 border-emerald-500 flex flex-col justify-between shadow-lg shadow-emerald-950/40">
+          <div
+            class="bg-gradient-to-br from-emerald-950 to-slate-800 p-5 rounded-2xl border-2 border-emerald-500 flex flex-col justify-between shadow-lg shadow-emerald-950/40">
             <div>
               <div class="flex justify-between items-center mb-2">
                 <span class="text-sm font-bold text-emerald-300">有空間需求 ➔ 裝入 Block 積木</span>
@@ -333,7 +368,8 @@
                 </div>
               </div>
             </div>
-            <div class="mt-4 p-2.5 rounded-lg bg-emerald-900/60 text-emerald-200 text-xs font-medium border border-emerald-700">
+            <div
+              class="mt-4 p-2.5 rounded-lg bg-emerald-900/60 text-emerald-200 text-xs font-medium border border-emerald-700">
               ➔ AI 讀取 Block 結構，1 秒自動生成互動式 SVG 樓層熱力圖！
             </div>
           </div>
@@ -345,7 +381,8 @@
     <section id="step4" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
         <div>
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 text-xs font-bold mb-2">
+          <div
+            class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 text-xs font-bold mb-2">
             步驟 4 · 主動智慧外殼
           </div>
           <h3 class="text-2xl font-black text-slate-900 tracking-tight">4. 掛載 Agent Shell，主動記憶對主 Agent 對話</h3>
@@ -366,7 +403,8 @@
           </div>
 
           <div class="p-4 rounded-xl bg-gradient-to-br from-purple-950 to-slate-800 border-2 border-purple-500">
-            <span class="text-[10px] font-mono bg-purple-500/30 text-purple-200 px-2 py-0.5 rounded font-bold">狀態 2 · 協商中</span>
+            <span class="text-[10px] font-mono bg-purple-500/30 text-purple-200 px-2 py-0.5 rounded font-bold">狀態 2 ·
+              協商中</span>
             <h4 class="font-extrabold text-white text-sm mt-1">智能外殼 (Active Shell)</h4>
             <div class="text-xs text-purple-200 mt-1 space-y-1">
               <div>• <strong>主觀記憶</strong>：「VIP預冷中，禁止降頻」</div>
@@ -388,7 +426,8 @@
     <section id="step5" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
         <div>
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-50 text-orange-700 text-xs font-bold mb-2">
+          <div
+            class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-50 text-orange-700 text-xs font-bold mb-2">
             步驟 5 · 全能力平權擴展
           </div>
           <h3 class="text-2xl font-black text-slate-900 tracking-tight">5. 除了 IoT，還可以有外部 API 與 MCP（全域大腦推理）</h3>
@@ -408,7 +447,8 @@
             <div class="text-xs text-slate-400 mt-0.5">大樓冷氣 VRV、水泵、電表</div>
           </div>
           <div class="p-3.5 bg-slate-800 rounded-xl border border-slate-700">
-            <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded font-bold">能力池 ②</span>
+            <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded font-bold">能力池
+              ②</span>
             <div class="font-bold text-white text-sm mt-1">外部雲端 API</div>
             <div class="text-xs text-slate-400 mt-0.5">中央氣象局即時天氣、台電即時電價</div>
           </div>
@@ -441,7 +481,8 @@
     <section id="gen-ui" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
         <div>
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 text-xs font-bold mb-2">
+          <div
+            class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 text-xs font-bold mb-2">
             終端人機互動 · Generative UI
           </div>
           <h3 class="text-2xl font-black text-slate-900 tracking-tight">終端人機介面：平日動態島，決策時即時浮現卡片</h3>
@@ -456,7 +497,8 @@
         <!-- 動態島 -->
         <div class="bg-slate-900 p-6 rounded-2xl text-center">
           <span class="text-xs font-bold text-slate-400 block mb-3">平日平穩運作：輕量動態島 (0 視覺負擔)</span>
-          <div class="inline-flex items-center gap-3 bg-slate-950 px-4 py-2.5 rounded-full border border-slate-800 shadow-inner">
+          <div
+            class="inline-flex items-center gap-3 bg-slate-950 px-4 py-2.5 rounded-full border border-slate-800 shadow-inner">
             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
             <span class="text-xs font-bold text-slate-200">全棟自適應節能守護中</span>
             <span class="text-xs font-mono text-emerald-400 font-bold">節電 18%</span>
@@ -464,7 +506,8 @@
         </div>
 
         <!-- 意圖落地卡 -->
-        <div class="bg-gradient-to-br from-slate-900 to-amber-950/40 p-5 rounded-2xl border-2 border-amber-500 shadow-lg shadow-amber-950/40">
+        <div
+          class="bg-gradient-to-br from-slate-900 to-amber-950/40 p-5 rounded-2xl border-2 border-amber-500 shadow-lg shadow-amber-950/40">
           <div class="flex justify-between items-center mb-2">
             <span class="text-xs font-bold text-amber-300">尖峰預警：AI 現場組裝「意圖落地卡」</span>
             <span class="text-[10px] bg-amber-500 text-slate-950 px-2 py-0.5 rounded font-bold">需主管核准</span>
@@ -478,7 +521,8 @@
               檢測到下午 14:00 高溫酷暑與重要外賓會議，建議提前於 12:40 啟動平穩預冷。
             </p>
             <div class="pt-1 flex gap-2">
-              <button class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow transition">
+              <button
+                class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow transition">
                 一鍵核准執行
               </button>
               <button class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition">
@@ -522,18 +566,24 @@
     </section>
 
     <!-- 底部導覽 -->
-    <footer class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+    <footer
+      class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
       <div>
         <span>Agentic AIoT 循序演繹簡報 · 專供主管彙報</span>
       </div>
-      <div class="flex items-center gap-4">
-        <a href="aiot-executive-summary.md" class="text-blue-600 hover:underline font-medium">查看 Markdown 檔</a>
+      <div class="flex items-center gap-3">
+        <a href="aiot-executive-summary.html" class="text-blue-600 hover:underline font-semibold">概念簡報</a>
         <span class="text-slate-300">|</span>
-        <a href="aiot-archetecture.html" class="text-blue-600 hover:underline font-medium">完整工程架構圖</a>
+        <a href="aiot-archetecture.html" class="text-slate-600 hover:underline font-medium">架構規格書</a>
+        <span class="text-slate-300">|</span>
+        <a href="aiot-workmanual.html" class="text-slate-600 hover:underline font-medium">實戰作業手冊</a>
+        <span class="text-slate-300">|</span>
+        <a href="aiot-ui-mockup.html" class="text-slate-600 hover:underline font-medium">畫面規格</a>
       </div>
     </footer>
 
   </main>
 
 </body>
+
 </html>
