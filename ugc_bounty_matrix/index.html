@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ugc_bounty_matrix ｜ 商業戰略定位全案知識庫</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Markdown & Syntax & Mermaid Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.min.css">
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/yaml.min.js"></script>
+
+  <style>
+    :root {
+      --font-sans: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+      
+      /* Dark Theme (Default) */
+      --bg-body: #090a0d;
+      --bg-sidebar: #0f1117;
+      --bg-card: #151821;
+      --bg-surface: #1a1e2a;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-focus: #e2b857;
+      --gold-primary: #e2b857;
+      --gold-light: #f6d88b;
+      --gold-dark: #b88d30;
+      --blue-accent: #38bdf8;
+      --green-accent: #4ade80;
+      --sidebar-width: 320px;
+      --toc-width: 260px;
+    }
+
+    body.theme-light {
+      --bg-body: #f8fafc;
+      --bg-sidebar: #ffffff;
+      --bg-card: #ffffff;
+      --bg-surface: #f1f5f9;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --border-focus: #b88d30;
+      --gold-primary: #b88d30;
+      --gold-light: #927021;
+      --gold-dark: #745615;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      width: var(--sidebar-width);
+      min-width: var(--sidebar-width);
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      z-index: 20;
+      transition: transform 0.25s ease;
+    }
+
+    .sidebar-header {
+      padding: 20px 18px 14px 18px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .project-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .project-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-weight: 900;
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      box-shadow: 0 0 15px rgba(226, 184, 87, 0.25);
+    }
+
+    .project-title-group {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .project-name {
+      font-weight: 800;
+      font-size: 1.02rem;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .project-badge {
+      font-size: 0.72rem;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    /* Search Box */
+    .search-container {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 12px 8px 34px;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--gold-primary);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
+    /* Sidebar Navigation Tree */
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 12px;
+    }
+
+    .nav-category {
+      margin-bottom: 18px;
+    }
+
+    .category-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      margin: 2px 0;
+      border-radius: 6px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-item:hover {
+      background: var(--bg-surface);
+      color: var(--text-main);
+    }
+
+    .nav-item.active {
+      background: rgba(226, 184, 87, 0.12);
+      color: var(--gold-primary);
+      font-weight: 600;
+      border-left: 3px solid var(--gold-primary);
+    }
+
+    .nav-item-icon {
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .sidebar-footer {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .theme-toggle-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--gold-primary);
+    }
+
+    /* Main Content Area */
+    #main {
+      flex: 1;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Top Action Bar */
+    .top-bar {
+      height: 52px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      background: var(--bg-body);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+    }
+
+    .doc-breadcrumbs {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .doc-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .action-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      border-color: var(--gold-primary);
+      color: var(--gold-primary);
+    }
+
+    /* Document Viewer Container */
+    .content-layout {
+      display: flex;
+      flex: 1;
+      position: relative;
+    }
+
+    .markdown-container {
+      flex: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 32px 100px 32px;
+      overflow-wrap: break-word;
+      line-height: 1.75;
+      font-size: 1.02rem;
+    }
+
+    /* Right Table of Contents (TOC) */
+    #toc-container {
+      width: var(--toc-width);
+      min-width: var(--toc-width);
+      padding: 30px 20px 40px 10px;
+      border-left: 1px solid var(--border-color);
+      overflow-y: auto;
+      font-size: 0.82rem;
+      position: sticky;
+      top: 52px;
+      height: calc(100vh - 52px);
+    }
+
+    .toc-title {
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      padding-left: 8px;
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item {
+      margin: 4px 0;
+    }
+
+    .toc-link {
+      display: block;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      line-height: 1.4;
+      transition: all 0.15s;
+    }
+
+    .toc-link:hover {
+      color: var(--text-main);
+      background: var(--bg-surface);
+    }
+
+    .toc-link.active {
+      color: var(--gold-primary);
+      font-weight: 600;
+      border-left: 2px solid var(--gold-primary);
+      background: rgba(226, 184, 87, 0.08);
+    }
+
+    .toc-item.depth-3 .toc-link {
+      padding-left: 20px;
+      font-size: 0.78rem;
+    }
+
+    /* Markdown Typography & Styling */
+    .markdown-body h1 {
+      font-size: 2.1rem;
+      font-weight: 900;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 14px;
+      margin-top: 10px;
+      margin-bottom: 24px;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .markdown-body h2 {
+      font-size: 1.55rem;
+      font-weight: 800;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+      margin-top: 38px;
+      margin-bottom: 18px;
+      color: var(--text-main);
+    }
+
+    .markdown-body h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-top: 28px;
+      margin-bottom: 14px;
+      color: var(--text-main);
+    }
+
+    .markdown-body p {
+      margin-bottom: 16px;
+    }
+
+    .markdown-body strong {
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+
+    body.theme-light .markdown-body strong {
+      color: #92400e;
+    }
+
+    .markdown-body blockquote {
+      border-left: 4px solid var(--gold-primary);
+      background: rgba(226, 184, 87, 0.06);
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 18px 0;
+      color: var(--text-muted);
+    }
+
+    .markdown-body code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #f472b6;
+    }
+
+    .markdown-body pre {
+      background: #111318 !important;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 18px 0;
+    }
+
+    .markdown-body pre code {
+      background: transparent;
+      border: none;
+      padding: 0;
+      color: inherit;
+      font-size: 0.88rem;
+    }
+
+    /* Tables */
+    .markdown-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.92rem;
+    }
+
+    .markdown-body table th,
+    .markdown-body table td {
+      border: 1px solid var(--border-color);
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    .markdown-body table th {
+      background: var(--bg-surface);
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .markdown-body table tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    body.theme-light .markdown-body table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    /* Mermaid Card, Viewport & Interactive Zoom */
+    .mermaid-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      margin: 24px 0;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .mermaid-card:hover {
+      border-color: rgba(226, 184, 87, 0.4);
+      box-shadow: 0 6px 28px rgba(226, 184, 87, 0.12);
+    }
+
+    .mermaid-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 14px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .mermaid-badge {
+      font-weight: 700;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+    }
+
+    .mermaid-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mermaid-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 4px 9px;
+      border-radius: 5px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+
+    .mermaid-btn:hover {
+      border-color: var(--gold-primary);
+      color: var(--gold-primary);
+      background: rgba(226, 184, 87, 0.08);
+    }
+
+    .mermaid-btn.primary {
+      background: rgba(226, 184, 87, 0.18);
+      border-color: var(--gold-primary);
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+
+    .mermaid-btn.primary:hover {
+      background: var(--gold-primary);
+      color: #000;
+    }
+
+    .mermaid-viewport {
+      min-height: 180px;
+      max-height: 520px;
+      overflow: auto;
+      padding: 24px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-in;
+      position: relative;
+      background: radial-gradient(circle at center, rgba(226, 184, 87, 0.02) 0%, transparent 70%);
+    }
+
+    .mermaid-canvas {
+      display: inline-block;
+      transform-origin: center center;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mermaid-canvas svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Mermaid Fullscreen Lightbox Modal */
+    .mermaid-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(4, 5, 8, 0.92);
+      backdrop-filter: blur(14px);
+      z-index: 9999;
+      padding: 24px;
+      box-sizing: border-box;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mermaid-modal.active {
+      display: flex;
+    }
+
+    .modal-dialog {
+      width: 95vw;
+      height: 92vh;
+      background: #0d0f15;
+      border: 1px solid var(--gold-primary);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 0 80px rgba(0, 0, 0, 0.9), 0 0 30px rgba(226, 184, 87, 0.25);
+    }
+
+    .modal-header {
+      height: 54px;
+      background: #141721;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .modal-title {
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.92rem;
+    }
+
+    .modal-scale-indicator {
+      background: rgba(226, 184, 87, 0.18);
+      color: var(--gold-primary);
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      border: 1px solid rgba(226, 184, 87, 0.3);
+    }
+
+    .modal-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-btn {
+      background: #1a1e2a;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+
+    .modal-btn:hover {
+      border-color: var(--gold-primary);
+      color: var(--gold-primary);
+      background: rgba(226, 184, 87, 0.08);
+    }
+
+    .modal-btn.close-btn {
+      background: rgba(239, 68, 68, 0.18);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+      font-weight: 700;
+    }
+
+    .modal-btn.close-btn:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .modal-body {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, rgba(30, 36, 52, 0.6) 0%, #08090d 100%);
+      cursor: grab;
+      user-select: none;
+    }
+
+    .modal-body:active {
+      cursor: grabbing;
+    }
+
+    .modal-canvas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-origin: center center;
+      transition: transform 0.04s ease-out;
+      will-change: transform;
+    }
+
+    .modal-canvas svg {
+      display: block;
+      filter: drop-shadow(0 12px 36px rgba(0, 0, 0, 0.7));
+    }
+
+    .modal-hint {
+      position: absolute;
+      bottom: 16px;
+      background: rgba(15, 17, 23, 0.85);
+      border: 1px solid rgba(226, 184, 87, 0.25);
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      color: var(--gold-light);
+      pointer-events: none;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Callout Alerts */
+    .callout {
+      border-left: 4px solid #38bdf8;
+      background: rgba(56, 189, 248, 0.08);
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 18px 0;
+    }
+
+    .callout.important {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .callout.warning {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.08);
+    }
+
+    .callout.tip {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    /* YAML Formatter */
+    .yaml-viewer {
+      background: #111318;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 1024px) {
+      #toc-container {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #sidebar {
+        position: absolute;
+        left: -320px;
+      }
+      #sidebar.open {
+        transform: translateX(320px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Left Sidebar Document Tree -->
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <div class="project-brand">
+        <div class="project-icon">UG</div>
+        <div class="project-title-group">
+          <div class="project-name">ugc_bounty_matrix</div>
+          <div class="project-badge">商業戰略全案門戶</div>
+        </div>
+      </div>
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="search-box" placeholder="搜尋全案文件與關鍵字...">
+      </div>
+    </div>
+
+    <nav class="sidebar-nav" id="nav-tree">
+      <!-- Generated Dynamically -->
+    </nav>
+
+    <div class="sidebar-footer">
+      <span>39 份核心文檔</span>
+      <button class="theme-toggle-btn" onclick="toggleTheme()">
+        <span id="theme-icon">🌙</span> <span id="theme-text">深色模式</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Viewer -->
+  <main id="main">
+    <div class="top-bar">
+      <div class="doc-breadcrumbs" id="breadcrumbs">
+        <span>文檔</span> / <strong id="current-doc-title">載入中...</strong>
+      </div>
+      <div class="doc-actions">
+        <button class="action-btn" onclick="copyMarkdown()">📋 複製原始 MD</button>
+        <button class="action-btn" onclick="window.print()">🖨️ 列印 / 轉 PDF</button>
+      </div>
+    </div>
+
+    <div class="content-layout">
+      <div class="markdown-container">
+        <article class="markdown-body" id="article-content">
+          <!-- Rendered by marked.js -->
+        </article>
+      </div>
+      <aside id="toc-container">
+        <div class="toc-title">📌 本頁目錄 (TOC)</div>
+        <ul class="toc-list" id="toc-list">
+          <!-- Rendered dynamically -->
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Mermaid Fullscreen Interactive Lightbox Modal -->
+  <div id="mermaid-modal" class="mermaid-modal" onclick="onModalBackdropClick(event)">
+    <div class="modal-dialog" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>🔍 Mermaid 架構圖檢視器</span>
+          <span class="modal-scale-indicator" id="modal-zoom-text">100%</span>
+        </div>
+        <div class="modal-controls">
+          <button class="modal-btn" onclick="zoomModal(1.2)" title="放大 (亦可滾動滑鼠滾輪)">➕ 放大</button>
+          <button class="modal-btn" onclick="zoomModal(0.8)" title="縮小 (亦可滾動滑鼠滾輪)">➖ 縮小</button>
+          <button class="modal-btn" onclick="resetModalZoom()" title="重設為 100%">↺ 重設</button>
+          <button class="modal-btn close-btn" onclick="closeMermaidModal()" title="關閉 (Esc)">✕ 關閉</button>
+        </div>
+      </div>
+      <div class="modal-body" id="modal-viewport">
+        <div class="modal-canvas" id="modal-canvas"></div>
+        <div class="modal-hint">💡 滾動滑鼠滾輪縮放 ｜ 按住滑鼠左鍵任意拖曳平移 ｜ 雙擊居中重設 ｜ 按 Esc 關閉</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Embedded SSOT Documents Store (Zero-CORS Offline) -->
+  <script id="project-docs-payload" type="application/json">
+{
+  "projectName": "ugc_bounty_matrix",
+  "defaultDoc": "README.md",
+  "files": {
+    "00_core_positioning/00_project_brief.md": {
+      "path": "00_core_positioning/00_project_brief.md",
+      "title": "共鳴創作者計畫 ‧ 專案戰略簡報 (Project Brief)",
+      "name": "00_project_brief.md",
+      "isYaml": false,
+      "raw": "# 共鳴創作者計畫 ‧ 專案戰略簡報 (Project Brief)\n\n> **內部專案代號**：`ugc_bounty_matrix`  \n> **對外官方計畫**：**共鳴創作者計畫 (Resonance Creator Program)**  \n> **核心定位本質**：**雙邊市場獲客網絡（Two-Sided Creator-to-Business Network）**\n\n---\n\n## 🎯 雙邊角色精準定位與價值主張 (Dual-Sided Value Proposition)\n\n本專案居於「品牌老闆獲客需求」與「青年學生打工供給」的黃金交集點，建立去中心化的成果分銷樞紐：\n\n```mermaid\nflowchart LR\n    subgraph Creators [\"【創作者 / 學生端】(供給方)\"]\n        C1[\"痛點: 超商罰站 $185、接案改稿被白嫖\"]\n        C2[\"承諾: 滿千+互動秒領 $500 (時薪翻2.5~6倍)\"]\n        C3[\"保障: 零收費、AI 預審通過不退件、帳號資產歸自己\"]\n    end\n\n    subgraph Platform [\"【共鳴創作者計畫】(中樞樞紐)\"]\n        P[\"去中心化成果驗收共創網絡\\n• AI 預審與彈藥庫質檢\\n• 雙門禁防刷驗收\\n• 對數階梯爆款稀釋\"]\n    end\n\n    subgraph Bosses [\"【品牌老闆端】(買單方)\"]\n        B1[\"痛點: 官方投流貴、網紅外包沒流量\"]\n        B2[\"承諾: 零觀看不給錢、每一分錢只為名單買單\"]\n        B3[\"價值: $50 獲取高意圖名單 + 百萬爆款紅利\"]\n    end\n\n    Creators <-->|\"提供素人真誠創意與多點分發\"| Platform\n    Platform <-->|\"提供低成本高轉化名單與爆款流量\"| Bosses\n```\n\n---\n\n## 📐 方案 A 驗收標準與加價階梯矩陣 (Plan A & Escalation Milestones)\n\n| 流量里程碑 ($V$) | 創作者累計領取賞金 | 老闆支付專案費用 | 平台單支淨利潤 | 老闆獲得等效 CPM | 商業本質與權責劃分 |\n| :--- | :--- | :--- | :--- | :--- | :--- |\n| **門檻：1,000 觀看** | **NT$ 500 元** | **NT$ 800 元** | **＋NT$ 300 元** | **$800 / 千次** | **素材製作 ＋ 首波千人曝光**<br>驗收條件：自然流量滿 1k ＋ 台灣受眾 >= 70% 截圖 |\n| **突破：10,000 觀看** | **NT$ 1,200 元** (補差額 $700) | **NT$ 1,800 元** (補差額 $1,000) | **＋NT$ 600 元** | **$180 / 千次** | **演算法破圈** (自帶素人信任，CPM 等同投流) |\n| **大爆：50,000 觀看** | **NT$ 2,500 元** (補差額 $1,300) | **NT$ 3,800 元** (補差額 $2,000) | **＋NT$ 1,300 元** | **$76 / 千次** | **全網擴散** (超額自然流暴擊，名單成本暴跌) |\n| **神作：100,000 觀看**| **NT$ 3,500 元** (封頂加發 $1k) | **NT$ 5,000 元** (封頂加付 $1.2k) | **＋NT$ 1,500 元** | **$50 / 千次** | **百萬頂級爆款** (流量費用封頂，防預算穿透) |\n| **10 萬觀看以上** | **流量賞金封頂**<br>轉入純 CPS 抽成 15%~20% | **流量費用封頂**<br>依真實銷售額抽成 25%~30% | **淨賺 10% 佣金** | 趨近於 $0 (純賺) | **長尾被動收入** (影片永久留存，出單才抽成) |\n\n---\n\n## 🎯 關鍵權責邊界：CTA 是老闆自己決定的！\n\n1. **對品牌老闆說（給予商業主導權）**：\n   > 「老闆，行銷拆成兩件事：前半段創作者負責把片子拍好看、把 1,000 個真人留在螢幕前聽完產品；**而後半段結尾的 CTA（行動呼籲、優惠誘因）完全由您親自決定！**\n   > 您可以要求放『留言領 9 折券』或『私訊免費領樣品』。創作者保證完整傳播給千人受眾；但最後有多少人買，取決於您的 CTA 誘因夠不夠香！**創作者負責把 1,000 個人帶到您的攤位前，而攤位放什麼好康吸引他掏錢，由您作主！**」\n2. **對創作者學生說（消除業績壓力）**：\n   > 「同學們，你們是靠創意和剪輯賺打工錢，不是來當業務員背業績的！產品好不好賣是老闆定價和優惠的事。官方給你們老闆指定的結尾台詞，你們只要在最後 5 秒順順講出來。**只要影片自然滿 1,000 觀看且受眾 70% 在台灣，500 塊就穩穩入帳，絕不以『有沒有人買』扣款！**」\n\n### 1. 對品牌老闆說話（獲客艦隊定位）\n*   **核心標語**：\n    > **「不用先砸十萬賭流量！發動百位創作者自建矩陣，每一塊錢只為『真實破千觀看＋精準諮詢』買單！」**\n*   **三大殺手級利益點**：\n    1. **零試錯成本**：沒達到 1,000 觀看或沒人互動，老闆一毛錢都不用付。\n    2. **買到精準潛在客戶 (Lead)**：$500 元換取 10 個留言「+1/想買」的高意圖諮詢，單個名單成本僅 $50 元（比 Meta 投流便宜 60%）。\n    3. **去中心化真人背書**：幾十位素人以個人頻道真實推薦，演算法多點開花，主帳號零封禁與 IP 風險。\n\n### 2. 對創作者/學生說話（高薪自由舞台定位）\n*   **核心標語**：\n    > **「告別超商時薪 185 罰站！用你的手機剪 1 分鐘短影音，滿千自然觀看加互動秒領 $500，爆款單支最高 $3,500 ＋ 永久被動抽成！」**\n*   **三大殺手級利益點**：\n    1. **實質時薪翻 2.5 ~ 6.5 倍**：1 分鐘短影音製作約 45 分鐘，滿千領 $500（換算時薪 $475~$1,200）。\n    2. **絕不白嫖與主觀退件**：AI 大綱預審通過即背書，達標 48 小時內必撥款，不憑老闆主觀美感挑刺。\n    3. **自建自媒體個人資產**：影片發在個人號上，流量、粉絲與長尾銷售分潤全歸創作者所有。\n    4. **終生零收費保證**：免學費、免樣品費、免保證金，乾乾淨淨的真金白銀合作。\n"
+    },
+    "00_core_positioning/01_asset_audit.md": {
+      "path": "00_core_positioning/01_asset_audit.md",
+      "title": "階段一：資產解構與信任狀審計報告 (Asset Audit)",
+      "name": "01_asset_audit.md",
+      "isYaml": false,
+      "raw": "# 階段一：資產解構與信任狀審計報告 (Asset Audit)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../_thinking/00_core/01_assets.yaml`](../_thinking/00_core/01_assets.yaml)  \n> **定位狀態**：審計完成  \n> **戰略主線**：**成果驗收保底 ✕ 爆款指數稀釋 ✕ 去中心化推薦矩陣**\n\n---\n\n## 1. 核心硬資產審計與真實信任狀 (Reason to Believe, RTB)\n\n「共鳴創作者計畫」並非空泛的網路兼職群組，而是基於精確的**單元經濟學（Unit Economics）與博弈論機制設計**，為了解決傳統短影音外包低效、投流高成本而誕生的創新生態。\n\n### 核心硬資產審計表：\n\n| 資產代號 | 資產名稱 | 客觀事實與 RTB (Reason to Believe) | 轉化為商業獲客與創作者端之價值 |\n| :--- | :--- | :--- | :--- |\n| **RTB-1** | **成果導向雙門禁賞金機制** | 拋棄傳統「賣工時」的 MP4 交付，改以「自然 1,000 觀看 ＋ 5~10 則真實互動/15次點擊」作為解鎖 $500 保底條件。 | 創作者享有「只要努力開頭好就能拿錢」的掌控感；品牌主將單個高意圖潛在客戶 (Lead) 成本壓在 $30~$50，遠超官方廣告。 |\n| **RTB-2** | **AI 預審與三層防刷防禦棧** | 開機前 AI 腳本大綱 30 秒預審、發布中 ManyChat 關鍵字追蹤、結算時台灣受眾 >70% 截圖與 48hr 冷卻期。 | 從機制上杜絕機器人假量與刷播放量套利，確保流入品牌的每一位都是真人。 |\n| **RTB-3** | **對數階梯爆款稀釋模型** | 1k 觀看 $500 (CPM $500 當製作補貼) ➔ 10k 觀看累計 $1,200 (CPM $120) ➔ 50k 觀看累計 $2,500 (CPM $50) ➔ 100k 觀看累計 $3,500 (CPM $35)。 | 激勵創作者死磕前 3 秒鉤子，而品牌綜合獲客成本隨播放量指數級下降，徹底杜絕行銷預算穿透風險。 |\n| **RTB-4** | **去中心化多點推薦矩陣** | 創作者以個人或自建垂直號發布，形成「多方真實自發推薦」的社會證明 (Social Proof)。 | 破除單一官方帳號強烈廣告感，多賽道同發測試演算法，主帳號零封禁與 IP 風險。 |\n\n---\n\n## 2. 嚴格模式約束宣告 (Constraints)\n\n1. **創作者端零門檻與零白嫖約束**：\n   - 嚴禁收取任何入會費、保證金或培訓費（與 Andrew Tate 的 HU 傳銷模式劃清界線）。\n   - 審核標準全面前置於 Step 2 AI 預審；凡通過預審且達標者，官方 48 小時內保證撥款，絕不以主觀審美刁難。\n2. **財務上限約束（Hard Ceiling）**：\n   - 單支影片純流量獎金以 100,000 觀看累計 $3,500 元為上限；10 萬以上一律轉入 15%~20% CPS 導流分潤，保護品牌現金流。\n3. **品牌安全紅線約束**：\n   - 嚴禁虛假療效、絕對誇大保證、低俗誘惑、政治爭議或侵權音樂。\n"
+    },
+    "00_core_positioning/02_mental_ladder.md": {
+      "path": "00_core_positioning/02_mental_ladder.md",
+      "title": "階段二：心智階梯探測與生態位審定 (Mental Ladder)",
+      "name": "02_mental_ladder.md",
+      "isYaml": false,
+      "raw": "# 階段二：心智階梯探測與生態位審定 (Mental Ladder)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../_thinking/00_core/02_ladder_landmines.yaml`](../_thinking/00_core/02_ladder_landmines.yaml)  \n> **核心結論**：**探測市場既有心智梯隊，裁定全新物種心智空白！**\n\n---\n\n## 1. 既有短影音外包與獲客心智階梯\n\n在目標受眾（創作者與品牌老闆）的大腦記憶體中，已經被三大既有梯隊佔據：\n\n1. **第一梯隊：傳統工時接案外包（以 MP4 檔案計費）**\n   - 認知印記：收費高（單支 $1,500~$3,000）、反覆改稿耗時耗力、發布後 0 播放外包商照收錢，老闆承擔全部風險。\n2. **第二梯隊：官方競價廣告投流（Meta / TikTok Ads）**\n   - 認知印記：租來的冰冷流量、廣告感極重、停投即死，獲客成本年年飆升（CPL > $150）。\n3. **第三梯隊：海外傳銷式矩陣裂變（TikTok Affiliate / HU）**\n   - 認知印記：先收創作者月費學費，純 CPS 成交分潤；創作者前期 0 收益挫折感極重，被視為割韭菜。\n\n---\n\n## 2. 第四梯隊：共鳴創作者計畫之空白突圍 (White Space)\n\n本案在雙邊大腦中搶佔的全新生態位：  \n**「去中心化成果驗收共創網絡 (Decentralized Bounty Partner)」**\n\n- **對創作者**：不賣時間罰站，1 分鐘短影音，滿千觀看加互動秒領 $500，爆款單支最高 $3,500！\n- **對品牌老闆**：零觀看老闆付 $0 元，以 $40~$50 超低單價獲取真實買家名單與百萬爆款紅利！\n"
+    },
+    "00_core_positioning/02_white_space_verdict.md": {
+      "path": "00_core_positioning/02_white_space_verdict.md",
+      "title": "階段二：心智階梯與生態位生態審計 (Mental Ladder & Ecosystem)",
+      "name": "02_white_space_verdict.md",
+      "isYaml": false,
+      "raw": "# 階段二：心智階梯與生態位生態審計 (Mental Ladder & Ecosystem)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../_thinking/00_core/02_category.yaml`](../_thinking/00_core/02_category.yaml)  \n> **定位狀態**：審計完成  \n\n---\n\n## 1. 現存市場三大既有心智梯隊對比\n\n短影音行銷生態中，品牌主與創作者早已被三種傳統模式所固化，每一種都存在無法調和的致命痛點：\n\n```mermaid\nquadrantChart\n    title 短影音外包與獲客模式生態位分佈\n    x-axis \"低確定性 (純賭博/0保底)\" --> \"高確定性 (有明確回報)\"\n    y-axis \"高成本 / 高摩擦\" --> \"低成本 / 高效率\"\n    quadrant-1 \"【本案生態位】共鳴創作者計畫\"\n    quadrant-2 \"傳統工時外包 (接案社團/外包網)\"\n    quadrant-3 \"海外純CPS分銷 (TikTok Affiliate/HU)\"\n    quadrant-4 \"官方投流廣告 (Meta/TikTok Ads)\"\n    \"傳統工時外包\": [0.75, 0.25]\n    \"官方投流廣告\": [0.85, 0.15]\n    \"海外純CPS分銷\": [0.15, 0.70]\n    \"共鳴創作者計畫\": [0.80, 0.85]\n```\n\n### 三大傳統模式之致命死穴：\n\n1. **傳統接案外包（以工時/檔案計費）**：\n   - **收費**：單支短影音 NT$ 800 ~ 2,500 元。\n   - **死穴**：**業主承擔所有風險**。創作者交出 MP4 檔案就結案，發上網只有 30 個人看，業主照樣付全額，ROI 極度不可測。\n2. **官方競價投流（Meta / TikTok Ads）**：\n   - **收費**：CPM NT$ 80 ~ 250，單個名單 NT$ 80 ~ 200。\n   - **死穴**：**租來的流量，廣告感極重**。觀眾看到贊助標籤直接滑走，且競價年年上漲，停投流量立刻歸零。\n3. **海外矩陣純 CPS 分銷（TikTok Affiliate / Andrew Tate HU）**：\n   - **收費**：0 底薪，成交抽成 5%~20% 或每個月先收創作者 $49 美元學費。\n   - **死穴**：**把銷售轉化風險全推給創作者**。90% 認真剪片的新手因初期 0 成交而心灰意冷放棄，流失率高達 95%，且被視為詐騙割韭菜。\n\n---\n\n## 2. 白地機會裁決 (White Space Verdict)\n\n市場留下的最大空白生態位是：  \n**「有保底成果驗收、讓創作者尊嚴勞動、同時讓品牌獲得真實互動名單的去中心化共創網絡」**。這個市場真空空白具有不可替代性：\n\n- **對創作者的佔位心智**：「不做超商廉價工，1 分鐘短影音，滿千自然觀看加互動秒領 $500，爆款單支最高 $3,500！」\n- **對品牌主的佔位心智**：「不付冤枉外包費，不買冰冷假廣告，以 $50 單價獲取高意圖真實名單與百萬自然曝光！」\n"
+    },
+    "00_core_positioning/03_landmines_report.md": {
+      "path": "00_core_positioning/03_landmines_report.md",
+      "title": "階段三：戰略地雷排查與反脆弱防禦 (Strategic Landmines)",
+      "name": "03_landmines_report.md",
+      "isYaml": false,
+      "raw": "# 階段三：戰略地雷排查與反脆弱防禦 (Strategic Landmines)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **定位狀態**：排查完畢  \n> **核心目標**：建立歷史倒閉避坑指南與死穴防火牆\n\n---\n\n## 🛑 四大潛在地雷與反脆弱排查避坑對策\n\n在執行「去中心化短影音賞金矩陣」時，市場上最容易踩入的四大地雷及本案的避雷規範：\n\n### 地雷 1：機器人刷量套利（Bots & Farms Arbitrage）\n*   **風險症狀**：職業刷手花 20 元買 1,000 播放量，向官方詐領 500 元賞金。\n*   **避雷解法**：\n    1. **強制綁定有效互動**：僅有播放量一律不給錢，必須搭配「留言區 5~10 則真實討論/+1」或「專屬短鏈 15 次獨立點擊」。\n    2. **後台受眾地理檢驗**：提報時必須附帶後台數據，台灣受眾比例低於 70% 視為無效數據。\n    3. **48~72 小時冷卻期**：排除瞬間灌水流量，等待平台自然演算法常態分佈。\n\n### 地雷 2：素材千篇一律導致平台降權（Shadowban）\n*   **風險症狀**：所有創作者拿同一份官方錄屏與文案直接發布，被 TikTok / Reels 判定為搬運垃圾，直接鎖 0 播放。\n*   **避雷解法**：\n    - 官方絕不提供「整支成片」，只提供「心智模組彈藥庫」（30 組開頭鉤子、5 種痛點敘事、多套 CTA）。\n    - 創作者必須自行出鏡、重新剪輯配樂或二次原創，確保音頻與視覺特徵碼之唯一性。\n\n### 地雷 3：創作者因退件產生白嫖怨氣（Labor Friction）\n*   **風險症狀**：創作者花 1 小時拍完，老闆以「我覺得拍得不好看」為主觀理由拒付款，引發社群炎上。\n*   **避雷解法**：\n    - **全流程審核前置（Step 2 AI 預審）**：在創作者動工錄影前，AI 系統即針對大綱台詞評分。一旦預審通過，只要事後達標，官方無條件 48 小時內撥款，絕不刁難。\n\n### 地雷 4：爆款過多導致行銷預算穿透（Budget Runaway）\n*   **風險症狀**：多支影片衝上百萬播放，若採線性計費，老闆將面臨數十萬巨額支出。\n*   **避雷解法**：\n    - **對數平滑階梯封頂**：1k ($500) ➔ 10k ($1,200) ➔ 50k ($2,500) ➔ 100k ($3,500 封頂)。\n    - 單支影片流量賞金上限就是 $3,500 元，10 萬以上一律走純 CPS 導流分潤，邊際固定成本歸零。\n"
+    },
+    "00_core_positioning/04_positioning_hypotheses.md": {
+      "path": "00_core_positioning/04_positioning_hypotheses.md",
+      "title": "階段三：四維定位假說收斂報告 (Positioning Hypotheses)",
+      "name": "04_positioning_hypotheses.md",
+      "isYaml": false,
+      "raw": "# 階段三：四維定位假說收斂報告 (Positioning Hypotheses)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../_thinking/00_core/03_hypotheses.yaml`](../_thinking/00_core/03_hypotheses.yaml)  \n\n---\n\n## 🎯 雙軌四維假說模型\n\n本專案居於雙邊市場樞紐，提出「雙軌推進、飛輪互哺」之戰略假說體系：\n\n### 軌道 A：大學生高時薪斜槓打工顛覆軌 (存量替代)\n*   **品類分化**：從傳統被動排班「體力打工」中分化出「成果導向影音共創」。\n*   **巨人對立**：直接對立超商、手搖飲、餐飲外場時薪 $185 罰站體力榨取。\n*   **極致取捨**：不承諾躺平暴富，只承諾「認真做出達標內容即享有超商 2.5~6 倍等效時薪」。\n*   **核心標語**：**「別再用青春罰站領 185！剪 1 分鐘短影音，滿千播放秒領 $500！」**\n\n### 軌道 B：品牌老闆去中心化成效獲客艦隊軌 (增量顛覆)\n*   **品類分化**：從傳統「賭博式外包與投流」中分化出「只為名單買單之素人推薦矩陣」。\n*   **巨人對立**：直接對立 Meta/TikTok 年年攀升之高昂 CPM 競價無底洞與傳統外包之 0 保證。\n*   **極致取捨**：不賣死板精修廣告，只賣生活場景中素人高轉化真誠體驗。\n*   **核心標語**：**「不用先砸十萬賭流量！發動百位創作者自建矩陣，每一塊錢只為真實觀看與買家名單買單！」**\n"
+    },
+    "00_core_positioning/05_red_team_debate.md": {
+      "path": "00_core_positioning/05_red_team_debate.md",
+      "title": "階段四：紅隊與藍軍極限博弈審判辯論 (Red Team Debate)",
+      "name": "05_red_team_debate.md",
+      "isYaml": false,
+      "raw": "# 階段四：紅隊與藍軍極限博弈審判辯論 (Red Team Debate)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../_thinking/00_core/04_red_team_scores.yaml`](../_thinking/00_core/04_red_team_scores.yaml)  \n\n---\n\n## 🥊 雙軌紅隊極限壓力博弈對決\n\n### 審判 1：創作者流失與信心崩塌拷問\n- **紅軍發難**：\n  > 「如果學生連續拍了 2 支影片只有 500 播放沒達標，一毛錢拿不到，他會不會立刻放棄，覺得平台在白嫖他？」\n- **藍軍防禦**：\n  > 1. **短影音自然常態**：只要帳號正常且套用官方前 3 秒鉤子，破千是推薦池基準；\n  > 2. **爆款追溯補償機制**：影片留在創作者自己頻道上，只要第三支衝上 10k 爆款，獎金累計至 $1,200（大爆至 $2,500），一次把前兩支的工時溢價全額補齊！\n\n### 審判 2：機器人刷量黑客攻擊拷問\n- **紅軍發難**：\n  > 「台灣社群到處都是刷量工作室，花 20 元刷 1,000 播放詐領 500 元，平台第一天就會被刷破產！」\n- **藍軍防禦**：\n  > 1. **雙門禁鎖定**：只看播放數一律付 0 元！必須搭配留言區真實觀眾留言「+1/詢價」；\n  > 2. **後台受眾地理檢驗**：提報必須附帶後台數據截圖，台灣受眾比例低於 70% 視為無效數據，並設有 48hr 冷卻審核期。\n\n---\n\n## 🎯 決策閘門收斂判定\n審判結果證實：雙軌模式具備極高的抗風險能力，**准予推進決策閘門與後續模組放量！**\n"
+    },
+    "00_core_positioning/HUMAN_DECISION_GATE.md": {
+      "path": "00_core_positioning/HUMAN_DECISION_GATE.md",
+      "title": "階段四與五：核心假說、雙邊攻防論證與決策門禁 (Decision Gate)",
+      "name": "HUMAN_DECISION_GATE.md",
+      "isYaml": false,
+      "raw": "# 階段四與五：核心假說、雙邊攻防論證與決策門禁 (Decision Gate)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **門禁狀態**：**HUMAN_DECISION_GATE APPROVED (DUAL-SIDED ALIGNED)**  \n> **決策閘門結論**：本決策閘門確立「語言釘子」與雙邊核心承諾！\n\n---\n\n## 📌 核心武器錨點\n* **語言釘子 (Verbal Nail)**：不賣時間罰站，1分鐘短影音，滿千加互動秒領 $500！\n* **視覺錘 (Visual Hammer)**：手機入帳 $500 推播通知 ＋ 留言區 +1 滾動瀑布\n\n---\n\n## 🥊 雙邊紅藍軍深度攻防論證\n\n### 對決 A：品牌老闆端攻防\n- **紅軍質疑（老闆視角）**：\n  > 「學生素人自製的影片品質會不會很差？會不會拿我的產品亂講話，甚至破壞品牌形象？」\n- **藍軍抗辯（戰略防禦）**：\n  > 1. **AI 腳本預審 ＋ 彈藥庫模組化**：創作者不是天馬行空亂拍，必須套用官方提供的「前 3 秒開頭鉤子」與「痛點積木」。開機前必須經由 AI 預審通過，違規誇大與侵權一票否決。\n  > 2. **素人感才是當今短影音轉化的最高境界**：現在觀眾對精緻官方廣告已有強烈抗體，素人在生活場景中的真實體驗分享，轉換率往往是精修廣告的 3~5 倍！\n\n### 對決 B：創作者學生端攻防\n- **紅軍質疑（學生視角）**：\n  > 「如果我辛苦剪完影片發布，結果演算法只給我 500 觀看沒達到 1,000，我豈不是白忙一場被白嫖？」\n- **藍軍抗辯（戰略防禦）**：\n  > 1. **短影音演算法的自然常態**：只要不是搬運抄襲帳號，套用官方爆款開頭，突破 1,000 是平台基礎推薦池的標準常態。\n  > 2. **個人帳號資產留存與爆款追溯**：影片發在創作者自己的頻道，即使這支只有 500 播放，也為帳號累積了權重與內容；只要下一支衝上破萬爆款，獎金立刻追溯到 $1,200~$3,500，一次把前面的工時收益全數超額補齊！\n\n---\n\n## 🎯 終局拍板決策（雙邊定位宣言）\n\n1. **面對品牌老闆**：\n   - 定位為**「去中心化成效獲客艦隊」**。\n   - 核心承諾：零底薪風險、只為真實觀看與高意圖名單買單、$50 單價顛覆傳統投流。\n2. **面對創作者學生**：\n   - 定位為**「自由高薪影音共創舞台」**。\n   - 核心承諾：告別超商罰站、1分鐘滿千秒領 $500、AI 預審杜絕退件、自建個人賺錢頻道。\n"
+    },
+    "_thinking/00_core/01_assets.yaml": {
+      "path": "_thinking/00_core/01_assets.yaml",
+      "title": "🧠 01_assets (SSOT 母體)",
+      "name": "01_assets.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\nbrand_name: \"共鳴創作者計畫 (Resonance Creator Program)\"\naudit_date: \"2026-11-28\"\n\nassets:\n  rtb_1_bounty_mechanics:\n    name: \"成果導向雙門禁賞金機制\"\n    description: \"打破傳統工時外包與純 CPS 盲盒，以『自然 1,000 觀看 ＋ 5~10 則真實互動/15次點擊』作為 $500 基礎保底解鎖條件。\"\n    rtb: \"兼顧創作者掌控感（可達成）與品牌主獲客意圖（杜絕假量），將單個高意圖潛在客戶 (Lead) 取得成本鎖定在 $30~$50。\"\n  \n  rtb_2_anti_fraud_stack:\n    name: \"AI 預審與後台受眾三層防刷防禦棧\"\n    description: \"結合開機前 AI 腳本大綱 30 秒預審、發布中 ManyChat/短鏈追蹤、結算時台灣受眾 >70% 截圖與 48 小時冷卻期。\"\n    rtb: \"機器人刷量無法在留言區產生真實互動，且跨國低價刷子帳號無法通過地區檢驗，徹底消滅無效刷量套利風險。\"\n\n  rtb_3_logarithmic_economics:\n    name: \"對數階梯爆款指數稀釋模型\"\n    description: \"1k 觀看給 $500（CPM $500 當素材製作補貼）；10k 觀看累計 $1,200（CPM $120）；50k 觀看累計 $2,500（CPM $50）；100k 觀看累計 $3,500（CPM $35）。\"\n    rtb: \"激勵創作者死磕前 3 秒鉤子以衝擊高額加碼，同時確保品牌的綜合獲客 CPM 比官方廣告便宜 50%~80%。\"\n\n  rtb_4_decentralized_trust:\n    name: \"去中心化多點推薦矩陣 (Social Proof)\"\n    description: \"由數十至數百位創作者自建個人號/垂直號發布，形成『千軍萬馬自發推薦』的真實社會證明。\"\n    rtb: \"避開官方單一品牌號廣告感過重與被演算法降權的風險，多賽道同時測試不同鉤子與受眾群體。\"\n\nconstraints:\n  - \"創作者無門檻啟動：嚴禁收取任何加盟費、學費或保證金（與 Andrew Tate HU 區隔）。\"\n  - \"驗收客觀透明：嚴禁以主觀審美退件，審核標準必須全部前置於 Step 2 AI 預審。\"\n  - \"財務安全硬頂：單支影片流量獎金上限 $3,500，超過 10 萬觀看後一律轉入 CPS 導流分潤。\"\n"
+    },
+    "_thinking/00_core/02_category.yaml": {
+      "path": "_thinking/00_core/02_category.yaml",
+      "title": "🧠 02_category (SSOT 母體)",
+      "name": "02_category.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\ncategory: \"短影音創作者外包與行銷獲客生態\"\n\nmarket_players:\n  legacy_freelance:\n    name: \"傳統接案外包 (Pro360 / Tasker / 接案社團)\"\n    core_logic: \"賣工時與交付 MP4 檔案\"\n    price_point: \"單支 1 分鐘短影音 NT$ 800 ~ 2,500\"\n    fatal_flaw: \"業主付了錢承擔全部風險，影片發布後 0 觀看接案者也照收錢；創作者反覆改稿耗時耗力。\"\n    mental_position: \"昂貴、低效、賭博式外包\"\n\n  paid_ads_meta_tiktok:\n    name: \"官方投流廣告 (Meta Ads / TikTok Ads)\"\n    core_logic: \"競價購買平台公域流量\"\n    price_point: \"CPM NT$ 80 ~ 250，單個名單 (Lead) NT$ 80 ~ 200\"\n    fatal_flaw: \"廣告感極重、觀眾本能滑走；成本隨競價年年攀升，一旦停投流量立即歸零。\"\n    mental_position: \"昂貴的租用流量毒藥\"\n\n  affiliate_and_hu:\n    name: \"海外矩陣裂變 (TikTok Shop Affiliate / Hustler's University)\"\n    core_logic: \"純 CPS 成交分潤 / 先收學費\"\n    price_point: \"0 底薪，成交抽成 5%~20% 或月費 $49\"\n    fatal_flaw: \"創作者承擔所有轉換風險，90% 新手因前期 0 收益而快速放棄；傳銷感重易被視為詐騙。\"\n    mental_position: \"免洗韭菜式分銷\"\n\nwhite_space_opportunity:\n  our_position: \"去中心化成果驗收共創網絡 (Decentralized Bounty Partner)\"\n  defining_difference: \"【不用先付昂貴外包費】✕【不讓創作者 0 收益做白工】✕【滿千觀看加互動即享 $500 保底】✕【爆款階梯加碼平滑 CPM】\"\n  competitive_moat: \"自帶高意圖互動（+1/點擊）的防刷驗收閉環，把每一塊錢行銷預算轉化為真實潛在顧客。\"\n"
+    },
+    "_thinking/00_core/02_ladder_landmines.yaml": {
+      "path": "_thinking/00_core/02_ladder_landmines.yaml",
+      "title": "🧠 02_ladder_landmines (SSOT 母體)",
+      "name": "02_ladder_landmines.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\ncategory: \"短影音創作者外包與行銷獲客生態\"\n\nmental_ladder:\n  legacy_freelance:\n    tier: 1\n    description: \"傳統接案外包 (以工時計費交付 MP4)\"\n    perceived_value: \"昂貴、不可控、業主承擔所有播放風險\"\n  paid_ads:\n    tier: 2\n    description: \"Meta / TikTok 官方廣告投流\"\n    perceived_value: \"租用流量毒藥、廣告感重、停投即死\"\n  pure_cps_affiliate:\n    tier: 3\n    description: \"海外傳銷矩陣 (先收學費或 0 底薪純賭出單)\"\n    perceived_value: \"割韭菜感強、創作者挫折感極高\"\n  resonance_bounty_matrix:\n    tier: 4\n    description: \"去中心化成果驗收共創網絡 (本案)\"\n    perceived_value: \"滿千播放+真實互動即領 $500，爆款指數平滑稀釋，雙贏閉環\"\n\nwhite_space_verdict:\n  physical_vacuum: \"市場缺乏一個兼具『零門檻啟動』與『客觀數據防刷』的去中心化影音外包分發協議。\"\n  mental_vacuum: \"『滿千觀看加互動秒領 $500』在大學生打工心智與品牌主獲客心智中均為絕對空白！\"\n\nlandmines_tree:\n  - id: LM-1\n    risk: \"刷量工作室惡意套利\"\n    mitigation: \"強制綁定留言區真實互動（+1）與後台受眾台灣比例 > 70% 截圖\"\n  - id: LM-2\n    risk: \"文案雷同導致平台判定搬運降權 (Shadowban)\"\n    mitigation: \"提供積木庫而非整支成片，創作者自行實拍或二創\"\n  - id: LM-3\n    risk: \"創作者因主觀退件產生白嫖怨氣\"\n    mitigation: \"AI 大綱 30 秒預審前置，通過即官方背書，達標必撥款\"\n  - id: LM-4\n    risk: \"百萬爆款導致行銷預算穿透\"\n    mitigation: \"單支影片流量獎金上限 $3,500，十萬播放後轉入純 CPS 抽成\"\n"
+    },
+    "_thinking/00_core/03_hypotheses.yaml": {
+      "path": "_thinking/00_core/03_hypotheses.yaml",
+      "title": "🧠 03_hypotheses (SSOT 母體)",
+      "name": "03_hypotheses.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\nhypotheses:\n  track_a_student_gig_disruption:\n    name: \"軌道 A：大學生高時薪斜槓打工顛覆軌 (存量替代)\"\n    core_idea: \"以 1 分鐘短影音滿千領 $500（等效時薪 $475~$1,200）直球擊穿超商/餐飲工讀生時薪 $185 罰站市場。\"\n    target_audience: \"大專院校學生、打工族、青年自媒體初學者\"\n    slogan: \"別再用青春罰站領 185！剪 1 分鐘短影音，滿千播放秒領 $500！\"\n    advantages: \"吸納海量校園優質原創產能，邊際招募成本極低。\"\n\n  track_b_boss_lead_generation:\n    name: \"軌道 B：品牌老闆去中心化成效獲客艦隊軌 (增量顛覆)\"\n    core_idea: \"以『零觀看付 $0 元』與『單個高意圖諮詢名單 $50 元』顛覆傳統昂貴官方投流與賭博式網紅外包。\"\n    target_audience: \"中小企業主、電商創辦人、品牌行銷總監\"\n    slogan: \"不用先砸十萬賭流量！發動百位創作者自建矩陣，每一塊錢只為真實觀看與買家名單買單！\"\n    advantages: \"商業閉環完整，以結果收費，老闆掏錢決策阻力極低。\"\n"
+    },
+    "_thinking/00_core/04_red_team_scores.yaml": {
+      "path": "_thinking/00_core/04_red_team_scores.yaml",
+      "title": "🧠 04_red_team_scores (SSOT 母體)",
+      "name": "04_red_team_scores.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\nred_team_scores:\n  stress_test_vectors:\n    creator_attrition_risk:\n      score: 8.8\n      critique: \"如果前幾支片沒過千，創作者是否會放棄？\"\n      defense: \"提供爆款開頭積木庫，且下一支衝破萬爆款時加碼追溯至 $1,200~$3,500，一次超額補回。\"\n    fraud_bot_attack:\n      score: 9.5\n      critique: \"是否有職業刷子用腳本灌水套利？\"\n      defense: \"雙門禁硬性鎖定：留言區真實 +1 互動 ＋ 後台台灣受眾比例 > 70% 截圖 ＋ 48hr 冷卻期。\"\n    boss_quality_concern:\n      score: 9.0\n      critique: \"素人亂講話是否損害品牌？\"\n      defense: \"AI 腳本大綱 30 秒預審前置，踩違禁詞一票否決；素人真實感轉化率遠高於精緻廣告。\"\n\ndecision_verdict: \"雙軌合一推進：以軌道 A 聚攏百位創作者產能，以軌道 B 承接品牌老闆充沛預算，形成正向飛輪！\"\n"
+    },
+    "_thinking/00_core/05_final_strategy.yaml": {
+      "path": "_thinking/00_core/05_final_strategy.yaml",
+      "title": "🧠 05_final_strategy (SSOT 母體)",
+      "name": "05_final_strategy.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\ndecision_gate_status: \"APPROVED\"\nfinal_strategy:\n  brand_name: \"共鳴創作者計畫 (Resonance Creator Program)\"\n  category_anchor: \"去中心化成果驗收共創網絡\"\n  core_slogan: \"不賣時間罰站，用好內容創造真實共鳴！1分鐘短影音，滿千觀看加互動秒領 $500，爆款單支最高 $3,500 ＋ 永久被動抽成！\"\n  verbal_nail: \"不賣時間罰站，滿千加互動秒領 $500！\"\n  visual_hammer: \"手機入帳 $500 推播通知 ＋ 留言區 +1 刷屏滾動瀑布\"\n  anti_target: \"超商餐飲時薪 185 體力罰站 ✕ 傳統外包改稿白嫖 ✕ 官方投流無底洞\"\n  rtbs:\n    - \"滿千觀看 ＋ 真實互動雙門禁成果保底\"\n    - \"對數平滑階梯稀釋模型，綜合 CPM 壓至 $35\"\n    - \"AI 腳本預審 ＋ 台灣受眾後台截圖防刷體系\"\n"
+    },
+    "_thinking/00_core/strategic_intent.yaml": {
+      "path": "_thinking/00_core/strategic_intent.yaml",
+      "title": "🧠 strategic_intent (SSOT 母體)",
+      "name": "strategic_intent.yaml",
+      "isYaml": true,
+      "raw": "strategic_intent:\n  project_id: \"ugc_bounty_matrix\"\n  program_name: \"共鳴創作者計畫 (Resonance Creator Program)\"\n  created_at: \"2026-11-28\"\n  \n  business_model_canvas:\n    value_proposition: \"去中心化短影音外包分銷網絡：以成果導向、防作弊的『滿千觀看＋有效導流』雙指標取代傳統昂貴且低效的工時外包與盲目投流。\"\n    target_creator_persona:\n      demographics: \"大學生、傳播/影視/行銷系學生、青年斜槓創作者、自媒體個人號主\"\n      pain_points:\n        - \"超商/餐飲工讀時薪低 ($185/hr)，且需固定排班罰站，體力耗竭\"\n        - \"傳統接案市場客戶改稿頻繁、結算拖延、溝通成本巨大\"\n        - \"自建自媒體帳號前期缺乏變現管道，容易熱情磨滅爛尾\"\n      desires:\n        - \"彈性自主工時，一部手機即可開工\"\n        - \"努力與報酬成正比，拍出爆款有高額加碼回報\"\n        - \"自建自媒體頻道資產，名利雙收（流量是自己的、還能拿品牌提成）\"\n\n  dual_sided_positioning:\n    side_a_brand_boss:\n      role_name: \"品牌主 / 企業老闆 (客戶端／買單方)\"\n      core_pain_points:\n        - \"官方投流費用年年飆漲 (CPM $150~$250)，獲客成本失控，停投即死\"\n        - \"傳統網紅/接案外包像買樂透，花數萬只換來幾百播放，外包商交出 MP4 檔案即推諉\"\n        - \"官方單一帳號廣告感極重，消費者滑走率高達 90%，毫無信任度\"\n      value_proposition: \"去中心化成效獲客艦隊：零底薪預付風險，只為『破千真實觀看 ＋ 精準諮詢名單』買單，以 $50 超低單價取得高意圖顧客！\"\n      primary_slogan: \"不用先砸十萬賭流量！發動百位創作者自建矩陣，每一塊錢只為『真實破千觀看＋精準諮詢』買單！\"\n      rtbs:\n        - \"成果導向雙門禁：沒達到 1,000 自然觀看或未產生互動，老闆一毛不拔\"\n        - \"獲客單價鎖定：$500 換 10 個 +1/諮詢 Lead，單個獲客成本 $50，較 Meta 投流省 60%\"\n        - \"爆款紅利全歸品牌：破萬至十萬播放 CPM 稀釋至 $35，享受超額自然流暴擊\"\n      objection_handling: \"擔心素人品質失控？AI 腳本預審與核心彈藥庫鎖死合規與前 3 秒鉤子，既真實又合規！\"\n\n    side_b_creator_student:\n      role_name: \"創作者 / 大學生與青年斜槓 (夥伴端／供給方)\"\n      core_pain_points:\n        - \"超商/餐飲工讀時薪 $185 體力罰站 8 小時，累得像狗且無技能積累\"\n        - \"接案社團業主反覆改稿刁難，最後只賺幾百塊甚至被拖欠跳票\"\n        - \"自己做自媒體卡在幾百播放無法變現，最怕兼職是繳學費/保證金的詐騙\"\n      value_proposition: \"自由高薪影音共創舞台：手機開工、免想腳本、滿千播放加互動秒領 $500，爆款單支最高 $3,500 ＋ 永久抽成！\"\n      primary_slogan: \"告別超商時薪 185 罰站！用你的手機剪 1 分鐘短影音，滿千自然觀看加互動秒領 $500，爆款單支最高 $3,500 ＋ 永久被動抽成！\"\n      rtbs:\n        - \"時薪翻 2.5 ~ 6.5 倍：1 分鐘片耗時 45 分鐘，滿千領 $500 (等效時薪 $475~$1,200)\"\n        - \"客觀數據驗收絕不白嫖：AI 大綱預審通過即背書，達標 48hr 必撥款，不憑老闆主觀審美挑刺\"\n        - \"自建自媒體個人資產：影片發在個人號上，粉絲、權重與長期分潤全歸自己\"\n        - \"終生零收費承諾：免學費、免樣品費、免保證金，真實乾淨的合作\"\n      objection_handling: \"擔心沒破千做白工？短影音基礎流量池 300~500，套用黃金前 3 秒開頭破千是常態；即使未達標也累積個人帳號素材，爆款一次補回！\"\n      pricing_and_economics:\n        plan_a_standard:\n          base_payout_creator: 500 # TWD\n          base_charge_boss: 800 # TWD\n          platform_margin: 300 # TWD (37.5%)\n          qualification_criteria:\n            min_views: 1000\n            verification_rule: \"自然推薦達 1,000 觀看 ＋ 後台截圖台灣受眾 >= 70%（排除假刷量）\"\n            cta_ownership: \"CTA（優惠/引導台詞）由老闆親自決定，創作者保證完整傳達給千人受眾，不考核成交轉換率\"\n          viral_milestones:\n            - views: 10000\n              creator_payout: 1200\n              boss_charge: 1800\n              platform_margin: 600\n              effective_cpm: 180\n            - views: 50000\n              creator_payout: 2500\n              boss_charge: 3800\n              platform_margin: 1300\n              effective_cpm: 76\n            - views: 100000\n              creator_payout: 3500\n              boss_charge: 5000\n              platform_margin: 1500\n              effective_cpm: 50\n          post_100k_mechanism: \"流量賞金封頂，轉入純 CPS 抽成（老闆付 25%~30%，創作者抽 15%~20%，平台淨賺 10%）\"\n\n    verification_and_anti_fraud:\n      step_1_pre_check: \"腳本與大綱 AI 預審（30秒過審制，防止偏離主題與違規）\"\n      step_2_geo_check: \"結算需提供後台截圖，台灣受眾比例需 > 70%\"\n      step_3_intent_check: \"留言區真實性與 ManyChat/專屬碼追蹤，杜絕機器人刷播放量\"\n      step_4_cool_down: \"影片發布後滿 48~72 小時結算，防止瞬間刷量套利\"\n"
+    },
+    "_thinking/cross_industry/cross_industry_model.yaml": {
+      "path": "_thinking/cross_industry/cross_industry_model.yaml",
+      "title": "🧠 cross_industry_model (SSOT 母體)",
+      "name": "cross_industry_model.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"cross_industry\"\nanalyzed_at: \"2026-11-28\"\n\nmutation_analysis:\n  archetype_1_web3_bounties:\n    origin_industry: \"Web3 / 去中心化加密社群\"\n    core_mechanism: \"賞金任務制 (Task Bounties) ＋ 成果鏈上核驗\"\n    borrowed_elements: \"去中心化節點、公開透明任務包、成果達標即觸發智能合約撥款理念\"\n    fatal_flaw_eliminated: \"剔除空氣幣炒作與代幣暴跌風險，改以新台幣現金 48 小時內銀行秒結\"\n\n  archetype_2_tiktok_affiliate_and_hu:\n    origin_industry: \"TikTok Shop Affiliate ✕ Andrew Tate Hustler's University\"\n    core_mechanism: \"矩陣式切片分發 ✕ 個人號推薦裂變\"\n    borrowed_elements: \"百號齊發形成社群真實推薦、長尾 CPS 永久分潤機制\"\n    fatal_flaw_eliminated: \"剔除割韭菜先繳學費機制，剔除純 CPS 導致新手 0 收益的高流失率；以『滿千+互動=$500』提供極致安全感\"\n\n  archetype_3_gig_economy:\n    origin_industry: \"Uber / Foodpanda 零工經濟\"\n    core_mechanism: \"碎片化時間調度 ✕ 任務單元化計酬\"\n    borrowed_elements: \"手機隨時隨地開工、不綁定排班、不限制出片數量\"\n    fatal_flaw_eliminated: \"擺脫風雨日曬體力罰站，升級為高附加價值且累積個人自媒體帳號資產的數位創作勞動\"\n"
+    },
+    "_thinking/jtbd_forces/jtbd_model.yaml": {
+      "path": "_thinking/jtbd_forces/jtbd_model.yaml",
+      "title": "🧠 jtbd_model (SSOT 母體)",
+      "name": "jtbd_model.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"jtbd_forces\"\nanalyzed_at: \"2026-11-28\"\n\nfour_forces:\n  push_of_situation:\n    score: 9.2\n    pains:\n      - id: PUSH-1\n        title: \"超商/外場打工的體力榨取與廉價感\"\n        description: \"時薪僅 NT$ 185，必須連續站立 6~8 小時、搬重物、面對奧客，時間被嚴格綁死，身心俱疲且無技能積累。\"\n      - id: PUSH-2\n        title: \"傳統接案市場的白嫖與無限改稿\"\n        description: \"接案社團單支片開價 $500~$800，業主反覆改色調、字幕三四版，最後結算拖延數週甚至跳票。\"\n      - id: PUSH-3\n        title: \"個人自媒體起號的零收益焦慮\"\n        description: \"自己開帳號剪片發了十幾支，播放量卡在幾百，零變現路徑，找不到持續投入的理由。\"\n\n  pull_of_new:\n    score: 9.5\n    desires:\n      - id: PULL-1\n        title: \"1分鐘滿千秒領 $500 的即時爽感\"\n        description: \"做 1 支 1 分鐘短影音，只要演算法正常推破 1,000 觀看加留言互動，立即領取 $500（超商 2.7 小時工資），48 小時入帳。\"\n      - id: PULL-2\n        title: \"爆款追溯與被動收入夢想\"\n        description: \"破萬加發 $1,200、破五萬加發 $2,500，且享受專屬碼 15%~20% 永久分潤，實現『睡覺時帳號在替我賺錢』。\"\n      - id: PULL-3\n        title: \"自建帳號累積個人自媒體資產\"\n        description: \"不用幫老闆當槍手，影片發在自己的頻道上，粉絲、流量與變現全歸自己所有。\"\n\n  habit_and_inertia:\n    score: 4.5\n    habits:\n      - id: HABIT-1\n        title: \"去既有兼職打工的舒適慣性\"\n        description: \"習慣了去實體店打卡上班的被動勞動模式，雖然累但不需要動腦思考文案與演算法。\"\n\n  anxiety_of_new:\n    score: 5.2\n    anxieties:\n      - id: ANXIETY-1\n        title: \"害怕被白嫖或拍完被退件\"\n        description: \"『如果我拍完了，老闆嫌不好看故意不給錢怎麼辦？』\"\n        countermeasure: \"AI 大綱 30 秒預審機制，審核前置；只要預審過且達標，官方保證撥款。\"\n      - id: ANXIETY-2\n        title: \"害怕是網路詐騙或傳銷\"\n        description: \"『會不會是像 HU 一樣要我先繳學費？』\"\n        countermeasure: \"零收費條款，免保證金、免買樣品，完全透明的成果結算制。\"\n\nverdict:\n  propelling_force: 18.7 # Push (9.2) + Pull (9.5)\n  dragging_force: 9.7 # Habit (4.5) + Anxiety (5.2)\n  net_momentum: 9.0 # 強烈前進動能，市場切入點極其鋒利\n"
+    },
+    "_thinking/market_sizing/census_model.yaml": {
+      "path": "_thinking/market_sizing/census_model.yaml",
+      "title": "🧠 census_model (SSOT 母體)",
+      "name": "census_model.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"market_sizing\"\ncensus_source: \"台灣教育部統計處 112-113 學年度大專校院校務資訊 ✕ 主計總處人力資源普查\"\ncurrency: \"TWD\"\n\ndemographics:\n  total_college_students_tw: 1140000 # 台灣大專院校在學學生總數約 114 萬人\n  part_time_work_ratio: 0.62 # 兼職打工比例約 62% (約 70.6 萬人)\n  media_and_creative_affinity_ratio: 0.28 # 具備剪輯工具使用習慣與自媒體發布意願約 28% (約 19.7 萬人)\n  freelancer_slash_workers_tw: 850000 # 青年斜槓接案族群約 85 萬人\n\nmarket_sizing_calculations:\n  tam_total_addressable_market:\n    description: \"全台灣大專打工族 ＋ 青年斜槓影音創作者母體\"\n    population: 1550000 # 70.6萬工讀生 + 85萬斜槓族\n    annual_potential_gmv: 9300000000 # 假設每人每月有 500 元短影音外包需求/供給，年產值約 93 億 TWD\n\n  sam_serviceable_addressable_market:\n    description: \"活躍於 TikTok / IG Reels / Threads 且具備基礎 CapCut 剪輯能力的創作者供給\"\n    population: 197000 # 核心影音活躍大學生群體\n    annual_market_size: 1182000000 # 每月人均產出 1 支，年產值約 11.8 億 TWD\n\n  som_serviceable_obtainable_market:\n    description: \"計畫啟動 1~2 年內，本平台目標滲透簽約的活躍創作者夥伴 (3%~5% 滲透率)\"\n    active_creators_target: 6000 # 6,000 位核心創作者\n    monthly_videos_per_creator: 6\n    total_monthly_videos: 36000\n    payout_per_video: 500\n    monthly_platform_payout: 18000000 # 每月撥付 1,800 萬 TWD\n    annual_platform_gmv: 216000000 # 年 GMV 達 2.16 億 TWD\n    platform_take_rate_margin: 0.20 # 平台抽成/服務費 20%\n    annual_platform_net_revenue: 43200000 # 平台年淨營收 4,320 萬 TWD\n"
+    },
+    "_thinking/mental_weapons/weapons_matrix.yaml": {
+      "path": "_thinking/mental_weapons/weapons_matrix.yaml",
+      "title": "🧠 weapons_matrix (SSOT 母體)",
+      "name": "weapons_matrix.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"mental_weapons\"\ncreated_at: \"2026-11-28\"\n\nweapons:\n  verbal_nail: \"不賣時間罰站，1 分鐘短影音，滿千觀看加互動秒領 $500！\"\n  visual_hammer: \"手機螢幕跳出的銀行入帳通知 ＋ 留言區被 +1 刷屏的瀑布畫面\"\n  category_name: \"去中心化成果驗收共創網絡 (Decentralized Bounty Partner)\"\n  anti_target: \"超商/外場廉價時薪罰站 ✕ 傳統接案無限改稿被白嫖 ✕ 純CPS分銷做白工\"\n  rtbs:\n    - \"滿千觀看 ＋ 5~10 則真實互動/15次點擊雙門禁保底，單個高意圖 Lead 成本鎖在 $30~$50\"\n    - \"對數平滑階梯稀釋模型，破萬加碼至 $1,200、破十萬至 $3,500，品牌平均 CPM 降至 $35\"\n    - \"AI 腳本大綱 30 秒預審 ＋ 台灣受眾 >70% 截圖驗收，機制級消滅刷量與勞資爭端\"\n  objection_killers:\n    - fear: \"創作者怕拍完被老闆嫌難看故意不給錢\"\n      killer: \"大綱預審通過即官方背書，只要播放滿千且有真實互動，48小時自動撥款，絕不主觀刁難\"\n    - fear: \"品牌主怕花錢買到機器人假播放\"\n      killer: \"強制綁定留言區互動諮詢與後台受眾台灣比例截圖，機器人刷不出真實對話\"\n  social_currency: \"欸我昨天剪了一支 1 分鐘短影音發在自己帳號，剛過 1,000 人看，500 塊真的秒入帳，比在超商站 3 小時爽多了！\"\n  pr_spike: \"『大學生打工革命：超商掀起離職潮？用短影音自然流換取時薪 475 元的共鳴創作者現象』\"\n"
+    },
+    "_thinking/pretotyping_funnel/funnel_model.yaml": {
+      "path": "_thinking/pretotyping_funnel/funnel_model.yaml",
+      "title": "🧠 funnel_model (SSOT 母體)",
+      "name": "funnel_model.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"pretotyping_funnel\"\ncreated_at: \"2026-11-28\"\n\nfunnel_architecture:\n  anti_vanity_rule: \"嚴禁用『純播放量、點讚、表情留言』作為驗收撥款依據，必須具備實質意圖承諾！\"\n  \n  tier_1_gate_ai_pre_check:\n    name: \"開機前 AI 腳本大綱 30 秒預審\"\n    flow: \"創作者透過 LINE Bot 提交『前3秒台詞 ＋ 痛點提綱 ＋ 結尾 CTA』\"\n    criteria:\n      theme_relevance: \">= 80%\"\n      forbidden_keywords: \"0 (嚴禁誇大、色情、侵權、絕對療效)\"\n      hook_structure: \"必須在前 3 秒提出具體衝突或問題\"\n    output: \"通過 (綠燈開拍) / 需修改 (指出具體改進點)\"\n\n  tier_2_gate_distribution_proof:\n    name: \"發布後真實互動與雙門禁驗收\"\n    thresholds:\n      min_views: 1000\n      intent_actions: \"留言區 5~10 則真實 +1/諮詢 或 專屬短鏈 15 次獨立點擊\"\n      geo_distribution: \"後台數據截圖需顯示台灣受眾 >= 70%\"\n      cool_down_period: \"發布後 48~72 小時結算\"\n\n  tier_3_lead_capture:\n    name: \"高意圖私訊自動化 (ManyChat / 專屬碼)\"\n    flow: \"留言區關鍵字觸發自動 DM ➔ 發送專屬領取短鏈 ➔ 落地頁領取優惠或加入官方 LINE\"\n    effective_cpl: \"NT$ 40 ~ $50 / Lead\"\n"
+    },
+    "_thinking/scale_defense/defense_model.yaml": {
+      "path": "_thinking/scale_defense/defense_model.yaml",
+      "title": "🧠 defense_model (SSOT 母體)",
+      "name": "defense_model.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"scale_defense\"\nanalyzed_at: \"2026-11-28\"\n\nseven_powers:\n  counter_positioning:\n    power_name: \"反向定位 (Counter-Positioning)\"\n    strength: \"極強 (9.5/10)\"\n    analysis: \"傳統 4A 廣告代理商與影音代操公司以『收取數十萬高額月費與製作工時』為主營利潤。他們無法跟進本模式，因為一旦轉向『滿千播放＋名單才收費』，會直接摧毀其既有高利潤主業。\"\n\n  network_effects:\n    power_name: \"雙邊網絡效應 (Two-Sided Network Effects)\"\n    strength: \"強 (8.8/10)\"\n    analysis: \"越多的優質學生創作者加入，品牌主能以更低成本取得更多樣化的爆款切角；越多的品牌主開出預算，學生越能在平台上穩定獲得高於超商數倍的收入，形成良性飛輪。\"\n\n  process_power:\n    power_name: \"程序工藝與 AI 質檢防線 (Process Power)\"\n    strength: \"強 (8.5/10)\"\n    analysis: \"自研的 AI 大綱 30 秒預審、三層防刷雙門禁（台灣受眾 >70% 截圖與 48hr 冷卻）機制，構成極高的運營與風控壁壘，外部模仿者極易被職業刷手刷穿預算倒閉。\"\n\n  switching_costs:\n    power_name: \"創作者管道綁定與轉換成本 (Switching Costs)\"\n    strength: \"中高 (7.8/10)\"\n    analysis: \"創作者在平台上累積的專屬導流碼與長尾 CPS 被動抽成資產，讓核心創作者具備極高的留存黏性，不願輕易轉移到其他 0 保底平台。\"\n\ntoc_bottleneck_audit:\n  primary_bottleneck: \"爆款突然湧現時的後台人工核銷與撥款摩擦\"\n  mitigation: \"推動自動化金流 API 串接與 ManyChat 關鍵字自動認證，將核銷效率提升至 95% 自動化。\"\n"
+    },
+    "_thinking/unit_economics/economics_model.yaml": {
+      "path": "_thinking/unit_economics/economics_model.yaml",
+      "title": "🧠 economics_model (SSOT 母體)",
+      "name": "economics_model.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"unit_economics\"\ncalculated_at: \"2026-11-28\"\n\ncreator_economics:\n  hourly_benchmark_taiwan: 185 # TWD (便利商店/餐飲基本工資)\n  creator_tiers:\n    novice_casual:\n      hours_per_week: 2\n      videos_per_month: 4\n      views_distribution:\n        pass_1k: 3\n        fail_1k: 1\n        viral_10k: 0\n        viral_50k: 0\n      conversions_per_month: 2\n      earnings:\n        base_milestone: 1500 # 3 * 500\n        viral_bonus: 0\n        cps_commission: 400 # 2 * 200\n        total_monthly: 1900\n      effective_hourly_wage: 475 # 1900 / 4 hrs = 2.56x minimum wage\n    \n    skilled_part_timer:\n      hours_per_week: 5\n      videos_per_month: 10\n      views_distribution:\n        pass_1k: 7\n        fail_1k: 1\n        viral_10k: 2\n        viral_50k: 0\n      conversions_per_month: 10\n      earnings:\n        base_milestone: 4500 # 9 * 500\n        viral_bonus: 1400 # 2 * (1200 - 500)\n        cps_commission: 2000 # 10 * 200\n        total_monthly: 7900\n      effective_hourly_wage: 790 # 7900 / 10 hrs = 4.27x minimum wage\n\n    power_creator:\n      hours_per_week: 10\n      videos_per_month: 18\n      views_distribution:\n        pass_1k: 10\n        fail_1k: 1\n        viral_10k: 5\n        viral_50k: 2\n      conversions_per_month: 35\n      earnings:\n        base_milestone: 8500 # 17 * 500\n        viral_bonus: 6100 # 5 * 700 + 2 * (2500 - 1200)\n        cps_commission: 7000 # 35 * 200\n        total_monthly: 21600\n      effective_hourly_wage: 1200 # 21600 / 18 hrs = 6.48x minimum wage\n\nbrand_unit_economics:\n  campaign_comparison_100k_budget:\n    traditional_agency:\n      budget: 100000 # TWD\n      deliverables: \"10 支短影音 MP4 檔案交付 (單支 $10,000)\"\n      guaranteed_views: 0 # 無保證播放\n      leads_generated: \"未知 / 取決於自行發布運氣\"\n      risk_borne_by: \"品牌老闆承擔 100% 暴死風險\"\n    \n    meta_paid_ads:\n      budget: 100000 # TWD\n      cpm_average: 180 # TWD\n      impressions: 555555\n      cpl_average: 120 # 單個名單 $120\n      leads_generated: 833\n      long_tail_value: 0 # 停投立刻歸零\n      social_proof: \"0 (純贊助廣告標籤，易引起反感)\"\n\n    ugc_bounty_matrix_our_model:\n      budget: 100000 # TWD\n      mechanism: \"只為滿千播放 ＋ 互動名單買單 ($500/支)\"\n      base_qualified_videos: 140 # 假設 140 支達成基礎門檻\n      viral_bonuses_paid: 30000 # 預留爆款加碼基金\n      estimated_total_views: \"800,000 ~ 1,500,000 (含破萬與五萬爆款自然流)\"\n      blended_cpm: 66.6 # 100,000 / 1,500,000 * 1000 = $66.6 TWD\n      leads_generated: \"1,600 ~ 2,500 個高意圖留言 +1 / 諮詢名單\"\n      effective_cpl: 45.0 # 單個名單約 $40 ~ $50\n      long_tail_value: \"永久沉澱在全台 100+ 個素人創作者帳號上，持續產生被動自然流量\"\n      social_proof: \"極高 (百人真實推薦，杜絕官方自嗨)\"\n  lead_generation_funnel:\n    base_milestone_1k:\n      cost: 500 # TWD\n      views: 1000\n      intent_actions: 10 # 留言+1 或 點擊\n      cost_per_lead_cpl: 50 # 500 / 10\n      cpm: 500\n      equivalent_meta_lead_cost: 120 # Meta 投流平均名單成本\n      savings_percentage: \"58.3%\"\n\n    viral_10k:\n      cost: 1200\n      views: 10000\n      intent_actions: 80\n      cost_per_lead_cpl: 15\n      cpm: 120\n      savings_percentage: \"87.5%\"\n\n    viral_50k:\n      cost: 2500\n      views: 50000\n      intent_actions: 350\n      cost_per_lead_cpl: 7.14\n      cpm: 50\n      savings_percentage: \"94.0%\"\n\n    viral_100k:\n      cost: 3500\n      views: 100000\n      intent_actions: 600\n      cost_per_lead_cpl: 5.83\n      cpm: 35\n      savings_percentage: \"95.1%\"\n"
+    },
+    "_thinking/web_translation/web_model.yaml": {
+      "path": "_thinking/web_translation/web_model.yaml",
+      "title": "🧠 web_model (SSOT 母體)",
+      "name": "web_model.yaml",
+      "isYaml": true,
+      "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"web_translation\"\ntranslation_rules:\n  invisible_brain_rule: \"落地頁中嚴禁出現特勞特、心智階梯、語言釘子、視覺錘、JTBD 等幕後商業黑話，全數溶解為大白話、直球利益與 FAQ！\"\n  pages_planned:\n    creator_recruitment_page:\n      title: \"共鳴創作者計畫 ‧ 官方招募主頁\"\n      target_audience: \"大學生、自媒體新手、青年斜槓打工族\"\n      hero_headline: \"別再用青春罰站領 185！剪 1 分鐘短影音，滿千觀看加互動秒領 $500，爆款單支最高 $3,500！\"\n    brand_boss_landing_page:\n      title: \"共鳴去中心化獲客系統 ‧ 品牌企業主解決方案\"\n      target_audience: \"中小企業主、電商創辦人、品牌行銷總監\"\n      hero_headline: \"不用先砸十萬賭流量！發動百位素人創作者自建矩陣，每一塊錢只為『真實破千觀看＋精準買家諮詢』買單！\"\n"
+    },
+    "input.yaml": {
+      "path": "input.yaml",
+      "title": "🧠 input (SSOT 母體)",
+      "name": "input.yaml",
+      "isYaml": true,
+      "raw": "# 共鳴創作者計畫 (Resonance Creator Program) / UGC 賞金分銷矩陣專案規格輸入\nproject_id: \"ugc_bounty_matrix\"\nbrand_name: \"共鳴創作者計畫 (Resonance Creator Program)\"\nproject_type: \"NEW_INNOVATION\" # 去中心化短影音外包分銷矩陣與賞金協同網路\n\n# 地理邊界與市場座標\ngeography:\n  country: \"TW\"\n  market_scope: \"NATIONAL\"\n  target_regions: [\"全台灣\", \"各大專院校\", \"青年斜槓社群\"]\n  currency: \"TWD\"\n  language: \"zh-TW\"\n\n# 啟用模組配置\nmodules:\n  enable_market_sizing: true        # 校園與斜槓短影音外包創作者市場規模測算\n  enable_jtbd_forces: true          # 創作者（打工抗拒 vs 自由創作）與品牌主痛點推拉力\n  enable_unit_economics: true       # 1,000 播放保底 + 導流 CAC 臨界線與邊際 CPM 測算\n  enable_mental_weapons: true       # 8 大心智作戰武器庫與創作者彈藥庫腳本\n  enable_pretotyping_funnel: true   # 行動承諾驗證與雙向防刷機制\n  enable_scale_defense: true        # 去中心化矩陣防禦壁壘 (7 Powers)\n  enable_cross_industry: true       # 跨界借鏡 (Web3 Bounties ✕ TikTok Affiliate ✕ 零工經濟)\n  enable_web_translation: true      # 創作者招募官方門戶轉譯\n\n# 核心商業模式與定位架構\ncore_positioning:\n  product_name: \"共鳴創作者計畫 (Resonance Creator Program)\"\n  positioning_architecture: \"去中心化 UGC 帳號矩陣 ✕ 成果驗收保底 ✕ 爆款指數稀釋\"\n  primary_slogan: \"不賣時間罰站，用好內容創造真實共鳴！1 分鐘短影音，滿千自然觀看加互動現領 $500，爆款單支最高 $3,500 ＋ 永久導流分潤。\"\n  value_proposition: \"打破傳統短影音外包高預付款、交付拖延與效果未知之黑洞。透過標準化彈藥庫（前 3 秒鉤子＋痛點積木）、AI 前置審核質檢與『1,000 觀看 ＋ 有效導流互動』成果結算機制，建立低邊際成本、高轉換率之去中心化品牌推薦網絡。\"\n  \n  pricing_structure:\n    plan_a_standard:\n      name: \"方案 A：滿千 500 保底 ✕ 爆款階梯加碼\"\n      creator_base_payout: 500 # TWD\n      boss_base_charge: 800 # TWD\n      platform_base_margin: 300 # TWD (毛利率 37.5%)\n      base_milestone:\n        views: 1000\n        qualification: \"自然推薦達 1,000 觀看 ＋ 後台截圖台灣受眾 >= 70%（徹底排除海外假刷量）\"\n        cta_responsibility: \"CTA（優惠誘因/引導字詞）完全由老闆自定；創作者負責完整播報給千人受眾，不考核成交轉換率\"\n      viral_tier_1:\n        views: 10000\n        creator_cumulative: 1200 # 補差額 $700\n        boss_cumulative: 1800 # 補差額 $1,000\n        platform_margin: 600\n        effective_cpm: 180\n      viral_tier_2:\n        views: 50000\n        creator_cumulative: 2500 # 補差額 $1,300\n        boss_cumulative: 3800 # 補差額 $2,000\n        platform_margin: 1300\n        effective_cpm: 76\n      viral_tier_3:\n        views: 100000\n        creator_cumulative: 3500 # 封頂加發 $1,000\n        boss_cumulative: 5000 # 封頂加付 $1,200\n        platform_margin: 1500\n        effective_cpm: 50\n      cps_commission:\n        description: \"10 萬觀看後流量費用封頂，轉入純 CPS 抽成：老闆付 25%~30%，創作者抽 15%~20%，平台淨賺 10%\"\n\n# 迭代紀錄\niteration_history:\n  - date: \"2026-11-28\"\n    phase: \"PHASE_00_PROJECT_INIT\"\n    decision: \"正式確立專案 ugc_bounty_matrix。定調對外品牌為『共鳴創作者計畫』，確立『滿千觀看＋有效導流』雙指標防刷結算模型與階梯指數稀釋財務曲線。\"\n"
+    },
+    "modules/cross_industry/01_target_recon.md": {
+      "path": "modules/cross_industry/01_target_recon.md",
+      "title": "跨界突變升維分析報告 (Cross-Industry Mutation Report)",
+      "name": "01_target_recon.md",
+      "isYaml": false,
+      "raw": "# 跨界突變升維分析報告 (Cross-Industry Mutation Report)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/cross_industry/cross_industry_model.yaml`](../../_thinking/cross_industry/cross_industry_model.yaml)  \n> **模組狀態**：突變完成  \n> **核心目標**：**高價值目標界三大篩選漏斗與心智真空探測**  \n> **核心結論**：**吸取 Web3 賞金之透明、TikTok 矩陣之裂變、外送零工之靈活，在目標界中徹底剔除三者的詐騙與剝削弊端，雜交出全新物種！**\n\n---\n\n## 1. 三大跨界物種基因雜交模型\n\n```mermaid\nflowchart TD\n    classDef w3 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#111827;\n    classDef tt fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#111827;\n    classDef gig fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#111827;\n    classDef our fill:#fce4ec,stroke:#c2185b,stroke-width:3px,color:#111827;\n\n    W3[\"1. Web3 Bounties (加密賞金)<br/>• 借其: 成果達標即撥款之透明機制<br/>• 剔除: 虛擬空氣幣與審核黑箱\"]:::w3\n    TT[\"2. TikTok 矩陣 / HU (切片裂變)<br/>• 借其: 去中心化多號開花與 CPS 抽成<br/>• 剔除: 先繳學費傳銷感與純賭運氣\"]:::tt\n    GIG[\"3. Uber / 外送 (零工經濟)<br/>• 借其: 手機隨時隨地開工的極致自由<br/>• 剔除: 體力罰站與無技能積累\"]:::gig\n\n    W3 & TT & GIG --> OUR[\"【本案新物種】共鳴創作者計畫<br/>• 現金成果保底 ($500)<br/>• 爆款指數平滑 (最高 $3,500)<br/>• 終生零收費 + 個人自媒體資產留存\"]:::our\n```\n\n---\n\n## 2. 跨界突變優勢對比矩陣\n\n| 跨界對象 | 原始行業的死穴 (Deadly Flaws) | 本案突變升維後的解決方案 (Mutation Edge) |\n| :--- | :--- | :--- |\n| **Web3 Bounties** | 發放代幣容易歸零、提現門檻高、審核黑箱常跳票。 | **新台幣真金白銀**：達標後 48 小時內銀行直接匯款入帳。 |\n| **TikTok Affiliate / HU** | 新手前期 0 收益挫折感極大（90% 流失）、先收會費被視為詐騙。 | **降低承諾門檻**：不賭終端下單，只要「滿千＋留言互動」即保底 $500；**終生零收費**贏得信任。 |\n| **Uber / 外送工讀** | 日曬雨淋、有交通事故風險、時薪固定鎖死在 $185。 | **室內數位創作**：一部手機開工，換算實質時薪 $475~$1,200，且為自己累積百萬播放與粉絲個人資產。 |\n"
+    },
+    "modules/cross_industry/02_capability_bridge.md": {
+      "path": "modules/cross_industry/02_capability_bridge.md",
+      "title": "跨界能力逆向整合度與非對稱防禦橋接 (Capability Bridge)",
+      "name": "02_capability_bridge.md",
+      "isYaml": false,
+      "raw": "# 跨界能力逆向整合度與非對稱防禦橋接 (Capability Bridge)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/cross_industry/cross_industry_model.yaml`](../../_thinking/cross_industry/cross_industry_model.yaml)  \n\n---\n\n## 🌉 跨界能力逆向整合度評估 (Fit Index ≥ 4.0)\n\n本專案跨界突變之成敗，取決於能否將「Web3 的公開賞金激勵」、「TikTok 的矩陣裂變切片」與「零工經濟的無拘束」無縫焊接：\n\n| 跨界借鏡構件 | 本業核心實力之橋接能力 | 整合度評分 (1~5分) | 評定理由與防禦紅線 |\n| :--- | :--- | :---: | :--- |\n| **賞金雙門禁驗證** | 自研 AI 30 秒大綱質檢 ＋ 後台受眾數據審核流程 | **4.9 分** | 徹底杜絕 Web3 的審核黑箱與空氣幣，以新台幣現金 48 小時內秒結。 |\n| **矩陣自建帳號裂變** | 模組化彈藥庫（30 組開頭鉤子 ＋ 痛點積木） | **4.8 分** | 創作者無需自行構思劇本，降低動工門檻，且避開搬運被降權的陷阱。 |\n| **高意圖自動私訊** | ManyChat 關鍵字自動觸發 ＋ 專屬領取短鏈 | **4.7 分** | 解決短影音難以直接放可點擊外鏈的平台限制，打造順暢轉化閉環。 |\n\n> **綜合整合度評分**：**4.8 分**（遠超 4.0 分門檻），確認該跨界突變高度可行，絕非生硬硬湊！\n"
+    },
+    "modules/cross_industry/03_category_naming.md": {
+      "path": "modules/cross_industry/03_category_naming.md",
+      "title": "跨界目標界新品類命名與測謊方案 (Category Naming & Testing)",
+      "name": "03_category_naming.md",
+      "isYaml": false,
+      "raw": "# 跨界目標界新品類命名與測謊方案 (Category Naming & Testing)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/cross_industry/cross_industry_model.yaml`](../../_thinking/cross_industry/cross_industry_model.yaml)  \n\n---\n\n## 🏷️ 目標界新品類命名轉譯\n\n嚴禁在市場上自稱「影音剪輯代操」或「分銷聯盟」，必須在目標界語境中確立新身份：\n\n*   **品類新名稱**：**「去中心化成果驗收共創網絡 (Decentralized Bounty Partner)」**\n*   **品類心智定位**：\n    - 在創作者心智中：**「不賣時間罰站、滿千有保底的自媒體成長舞台」**\n    - 在品牌主心智中：**「零觀看不給錢、每一分錢只買買家名單的獲客艦隊」**\n\n---\n\n## 🧪 零代碼預售測謊路線圖\n\n1. **第 1 階段：種子創作者招募測謊**\n   - 在 Dcard / 大學生社群發布「1 分鐘短影音滿千領 $500」招募貼文，目標 48 小時內吸引 20 位學生報名加入。\n2. **第 2 階段：首批 10 支影片實測測謊**\n   - 投產 10 支影片，驗證是否有 3 支以上突破 1,000 播放，並產生至少 30 則留言 +1 互動。\n3. **第 3 階段：品牌主商業閉環測謊**\n   - 拿這 10 支實測數據向中小企業主提案 NT$ 38,000 種子包，測出老闆真實掏錢付費意願！\n"
+    },
+    "modules/jtbd_forces/01_jtbd_pain_matrix.md": {
+      "path": "modules/jtbd_forces/01_jtbd_pain_matrix.md",
+      "title": "JTBD 痛點剛度與前進動力分析報告 (JTBD Forces Matrix)",
+      "name": "01_jtbd_pain_matrix.md",
+      "isYaml": false,
+      "raw": "# JTBD 痛點剛度與前進動力分析報告 (JTBD Forces Matrix)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/jtbd_forces/jtbd_model.yaml`](../../_thinking/jtbd_forces/jtbd_model.yaml)  \n> **模組狀態**：審定通過  \n> **判決結論**：**前進動能 18.7 >> 阻力 9.7 (淨動能 +9.0)！痛點極度真實，具備瞬間擊穿大學生打工市場之爆發力！**\n\n---\n\n## 1. 顧客前進四力動能模型 (The Four Forces Engine)\n\n```mermaid\nflowchart TD\n    classDef push fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#111827;\n    classDef pull fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#111827;\n    classDef habit fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#111827;\n    classDef anxiety fill:#ede7f6,stroke:#4527a0,stroke-width:2px,color:#111827;\n\n    subgraph PROPELLING [\"【前進推動力】總分: 18.7 (極強攻破性)\"]\n        F_PUSH[\"1. 現狀痛苦推力 (Push: 9.2)<br/>• 超商餐飲時薪 $185 罰站體力榨取<br/>• 傳統接案業主無限改稿與拖欠款項<br/>• 個人起號 0 變現之無力感\"]:::push\n        F_PULL[\"2. 新品類吸引力 (Pull: 9.5)<br/>• 1分鐘片滿千+互動秒領 $500 現金<br/>• 破萬爆款追溯至 $3,500 ＋ 永久抽成<br/>• 自建自媒體帳號，流量全歸自己\"]:::pull\n    end\n\n    subgraph DRAGGING [\"【後退阻力】總分: 9.7 (可控摩擦)\"]\n        F_HABIT[\"3. 既有習慣重力 (Habit: 4.5)<br/>• 習慣不動腦的被動打工排班打卡\"]:::habit\n        F_ANXIETY[\"4. 嘗新焦慮摩擦 (Anxiety: 5.2)<br/>• 怕拍完被老闆主觀挑刺白嫖<br/>• 怕是網路傳銷/要先繳保證金\"]:::anxiety\n    end\n\n    PROPELLING -. \"淨動力差額 +9.0 (碾壓切換)\" .-> DRAGGING\n```\n\n---\n\n## 2. 核心痛點 (Push) 轉化為短影音致命開頭 Hook 庫\n\n本模組提取之創作者真實痛點，直接轉化為招募宣傳與短影音前 3 秒核彈級鉤子：\n\n| 痛點代號 | 現狀痛苦情境 (Push Context) | 招募宣傳 / 前 3 秒鉤子文案 (Hook) |\n| :--- | :--- | :--- |\n| **HOOK-1** | 痛恨超商餐飲罰站 8 小時換取微薄時薪 | **「別再用青春去超商罰站領 185 了！在家剪 1 分鐘短影音，滿千播放現拿 $500！」** |\n| **HOOK-2** | 痛恨接案市場業主反覆改稿、白嫖創意 | **「接案剪輯改了 5 次只賺你幾百塊？這裡免改稿，只要演算法破千、有互動，48小時自動撥款！」** |\n| **HOOK-3** | 想做自媒體卻不知道怎麼變現 | **「你的短影音只會拿來刷？自建個人號，用官方彈藥庫拍片，流量是你的，還能拿高額現金獎！」** |\n\n---\n\n## 3. 阻力拆除機制 (Anxiety Killers)\n\n為了將後退阻力從 9.7 降至接近於 0，官方設立**雙重防空飛彈**：\n1. **消滅白嫖焦慮**：建立 **Step 2 AI 大綱 30 秒預審**。大綱過了就是官方背書，只要達標 48 小時內必撥款，絕不事後挑刺。\n2. **消滅傳銷焦慮**：承諾 **「終生零收費」**，不收教材費、不用買樣品、不繳保證金，徹底贏得大學生社群信任。\n"
+    },
+    "modules/market_sizing/02_market_size_census.md": {
+      "path": "modules/market_sizing/02_market_size_census.md",
+      "title": "官方普查與商業規模測算報告 (Market Sizing Census Report)",
+      "name": "02_market_size_census.md",
+      "isYaml": false,
+      "raw": "# 官方普查與商業規模測算報告 (Market Sizing Census Report)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/market_sizing/census_model.yaml`](../../_thinking/market_sizing/census_model.yaml)  \n> **模組狀態**：測算完成  \n> **數據來源**：台灣教育部統計處大專校院校務統計 ✕ 主計總處青年勞動與斜槓普查  \n\n---\n\n## 1. 商業規模三級測算模型 (TAM / SAM / SOM)\n\n```mermaid\nflowchart TD\n    classDef tam fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#111827;\n    classDef sam fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#111827;\n    classDef som fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#111827;\n\n    TAM[\"1. TAM (全台大專打工族 ＋ 斜槓影音創作者)<br/>• 創作者總母體: 155 萬人<br/>• 宏觀短影音潛在年產值: NT$ 93 億元\"]:::tam\n    --> SAM[\"2. SAM (具備手機剪輯能力且渴望靈活高薪之核心群體)<br/>• 核心活躍大學生群體: 19.7 萬人<br/>• 年外包可服務產值: NT$ 11.8 億元\"]:::sam\n    --> SOM[\"3. SOM (啟動 1~2 年目標簽約活躍夥伴)<br/>• 平台活躍創作者: 6,000 位<br/>• 年撮合交付影片: 43.2 萬支<br/>• 平台年交易額 (GMV): NT$ 2.16 億元<br/>• 平台年營收 (20% 服務抽成): NT$ 4,320 萬元\"]:::som\n```\n\n---\n\n## 2. 雙邊市場供需規模撮合推演\n\n### (1) 供給端（大學生打工池）：\n- 台灣大專在學生約 114 萬人，工讀打工比例高達 62%（約 70.6 萬人）。\n- 其中超過 28%（約 19.7 萬人）平時即有使用 CapCut/剪映、IG Reels 發短影音之習慣。\n- **結論**：供給端池子極大，只要「滿千領 $500」的即時兌現口碑在校園社群傳開，獲取創作者的邊際成本極低。\n\n### (2) 需求端（中小企業與品牌主獲客池）：\n- 台灣中小企業超過 160 萬家，其中至少 20 萬家急需透過短影音獲取新客。\n- 只要有 500~1,000 家品牌主每月撥出 2~5 萬元的獲客預算，即可完全吃下數千名創作者的產能，達到 **供需平衡且高利潤運轉**。\n"
+    },
+    "modules/mental_weapons/06_brand_channel_ip.md": {
+      "path": "modules/mental_weapons/06_brand_channel_ip.md",
+      "title": "品牌頻道 IP 矩陣 ✕ 三大直球欄目 ✕ 敏捷開機 SOP (Brand Channel IP)",
+      "name": "06_brand_channel_ip.md",
+      "isYaml": false,
+      "raw": "# 品牌頻道 IP 矩陣 ✕ 三大直球欄目 ✕ 敏捷開機 SOP (Brand Channel IP)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/mental_weapons/weapons_matrix.yaml`](../../_thinking/mental_weapons/weapons_matrix.yaml)  \n\n---\n\n## 📺 三大直球欄目規劃 (The 3 Pillar Formats)\n\n為了讓全台創作者矩陣在演算法上持續獲得推薦，官方設計三大定位鮮明的常態欄目：\n\n### 欄目 1：【超商逃離日記】（打造學生斜槓打工標竿 IP）\n*   **定位**：專門記錄年輕人「如何用短影音技能替代體力勞動」的真實成長歷程。\n*   **更新頻率**：每週 2~3 支。\n*   **內容主線**：曬收益截圖、分享開頭 3 秒鉤子心得、採訪同學加入後的改變。\n*   **吸睛標籤**：`#大學生打工` `#短影音變現` `#拒絕超商罰站` `#共鳴計畫`\n\n### 欄目 2：【真假神器測謊局】（打造客觀好物推薦 IP）\n*   **定位**：站在消費者視角「替大家實測排雷、找出真正寶藏神器」。\n*   **更新頻率**：每週 1~2 支。\n*   **內容主線**：拿市售痛點產品與合作產品對比，暴力實測，最後給出良心評價並發放專屬折扣。\n*   **吸睛標籤**：`#好物推薦` `#生活神器` `#避坑指南` `#真實開箱`\n\n### 欄目 3：【30秒避坑小課堂】（打造專業乾貨與教學 IP）\n*   **定位**：快速輸出實用技巧與省錢攻略。\n*   **更新頻率**：每週 3 支。\n*   **內容主線**：極短快節奏乾貨，引發觀眾收藏與轉發。\n\n---\n\n## 👤 創作者角色卡體系 (Creator Persona Cards)\n\n官方引導創作者認領的三大角色定位（不用每個人都一樣）：\n\n| 角色卡代號 | 角色人設名稱 | 核心說話語氣與視覺特徵 | 適合發揮的型態 |\n| :--- | :--- | :--- | :--- |\n| **IP-A** | **「耿直大膽的打工大學生」** | 說話接地氣、帶點幽默自嘲、真實不做作，代表廣大學生發聲。 | 型態 P-1（生活反差）、型態 P-3（微短劇） |\n| **IP-B** | **「毒舌理性的實測學長/姐」** | 凡事講求數據、討厭智商稅、專挑產品缺點講，信任度極高。 | 型態 P-2（暴力實測）、型態 P-4（避坑乾貨） |\n| **IP-C** | **「低調神秘的剪輯技術宅」** | 不露臉、只靠神級卡點節奏與 AI 旁白說話，畫面極致絲滑。 | 型態 P-5（無臉錄屏 AI 剪輯） |\n\n---\n\n## 🚀 創作者 1~4 週敏捷開機 SOP (Agile Onboarding)\n\n*   **第 1 週（破冰起跑）**：\n    - 領取官方專屬身分代碼與 30 組標題庫。\n    - 挑選【型態 P-1】或【型態 P-3】發布前 2 支影片，達成人生第一筆 $500 元成果獎金。\n*   **第 2 週（數據微調）**：\n    - 檢視後台留存率，由 AI 預審微調前 3 秒開頭鉤子。\n    - 留言區部署自動私訊（ManyChat），將互動率提升至 10 人以上。\n*   **第 3 週（衝刺爆款）**：\n    - 嘗試【型態 P-2 暴力實測】，追逐演算法第一波破萬推薦，解鎖 $1,200 累計賞金。\n*   **第 4 週（被動分潤期）**：\n    - 帳號權重提升，建立專屬標籤，開啟長尾 CPS 訂單抽成，每月享有持續被動現金流。\n"
+    },
+    "modules/mental_weapons/06_creative_archetypes.md": {
+      "path": "modules/mental_weapons/06_creative_archetypes.md",
+      "title": "創作者實拍型態庫 ✕ 微短劇故事重構 ✕ 發射載體 ✕ CTA 積木庫 (Creative Archetypes)",
+      "name": "06_creative_archetypes.md",
+      "isYaml": false,
+      "raw": "# 創作者實拍型態庫 ✕ 微短劇故事重構 ✕ 發射載體 ✕ CTA 積木庫 (Creative Archetypes)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/mental_weapons/weapons_matrix.yaml`](../../_thinking/mental_weapons/weapons_matrix.yaml)  \n> **使用對象**：簽約合作創作者、大學生兼職夥伴、自媒體號主  \n> **核心定位**：**短影音心智武器之獨立實拍發射載體**  \n\n---\n\n## 🎭 P-1~P-5 五大實拍創作型態庫 (The 5 Creative Archetypes)\n\n為了讓創作者不卡關、不離題，官方提供五種可直接對照演出的實拍型態：\n\n### 【型態 P-1：真實生活反差型（適合學生日常日常）】\n*   **視覺符號**：宿舍書桌、泡麵、剛下課的書包。\n*   **敘事結構**：從「超商打工累成狗」或「月底吃土」切入 ➔ 拿出一支手機開始剪輯 ➔ 手機震動跳出 $500 入帳推播 ➔ 真實驚喜神情。\n*   **完播心法**：前 3 秒禁止任何廣告感，完全是朋友聊天視角，真實感拉滿。\n\n### 【型態 P-2：產品暴力實測拆解型（適合好物與神器推廣）】\n*   **視覺符號**：桌面乾淨、特寫鏡頭、強烈對比道具。\n*   **敘事結構**：提出一般市售產品的 3 大坑點 ➔ 拿出推薦神器一秒解決 ➔ 畫面特寫操作流暢度 ➔ 觀眾看完立即被種草。\n*   **完播心法**：用快節奏剪輯配卡點音效，15 秒內完成「質疑 ➔ 實測 ➔ 打臉 ➔ 臣服」心理曲線。\n\n### 【型態 P-3：微短劇反轉型（高完播率之王）】\n*   **角色設定**：兩個學生（室友 A：剛從手搖飲打工下班滿身大汗；室友 B：在床上優雅吹冷氣玩手機）。\n*   **劇情衝突**：\n    - A 抱怨：「今天又被奧客搞，站了 4 小時才賺七百塊，累死了……你怎麼整天躺著還有錢叫外送？」\n    - B 微笑把手機給 A 看：「因為我剛剪完一支 1 分鐘短影音，系統剛撥款 500 給我。」\n    - A 驚呼：「真的假的？！教我！」\n    - B 轉向鏡頭：「想要領彈藥庫的，留言區留【+1】我發給你！」\n\n### 【型態 P-4：乾貨避坑與逆向教學型（適合知識與自媒體個人號）】\n*   **視覺符號**：綠幕背景、圖文高亮圈選、口播語速明快。\n*   **敘事結構**：「90% 的人都不知道這個省錢密碼」➔ 拆解官方活動與優惠漏洞 ➔ 指引領取路徑。\n\n### 【型態 P-5：無臉錄屏 AI 解說型（適合不想露臉的創作者）】\n*   **視覺符號**：高畫質螢幕錄製 ＋ AI 擬真人聲配音 ＋ 醒目卡點花字字幕。\n*   **敘事結構**：直球演示軟體/工具/產品使用前後對比，零社交負擔開工。\n\n---\n\n## 🧱 萬用直球 CTA 積木庫 (Call-To-Action Blocks)\n\n影片最後 5 秒必須強制套用以下三組直球積木之一，杜絕「謝謝觀看」的無效結尾：\n\n1. **【互動導流型積木】**：\n   > **「想要領取完整清單/優惠券的，不要到處找了，直接在留言區留【+1】，我私訊發給你！」**\n2. **【主頁外鏈型積木】**：\n   > **「限時折扣碼我放在個人主頁第一條連結，點進去直接現折 200，手慢就搶完了！」**\n3. **【兼職招募型積木】**：\n   > **「別再問我怎麼加入的，留言區留【我想做】，官方彈藥庫直接免費私訊發你！」**\n\n---\n\n## ✅ 創作者開機自我檢核表 (Pre-Flight Checklist)\n\n創作者按下「錄影鍵」前必須自檢的四大指標：\n- [ ] 前 3 秒是否出現明確衝突、痛點或數字？（嚴禁自我介紹）\n- [ ] 聲音是否清晰、環境無嘈雜噪音？\n- [ ] 結尾是否包含明確的 CTA 指令（留+1 或點主頁）？\n- [ ] 腳本大綱是否已通過 AI 預審（未踩誇大、醫療療效等違禁紅線）？\n"
+    },
+    "modules/mental_weapons/06_mental_weapons_kit.md": {
+      "path": "modules/mental_weapons/06_mental_weapons_kit.md",
+      "title": "特勞特定位 8 大心智武器庫實戰手冊 (Mental Weapons Kit)",
+      "name": "06_mental_weapons_kit.md",
+      "isYaml": false,
+      "raw": "# 特勞特定位 8 大心智武器庫實戰手冊 (Mental Weapons Kit)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/mental_weapons/weapons_matrix.yaml`](../../_thinking/mental_weapons/weapons_matrix.yaml)  \n> **模組狀態**：實戰就緒  \n> **核心定位**：**去中心化短影音外包分銷矩陣 ✕ 成果驗收保底 ✕ 爆款指數稀釋**\n\n---\n\n## 🎯 8 大心智武器總覽架構\n\n```mermaid\nflowchart TD\n    subgraph MindEntry [\"大腦進入層 (1~3 秒)\"]\n        W1[\"1. 語言釘子 (Verbal Nail)<br/>不賣時間罰站，1分鐘短影音，滿千加互動秒領 $500！\"]\n        W2[\"2. 視覺錘 (Visual Hammer)<br/>手機跳出入帳通知 ＋ 留言區 +1 刷屏瀑布\"]\n        W3[\"3. 品類新坐標 (Category Name)<br/>去中心化成果驗收共創網絡\"]\n    end\n\n    subgraph MindBattle [\"心智對決層 (3~10 秒)\"]\n        W4[\"4. 戰略公敵標靶 (Anti-Position)<br/>打倒超商罰站廉價工 ✕ 傳統外包改稿白嫖\"]\n        W5[\"5. 三大硬核信任狀 (The 3 RTBs)<br/>成果保底 ✕ 爆款稀釋 ✕ AI 預審防刷棧\"]\n        W6[\"6. 致命異議爆破彈 (Objection Killer)<br/>大綱預審通過即背書，達標48hr必撥款！\"]\n    end\n\n    subgraph MindSpread [\"口碑與傳播層 (自主裂變)\"]\n        W7[\"7. 市井轉述口金句 (Social Currency)<br/>『昨天發一支滿千人看，500元秒入帳，比超商好賺太多！』\"]\n        W8[\"8. 公關新聞引爆點 (PR Spike)<br/>『大學生打工革命：超商離職潮與短影音共創現象』\"]\n    end\n```\n\n---\n\n### 武器 1：語言釘子 (Verbal Nail)\n> **「不賣時間罰站，用好內容創造真實共鳴！1 分鐘短影音，滿千自然觀看加互動現領 $500，爆款單支最高 $3,500 ＋ 永久導流分潤！」**\n*   **作戰目的**：直接把「超商打工罰站」與「短影音現賺 500」做強烈反差，1 秒扎入大學生與斜槓族心智。\n\n### 武器 2：視覺錘 (Visual Hammer)\n*   **超級符號**：**「左邊是銀行/街口入帳 $500 元的推播通知，右邊是短影音留言區觀眾瘋狂留言『+1、已私訊』的滾動瀑布」**。\n*   **心智暗示**：這不是虛無縹緲的畫大餅，而是看得見的真金白銀與熱烈反饋。\n\n### 武器 3：品類新坐標 (Category Anchor)\n*   **新品類名**：**去中心化成果驗收共創網絡 (Decentralized Bounty Partner)**\n*   **借用認知**：告別傳統「按工時外包」的剝削與「純 CPS 分銷」的零底薪，建立「有保底成果驗收、爆款加碼分享」的新物種。\n\n### 武器 4：戰略公敵標靶 (Anti-Positioning)\n*   **三大公敵**：\n    1. 超商/餐飲工讀生時薪 185 元的被動體力罰站。\n    2. 傳統接案業主反覆刁難改稿、結算拖延的白嫖行徑。\n    3. 海外傳銷式矩陣先收創作者學費、0 成交即 0 收入的割韭菜行為。\n\n### 武器 5：三大硬核信任狀 (Reason to Believe, RTB)\n1. **成果保底雙門禁**：滿 1,000 觀看 ＋ 5~10 則真實互動/15次點擊，直接鎖定單個高意圖名單成本在 $30~$50。\n2. **對數平滑階梯稀釋**：1k ($500) ➔ 10k ($1,200) ➔ 50k ($2,500) ➔ 100k ($3,500 封頂)，品牌平均 CPM 降至 $35 元。\n3. **AI 預審機制**：30 秒大綱質檢，開機前確認合規；結算配合後台受眾台灣 >70% 截圖，杜絕一切假流量。\n\n### 武器 6：致命異議爆破彈 (Objection Killer)\n*   **創作者最大恐懼**：「我拍完了，老闆挑刺說不好看故意不給錢怎麼辦？」\n*   **直球擊碎話術**：\n    > **「我們只做客觀數據驗收，絕不憑老闆主觀審美退件！只要你的大綱通過 Step 2 AI 預審，且發布後達到 1,000 播放與基本互動，48 小時內系統自動撥款，絕不刁難！」**\n\n### 武器 7：市井轉述社交金句 (Social Currency)\n*   **大學生向同學炫耀的口語**：\n    > **「欸，我昨天剪了一支 1 分鐘影片發在自己 IG，剛破千人看，500 塊真的秒入帳！比在飲料店搖飲料搖 3 個小時爽太多了，你要不要也來做？」**\n\n### 武器 8：公關新聞引爆點 (PR Spike)\n*   **新聞話題引爆**：\n    > **《大學生打工新常態：超商掀起逃離潮？用短影音自然流換取時薪 475 元的共鳴創作者生態》**\n\n---\n\n## 👔 特別加收：面向品牌老闆 (Boss) 商務洽談銷售戰鬥卡 (Sales Battlecard)\n\n當面對企業主、中小企業老闆提案本合作時，直接調用以下四大封喉話術：\n\n1. **破冰話術（打碎傳統投流信仰）**：\n   > 「老闆，現在 Meta 廣告費越來越貴、買名單一個都要一百多塊，而且停投流量就死。我們這套計畫不是叫你花大錢買廣告，而是幫你發動全台灣幾十位素人創作者，在他們自己的帳號幫你推薦。重點是：**影片沒達到 1,000 播放、沒帶來留言互動，你一毛錢都不用付！**」\n2. **信任防禦（消除品質擔憂）**：\n   > 「你一定會擔心學生亂拍。我們有自研的 **AI 腳本預審系統**，開機前就把開頭鉤子、產品利益點和法規紅線鎖死，既保留素人的真誠真實感，又保證商業訴求精準傳達。」\n3. **終局算盤（算帳給老闆看）**：\n   > 「你撥 5 萬元預算，可以買到 100 支達標的短影音、至少 10 萬次自然真實曝光，而且直接帶來 500~1,000 個留言 +1 的真實買家名單！換算下來一個潛在客戶只要 $50 塊。而且只要裡面爆了 2 支破萬影片，所有的超額自然流量全都白送給你！」\n"
+    },
+    "modules/mental_weapons/06_video_testing_scripts.md": {
+      "path": "modules/mental_weapons/06_video_testing_scripts.md",
+      "title": "創作者實戰彈藥庫 ‧ 30 組直球標題庫與口播腳本深稿 (Video Testing Scripts)",
+      "name": "06_video_testing_scripts.md",
+      "isYaml": false,
+      "raw": "# 創作者實戰彈藥庫 ‧ 30 組直球標題庫與口播腳本深稿 (Video Testing Scripts)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **使用對象**：簽約合作創作者、大學生斜槓夥伴、自媒體號主  \n> **規格標準**：前 3 秒強鉤子 ✕ 痛點共鳴 ✕ 解決方案 ✕ 留言區直球 CTA  \n> **核心資產**：**官方 30 組核心標題庫與實拍腳本**\n\n---\n\n## 💥 30 條直球開頭黃金鉤子與標題庫清單 (The 30 Golden Hooks)\n\n### 分類 A：打工抗拒與時薪對比類（針對大學生/兼職族）\n1. 「如果你還在超商罰站 8 小時賺 185，請立刻把這支影片看完！」\n2. 「這是我大學打工做過最爽的一份工作，在家剪 1 分鐘片現賺 500。」\n3. 「別再用青春去搖飲料了！教你用手機零成本做出能領薪水的短影音。」\n4. 「時薪 185 vs 1分鐘賺 500，聰明的大學生早就這樣選了。」\n5. 「為什麼我們學校越來越多同學，開始不想去外包接案了？」\n6. 「花 1 小時看劇，跟花 1 小時剪片現領 500，你選哪一個？」\n7. 「這家公司居然只要影片破 1,000 人看就直接發錢，是不是搞慈善？」\n8. 「室友問我為什麼都不出門上班，卻每週都有錢吃大餐？」\n9. 「算筆帳給你看：在超商罰站一整天，還不如剪兩支好影片。」\n10. 「拒絕當廉價工讀生！大學生用自媒體賺第一桶金的真實路徑。」\n\n### 分類 B：產品神器與真實體驗類（針對觀眾導流）\n11. 「這是我今年用過最相見恨晚的神器，早知道 3 年前就該買了！」\n12. 「千萬別隨便買這個，因為用過之後你就再也回不去了。」\n13. 「如果你的生活常常遇到這個爛問題，花 10 秒看我怎麼解決。」\n14. 「全網都在推的這個東西到底是不是智商稅？我實測給你看。」\n15. 「後悔沒有早點發現！這個小東西幫我省下了整整 3 個小時。」\n16. 「身邊朋友都在問我這到底是什麼黑科技？今天一次說清楚。」\n17. 「如果你跟我一樣痛恨這件事，那你一定要試試看這個方法。」\n18. 「花小錢解決大麻煩！連我媽用了都說讚的生活必備好物。」\n19. 「被問了 800 次的秘密終於公開了，記得先點讚收藏免得找不到。」\n20. 「這不是業配，這是我自己掏錢買了三次還在用的寶藏產品。」\n\n### 分類 C：乾貨避坑與逆向思維類（針對高轉化觀眾）\n21. 「90% 的人都不知道，其實只要改掉這個習慣就能省下一大筆錢！」\n22. 「如果你正在找解決方案，聽我一句勸：先別急著花大錢。」\n23. 「實話實說！市面上同類產品這麼多，為什麼我只認準這一家？」\n24. 「這是我花了 3,000 塊買教訓才總結出來的經驗，免費告訴你。」\n25. 「別再傻傻踩坑了！三招教你挑出最適合自己的真正好貨。」\n26. 「這款神作到底是怎麼做到評價一面倒的？看完你就懂了。」\n27. 「如果你每個月都在為這件事煩惱，這支影片就是為你拍的。」\n28. 「花 30 秒學會這一招，讓你少走 3 個月彎路。」\n29. 「很多人問我差在哪裡？今天直接上對比給你看，一目了然！」\n30. 「想要徹底搞定這個問題？看這一支影片就完全足夠了！」\n\n---\n\n## 🎬 兩套標準 60 秒四層口播實拍深稿範本\n\n### 範本 1：【大學生兼職共鳴型口播深稿】（吸引更多人加入或建立真實信任）\n\n| 秒數 | 鏡頭畫面 | 口播台詞 (逐字稿) | 心智作用 |\n| :--- | :--- | :--- | :--- |\n| **0~3s** | 手機直接自拍，背景在宿舍或書桌，手上晃著剛領到的入帳通知。 | 「別再用青春去超商罰站領 185 了！在家剪 1 分鐘片，滿千播放現拿 500 塊！」 | **視覺錘＋語言釘子**：打破傳統時薪認知。 |\n| **4~15s** | 鏡頭切換到手機剪映/CapCut 畫面，快速滑動幾段素材。 | 「以前我也在飲料店打工，站到腳底筋膜炎一個月才賺那一萬多塊。後來朋友介紹我這個夥伴計畫，官方直接提供現成文案和開頭積木，你只要用自己手機拍幾段、剪一剪發在自己的 IG 或 TikTok。」 | **Push 痛點共鳴**：喚醒體力打工的委屈與疲累。 |\n| **16~40s** | 鏡頭回到真人，展示後台數據突破 1,000 觀看的畫面。 | 「重點來了！他不用你百萬粉絲，只要演算法正常推薦過 1,000 觀看，而且留言區有人問你怎麼買，500 塊直接入帳！如果運氣好被推上破萬爆款，獎金還能一路加到三千多，而且影片是留在你自己的頻道上，粉絲流量全算你的！」 | **RTB 信任狀展示**：可達成的門檻與巨大回報。 |\n| **41~60s** | 鏡頭直視觀眾，手指指向下方留言區。 | 「別再懷疑是不是詐騙了，完全不用繳保證金、不用買教材！想要領取官方彈藥庫和詳細規則的，直接在留言區留【+1】，我私訊把懶人包發給你！」 | **直球 CTA**：觸發留言互動與 ManyChat 導流閉環。 |\n\n---\n\n### 範本 2：【生活好物痛點直球型口播深稿】（針對產品銷售與名單導流）\n\n| 秒數 | 鏡頭畫面 | 口播台詞 (逐字稿) | 心智作用 |\n| :--- | :--- | :--- | :--- |\n| **0~3s** | 特寫狼狽痛苦表情，桌面上一團混亂或遇到麻煩的特寫。 | 「如果你每天也在為這件事抓狂，求求你花 10 秒看我怎麼搞定！」 | **前 3 秒強鉤子**：直擊日常具體痛點。 |\n| **4~18s** | 鏡頭展示原本舊方法的痛苦、費時、浪費錢。 | 「以前為了解決這個問題，我買了一堆號稱好用的工具，結果全部是智商稅，不是用兩次就壞，就是步驟超級繁瑣，真的越用越火大！」 | **Push 痛點加深**：喚醒花冤枉錢的憤怒。 |\n| **19~42s** | 拿出推薦產品，展示一秒解決問題的絲滑過程。 | 「直到上週室友推給我這個神器，直接一鍵搞定！不用複雜設定，拿起來就能用，我原本要弄半小時的事情，現在 3 分鐘搞定，整個下午時間都多出來了！」 | **Pull 新品類爽感**：展示對比強烈的解決方案。 |\n| **43~60s** | 產品拿在胸前，另一手指向螢幕下方。 | 「現在官方有限時優惠活動，還能免費領試用！想知道是哪一款的，留言區留【+1】或點我個人主頁第一條連結，專屬折扣碼也在那裡，快去看看！」 | **直球 CTA**：拉動留言區 +1 與主頁 Bio 點擊。 |\n"
+    },
+    "modules/pretotyping_funnel/06_skin_in_the_game.md": {
+      "path": "modules/pretotyping_funnel/06_skin_in_the_game.md",
+      "title": "行動承諾與微型測謊漏斗模組報告 (Skin in the Game & Anti-Fraud Funnel)",
+      "name": "06_skin_in_the_game.md",
+      "isYaml": false,
+      "raw": "# 行動承諾與微型測謊漏斗模組報告 (Skin in the Game & Anti-Fraud Funnel)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/pretotyping_funnel/funnel_model.yaml`](../../_thinking/pretotyping_funnel/funnel_model.yaml)  \n> **模組狀態**：實戰就緒  \n> **核心哲學**：**徹底封殺虛榮指標——用「AI 30 秒預審 ＋ 雙門禁意圖承諾 ＋ 後台受眾截圖」建立不可作弊的防刷漏斗！**\n\n---\n\n## 1. 三級行動承諾防刷漏斗架構 (The 3-Tier Commitment Ladder)\n\n```mermaid\nflowchart TD\n    classDef l1 fill:#ffebee,stroke:#c62828,stroke-width:1px,color:#111827;\n    classDef l2 fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#111827;\n    classDef l3 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#111827;\n\n    L1[\"階梯 1: 虛榮指標 (嚴禁單獨撥款！)<br/>• 純播放量、點讚、純愛心表情 ➔ 刷量工作室 20 元即可刷滿，零商業價值！\"]:::l1\n    --> L2[\"階梯 2: 行為與隱私承諾 (解鎖 $500 門檻)<br/>• 滿 1,000 自然播放 ＋ 留言區 5~10 則真實『+1 / 詢價』<br/>• 後台數據截圖：台灣受眾比例 >= 70%\"]:::l2\n    --> L3[\"階梯 3: 貨幣與訂單承諾 (終極爆款與分潤)<br/>• 觀眾透過創作者專屬折扣碼完成下單 ➔ 創作者享 15%~20% 永久分潤！\"]:::l3\n```\n\n---\n\n## 2. 核心落地：AI 30 秒大綱質檢 Prompt 標準規格\n\n創作者在開機前，於 LINE 官方帳號輸入其腳本大綱，系統背後之後台 LLM 質檢規則：\n\n```text\n【系統角色】\n你是「共鳴創作者計畫」的 AI 內容質檢官。你的任務是在 30 秒內審核創作者提交的 1 分鐘短影音大綱，判定是否放行開機。\n\n【審核輸入】\n1. 前 3 秒開頭台詞\n2. 影片核心痛點與解決方案\n3. 結尾行動呼籲 (CTA)\n\n【評分標準卡 (滿分 100，>= 80 放行)】\n1. 前 3 秒鉤子 (30%): 是否具備衝突感、數字對比或強烈提問？（平淡自我介紹直接給 0 分）\n2. 痛點與賣點真實性 (30%): 是否符合官方彈藥庫之核心價值？有無離題？\n3. 直球 CTA 設計 (20%): 是否有明確提醒觀眾「留言區留+1」或「點主頁連結領專屬優惠」？\n4. 合規與紅線檢測 (20%): 嚴禁色情低俗、誇大療效、侵權爭議或絕對化保證（踩線一票否決）\n\n【輸出格式】\n- 判定結果：【🟢 審核通過，准予開拍】 或 【🟡 建議調整】\n- 具體微調建議（若未通過，需給予 1~2 句直接可用的改進文案）\n```\n\n---\n\n## 3. 測謊與撥款三色信號燈判決卡 (Traffic Light Matrix)\n\n| 信號燈級別 | 創作者提報數據特徵 | 系統後台判定結論 | 處置動作 |\n| :--- | :--- | :--- | :--- |\n| 🔴 **紅燈 (作弊或無效)** | 播放數 > 1,000，但留言為 0 或全為機器人純表情；後台台灣受眾 < 50%。 | **判定為外部刷量工作室灌水** | 駁回撥款，提醒創作者更換為自然流內容；累犯 2 次列入黑名單。 |\n| 🟡 **黃燈 (內容瑕疵)** | 播放數 > 3,000，但留言區僅 1~2 則互動，點擊率 < 0.5%。 | **有流量但 CTA 吸引力不足** | 發放基本 $300 補貼，輔導創作者調整結尾鉤子。 |\n| 🟢 **綠燈 (真金白銀)** | 播放數 >= 1,000，留言區有 5 則以上「+1/想了解」，台灣受眾 > 70%。 | **真實高意圖轉換閉環確立！** | **48 小時內秒撥 $500 打工金**，後續爆款加碼持續追溯！ |\n"
+    },
+    "modules/scale_defense/07_moat_and_fulfillment.md": {
+      "path": "modules/scale_defense/07_moat_and_fulfillment.md",
+      "title": "履約瓶頸排查與 7 Powers 防禦壁壘報告 (Scale Readiness & 7 Powers)",
+      "name": "07_moat_and_fulfillment.md",
+      "isYaml": false,
+      "raw": "# 履約瓶頸排查與 7 Powers 防禦壁壘報告 (Scale Readiness & 7 Powers)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/scale_defense/defense_model.yaml`](../../_thinking/scale_defense/defense_model.yaml)  \n> **模組狀態**：防禦就緒  \n> **核心結論**：**反向定位（Counter-Positioning）形成天然絕緣牆——傳統廣告代理商就算眼紅也無法模仿，因為會直接摧毀其高額月費主業！**\n\n---\n\n## 1. 7 Powers 商業壁壘審查矩陣 (Hamilton Helmer 7 Powers)\n\n```mermaid\nflowchart TD\n    classDef moat fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#111827;\n    classDef op fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#111827;\n\n    subgraph DEFENSE [\"【7 Powers 結構性護城河】\"]\n        M1[\"1. 反向定位 (Counter-Positioning) ➔ 傳統影音代操無法跟進 (自傷高利潤主業)\"]:::moat\n        M2[\"2. 雙邊網絡效應 (Network Effects) ➔ 創作者與品牌雙向飛輪鎖定\"]:::moat\n        M3[\"3. 程序工藝防禦 (Process Power) ➔ AI 30秒預審與三層防刷技術棧\"]:::moat\n        M4[\"4. 轉換成本 (Switching Costs) ➔ 創作者專屬碼長尾被動 CPS 資產綁定\"]:::moat\n    end\n\n    subgraph FULFILLMENT [\"【TOC 履約抗崩潰檢驗】\"]\n        O1[\"瓶頸排查：單月達標影片破千支時，核銷與對帳可能塞車\"]:::op\n        O2[\"交付極簡化：ManyChat API 自動對接 ＋ 批量金流轉帳 SOP\"]:::op\n    end\n\n    DEFENSE --- FULFILLMENT\n```\n\n---\n\n## 2. 巨頭為何不敢模仿？反向定位（Counter-Positioning）深度拆解\n\n市場上資金雄厚的傳統 4A 廣告代理商或大型影音代操工作室，為什麼無法輕易抄死我們？\n\n1. **商業模式內在衝突**：\n   - 傳統代理商的利潤建立在「向客戶收取固定高額製作費（一支 $15,000~$30,000）與月度服務費」。\n   - 如果他們宣布「一支只收 $500，且沒達到 1,000 播放一毛不收」，他們原有的高毛利大客戶會立刻質疑既有合約，**跟進模仿等於直接砍死自己的金牛業務**。\n2. **組織基因與成本結構不同**：\n   - 傳統公司養了大量全職企劃、攝影師、剪輯師，固定人事成本極高，必須靠高單價合約支撐。\n   - 本案走的是「輕資產、去中心化素人矩陣 ＋ AI 預審平台化」，固定邊際成本趨近於零，具備天然的定價破壞力。\n\n---\n\n## 3. TOC 履約瓶頸排查 (Constraint Management)\n\n當去中心化矩陣在全台灣校園快速裂變，單月合格影片達到 500~1,000 支時，系統可能面臨的崩潰點與防範措施：\n\n| 潛在瓶頸 (Bottleneck) | 壓力測試情境 (Stress Test) | 預防與解除措施 (SOP) |\n| :--- | :--- | :--- |\n| **後台對帳與轉帳塞車** | 每月 500 筆 $500 元小額撥款，人工匯款手續繁瑣且易出錯。 | 導入企業批量轉帳（街口支付/Line Pay/網銀批次上傳），審核通過一鍵批次撥付。 |\n| **假名單惡意灌水 (Spam)** | 創作者請朋友狂刷留言「+1」洗名單。 | 規定名單必須經過 ManyChat 自動私訊領取「實名折扣碼」或留下有效聯絡方式才計入有效 Lead。 |\n| **品牌主產品斷貨風險** | 單支影片衝上 10 萬觀看，爆發瞬間訂單，老闆無法交貨。 | 在入駐合約中明確庫存預警線，一旦爆單，該創作者影片轉向「早鳥候補登記」。 |\n"
+    },
+    "modules/unit_economics/02_breakeven_cap.md": {
+      "path": "modules/unit_economics/02_breakeven_cap.md",
+      "title": "單元經濟模型與獲客破產臨界線測算 (Unit Economics Report)",
+      "name": "02_breakeven_cap.md",
+      "isYaml": false,
+      "raw": "# 單元經濟模型與獲客破產臨界線測算 (Unit Economics Report)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/unit_economics/economics_model.yaml`](../../_thinking/unit_economics/economics_model.yaml)  \n> **模組狀態**：審計完成  \n> **核心指標**：**CAC Cap 獲客成本上限防線 ✕ 保本轉換率臨界點 ✕ 邊際貢獻測算**  \n> **核心結論**：**雙贏防線——創作者享有 2.5x ~ 6.5x 超商時薪；品牌獲客 CAC 鎖死在 $5.8 ~ $50 元，確保保本並較官方競價投流節省 58% ~ 95% 預算！**\n\n---\n\n## 1. 創作者收益與時薪矩陣分析 (Creator Side)\n\n傳統學生打工（便利商店、手搖飲、餐飲外場）目前法定基本時薪為 **NT$ 185 元**，且必須承擔固定排班、通勤與高強度體力耗損。\n\n在「共鳴創作者計畫」中，熟練創作者製作 1 支 1 分鐘短影音（包含套用官方彈藥庫、拍攝/剪輯/AI配音、發布）平均耗時 **45 ~ 60 分鐘**。\n\n### 創作者三級收益測算表：\n\n| 創作者等級與投入程度 | 月產出量 (每週工時) | 流量表現分佈假設 | 基礎達成金 ($500) | 爆款階梯加碼 | 導流 CPS 抽成 ($200/單) | **預估每月總收入** | **實質等效時薪** (對比工讀 $185) |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n| **新手兼職 / 試水溫** | 4 支 (每週 1 小時) | 3 支滿 1k、1 支未滿 | $1,500 | $0 | 帶來 2 單 ($400) | **NT$ 1,900** | **NT$ 475 / hr** (2.56 倍) |\n| **熟練創作者 / 穩定副業** | 10 支 (每週 2.5 小時) | 7 支滿 1k、2 支破萬、1 支未滿 | $4,500 | $1,400 (破萬補貼) | 帶來 10 單 ($2,000) | **NT$ 7,900** | **NT$ 790 / hr** (4.27 倍) |\n| **爆款收割機 / 核心夥伴** | 18 支 (每週 4.5 小時) | 10 支滿千、5 支破萬、2 支大爆 (50k+) | $8,500 | $6,100 (高額爆款加碼) | 帶來 35 單 ($7,000) | **NT$ 21,600** | **NT$ 1,200 / hr** (6.48 倍) |\n\n> **創作者心理價值確立**：即使是新手，做 1 支片滿千觀看拿到 $500，換算時薪也是超商的 2.5 倍以上；一旦產出爆款，時薪直接破千元，具備極強的長期留存黏性。\n\n---\n\n## 2. 品牌主獲客成本與邊際 CPM 指數稀釋模型 (Brand Side)\n\n品牌主最大的恐懼是「當冤大頭買了假流量」或「被爆款穿透預算」。以下為品牌端在各階段流量下的真實財務指標：\n\n```mermaid\nxychart-beta\n    title \"影片觀看數 vs 品牌每千次展示成本 (CPM)\"\n    x-axis [\"1,000 觀看\", \"10,000 觀看\", \"50,000 觀看\", \"100,000 觀看\"]\n    y-axis \"平均 CPM (TWD)\" 0 --> 550\n    bar [500, 120, 50, 35]\n```\n\n### 品牌獲客指標對比表：\n\n| 流量里程碑 ($V$) | 品牌累計支出 ($TWD$) | 帶來的真實意圖動作 (Leads) | 單個名單獲取成本 (CPL) | 品牌平均 CPM | 對比 Meta 投流平均名單成本 ($120/Lead) |\n| :--- | :--- | :--- | :--- | :--- | :--- |\n| **1,000 觀看** | **$500** | **10 個 (+1 或點擊)** | **$50.0 / 名單** | **$500** | **現省 58.3%**（兼買到原創影片） |\n| **10,000 觀看** | **$1,200** | **80 個** | **$15.0 / 名單** | **$120** | **現省 87.5%** |\n| **50,000 觀看** | **$2,500** | **350 個** | **$7.14 / 名單** | **$50** | **現省 94.0%** |\n| **100,000 觀看** | **$3,500** (封頂) | **600 個** | **$5.83 / 名單** | **$35** | **現省 95.1%** |\n\n---\n\n## 3. 業界四大行銷管道 10 萬元殘酷基準對比 (Industry Benchmark Battle)\n\n當品牌老闆手握 **NT$ 100,000 元行銷預算** 時，投入四種不同管道的真實獲客投報率（ROI）橫向基準對比：\n\n| 評估維度 | 管道 1：傳統影音代操 / 接案外包 | 管道 2：找 KOL / 網紅業配 | 管道 3：Meta / TikTok 官方廣告投流 | **管道 4：共鳴創作者計畫 (本案)** |\n| :--- | :--- | :--- | :--- | :--- |\n| **10 萬元買到什麼？** | 買到 5~8 支剪好的 MP4 檔案 | 買到 1~2 位萬粉網紅發 1 支片 | 買到約 50 萬次冷冰冰的廣告曝光 | **買到 80~100 支原創影片 ＋ 百位素人自建帳號真實推薦** |\n| **觀看數保證機制** | **0 保證**<br>(發布後只有 30 人看，外包商照收 10 萬) | **0 保證**<br>(網紅只負責發，若被演算法埋沒算你倒楣) | 依競價展示<br>(花完就沒了) | **雙門禁保證**<br>**(沒達到 1,000 播放 ＋ 互動，該支影片老闆付 $0 元！)** |\n| **獲取潛在客戶成本<br>(Cost Per Lead, CPL)** | 無法預估<br>(通常 > $200 / 名單) | 極高且難以追蹤<br>(通常 > $300 / 名單) | 約 **NT$ 120 ~ $180 / 名單**<br>(點進來常是誤觸路人) | **僅 NT$ 40 ~ $50 / 名單**<br>**(留言區主動喊「+1/想買」的高意圖精準買家)** |\n| **長尾資產累積** | 零<br>(死在自己沒人看的新帳號) | 差<br>(網紅過兩天就發新業配，被迅速洗掉) | **停投立刻歸零**<br>(像吸毒一樣不能停) | **永久留在全台百位創作者頻道**<br>(長尾自然搜尋＋持續被動出單) |\n| **消費者信任度** | 差（官方自賣自誇） | 差（觀眾一眼看出接業配） | 極差（「贊助」標籤，本能直接滑走） | **極高（素人生活真實體驗，社群信任感最強）** |\n| **預算風險誰承擔？** | **老闆承擔 100% 虧損風險** | **老闆承擔 100% 虧損風險** | **老闆承擔競價波動風險** | **【風險倒置】未達標我們負責，老闆只為真實成效買單！** |\n\n---\n\n## 4. 平台收費表 vs 創作者支出表利潤模型 (Platform Margin Architecture)\n\n作為平台營運樞紐，平台賺取的是**獲客服務價差 ＋ 爆款溢價 ＋ 後續長尾 CPS 抽成**：\n\n### (1) 單支影片階梯利潤對照表：\n\n| 流量與成效里程碑 | 1. 向品牌老闆收取 (Revenue) | 2. 支付給創作者 (Payout) | 3. 平台單支毛利 (Gross Profit) | 4. 平台毛利率 | 商業邏輯與利潤支撐 |\n| :--- | :--- | :--- | :--- | :--- | :--- |\n| **首發達標 (1k 播放 + 互動)** | **NT$ 800 元** | **NT$ 500 元** | **＋NT$ 300 元** | **37.5%** | 基礎撮合、AI 預審與客觀防刷質檢費 |\n| **破萬爆款 (10,000 觀看)** | **NT$ 1,800 元** | **NT$ 1,200 元** (累計) | **＋NT$ 600 元** | **33.3%** | 爆款流量溢價 (老闆獲萬次曝光 CPM 僅 $180) |\n| **五萬大爆款 (50,000 觀看)**| **NT$ 3,800 元** | **NT$ 2,500 元** (累計) | **＋NT$ 1,300 元** | **34.2%** | 全網擴散紅利 (帶來 350+ 名單，單支利潤破千) |\n| **十萬神作 (100,000 觀看)**| **NT$ 5,000 元** | **NT$ 3,500 元** (封頂) | **＋NT$ 1,500 元** | **30.0%** | 頂級爆款封頂，之後流量不再加收 |\n| **後續真實成交 (CPS 抽成)**| **收取商品銷售額 25%~30%** | **分潤給創作者 15%~20%** | **淨賺 10% 佣金** | **10% 淨提成** | 爆款影片長期留存，長尾被動現金流 |\n\n### (2) 品牌主月度專案打包收費方案：\n\n*   **方案 A：【種子測水溫專案包】（破冰首選）**\n    - **收費**：**NT$ 38,000 元**\n    - **交付保證**：交付 **30 支**滿千觀看＋有互動影片（未達標免費補拍或退款），預估 30,000+ 曝光 ＋ 150~300 個真實諮詢名單。\n    - **平台支出**：創作者底金 $15,000 ＋ 爆款儲備 $5,000 ＝ $20,000\n    - **👉 平台單案淨利**：**NT$ 18,000 元（淨利率 47.3%）**\n*   **方案 B：【品牌矩陣突圍包】（主力方案）**\n    - **收費**：**NT$ 98,000 元**\n    - **交付保證**：交付 **80 支**達標影片 ＋ 3~5 支破萬爆款，預估 150,000~300,000 曝光 ＋ 800~1,500 個真實名單。\n    - **平台支出**：創作者底金 $40,000 ＋ 爆款加碼 $15,000 ＝ $55,000\n    - **👉 平台單案淨利**：**NT$ 43,000 元（淨利率 43.8%）**\n*   **方案 C：【全網霸屏旗艦包】（大品牌大促）**\n    - **收費**：**NT$ 250,000 元**\n    - **交付保證**：交付 **200 支**達標影片 ＋ 多支 5 萬、10 萬大爆款，預估 800,000~1,500,000 曝光 ＋ 2,000+ 高意圖名單。\n    - **平台支出**：創作者底金 $100,000 ＋ 爆款加碼 $40,000 ＝ $140,000\n    - **👉 平台單案淨利**：**NT$ 110,000 元（淨利超過 11 萬元！）**\n\n---\n\n## 5. 獲客破產臨界線與安全邊際結論 (Breakeven Verdict)\n\n1. **底線安全邊際 (Downside Floor)**：\n   - 就算最慘狀況——創作者全部剛好卡在 1,000 觀看，品牌也是以 **$50 元/名單** 取得高意圖潛在客戶，同時還獲得了合法可二創的原創影片素材（市價 $1,000+）。\n2. **天花板爆款暴擊 (Upside Ceiling)**：\n   - 一旦出現 5 萬、10 萬大爆款，獲客成本雪崩式下跌至 **$5.8 元/名單**，CPM 壓低至 **$35 元**。\n   - 10 萬觀看後流量獎金封頂，完全轉入 CPS（有成交才分潤），徹底消滅預算黑洞。\n"
+    },
+    "modules/web_translation/08_high_converting_landing_page.md": {
+      "path": "modules/web_translation/08_high_converting_landing_page.md",
+      "title": "雙邊品牌受眾轉化落地頁規劃手冊 (Web Translation Architecture)",
+      "name": "08_high_converting_landing_page.md",
+      "isYaml": false,
+      "raw": "# 雙邊品牌受眾轉化落地頁規劃手冊 (Web Translation Architecture)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/web_translation/web_model.yaml`](../../_thinking/web_translation/web_model.yaml)  \n> **模組狀態**：規劃完成  \n> **鐵律遵循**：**大腦隱形，受眾心動！0% 定位理論黑話，100% 直擊受眾靈魂的大白話轉化動線！**\n\n---\n\n## 📱 門戶 A：面向創作者與大學生（招募轉化動線）\n\n*   **Hero 首屏大標題**：\n    > **「別再用青春罰站領 185！剪 1 分鐘短影音，滿千觀看加互動秒領 $500，爆款單支最高 $3,500！」**\n*   **Hero 視覺錘**：手機入帳 $500 元推播通知截圖 ＋ 留言區「+1」刷屏動態效果。\n*   **四大免疑慮承諾徽章**：\n    1. 🟢 **終生 0 費用**：不用繳保證金、不用買教材、不推銷任何軟體。\n    2. 🟢 **免想文案**：官方提供 30 組爆款開頭鉤子與腳本積木。\n    3. 🟢 **絕不白嫖**：AI 預審通過即背書，達標 48 小時內銀行直接撥款。\n    4. 🟢 **資產全歸你**：影片發在個人號，粉絲與長期抽成分潤全是你的。\n*   **直球行動按鈕 (CTA)**：【立即領取官方彈藥庫，開啟第一支 $500 挑戰】（點擊跳轉 LINE 官方預審 Bot）。\n\n---\n\n## 👔 門戶 B：面向企業主與品牌老闆（獲客提案動線）\n\n*   **Hero 首屏大標題**：\n    > **「告別官方投流無底洞！發動百位素人自建矩陣，每一分錢只為『真實破千播放＋高意圖買家諮詢』買單！」**\n*   **四大業界殘酷基準橫向對比表 (對比傳統外包、網紅、Meta 投流)**：\n    - 展示 10 萬元預算下，本案如何以 $40~$50 超低名單單價帶回 1,600~2,500 個真實諮詢名單（較 Meta 投流省 60% 以上）。\n*   **三大算盤刀法話術**：\n    1. **算風險**：零觀看、零互動，老闆付 $0 元！\n    2. **算單價**：官方名單一個 $120~$180，本案只需 $40~$50。\n    3. **算暴擊**：百位素人同時下場，爆發 5 萬、10 萬超額爆款流量全白送給老闆！\n*   **核心品控保障**：\n    - 展示「AI 腳本預審」如何確保素人影片 100% 傳達品牌訴求，嚴禁虛假誇大。\n*   **零風險試水溫 Offer**：\n    - **【NT$ 38,000 種子測水溫專案】**：保證交付 30 支滿千觀看＋有互動影片，未達標按比例退款！\n*   **直球行動按鈕 (CTA)**：【預約獲客沙盒試跑方案】（線上填表，當天提供產品專屬爆款選題規劃）。\n"
+    },
+    "README.md": {
+      "path": "README.md",
+      "title": "共鳴創作者計畫 (Resonance Creator Program)",
+      "name": "README.md",
+      "isYaml": false,
+      "raw": "# 共鳴創作者計畫 (Resonance Creator Program)\n> **內部專案代號**：`ugc_bounty_matrix`  \n> **定位核心**：去中心化短影音外包分銷矩陣 ✕ 成果驗收保底 ✕ 爆款指數稀釋\n\n---\n\n## 📖 專案文件導覽\n\n- **專案規格與設定**：\n  - [專案規格輸入 (input.yaml)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/input.yaml)\n  - [專案狀態追蹤母體 (state.yaml)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/state.yaml)\n- **戰略核心文件**：\n  - [專案戰略簡報 (00_project_brief.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/00_core_positioning/00_project_brief.md)\n  - [SSOT 思考母體 (strategic_intent.yaml)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/_thinking/00_core/strategic_intent.yaml)\n  - [資產與信任狀審計 (01_asset_audit.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/00_core_positioning/01_asset_audit.md)\n  - [心智階梯與白地裁決 (02_white_space_verdict.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/00_core_positioning/02_white_space_verdict.md)\n  - [戰略地雷排查報告 (03_landmines_report.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/00_core_positioning/03_landmines_report.md)\n  - [決策門禁拍板 (HUMAN_DECISION_GATE.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/00_core_positioning/HUMAN_DECISION_GATE.md)\n\n- **核心商業與作戰模組（8 大模組全數落盤完成）**：\n  - [單元經濟與獲客破產防線 (02_breakeven_cap.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/unit_economics/02_breakeven_cap.md)\n  - [JTBD 痛點推拉力矩陣 (01_jtbd_pain_matrix.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/jtbd_forces/01_jtbd_pain_matrix.md)\n  - [8 大心智武器庫實戰手冊 (06_mental_weapons_kit.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/mental_weapons/06_mental_weapons_kit.md)\n  - [創作者實戰彈藥庫 ✕ 30 組標題與口播深稿 (06_video_testing_scripts.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/mental_weapons/06_video_testing_scripts.md)\n  - [行動承諾與防刷漏斗報告 (06_skin_in_the_game.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/pretotyping_funnel/06_skin_in_the_game.md)\n  - [履約瓶頸排查與 7 Powers 防禦壁壘 (07_moat_and_fulfillment.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/scale_defense/07_moat_and_fulfillment.md)\n  - [官方普查與商業規模測算報告 (02_market_size_census.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/market_sizing/02_market_size_census.md)\n  - [跨界突變升維分析報告 (01_target_recon.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/cross_industry/01_target_recon.md)\n  - [雙邊品牌轉化落地頁規劃手冊 (08_high_converting_landing_page.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/web_translation/08_high_converting_landing_page.md)\n\n---\n\n## 📊 專案核心商業指標速查\n\n- **基本解鎖門檻**：自然推薦滿 1,000 觀看 ＋ 5~10 則真實互動 / 15 次點擊 ➔ **發放 $500 元**\n- **破萬爆款追溯**：10,000 觀看累計 $1,200 ｜ 50,000 觀看累計 $2,500 ｜ 100,000 觀看累計 $3,500\n- **全案綜合目標 CPM**：爆款稀釋後壓制在 **$35 ~ $50 台幣**，極大化品牌獲客投報率（ROI）。\n"
+    },
+    "state.yaml": {
+      "path": "state.yaml",
+      "title": "🧠 state (SSOT 母體)",
+      "name": "state.yaml",
+      "isYaml": true,
+      "raw": "# 專案狀態追蹤母體\nproject_id: \"ugc_bounty_matrix\"\nbrand_name: \"共鳴創作者計畫 (Resonance Creator Program)\"\ncurrent_phase: \"PHASE_00_STRATEGIC_FOUNDATION\"\npipeline_status: \"IN_PROGRESS\"\nlast_updated: \"2026-11-28\"\n\nphases:\n  00_core_positioning:\n    status: \"COMPLETED\"\n    completion_rate: \"100%\"\n    required_files:\n      - \"README.md\"\n      - \"_thinking/00_core/strategic_intent.yaml\"\n      - \"_thinking/00_core/01_assets.yaml\"\n      - \"_thinking/00_core/02_category.yaml\"\n      - \"00_core_positioning/00_project_brief.md\"\n      - \"00_core_positioning/01_asset_audit.md\"\n      - \"00_core_positioning/02_white_space_verdict.md\"\n      - \"00_core_positioning/03_landmines_report.md\"\n      - \"00_core_positioning/HUMAN_DECISION_GATE.md\"\n\n  modules:\n    market_sizing: \"COMPLETED\"\n    jtbd_forces: \"COMPLETED\"\n    unit_economics: \"COMPLETED\"\n    mental_weapons: \"COMPLETED\"\n    pretotyping_funnel: \"COMPLETED\"\n    scale_defense: \"COMPLETED\"\n    cross_industry: \"COMPLETED\"\n    web_translation: \"COMPLETED\"\n"
+    }
+  },
+  "categories": [
+    {
+      "id": "core_decision",
+      "name": "🏆 核心決策與頂層戰略",
+      "icon": "🏆",
+      "files": [
+        {
+          "path": "README.md",
+          "title": "共鳴創作者計畫 (Resonance Creator Program)",
+          "name": "README.md",
+          "isYaml": false,
+          "raw": "# 共鳴創作者計畫 (Resonance Creator Program)\n> **內部專案代號**：`ugc_bounty_matrix`  \n> **定位核心**：去中心化短影音外包分銷矩陣 ✕ 成果驗收保底 ✕ 爆款指數稀釋\n\n---\n\n## 📖 專案文件導覽\n\n- **專案規格與設定**：\n  - [專案規格輸入 (input.yaml)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/input.yaml)\n  - [專案狀態追蹤母體 (state.yaml)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/state.yaml)\n- **戰略核心文件**：\n  - [專案戰略簡報 (00_project_brief.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/00_core_positioning/00_project_brief.md)\n  - [SSOT 思考母體 (strategic_intent.yaml)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/_thinking/00_core/strategic_intent.yaml)\n  - [資產與信任狀審計 (01_asset_audit.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/00_core_positioning/01_asset_audit.md)\n  - [心智階梯與白地裁決 (02_white_space_verdict.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/00_core_positioning/02_white_space_verdict.md)\n  - [戰略地雷排查報告 (03_landmines_report.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/00_core_positioning/03_landmines_report.md)\n  - [決策門禁拍板 (HUMAN_DECISION_GATE.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/00_core_positioning/HUMAN_DECISION_GATE.md)\n\n- **核心商業與作戰模組（8 大模組全數落盤完成）**：\n  - [單元經濟與獲客破產防線 (02_breakeven_cap.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/unit_economics/02_breakeven_cap.md)\n  - [JTBD 痛點推拉力矩陣 (01_jtbd_pain_matrix.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/jtbd_forces/01_jtbd_pain_matrix.md)\n  - [8 大心智武器庫實戰手冊 (06_mental_weapons_kit.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/mental_weapons/06_mental_weapons_kit.md)\n  - [創作者實戰彈藥庫 ✕ 30 組標題與口播深稿 (06_video_testing_scripts.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/mental_weapons/06_video_testing_scripts.md)\n  - [行動承諾與防刷漏斗報告 (06_skin_in_the_game.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/pretotyping_funnel/06_skin_in_the_game.md)\n  - [履約瓶頸排查與 7 Powers 防禦壁壘 (07_moat_and_fulfillment.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/scale_defense/07_moat_and_fulfillment.md)\n  - [官方普查與商業規模測算報告 (02_market_size_census.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/market_sizing/02_market_size_census.md)\n  - [跨界突變升維分析報告 (01_target_recon.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/cross_industry/01_target_recon.md)\n  - [雙邊品牌轉化落地頁規劃手冊 (08_high_converting_landing_page.md)](file:///c:/Users/kh/Desktop/market_positioning/projects/ugc_bounty_matrix/modules/web_translation/08_high_converting_landing_page.md)\n\n---\n\n## 📊 專案核心商業指標速查\n\n- **基本解鎖門檻**：自然推薦滿 1,000 觀看 ＋ 5~10 則真實互動 / 15 次點擊 ➔ **發放 $500 元**\n- **破萬爆款追溯**：10,000 觀看累計 $1,200 ｜ 50,000 觀看累計 $2,500 ｜ 100,000 觀看累計 $3,500\n- **全案綜合目標 CPM**：爆款稀釋後壓制在 **$35 ~ $50 台幣**，極大化品牌獲客投報率（ROI）。\n"
+        },
+        {
+          "path": "00_core_positioning/HUMAN_DECISION_GATE.md",
+          "title": "階段四與五：核心假說、雙邊攻防論證與決策門禁 (Decision Gate)",
+          "name": "HUMAN_DECISION_GATE.md",
+          "isYaml": false,
+          "raw": "# 階段四與五：核心假說、雙邊攻防論證與決策門禁 (Decision Gate)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **門禁狀態**：**HUMAN_DECISION_GATE APPROVED (DUAL-SIDED ALIGNED)**  \n> **決策閘門結論**：本決策閘門確立「語言釘子」與雙邊核心承諾！\n\n---\n\n## 📌 核心武器錨點\n* **語言釘子 (Verbal Nail)**：不賣時間罰站，1分鐘短影音，滿千加互動秒領 $500！\n* **視覺錘 (Visual Hammer)**：手機入帳 $500 推播通知 ＋ 留言區 +1 滾動瀑布\n\n---\n\n## 🥊 雙邊紅藍軍深度攻防論證\n\n### 對決 A：品牌老闆端攻防\n- **紅軍質疑（老闆視角）**：\n  > 「學生素人自製的影片品質會不會很差？會不會拿我的產品亂講話，甚至破壞品牌形象？」\n- **藍軍抗辯（戰略防禦）**：\n  > 1. **AI 腳本預審 ＋ 彈藥庫模組化**：創作者不是天馬行空亂拍，必須套用官方提供的「前 3 秒開頭鉤子」與「痛點積木」。開機前必須經由 AI 預審通過，違規誇大與侵權一票否決。\n  > 2. **素人感才是當今短影音轉化的最高境界**：現在觀眾對精緻官方廣告已有強烈抗體，素人在生活場景中的真實體驗分享，轉換率往往是精修廣告的 3~5 倍！\n\n### 對決 B：創作者學生端攻防\n- **紅軍質疑（學生視角）**：\n  > 「如果我辛苦剪完影片發布，結果演算法只給我 500 觀看沒達到 1,000，我豈不是白忙一場被白嫖？」\n- **藍軍抗辯（戰略防禦）**：\n  > 1. **短影音演算法的自然常態**：只要不是搬運抄襲帳號，套用官方爆款開頭，突破 1,000 是平台基礎推薦池的標準常態。\n  > 2. **個人帳號資產留存與爆款追溯**：影片發在創作者自己的頻道，即使這支只有 500 播放，也為帳號累積了權重與內容；只要下一支衝上破萬爆款，獎金立刻追溯到 $1,200~$3,500，一次把前面的工時收益全數超額補齊！\n\n---\n\n## 🎯 終局拍板決策（雙邊定位宣言）\n\n1. **面對品牌老闆**：\n   - 定位為**「去中心化成效獲客艦隊」**。\n   - 核心承諾：零底薪風險、只為真實觀看與高意圖名單買單、$50 單價顛覆傳統投流。\n2. **面對創作者學生**：\n   - 定位為**「自由高薪影音共創舞台」**。\n   - 核心承諾：告別超商罰站、1分鐘滿千秒領 $500、AI 預審杜絕退件、自建個人賺錢頻道。\n"
+        }
+      ]
+    },
+    {
+      "id": "core_positioning",
+      "name": "📑 特勞特核心定位論證",
+      "icon": "📑",
+      "files": [
+        {
+          "path": "00_core_positioning/00_project_brief.md",
+          "title": "共鳴創作者計畫 ‧ 專案戰略簡報 (Project Brief)",
+          "name": "00_project_brief.md",
+          "isYaml": false,
+          "raw": "# 共鳴創作者計畫 ‧ 專案戰略簡報 (Project Brief)\n\n> **內部專案代號**：`ugc_bounty_matrix`  \n> **對外官方計畫**：**共鳴創作者計畫 (Resonance Creator Program)**  \n> **核心定位本質**：**雙邊市場獲客網絡（Two-Sided Creator-to-Business Network）**\n\n---\n\n## 🎯 雙邊角色精準定位與價值主張 (Dual-Sided Value Proposition)\n\n本專案居於「品牌老闆獲客需求」與「青年學生打工供給」的黃金交集點，建立去中心化的成果分銷樞紐：\n\n```mermaid\nflowchart LR\n    subgraph Creators [\"【創作者 / 學生端】(供給方)\"]\n        C1[\"痛點: 超商罰站 $185、接案改稿被白嫖\"]\n        C2[\"承諾: 滿千+互動秒領 $500 (時薪翻2.5~6倍)\"]\n        C3[\"保障: 零收費、AI 預審通過不退件、帳號資產歸自己\"]\n    end\n\n    subgraph Platform [\"【共鳴創作者計畫】(中樞樞紐)\"]\n        P[\"去中心化成果驗收共創網絡\\n• AI 預審與彈藥庫質檢\\n• 雙門禁防刷驗收\\n• 對數階梯爆款稀釋\"]\n    end\n\n    subgraph Bosses [\"【品牌老闆端】(買單方)\"]\n        B1[\"痛點: 官方投流貴、網紅外包沒流量\"]\n        B2[\"承諾: 零觀看不給錢、每一分錢只為名單買單\"]\n        B3[\"價值: $50 獲取高意圖名單 + 百萬爆款紅利\"]\n    end\n\n    Creators <-->|\"提供素人真誠創意與多點分發\"| Platform\n    Platform <-->|\"提供低成本高轉化名單與爆款流量\"| Bosses\n```\n\n---\n\n## 📐 方案 A 驗收標準與加價階梯矩陣 (Plan A & Escalation Milestones)\n\n| 流量里程碑 ($V$) | 創作者累計領取賞金 | 老闆支付專案費用 | 平台單支淨利潤 | 老闆獲得等效 CPM | 商業本質與權責劃分 |\n| :--- | :--- | :--- | :--- | :--- | :--- |\n| **門檻：1,000 觀看** | **NT$ 500 元** | **NT$ 800 元** | **＋NT$ 300 元** | **$800 / 千次** | **素材製作 ＋ 首波千人曝光**<br>驗收條件：自然流量滿 1k ＋ 台灣受眾 >= 70% 截圖 |\n| **突破：10,000 觀看** | **NT$ 1,200 元** (補差額 $700) | **NT$ 1,800 元** (補差額 $1,000) | **＋NT$ 600 元** | **$180 / 千次** | **演算法破圈** (自帶素人信任，CPM 等同投流) |\n| **大爆：50,000 觀看** | **NT$ 2,500 元** (補差額 $1,300) | **NT$ 3,800 元** (補差額 $2,000) | **＋NT$ 1,300 元** | **$76 / 千次** | **全網擴散** (超額自然流暴擊，名單成本暴跌) |\n| **神作：100,000 觀看**| **NT$ 3,500 元** (封頂加發 $1k) | **NT$ 5,000 元** (封頂加付 $1.2k) | **＋NT$ 1,500 元** | **$50 / 千次** | **百萬頂級爆款** (流量費用封頂，防預算穿透) |\n| **10 萬觀看以上** | **流量賞金封頂**<br>轉入純 CPS 抽成 15%~20% | **流量費用封頂**<br>依真實銷售額抽成 25%~30% | **淨賺 10% 佣金** | 趨近於 $0 (純賺) | **長尾被動收入** (影片永久留存，出單才抽成) |\n\n---\n\n## 🎯 關鍵權責邊界：CTA 是老闆自己決定的！\n\n1. **對品牌老闆說（給予商業主導權）**：\n   > 「老闆，行銷拆成兩件事：前半段創作者負責把片子拍好看、把 1,000 個真人留在螢幕前聽完產品；**而後半段結尾的 CTA（行動呼籲、優惠誘因）完全由您親自決定！**\n   > 您可以要求放『留言領 9 折券』或『私訊免費領樣品』。創作者保證完整傳播給千人受眾；但最後有多少人買，取決於您的 CTA 誘因夠不夠香！**創作者負責把 1,000 個人帶到您的攤位前，而攤位放什麼好康吸引他掏錢，由您作主！**」\n2. **對創作者學生說（消除業績壓力）**：\n   > 「同學們，你們是靠創意和剪輯賺打工錢，不是來當業務員背業績的！產品好不好賣是老闆定價和優惠的事。官方給你們老闆指定的結尾台詞，你們只要在最後 5 秒順順講出來。**只要影片自然滿 1,000 觀看且受眾 70% 在台灣，500 塊就穩穩入帳，絕不以『有沒有人買』扣款！**」\n\n### 1. 對品牌老闆說話（獲客艦隊定位）\n*   **核心標語**：\n    > **「不用先砸十萬賭流量！發動百位創作者自建矩陣，每一塊錢只為『真實破千觀看＋精準諮詢』買單！」**\n*   **三大殺手級利益點**：\n    1. **零試錯成本**：沒達到 1,000 觀看或沒人互動，老闆一毛錢都不用付。\n    2. **買到精準潛在客戶 (Lead)**：$500 元換取 10 個留言「+1/想買」的高意圖諮詢，單個名單成本僅 $50 元（比 Meta 投流便宜 60%）。\n    3. **去中心化真人背書**：幾十位素人以個人頻道真實推薦，演算法多點開花，主帳號零封禁與 IP 風險。\n\n### 2. 對創作者/學生說話（高薪自由舞台定位）\n*   **核心標語**：\n    > **「告別超商時薪 185 罰站！用你的手機剪 1 分鐘短影音，滿千自然觀看加互動秒領 $500，爆款單支最高 $3,500 ＋ 永久被動抽成！」**\n*   **三大殺手級利益點**：\n    1. **實質時薪翻 2.5 ~ 6.5 倍**：1 分鐘短影音製作約 45 分鐘，滿千領 $500（換算時薪 $475~$1,200）。\n    2. **絕不白嫖與主觀退件**：AI 大綱預審通過即背書，達標 48 小時內必撥款，不憑老闆主觀美感挑刺。\n    3. **自建自媒體個人資產**：影片發在個人號上，流量、粉絲與長尾銷售分潤全歸創作者所有。\n    4. **終生零收費保證**：免學費、免樣品費、免保證金，乾乾淨淨的真金白銀合作。\n"
+        },
+        {
+          "path": "00_core_positioning/01_asset_audit.md",
+          "title": "階段一：資產解構與信任狀審計報告 (Asset Audit)",
+          "name": "01_asset_audit.md",
+          "isYaml": false,
+          "raw": "# 階段一：資產解構與信任狀審計報告 (Asset Audit)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../_thinking/00_core/01_assets.yaml`](../_thinking/00_core/01_assets.yaml)  \n> **定位狀態**：審計完成  \n> **戰略主線**：**成果驗收保底 ✕ 爆款指數稀釋 ✕ 去中心化推薦矩陣**\n\n---\n\n## 1. 核心硬資產審計與真實信任狀 (Reason to Believe, RTB)\n\n「共鳴創作者計畫」並非空泛的網路兼職群組，而是基於精確的**單元經濟學（Unit Economics）與博弈論機制設計**，為了解決傳統短影音外包低效、投流高成本而誕生的創新生態。\n\n### 核心硬資產審計表：\n\n| 資產代號 | 資產名稱 | 客觀事實與 RTB (Reason to Believe) | 轉化為商業獲客與創作者端之價值 |\n| :--- | :--- | :--- | :--- |\n| **RTB-1** | **成果導向雙門禁賞金機制** | 拋棄傳統「賣工時」的 MP4 交付，改以「自然 1,000 觀看 ＋ 5~10 則真實互動/15次點擊」作為解鎖 $500 保底條件。 | 創作者享有「只要努力開頭好就能拿錢」的掌控感；品牌主將單個高意圖潛在客戶 (Lead) 成本壓在 $30~$50，遠超官方廣告。 |\n| **RTB-2** | **AI 預審與三層防刷防禦棧** | 開機前 AI 腳本大綱 30 秒預審、發布中 ManyChat 關鍵字追蹤、結算時台灣受眾 >70% 截圖與 48hr 冷卻期。 | 從機制上杜絕機器人假量與刷播放量套利，確保流入品牌的每一位都是真人。 |\n| **RTB-3** | **對數階梯爆款稀釋模型** | 1k 觀看 $500 (CPM $500 當製作補貼) ➔ 10k 觀看累計 $1,200 (CPM $120) ➔ 50k 觀看累計 $2,500 (CPM $50) ➔ 100k 觀看累計 $3,500 (CPM $35)。 | 激勵創作者死磕前 3 秒鉤子，而品牌綜合獲客成本隨播放量指數級下降，徹底杜絕行銷預算穿透風險。 |\n| **RTB-4** | **去中心化多點推薦矩陣** | 創作者以個人或自建垂直號發布，形成「多方真實自發推薦」的社會證明 (Social Proof)。 | 破除單一官方帳號強烈廣告感，多賽道同發測試演算法，主帳號零封禁與 IP 風險。 |\n\n---\n\n## 2. 嚴格模式約束宣告 (Constraints)\n\n1. **創作者端零門檻與零白嫖約束**：\n   - 嚴禁收取任何入會費、保證金或培訓費（與 Andrew Tate 的 HU 傳銷模式劃清界線）。\n   - 審核標準全面前置於 Step 2 AI 預審；凡通過預審且達標者，官方 48 小時內保證撥款，絕不以主觀審美刁難。\n2. **財務上限約束（Hard Ceiling）**：\n   - 單支影片純流量獎金以 100,000 觀看累計 $3,500 元為上限；10 萬以上一律轉入 15%~20% CPS 導流分潤，保護品牌現金流。\n3. **品牌安全紅線約束**：\n   - 嚴禁虛假療效、絕對誇大保證、低俗誘惑、政治爭議或侵權音樂。\n"
+        },
+        {
+          "path": "00_core_positioning/02_mental_ladder.md",
+          "title": "階段二：心智階梯探測與生態位審定 (Mental Ladder)",
+          "name": "02_mental_ladder.md",
+          "isYaml": false,
+          "raw": "# 階段二：心智階梯探測與生態位審定 (Mental Ladder)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../_thinking/00_core/02_ladder_landmines.yaml`](../_thinking/00_core/02_ladder_landmines.yaml)  \n> **核心結論**：**探測市場既有心智梯隊，裁定全新物種心智空白！**\n\n---\n\n## 1. 既有短影音外包與獲客心智階梯\n\n在目標受眾（創作者與品牌老闆）的大腦記憶體中，已經被三大既有梯隊佔據：\n\n1. **第一梯隊：傳統工時接案外包（以 MP4 檔案計費）**\n   - 認知印記：收費高（單支 $1,500~$3,000）、反覆改稿耗時耗力、發布後 0 播放外包商照收錢，老闆承擔全部風險。\n2. **第二梯隊：官方競價廣告投流（Meta / TikTok Ads）**\n   - 認知印記：租來的冰冷流量、廣告感極重、停投即死，獲客成本年年飆升（CPL > $150）。\n3. **第三梯隊：海外傳銷式矩陣裂變（TikTok Affiliate / HU）**\n   - 認知印記：先收創作者月費學費，純 CPS 成交分潤；創作者前期 0 收益挫折感極重，被視為割韭菜。\n\n---\n\n## 2. 第四梯隊：共鳴創作者計畫之空白突圍 (White Space)\n\n本案在雙邊大腦中搶佔的全新生態位：  \n**「去中心化成果驗收共創網絡 (Decentralized Bounty Partner)」**\n\n- **對創作者**：不賣時間罰站，1 分鐘短影音，滿千觀看加互動秒領 $500，爆款單支最高 $3,500！\n- **對品牌老闆**：零觀看老闆付 $0 元，以 $40~$50 超低單價獲取真實買家名單與百萬爆款紅利！\n"
+        },
+        {
+          "path": "00_core_positioning/02_white_space_verdict.md",
+          "title": "階段二：心智階梯與生態位生態審計 (Mental Ladder & Ecosystem)",
+          "name": "02_white_space_verdict.md",
+          "isYaml": false,
+          "raw": "# 階段二：心智階梯與生態位生態審計 (Mental Ladder & Ecosystem)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../_thinking/00_core/02_category.yaml`](../_thinking/00_core/02_category.yaml)  \n> **定位狀態**：審計完成  \n\n---\n\n## 1. 現存市場三大既有心智梯隊對比\n\n短影音行銷生態中，品牌主與創作者早已被三種傳統模式所固化，每一種都存在無法調和的致命痛點：\n\n```mermaid\nquadrantChart\n    title 短影音外包與獲客模式生態位分佈\n    x-axis \"低確定性 (純賭博/0保底)\" --> \"高確定性 (有明確回報)\"\n    y-axis \"高成本 / 高摩擦\" --> \"低成本 / 高效率\"\n    quadrant-1 \"【本案生態位】共鳴創作者計畫\"\n    quadrant-2 \"傳統工時外包 (接案社團/外包網)\"\n    quadrant-3 \"海外純CPS分銷 (TikTok Affiliate/HU)\"\n    quadrant-4 \"官方投流廣告 (Meta/TikTok Ads)\"\n    \"傳統工時外包\": [0.75, 0.25]\n    \"官方投流廣告\": [0.85, 0.15]\n    \"海外純CPS分銷\": [0.15, 0.70]\n    \"共鳴創作者計畫\": [0.80, 0.85]\n```\n\n### 三大傳統模式之致命死穴：\n\n1. **傳統接案外包（以工時/檔案計費）**：\n   - **收費**：單支短影音 NT$ 800 ~ 2,500 元。\n   - **死穴**：**業主承擔所有風險**。創作者交出 MP4 檔案就結案，發上網只有 30 個人看，業主照樣付全額，ROI 極度不可測。\n2. **官方競價投流（Meta / TikTok Ads）**：\n   - **收費**：CPM NT$ 80 ~ 250，單個名單 NT$ 80 ~ 200。\n   - **死穴**：**租來的流量，廣告感極重**。觀眾看到贊助標籤直接滑走，且競價年年上漲，停投流量立刻歸零。\n3. **海外矩陣純 CPS 分銷（TikTok Affiliate / Andrew Tate HU）**：\n   - **收費**：0 底薪，成交抽成 5%~20% 或每個月先收創作者 $49 美元學費。\n   - **死穴**：**把銷售轉化風險全推給創作者**。90% 認真剪片的新手因初期 0 成交而心灰意冷放棄，流失率高達 95%，且被視為詐騙割韭菜。\n\n---\n\n## 2. 白地機會裁決 (White Space Verdict)\n\n市場留下的最大空白生態位是：  \n**「有保底成果驗收、讓創作者尊嚴勞動、同時讓品牌獲得真實互動名單的去中心化共創網絡」**。這個市場真空空白具有不可替代性：\n\n- **對創作者的佔位心智**：「不做超商廉價工，1 分鐘短影音，滿千自然觀看加互動秒領 $500，爆款單支最高 $3,500！」\n- **對品牌主的佔位心智**：「不付冤枉外包費，不買冰冷假廣告，以 $50 單價獲取高意圖真實名單與百萬自然曝光！」\n"
+        },
+        {
+          "path": "00_core_positioning/03_landmines_report.md",
+          "title": "階段三：戰略地雷排查與反脆弱防禦 (Strategic Landmines)",
+          "name": "03_landmines_report.md",
+          "isYaml": false,
+          "raw": "# 階段三：戰略地雷排查與反脆弱防禦 (Strategic Landmines)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **定位狀態**：排查完畢  \n> **核心目標**：建立歷史倒閉避坑指南與死穴防火牆\n\n---\n\n## 🛑 四大潛在地雷與反脆弱排查避坑對策\n\n在執行「去中心化短影音賞金矩陣」時，市場上最容易踩入的四大地雷及本案的避雷規範：\n\n### 地雷 1：機器人刷量套利（Bots & Farms Arbitrage）\n*   **風險症狀**：職業刷手花 20 元買 1,000 播放量，向官方詐領 500 元賞金。\n*   **避雷解法**：\n    1. **強制綁定有效互動**：僅有播放量一律不給錢，必須搭配「留言區 5~10 則真實討論/+1」或「專屬短鏈 15 次獨立點擊」。\n    2. **後台受眾地理檢驗**：提報時必須附帶後台數據，台灣受眾比例低於 70% 視為無效數據。\n    3. **48~72 小時冷卻期**：排除瞬間灌水流量，等待平台自然演算法常態分佈。\n\n### 地雷 2：素材千篇一律導致平台降權（Shadowban）\n*   **風險症狀**：所有創作者拿同一份官方錄屏與文案直接發布，被 TikTok / Reels 判定為搬運垃圾，直接鎖 0 播放。\n*   **避雷解法**：\n    - 官方絕不提供「整支成片」，只提供「心智模組彈藥庫」（30 組開頭鉤子、5 種痛點敘事、多套 CTA）。\n    - 創作者必須自行出鏡、重新剪輯配樂或二次原創，確保音頻與視覺特徵碼之唯一性。\n\n### 地雷 3：創作者因退件產生白嫖怨氣（Labor Friction）\n*   **風險症狀**：創作者花 1 小時拍完，老闆以「我覺得拍得不好看」為主觀理由拒付款，引發社群炎上。\n*   **避雷解法**：\n    - **全流程審核前置（Step 2 AI 預審）**：在創作者動工錄影前，AI 系統即針對大綱台詞評分。一旦預審通過，只要事後達標，官方無條件 48 小時內撥款，絕不刁難。\n\n### 地雷 4：爆款過多導致行銷預算穿透（Budget Runaway）\n*   **風險症狀**：多支影片衝上百萬播放，若採線性計費，老闆將面臨數十萬巨額支出。\n*   **避雷解法**：\n    - **對數平滑階梯封頂**：1k ($500) ➔ 10k ($1,200) ➔ 50k ($2,500) ➔ 100k ($3,500 封頂)。\n    - 單支影片流量賞金上限就是 $3,500 元，10 萬以上一律走純 CPS 導流分潤，邊際固定成本歸零。\n"
+        },
+        {
+          "path": "00_core_positioning/04_positioning_hypotheses.md",
+          "title": "階段三：四維定位假說收斂報告 (Positioning Hypotheses)",
+          "name": "04_positioning_hypotheses.md",
+          "isYaml": false,
+          "raw": "# 階段三：四維定位假說收斂報告 (Positioning Hypotheses)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../_thinking/00_core/03_hypotheses.yaml`](../_thinking/00_core/03_hypotheses.yaml)  \n\n---\n\n## 🎯 雙軌四維假說模型\n\n本專案居於雙邊市場樞紐，提出「雙軌推進、飛輪互哺」之戰略假說體系：\n\n### 軌道 A：大學生高時薪斜槓打工顛覆軌 (存量替代)\n*   **品類分化**：從傳統被動排班「體力打工」中分化出「成果導向影音共創」。\n*   **巨人對立**：直接對立超商、手搖飲、餐飲外場時薪 $185 罰站體力榨取。\n*   **極致取捨**：不承諾躺平暴富，只承諾「認真做出達標內容即享有超商 2.5~6 倍等效時薪」。\n*   **核心標語**：**「別再用青春罰站領 185！剪 1 分鐘短影音，滿千播放秒領 $500！」**\n\n### 軌道 B：品牌老闆去中心化成效獲客艦隊軌 (增量顛覆)\n*   **品類分化**：從傳統「賭博式外包與投流」中分化出「只為名單買單之素人推薦矩陣」。\n*   **巨人對立**：直接對立 Meta/TikTok 年年攀升之高昂 CPM 競價無底洞與傳統外包之 0 保證。\n*   **極致取捨**：不賣死板精修廣告，只賣生活場景中素人高轉化真誠體驗。\n*   **核心標語**：**「不用先砸十萬賭流量！發動百位創作者自建矩陣，每一塊錢只為真實觀看與買家名單買單！」**\n"
+        },
+        {
+          "path": "00_core_positioning/05_red_team_debate.md",
+          "title": "階段四：紅隊與藍軍極限博弈審判辯論 (Red Team Debate)",
+          "name": "05_red_team_debate.md",
+          "isYaml": false,
+          "raw": "# 階段四：紅隊與藍軍極限博弈審判辯論 (Red Team Debate)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../_thinking/00_core/04_red_team_scores.yaml`](../_thinking/00_core/04_red_team_scores.yaml)  \n\n---\n\n## 🥊 雙軌紅隊極限壓力博弈對決\n\n### 審判 1：創作者流失與信心崩塌拷問\n- **紅軍發難**：\n  > 「如果學生連續拍了 2 支影片只有 500 播放沒達標，一毛錢拿不到，他會不會立刻放棄，覺得平台在白嫖他？」\n- **藍軍防禦**：\n  > 1. **短影音自然常態**：只要帳號正常且套用官方前 3 秒鉤子，破千是推薦池基準；\n  > 2. **爆款追溯補償機制**：影片留在創作者自己頻道上，只要第三支衝上 10k 爆款，獎金累計至 $1,200（大爆至 $2,500），一次把前兩支的工時溢價全額補齊！\n\n### 審判 2：機器人刷量黑客攻擊拷問\n- **紅軍發難**：\n  > 「台灣社群到處都是刷量工作室，花 20 元刷 1,000 播放詐領 500 元，平台第一天就會被刷破產！」\n- **藍軍防禦**：\n  > 1. **雙門禁鎖定**：只看播放數一律付 0 元！必須搭配留言區真實觀眾留言「+1/詢價」；\n  > 2. **後台受眾地理檢驗**：提報必須附帶後台數據截圖，台灣受眾比例低於 70% 視為無效數據，並設有 48hr 冷卻審核期。\n\n---\n\n## 🎯 決策閘門收斂判定\n審判結果證實：雙軌模式具備極高的抗風險能力，**准予推進決策閘門與後續模組放量！**\n"
+        }
+      ]
+    },
+    {
+      "id": "modules_strategy",
+      "name": "🧩 擴展模組與商業交付物",
+      "icon": "🧩",
+      "files": [
+        {
+          "path": "modules/cross_industry/01_target_recon.md",
+          "title": "跨界突變升維分析報告 (Cross-Industry Mutation Report)",
+          "name": "01_target_recon.md",
+          "isYaml": false,
+          "raw": "# 跨界突變升維分析報告 (Cross-Industry Mutation Report)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/cross_industry/cross_industry_model.yaml`](../../_thinking/cross_industry/cross_industry_model.yaml)  \n> **模組狀態**：突變完成  \n> **核心目標**：**高價值目標界三大篩選漏斗與心智真空探測**  \n> **核心結論**：**吸取 Web3 賞金之透明、TikTok 矩陣之裂變、外送零工之靈活，在目標界中徹底剔除三者的詐騙與剝削弊端，雜交出全新物種！**\n\n---\n\n## 1. 三大跨界物種基因雜交模型\n\n```mermaid\nflowchart TD\n    classDef w3 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#111827;\n    classDef tt fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#111827;\n    classDef gig fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#111827;\n    classDef our fill:#fce4ec,stroke:#c2185b,stroke-width:3px,color:#111827;\n\n    W3[\"1. Web3 Bounties (加密賞金)<br/>• 借其: 成果達標即撥款之透明機制<br/>• 剔除: 虛擬空氣幣與審核黑箱\"]:::w3\n    TT[\"2. TikTok 矩陣 / HU (切片裂變)<br/>• 借其: 去中心化多號開花與 CPS 抽成<br/>• 剔除: 先繳學費傳銷感與純賭運氣\"]:::tt\n    GIG[\"3. Uber / 外送 (零工經濟)<br/>• 借其: 手機隨時隨地開工的極致自由<br/>• 剔除: 體力罰站與無技能積累\"]:::gig\n\n    W3 & TT & GIG --> OUR[\"【本案新物種】共鳴創作者計畫<br/>• 現金成果保底 ($500)<br/>• 爆款指數平滑 (最高 $3,500)<br/>• 終生零收費 + 個人自媒體資產留存\"]:::our\n```\n\n---\n\n## 2. 跨界突變優勢對比矩陣\n\n| 跨界對象 | 原始行業的死穴 (Deadly Flaws) | 本案突變升維後的解決方案 (Mutation Edge) |\n| :--- | :--- | :--- |\n| **Web3 Bounties** | 發放代幣容易歸零、提現門檻高、審核黑箱常跳票。 | **新台幣真金白銀**：達標後 48 小時內銀行直接匯款入帳。 |\n| **TikTok Affiliate / HU** | 新手前期 0 收益挫折感極大（90% 流失）、先收會費被視為詐騙。 | **降低承諾門檻**：不賭終端下單，只要「滿千＋留言互動」即保底 $500；**終生零收費**贏得信任。 |\n| **Uber / 外送工讀** | 日曬雨淋、有交通事故風險、時薪固定鎖死在 $185。 | **室內數位創作**：一部手機開工，換算實質時薪 $475~$1,200，且為自己累積百萬播放與粉絲個人資產。 |\n"
+        },
+        {
+          "path": "modules/cross_industry/02_capability_bridge.md",
+          "title": "跨界能力逆向整合度與非對稱防禦橋接 (Capability Bridge)",
+          "name": "02_capability_bridge.md",
+          "isYaml": false,
+          "raw": "# 跨界能力逆向整合度與非對稱防禦橋接 (Capability Bridge)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/cross_industry/cross_industry_model.yaml`](../../_thinking/cross_industry/cross_industry_model.yaml)  \n\n---\n\n## 🌉 跨界能力逆向整合度評估 (Fit Index ≥ 4.0)\n\n本專案跨界突變之成敗，取決於能否將「Web3 的公開賞金激勵」、「TikTok 的矩陣裂變切片」與「零工經濟的無拘束」無縫焊接：\n\n| 跨界借鏡構件 | 本業核心實力之橋接能力 | 整合度評分 (1~5分) | 評定理由與防禦紅線 |\n| :--- | :--- | :---: | :--- |\n| **賞金雙門禁驗證** | 自研 AI 30 秒大綱質檢 ＋ 後台受眾數據審核流程 | **4.9 分** | 徹底杜絕 Web3 的審核黑箱與空氣幣，以新台幣現金 48 小時內秒結。 |\n| **矩陣自建帳號裂變** | 模組化彈藥庫（30 組開頭鉤子 ＋ 痛點積木） | **4.8 分** | 創作者無需自行構思劇本，降低動工門檻，且避開搬運被降權的陷阱。 |\n| **高意圖自動私訊** | ManyChat 關鍵字自動觸發 ＋ 專屬領取短鏈 | **4.7 分** | 解決短影音難以直接放可點擊外鏈的平台限制，打造順暢轉化閉環。 |\n\n> **綜合整合度評分**：**4.8 分**（遠超 4.0 分門檻），確認該跨界突變高度可行，絕非生硬硬湊！\n"
+        },
+        {
+          "path": "modules/cross_industry/03_category_naming.md",
+          "title": "跨界目標界新品類命名與測謊方案 (Category Naming & Testing)",
+          "name": "03_category_naming.md",
+          "isYaml": false,
+          "raw": "# 跨界目標界新品類命名與測謊方案 (Category Naming & Testing)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/cross_industry/cross_industry_model.yaml`](../../_thinking/cross_industry/cross_industry_model.yaml)  \n\n---\n\n## 🏷️ 目標界新品類命名轉譯\n\n嚴禁在市場上自稱「影音剪輯代操」或「分銷聯盟」，必須在目標界語境中確立新身份：\n\n*   **品類新名稱**：**「去中心化成果驗收共創網絡 (Decentralized Bounty Partner)」**\n*   **品類心智定位**：\n    - 在創作者心智中：**「不賣時間罰站、滿千有保底的自媒體成長舞台」**\n    - 在品牌主心智中：**「零觀看不給錢、每一分錢只買買家名單的獲客艦隊」**\n\n---\n\n## 🧪 零代碼預售測謊路線圖\n\n1. **第 1 階段：種子創作者招募測謊**\n   - 在 Dcard / 大學生社群發布「1 分鐘短影音滿千領 $500」招募貼文，目標 48 小時內吸引 20 位學生報名加入。\n2. **第 2 階段：首批 10 支影片實測測謊**\n   - 投產 10 支影片，驗證是否有 3 支以上突破 1,000 播放，並產生至少 30 則留言 +1 互動。\n3. **第 3 階段：品牌主商業閉環測謊**\n   - 拿這 10 支實測數據向中小企業主提案 NT$ 38,000 種子包，測出老闆真實掏錢付費意願！\n"
+        },
+        {
+          "path": "modules/jtbd_forces/01_jtbd_pain_matrix.md",
+          "title": "JTBD 痛點剛度與前進動力分析報告 (JTBD Forces Matrix)",
+          "name": "01_jtbd_pain_matrix.md",
+          "isYaml": false,
+          "raw": "# JTBD 痛點剛度與前進動力分析報告 (JTBD Forces Matrix)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/jtbd_forces/jtbd_model.yaml`](../../_thinking/jtbd_forces/jtbd_model.yaml)  \n> **模組狀態**：審定通過  \n> **判決結論**：**前進動能 18.7 >> 阻力 9.7 (淨動能 +9.0)！痛點極度真實，具備瞬間擊穿大學生打工市場之爆發力！**\n\n---\n\n## 1. 顧客前進四力動能模型 (The Four Forces Engine)\n\n```mermaid\nflowchart TD\n    classDef push fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#111827;\n    classDef pull fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#111827;\n    classDef habit fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#111827;\n    classDef anxiety fill:#ede7f6,stroke:#4527a0,stroke-width:2px,color:#111827;\n\n    subgraph PROPELLING [\"【前進推動力】總分: 18.7 (極強攻破性)\"]\n        F_PUSH[\"1. 現狀痛苦推力 (Push: 9.2)<br/>• 超商餐飲時薪 $185 罰站體力榨取<br/>• 傳統接案業主無限改稿與拖欠款項<br/>• 個人起號 0 變現之無力感\"]:::push\n        F_PULL[\"2. 新品類吸引力 (Pull: 9.5)<br/>• 1分鐘片滿千+互動秒領 $500 現金<br/>• 破萬爆款追溯至 $3,500 ＋ 永久抽成<br/>• 自建自媒體帳號，流量全歸自己\"]:::pull\n    end\n\n    subgraph DRAGGING [\"【後退阻力】總分: 9.7 (可控摩擦)\"]\n        F_HABIT[\"3. 既有習慣重力 (Habit: 4.5)<br/>• 習慣不動腦的被動打工排班打卡\"]:::habit\n        F_ANXIETY[\"4. 嘗新焦慮摩擦 (Anxiety: 5.2)<br/>• 怕拍完被老闆主觀挑刺白嫖<br/>• 怕是網路傳銷/要先繳保證金\"]:::anxiety\n    end\n\n    PROPELLING -. \"淨動力差額 +9.0 (碾壓切換)\" .-> DRAGGING\n```\n\n---\n\n## 2. 核心痛點 (Push) 轉化為短影音致命開頭 Hook 庫\n\n本模組提取之創作者真實痛點，直接轉化為招募宣傳與短影音前 3 秒核彈級鉤子：\n\n| 痛點代號 | 現狀痛苦情境 (Push Context) | 招募宣傳 / 前 3 秒鉤子文案 (Hook) |\n| :--- | :--- | :--- |\n| **HOOK-1** | 痛恨超商餐飲罰站 8 小時換取微薄時薪 | **「別再用青春去超商罰站領 185 了！在家剪 1 分鐘短影音，滿千播放現拿 $500！」** |\n| **HOOK-2** | 痛恨接案市場業主反覆改稿、白嫖創意 | **「接案剪輯改了 5 次只賺你幾百塊？這裡免改稿，只要演算法破千、有互動，48小時自動撥款！」** |\n| **HOOK-3** | 想做自媒體卻不知道怎麼變現 | **「你的短影音只會拿來刷？自建個人號，用官方彈藥庫拍片，流量是你的，還能拿高額現金獎！」** |\n\n---\n\n## 3. 阻力拆除機制 (Anxiety Killers)\n\n為了將後退阻力從 9.7 降至接近於 0，官方設立**雙重防空飛彈**：\n1. **消滅白嫖焦慮**：建立 **Step 2 AI 大綱 30 秒預審**。大綱過了就是官方背書，只要達標 48 小時內必撥款，絕不事後挑刺。\n2. **消滅傳銷焦慮**：承諾 **「終生零收費」**，不收教材費、不用買樣品、不繳保證金，徹底贏得大學生社群信任。\n"
+        },
+        {
+          "path": "modules/market_sizing/02_market_size_census.md",
+          "title": "官方普查與商業規模測算報告 (Market Sizing Census Report)",
+          "name": "02_market_size_census.md",
+          "isYaml": false,
+          "raw": "# 官方普查與商業規模測算報告 (Market Sizing Census Report)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/market_sizing/census_model.yaml`](../../_thinking/market_sizing/census_model.yaml)  \n> **模組狀態**：測算完成  \n> **數據來源**：台灣教育部統計處大專校院校務統計 ✕ 主計總處青年勞動與斜槓普查  \n\n---\n\n## 1. 商業規模三級測算模型 (TAM / SAM / SOM)\n\n```mermaid\nflowchart TD\n    classDef tam fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#111827;\n    classDef sam fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#111827;\n    classDef som fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#111827;\n\n    TAM[\"1. TAM (全台大專打工族 ＋ 斜槓影音創作者)<br/>• 創作者總母體: 155 萬人<br/>• 宏觀短影音潛在年產值: NT$ 93 億元\"]:::tam\n    --> SAM[\"2. SAM (具備手機剪輯能力且渴望靈活高薪之核心群體)<br/>• 核心活躍大學生群體: 19.7 萬人<br/>• 年外包可服務產值: NT$ 11.8 億元\"]:::sam\n    --> SOM[\"3. SOM (啟動 1~2 年目標簽約活躍夥伴)<br/>• 平台活躍創作者: 6,000 位<br/>• 年撮合交付影片: 43.2 萬支<br/>• 平台年交易額 (GMV): NT$ 2.16 億元<br/>• 平台年營收 (20% 服務抽成): NT$ 4,320 萬元\"]:::som\n```\n\n---\n\n## 2. 雙邊市場供需規模撮合推演\n\n### (1) 供給端（大學生打工池）：\n- 台灣大專在學生約 114 萬人，工讀打工比例高達 62%（約 70.6 萬人）。\n- 其中超過 28%（約 19.7 萬人）平時即有使用 CapCut/剪映、IG Reels 發短影音之習慣。\n- **結論**：供給端池子極大，只要「滿千領 $500」的即時兌現口碑在校園社群傳開，獲取創作者的邊際成本極低。\n\n### (2) 需求端（中小企業與品牌主獲客池）：\n- 台灣中小企業超過 160 萬家，其中至少 20 萬家急需透過短影音獲取新客。\n- 只要有 500~1,000 家品牌主每月撥出 2~5 萬元的獲客預算，即可完全吃下數千名創作者的產能，達到 **供需平衡且高利潤運轉**。\n"
+        },
+        {
+          "path": "modules/mental_weapons/06_brand_channel_ip.md",
+          "title": "品牌頻道 IP 矩陣 ✕ 三大直球欄目 ✕ 敏捷開機 SOP (Brand Channel IP)",
+          "name": "06_brand_channel_ip.md",
+          "isYaml": false,
+          "raw": "# 品牌頻道 IP 矩陣 ✕ 三大直球欄目 ✕ 敏捷開機 SOP (Brand Channel IP)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/mental_weapons/weapons_matrix.yaml`](../../_thinking/mental_weapons/weapons_matrix.yaml)  \n\n---\n\n## 📺 三大直球欄目規劃 (The 3 Pillar Formats)\n\n為了讓全台創作者矩陣在演算法上持續獲得推薦，官方設計三大定位鮮明的常態欄目：\n\n### 欄目 1：【超商逃離日記】（打造學生斜槓打工標竿 IP）\n*   **定位**：專門記錄年輕人「如何用短影音技能替代體力勞動」的真實成長歷程。\n*   **更新頻率**：每週 2~3 支。\n*   **內容主線**：曬收益截圖、分享開頭 3 秒鉤子心得、採訪同學加入後的改變。\n*   **吸睛標籤**：`#大學生打工` `#短影音變現` `#拒絕超商罰站` `#共鳴計畫`\n\n### 欄目 2：【真假神器測謊局】（打造客觀好物推薦 IP）\n*   **定位**：站在消費者視角「替大家實測排雷、找出真正寶藏神器」。\n*   **更新頻率**：每週 1~2 支。\n*   **內容主線**：拿市售痛點產品與合作產品對比，暴力實測，最後給出良心評價並發放專屬折扣。\n*   **吸睛標籤**：`#好物推薦` `#生活神器` `#避坑指南` `#真實開箱`\n\n### 欄目 3：【30秒避坑小課堂】（打造專業乾貨與教學 IP）\n*   **定位**：快速輸出實用技巧與省錢攻略。\n*   **更新頻率**：每週 3 支。\n*   **內容主線**：極短快節奏乾貨，引發觀眾收藏與轉發。\n\n---\n\n## 👤 創作者角色卡體系 (Creator Persona Cards)\n\n官方引導創作者認領的三大角色定位（不用每個人都一樣）：\n\n| 角色卡代號 | 角色人設名稱 | 核心說話語氣與視覺特徵 | 適合發揮的型態 |\n| :--- | :--- | :--- | :--- |\n| **IP-A** | **「耿直大膽的打工大學生」** | 說話接地氣、帶點幽默自嘲、真實不做作，代表廣大學生發聲。 | 型態 P-1（生活反差）、型態 P-3（微短劇） |\n| **IP-B** | **「毒舌理性的實測學長/姐」** | 凡事講求數據、討厭智商稅、專挑產品缺點講，信任度極高。 | 型態 P-2（暴力實測）、型態 P-4（避坑乾貨） |\n| **IP-C** | **「低調神秘的剪輯技術宅」** | 不露臉、只靠神級卡點節奏與 AI 旁白說話，畫面極致絲滑。 | 型態 P-5（無臉錄屏 AI 剪輯） |\n\n---\n\n## 🚀 創作者 1~4 週敏捷開機 SOP (Agile Onboarding)\n\n*   **第 1 週（破冰起跑）**：\n    - 領取官方專屬身分代碼與 30 組標題庫。\n    - 挑選【型態 P-1】或【型態 P-3】發布前 2 支影片，達成人生第一筆 $500 元成果獎金。\n*   **第 2 週（數據微調）**：\n    - 檢視後台留存率，由 AI 預審微調前 3 秒開頭鉤子。\n    - 留言區部署自動私訊（ManyChat），將互動率提升至 10 人以上。\n*   **第 3 週（衝刺爆款）**：\n    - 嘗試【型態 P-2 暴力實測】，追逐演算法第一波破萬推薦，解鎖 $1,200 累計賞金。\n*   **第 4 週（被動分潤期）**：\n    - 帳號權重提升，建立專屬標籤，開啟長尾 CPS 訂單抽成，每月享有持續被動現金流。\n"
+        },
+        {
+          "path": "modules/mental_weapons/06_creative_archetypes.md",
+          "title": "創作者實拍型態庫 ✕ 微短劇故事重構 ✕ 發射載體 ✕ CTA 積木庫 (Creative Archetypes)",
+          "name": "06_creative_archetypes.md",
+          "isYaml": false,
+          "raw": "# 創作者實拍型態庫 ✕ 微短劇故事重構 ✕ 發射載體 ✕ CTA 積木庫 (Creative Archetypes)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/mental_weapons/weapons_matrix.yaml`](../../_thinking/mental_weapons/weapons_matrix.yaml)  \n> **使用對象**：簽約合作創作者、大學生兼職夥伴、自媒體號主  \n> **核心定位**：**短影音心智武器之獨立實拍發射載體**  \n\n---\n\n## 🎭 P-1~P-5 五大實拍創作型態庫 (The 5 Creative Archetypes)\n\n為了讓創作者不卡關、不離題，官方提供五種可直接對照演出的實拍型態：\n\n### 【型態 P-1：真實生活反差型（適合學生日常日常）】\n*   **視覺符號**：宿舍書桌、泡麵、剛下課的書包。\n*   **敘事結構**：從「超商打工累成狗」或「月底吃土」切入 ➔ 拿出一支手機開始剪輯 ➔ 手機震動跳出 $500 入帳推播 ➔ 真實驚喜神情。\n*   **完播心法**：前 3 秒禁止任何廣告感，完全是朋友聊天視角，真實感拉滿。\n\n### 【型態 P-2：產品暴力實測拆解型（適合好物與神器推廣）】\n*   **視覺符號**：桌面乾淨、特寫鏡頭、強烈對比道具。\n*   **敘事結構**：提出一般市售產品的 3 大坑點 ➔ 拿出推薦神器一秒解決 ➔ 畫面特寫操作流暢度 ➔ 觀眾看完立即被種草。\n*   **完播心法**：用快節奏剪輯配卡點音效，15 秒內完成「質疑 ➔ 實測 ➔ 打臉 ➔ 臣服」心理曲線。\n\n### 【型態 P-3：微短劇反轉型（高完播率之王）】\n*   **角色設定**：兩個學生（室友 A：剛從手搖飲打工下班滿身大汗；室友 B：在床上優雅吹冷氣玩手機）。\n*   **劇情衝突**：\n    - A 抱怨：「今天又被奧客搞，站了 4 小時才賺七百塊，累死了……你怎麼整天躺著還有錢叫外送？」\n    - B 微笑把手機給 A 看：「因為我剛剪完一支 1 分鐘短影音，系統剛撥款 500 給我。」\n    - A 驚呼：「真的假的？！教我！」\n    - B 轉向鏡頭：「想要領彈藥庫的，留言區留【+1】我發給你！」\n\n### 【型態 P-4：乾貨避坑與逆向教學型（適合知識與自媒體個人號）】\n*   **視覺符號**：綠幕背景、圖文高亮圈選、口播語速明快。\n*   **敘事結構**：「90% 的人都不知道這個省錢密碼」➔ 拆解官方活動與優惠漏洞 ➔ 指引領取路徑。\n\n### 【型態 P-5：無臉錄屏 AI 解說型（適合不想露臉的創作者）】\n*   **視覺符號**：高畫質螢幕錄製 ＋ AI 擬真人聲配音 ＋ 醒目卡點花字字幕。\n*   **敘事結構**：直球演示軟體/工具/產品使用前後對比，零社交負擔開工。\n\n---\n\n## 🧱 萬用直球 CTA 積木庫 (Call-To-Action Blocks)\n\n影片最後 5 秒必須強制套用以下三組直球積木之一，杜絕「謝謝觀看」的無效結尾：\n\n1. **【互動導流型積木】**：\n   > **「想要領取完整清單/優惠券的，不要到處找了，直接在留言區留【+1】，我私訊發給你！」**\n2. **【主頁外鏈型積木】**：\n   > **「限時折扣碼我放在個人主頁第一條連結，點進去直接現折 200，手慢就搶完了！」**\n3. **【兼職招募型積木】**：\n   > **「別再問我怎麼加入的，留言區留【我想做】，官方彈藥庫直接免費私訊發你！」**\n\n---\n\n## ✅ 創作者開機自我檢核表 (Pre-Flight Checklist)\n\n創作者按下「錄影鍵」前必須自檢的四大指標：\n- [ ] 前 3 秒是否出現明確衝突、痛點或數字？（嚴禁自我介紹）\n- [ ] 聲音是否清晰、環境無嘈雜噪音？\n- [ ] 結尾是否包含明確的 CTA 指令（留+1 或點主頁）？\n- [ ] 腳本大綱是否已通過 AI 預審（未踩誇大、醫療療效等違禁紅線）？\n"
+        },
+        {
+          "path": "modules/mental_weapons/06_mental_weapons_kit.md",
+          "title": "特勞特定位 8 大心智武器庫實戰手冊 (Mental Weapons Kit)",
+          "name": "06_mental_weapons_kit.md",
+          "isYaml": false,
+          "raw": "# 特勞特定位 8 大心智武器庫實戰手冊 (Mental Weapons Kit)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/mental_weapons/weapons_matrix.yaml`](../../_thinking/mental_weapons/weapons_matrix.yaml)  \n> **模組狀態**：實戰就緒  \n> **核心定位**：**去中心化短影音外包分銷矩陣 ✕ 成果驗收保底 ✕ 爆款指數稀釋**\n\n---\n\n## 🎯 8 大心智武器總覽架構\n\n```mermaid\nflowchart TD\n    subgraph MindEntry [\"大腦進入層 (1~3 秒)\"]\n        W1[\"1. 語言釘子 (Verbal Nail)<br/>不賣時間罰站，1分鐘短影音，滿千加互動秒領 $500！\"]\n        W2[\"2. 視覺錘 (Visual Hammer)<br/>手機跳出入帳通知 ＋ 留言區 +1 刷屏瀑布\"]\n        W3[\"3. 品類新坐標 (Category Name)<br/>去中心化成果驗收共創網絡\"]\n    end\n\n    subgraph MindBattle [\"心智對決層 (3~10 秒)\"]\n        W4[\"4. 戰略公敵標靶 (Anti-Position)<br/>打倒超商罰站廉價工 ✕ 傳統外包改稿白嫖\"]\n        W5[\"5. 三大硬核信任狀 (The 3 RTBs)<br/>成果保底 ✕ 爆款稀釋 ✕ AI 預審防刷棧\"]\n        W6[\"6. 致命異議爆破彈 (Objection Killer)<br/>大綱預審通過即背書，達標48hr必撥款！\"]\n    end\n\n    subgraph MindSpread [\"口碑與傳播層 (自主裂變)\"]\n        W7[\"7. 市井轉述口金句 (Social Currency)<br/>『昨天發一支滿千人看，500元秒入帳，比超商好賺太多！』\"]\n        W8[\"8. 公關新聞引爆點 (PR Spike)<br/>『大學生打工革命：超商離職潮與短影音共創現象』\"]\n    end\n```\n\n---\n\n### 武器 1：語言釘子 (Verbal Nail)\n> **「不賣時間罰站，用好內容創造真實共鳴！1 分鐘短影音，滿千自然觀看加互動現領 $500，爆款單支最高 $3,500 ＋ 永久導流分潤！」**\n*   **作戰目的**：直接把「超商打工罰站」與「短影音現賺 500」做強烈反差，1 秒扎入大學生與斜槓族心智。\n\n### 武器 2：視覺錘 (Visual Hammer)\n*   **超級符號**：**「左邊是銀行/街口入帳 $500 元的推播通知，右邊是短影音留言區觀眾瘋狂留言『+1、已私訊』的滾動瀑布」**。\n*   **心智暗示**：這不是虛無縹緲的畫大餅，而是看得見的真金白銀與熱烈反饋。\n\n### 武器 3：品類新坐標 (Category Anchor)\n*   **新品類名**：**去中心化成果驗收共創網絡 (Decentralized Bounty Partner)**\n*   **借用認知**：告別傳統「按工時外包」的剝削與「純 CPS 分銷」的零底薪，建立「有保底成果驗收、爆款加碼分享」的新物種。\n\n### 武器 4：戰略公敵標靶 (Anti-Positioning)\n*   **三大公敵**：\n    1. 超商/餐飲工讀生時薪 185 元的被動體力罰站。\n    2. 傳統接案業主反覆刁難改稿、結算拖延的白嫖行徑。\n    3. 海外傳銷式矩陣先收創作者學費、0 成交即 0 收入的割韭菜行為。\n\n### 武器 5：三大硬核信任狀 (Reason to Believe, RTB)\n1. **成果保底雙門禁**：滿 1,000 觀看 ＋ 5~10 則真實互動/15次點擊，直接鎖定單個高意圖名單成本在 $30~$50。\n2. **對數平滑階梯稀釋**：1k ($500) ➔ 10k ($1,200) ➔ 50k ($2,500) ➔ 100k ($3,500 封頂)，品牌平均 CPM 降至 $35 元。\n3. **AI 預審機制**：30 秒大綱質檢，開機前確認合規；結算配合後台受眾台灣 >70% 截圖，杜絕一切假流量。\n\n### 武器 6：致命異議爆破彈 (Objection Killer)\n*   **創作者最大恐懼**：「我拍完了，老闆挑刺說不好看故意不給錢怎麼辦？」\n*   **直球擊碎話術**：\n    > **「我們只做客觀數據驗收，絕不憑老闆主觀審美退件！只要你的大綱通過 Step 2 AI 預審，且發布後達到 1,000 播放與基本互動，48 小時內系統自動撥款，絕不刁難！」**\n\n### 武器 7：市井轉述社交金句 (Social Currency)\n*   **大學生向同學炫耀的口語**：\n    > **「欸，我昨天剪了一支 1 分鐘影片發在自己 IG，剛破千人看，500 塊真的秒入帳！比在飲料店搖飲料搖 3 個小時爽太多了，你要不要也來做？」**\n\n### 武器 8：公關新聞引爆點 (PR Spike)\n*   **新聞話題引爆**：\n    > **《大學生打工新常態：超商掀起逃離潮？用短影音自然流換取時薪 475 元的共鳴創作者生態》**\n\n---\n\n## 👔 特別加收：面向品牌老闆 (Boss) 商務洽談銷售戰鬥卡 (Sales Battlecard)\n\n當面對企業主、中小企業老闆提案本合作時，直接調用以下四大封喉話術：\n\n1. **破冰話術（打碎傳統投流信仰）**：\n   > 「老闆，現在 Meta 廣告費越來越貴、買名單一個都要一百多塊，而且停投流量就死。我們這套計畫不是叫你花大錢買廣告，而是幫你發動全台灣幾十位素人創作者，在他們自己的帳號幫你推薦。重點是：**影片沒達到 1,000 播放、沒帶來留言互動，你一毛錢都不用付！**」\n2. **信任防禦（消除品質擔憂）**：\n   > 「你一定會擔心學生亂拍。我們有自研的 **AI 腳本預審系統**，開機前就把開頭鉤子、產品利益點和法規紅線鎖死，既保留素人的真誠真實感，又保證商業訴求精準傳達。」\n3. **終局算盤（算帳給老闆看）**：\n   > 「你撥 5 萬元預算，可以買到 100 支達標的短影音、至少 10 萬次自然真實曝光，而且直接帶來 500~1,000 個留言 +1 的真實買家名單！換算下來一個潛在客戶只要 $50 塊。而且只要裡面爆了 2 支破萬影片，所有的超額自然流量全都白送給你！」\n"
+        },
+        {
+          "path": "modules/mental_weapons/06_video_testing_scripts.md",
+          "title": "創作者實戰彈藥庫 ‧ 30 組直球標題庫與口播腳本深稿 (Video Testing Scripts)",
+          "name": "06_video_testing_scripts.md",
+          "isYaml": false,
+          "raw": "# 創作者實戰彈藥庫 ‧ 30 組直球標題庫與口播腳本深稿 (Video Testing Scripts)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **使用對象**：簽約合作創作者、大學生斜槓夥伴、自媒體號主  \n> **規格標準**：前 3 秒強鉤子 ✕ 痛點共鳴 ✕ 解決方案 ✕ 留言區直球 CTA  \n> **核心資產**：**官方 30 組核心標題庫與實拍腳本**\n\n---\n\n## 💥 30 條直球開頭黃金鉤子與標題庫清單 (The 30 Golden Hooks)\n\n### 分類 A：打工抗拒與時薪對比類（針對大學生/兼職族）\n1. 「如果你還在超商罰站 8 小時賺 185，請立刻把這支影片看完！」\n2. 「這是我大學打工做過最爽的一份工作，在家剪 1 分鐘片現賺 500。」\n3. 「別再用青春去搖飲料了！教你用手機零成本做出能領薪水的短影音。」\n4. 「時薪 185 vs 1分鐘賺 500，聰明的大學生早就這樣選了。」\n5. 「為什麼我們學校越來越多同學，開始不想去外包接案了？」\n6. 「花 1 小時看劇，跟花 1 小時剪片現領 500，你選哪一個？」\n7. 「這家公司居然只要影片破 1,000 人看就直接發錢，是不是搞慈善？」\n8. 「室友問我為什麼都不出門上班，卻每週都有錢吃大餐？」\n9. 「算筆帳給你看：在超商罰站一整天，還不如剪兩支好影片。」\n10. 「拒絕當廉價工讀生！大學生用自媒體賺第一桶金的真實路徑。」\n\n### 分類 B：產品神器與真實體驗類（針對觀眾導流）\n11. 「這是我今年用過最相見恨晚的神器，早知道 3 年前就該買了！」\n12. 「千萬別隨便買這個，因為用過之後你就再也回不去了。」\n13. 「如果你的生活常常遇到這個爛問題，花 10 秒看我怎麼解決。」\n14. 「全網都在推的這個東西到底是不是智商稅？我實測給你看。」\n15. 「後悔沒有早點發現！這個小東西幫我省下了整整 3 個小時。」\n16. 「身邊朋友都在問我這到底是什麼黑科技？今天一次說清楚。」\n17. 「如果你跟我一樣痛恨這件事，那你一定要試試看這個方法。」\n18. 「花小錢解決大麻煩！連我媽用了都說讚的生活必備好物。」\n19. 「被問了 800 次的秘密終於公開了，記得先點讚收藏免得找不到。」\n20. 「這不是業配，這是我自己掏錢買了三次還在用的寶藏產品。」\n\n### 分類 C：乾貨避坑與逆向思維類（針對高轉化觀眾）\n21. 「90% 的人都不知道，其實只要改掉這個習慣就能省下一大筆錢！」\n22. 「如果你正在找解決方案，聽我一句勸：先別急著花大錢。」\n23. 「實話實說！市面上同類產品這麼多，為什麼我只認準這一家？」\n24. 「這是我花了 3,000 塊買教訓才總結出來的經驗，免費告訴你。」\n25. 「別再傻傻踩坑了！三招教你挑出最適合自己的真正好貨。」\n26. 「這款神作到底是怎麼做到評價一面倒的？看完你就懂了。」\n27. 「如果你每個月都在為這件事煩惱，這支影片就是為你拍的。」\n28. 「花 30 秒學會這一招，讓你少走 3 個月彎路。」\n29. 「很多人問我差在哪裡？今天直接上對比給你看，一目了然！」\n30. 「想要徹底搞定這個問題？看這一支影片就完全足夠了！」\n\n---\n\n## 🎬 兩套標準 60 秒四層口播實拍深稿範本\n\n### 範本 1：【大學生兼職共鳴型口播深稿】（吸引更多人加入或建立真實信任）\n\n| 秒數 | 鏡頭畫面 | 口播台詞 (逐字稿) | 心智作用 |\n| :--- | :--- | :--- | :--- |\n| **0~3s** | 手機直接自拍，背景在宿舍或書桌，手上晃著剛領到的入帳通知。 | 「別再用青春去超商罰站領 185 了！在家剪 1 分鐘片，滿千播放現拿 500 塊！」 | **視覺錘＋語言釘子**：打破傳統時薪認知。 |\n| **4~15s** | 鏡頭切換到手機剪映/CapCut 畫面，快速滑動幾段素材。 | 「以前我也在飲料店打工，站到腳底筋膜炎一個月才賺那一萬多塊。後來朋友介紹我這個夥伴計畫，官方直接提供現成文案和開頭積木，你只要用自己手機拍幾段、剪一剪發在自己的 IG 或 TikTok。」 | **Push 痛點共鳴**：喚醒體力打工的委屈與疲累。 |\n| **16~40s** | 鏡頭回到真人，展示後台數據突破 1,000 觀看的畫面。 | 「重點來了！他不用你百萬粉絲，只要演算法正常推薦過 1,000 觀看，而且留言區有人問你怎麼買，500 塊直接入帳！如果運氣好被推上破萬爆款，獎金還能一路加到三千多，而且影片是留在你自己的頻道上，粉絲流量全算你的！」 | **RTB 信任狀展示**：可達成的門檻與巨大回報。 |\n| **41~60s** | 鏡頭直視觀眾，手指指向下方留言區。 | 「別再懷疑是不是詐騙了，完全不用繳保證金、不用買教材！想要領取官方彈藥庫和詳細規則的，直接在留言區留【+1】，我私訊把懶人包發給你！」 | **直球 CTA**：觸發留言互動與 ManyChat 導流閉環。 |\n\n---\n\n### 範本 2：【生活好物痛點直球型口播深稿】（針對產品銷售與名單導流）\n\n| 秒數 | 鏡頭畫面 | 口播台詞 (逐字稿) | 心智作用 |\n| :--- | :--- | :--- | :--- |\n| **0~3s** | 特寫狼狽痛苦表情，桌面上一團混亂或遇到麻煩的特寫。 | 「如果你每天也在為這件事抓狂，求求你花 10 秒看我怎麼搞定！」 | **前 3 秒強鉤子**：直擊日常具體痛點。 |\n| **4~18s** | 鏡頭展示原本舊方法的痛苦、費時、浪費錢。 | 「以前為了解決這個問題，我買了一堆號稱好用的工具，結果全部是智商稅，不是用兩次就壞，就是步驟超級繁瑣，真的越用越火大！」 | **Push 痛點加深**：喚醒花冤枉錢的憤怒。 |\n| **19~42s** | 拿出推薦產品，展示一秒解決問題的絲滑過程。 | 「直到上週室友推給我這個神器，直接一鍵搞定！不用複雜設定，拿起來就能用，我原本要弄半小時的事情，現在 3 分鐘搞定，整個下午時間都多出來了！」 | **Pull 新品類爽感**：展示對比強烈的解決方案。 |\n| **43~60s** | 產品拿在胸前，另一手指向螢幕下方。 | 「現在官方有限時優惠活動，還能免費領試用！想知道是哪一款的，留言區留【+1】或點我個人主頁第一條連結，專屬折扣碼也在那裡，快去看看！」 | **直球 CTA**：拉動留言區 +1 與主頁 Bio 點擊。 |\n"
+        },
+        {
+          "path": "modules/pretotyping_funnel/06_skin_in_the_game.md",
+          "title": "行動承諾與微型測謊漏斗模組報告 (Skin in the Game & Anti-Fraud Funnel)",
+          "name": "06_skin_in_the_game.md",
+          "isYaml": false,
+          "raw": "# 行動承諾與微型測謊漏斗模組報告 (Skin in the Game & Anti-Fraud Funnel)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/pretotyping_funnel/funnel_model.yaml`](../../_thinking/pretotyping_funnel/funnel_model.yaml)  \n> **模組狀態**：實戰就緒  \n> **核心哲學**：**徹底封殺虛榮指標——用「AI 30 秒預審 ＋ 雙門禁意圖承諾 ＋ 後台受眾截圖」建立不可作弊的防刷漏斗！**\n\n---\n\n## 1. 三級行動承諾防刷漏斗架構 (The 3-Tier Commitment Ladder)\n\n```mermaid\nflowchart TD\n    classDef l1 fill:#ffebee,stroke:#c62828,stroke-width:1px,color:#111827;\n    classDef l2 fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#111827;\n    classDef l3 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#111827;\n\n    L1[\"階梯 1: 虛榮指標 (嚴禁單獨撥款！)<br/>• 純播放量、點讚、純愛心表情 ➔ 刷量工作室 20 元即可刷滿，零商業價值！\"]:::l1\n    --> L2[\"階梯 2: 行為與隱私承諾 (解鎖 $500 門檻)<br/>• 滿 1,000 自然播放 ＋ 留言區 5~10 則真實『+1 / 詢價』<br/>• 後台數據截圖：台灣受眾比例 >= 70%\"]:::l2\n    --> L3[\"階梯 3: 貨幣與訂單承諾 (終極爆款與分潤)<br/>• 觀眾透過創作者專屬折扣碼完成下單 ➔ 創作者享 15%~20% 永久分潤！\"]:::l3\n```\n\n---\n\n## 2. 核心落地：AI 30 秒大綱質檢 Prompt 標準規格\n\n創作者在開機前，於 LINE 官方帳號輸入其腳本大綱，系統背後之後台 LLM 質檢規則：\n\n```text\n【系統角色】\n你是「共鳴創作者計畫」的 AI 內容質檢官。你的任務是在 30 秒內審核創作者提交的 1 分鐘短影音大綱，判定是否放行開機。\n\n【審核輸入】\n1. 前 3 秒開頭台詞\n2. 影片核心痛點與解決方案\n3. 結尾行動呼籲 (CTA)\n\n【評分標準卡 (滿分 100，>= 80 放行)】\n1. 前 3 秒鉤子 (30%): 是否具備衝突感、數字對比或強烈提問？（平淡自我介紹直接給 0 分）\n2. 痛點與賣點真實性 (30%): 是否符合官方彈藥庫之核心價值？有無離題？\n3. 直球 CTA 設計 (20%): 是否有明確提醒觀眾「留言區留+1」或「點主頁連結領專屬優惠」？\n4. 合規與紅線檢測 (20%): 嚴禁色情低俗、誇大療效、侵權爭議或絕對化保證（踩線一票否決）\n\n【輸出格式】\n- 判定結果：【🟢 審核通過，准予開拍】 或 【🟡 建議調整】\n- 具體微調建議（若未通過，需給予 1~2 句直接可用的改進文案）\n```\n\n---\n\n## 3. 測謊與撥款三色信號燈判決卡 (Traffic Light Matrix)\n\n| 信號燈級別 | 創作者提報數據特徵 | 系統後台判定結論 | 處置動作 |\n| :--- | :--- | :--- | :--- |\n| 🔴 **紅燈 (作弊或無效)** | 播放數 > 1,000，但留言為 0 或全為機器人純表情；後台台灣受眾 < 50%。 | **判定為外部刷量工作室灌水** | 駁回撥款，提醒創作者更換為自然流內容；累犯 2 次列入黑名單。 |\n| 🟡 **黃燈 (內容瑕疵)** | 播放數 > 3,000，但留言區僅 1~2 則互動，點擊率 < 0.5%。 | **有流量但 CTA 吸引力不足** | 發放基本 $300 補貼，輔導創作者調整結尾鉤子。 |\n| 🟢 **綠燈 (真金白銀)** | 播放數 >= 1,000，留言區有 5 則以上「+1/想了解」，台灣受眾 > 70%。 | **真實高意圖轉換閉環確立！** | **48 小時內秒撥 $500 打工金**，後續爆款加碼持續追溯！ |\n"
+        },
+        {
+          "path": "modules/scale_defense/07_moat_and_fulfillment.md",
+          "title": "履約瓶頸排查與 7 Powers 防禦壁壘報告 (Scale Readiness & 7 Powers)",
+          "name": "07_moat_and_fulfillment.md",
+          "isYaml": false,
+          "raw": "# 履約瓶頸排查與 7 Powers 防禦壁壘報告 (Scale Readiness & 7 Powers)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/scale_defense/defense_model.yaml`](../../_thinking/scale_defense/defense_model.yaml)  \n> **模組狀態**：防禦就緒  \n> **核心結論**：**反向定位（Counter-Positioning）形成天然絕緣牆——傳統廣告代理商就算眼紅也無法模仿，因為會直接摧毀其高額月費主業！**\n\n---\n\n## 1. 7 Powers 商業壁壘審查矩陣 (Hamilton Helmer 7 Powers)\n\n```mermaid\nflowchart TD\n    classDef moat fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#111827;\n    classDef op fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#111827;\n\n    subgraph DEFENSE [\"【7 Powers 結構性護城河】\"]\n        M1[\"1. 反向定位 (Counter-Positioning) ➔ 傳統影音代操無法跟進 (自傷高利潤主業)\"]:::moat\n        M2[\"2. 雙邊網絡效應 (Network Effects) ➔ 創作者與品牌雙向飛輪鎖定\"]:::moat\n        M3[\"3. 程序工藝防禦 (Process Power) ➔ AI 30秒預審與三層防刷技術棧\"]:::moat\n        M4[\"4. 轉換成本 (Switching Costs) ➔ 創作者專屬碼長尾被動 CPS 資產綁定\"]:::moat\n    end\n\n    subgraph FULFILLMENT [\"【TOC 履約抗崩潰檢驗】\"]\n        O1[\"瓶頸排查：單月達標影片破千支時，核銷與對帳可能塞車\"]:::op\n        O2[\"交付極簡化：ManyChat API 自動對接 ＋ 批量金流轉帳 SOP\"]:::op\n    end\n\n    DEFENSE --- FULFILLMENT\n```\n\n---\n\n## 2. 巨頭為何不敢模仿？反向定位（Counter-Positioning）深度拆解\n\n市場上資金雄厚的傳統 4A 廣告代理商或大型影音代操工作室，為什麼無法輕易抄死我們？\n\n1. **商業模式內在衝突**：\n   - 傳統代理商的利潤建立在「向客戶收取固定高額製作費（一支 $15,000~$30,000）與月度服務費」。\n   - 如果他們宣布「一支只收 $500，且沒達到 1,000 播放一毛不收」，他們原有的高毛利大客戶會立刻質疑既有合約，**跟進模仿等於直接砍死自己的金牛業務**。\n2. **組織基因與成本結構不同**：\n   - 傳統公司養了大量全職企劃、攝影師、剪輯師，固定人事成本極高，必須靠高單價合約支撐。\n   - 本案走的是「輕資產、去中心化素人矩陣 ＋ AI 預審平台化」，固定邊際成本趨近於零，具備天然的定價破壞力。\n\n---\n\n## 3. TOC 履約瓶頸排查 (Constraint Management)\n\n當去中心化矩陣在全台灣校園快速裂變，單月合格影片達到 500~1,000 支時，系統可能面臨的崩潰點與防範措施：\n\n| 潛在瓶頸 (Bottleneck) | 壓力測試情境 (Stress Test) | 預防與解除措施 (SOP) |\n| :--- | :--- | :--- |\n| **後台對帳與轉帳塞車** | 每月 500 筆 $500 元小額撥款，人工匯款手續繁瑣且易出錯。 | 導入企業批量轉帳（街口支付/Line Pay/網銀批次上傳），審核通過一鍵批次撥付。 |\n| **假名單惡意灌水 (Spam)** | 創作者請朋友狂刷留言「+1」洗名單。 | 規定名單必須經過 ManyChat 自動私訊領取「實名折扣碼」或留下有效聯絡方式才計入有效 Lead。 |\n| **品牌主產品斷貨風險** | 單支影片衝上 10 萬觀看，爆發瞬間訂單，老闆無法交貨。 | 在入駐合約中明確庫存預警線，一旦爆單，該創作者影片轉向「早鳥候補登記」。 |\n"
+        },
+        {
+          "path": "modules/unit_economics/02_breakeven_cap.md",
+          "title": "單元經濟模型與獲客破產臨界線測算 (Unit Economics Report)",
+          "name": "02_breakeven_cap.md",
+          "isYaml": false,
+          "raw": "# 單元經濟模型與獲客破產臨界線測算 (Unit Economics Report)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/unit_economics/economics_model.yaml`](../../_thinking/unit_economics/economics_model.yaml)  \n> **模組狀態**：審計完成  \n> **核心指標**：**CAC Cap 獲客成本上限防線 ✕ 保本轉換率臨界點 ✕ 邊際貢獻測算**  \n> **核心結論**：**雙贏防線——創作者享有 2.5x ~ 6.5x 超商時薪；品牌獲客 CAC 鎖死在 $5.8 ~ $50 元，確保保本並較官方競價投流節省 58% ~ 95% 預算！**\n\n---\n\n## 1. 創作者收益與時薪矩陣分析 (Creator Side)\n\n傳統學生打工（便利商店、手搖飲、餐飲外場）目前法定基本時薪為 **NT$ 185 元**，且必須承擔固定排班、通勤與高強度體力耗損。\n\n在「共鳴創作者計畫」中，熟練創作者製作 1 支 1 分鐘短影音（包含套用官方彈藥庫、拍攝/剪輯/AI配音、發布）平均耗時 **45 ~ 60 分鐘**。\n\n### 創作者三級收益測算表：\n\n| 創作者等級與投入程度 | 月產出量 (每週工時) | 流量表現分佈假設 | 基礎達成金 ($500) | 爆款階梯加碼 | 導流 CPS 抽成 ($200/單) | **預估每月總收入** | **實質等效時薪** (對比工讀 $185) |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n| **新手兼職 / 試水溫** | 4 支 (每週 1 小時) | 3 支滿 1k、1 支未滿 | $1,500 | $0 | 帶來 2 單 ($400) | **NT$ 1,900** | **NT$ 475 / hr** (2.56 倍) |\n| **熟練創作者 / 穩定副業** | 10 支 (每週 2.5 小時) | 7 支滿 1k、2 支破萬、1 支未滿 | $4,500 | $1,400 (破萬補貼) | 帶來 10 單 ($2,000) | **NT$ 7,900** | **NT$ 790 / hr** (4.27 倍) |\n| **爆款收割機 / 核心夥伴** | 18 支 (每週 4.5 小時) | 10 支滿千、5 支破萬、2 支大爆 (50k+) | $8,500 | $6,100 (高額爆款加碼) | 帶來 35 單 ($7,000) | **NT$ 21,600** | **NT$ 1,200 / hr** (6.48 倍) |\n\n> **創作者心理價值確立**：即使是新手，做 1 支片滿千觀看拿到 $500，換算時薪也是超商的 2.5 倍以上；一旦產出爆款，時薪直接破千元，具備極強的長期留存黏性。\n\n---\n\n## 2. 品牌主獲客成本與邊際 CPM 指數稀釋模型 (Brand Side)\n\n品牌主最大的恐懼是「當冤大頭買了假流量」或「被爆款穿透預算」。以下為品牌端在各階段流量下的真實財務指標：\n\n```mermaid\nxychart-beta\n    title \"影片觀看數 vs 品牌每千次展示成本 (CPM)\"\n    x-axis [\"1,000 觀看\", \"10,000 觀看\", \"50,000 觀看\", \"100,000 觀看\"]\n    y-axis \"平均 CPM (TWD)\" 0 --> 550\n    bar [500, 120, 50, 35]\n```\n\n### 品牌獲客指標對比表：\n\n| 流量里程碑 ($V$) | 品牌累計支出 ($TWD$) | 帶來的真實意圖動作 (Leads) | 單個名單獲取成本 (CPL) | 品牌平均 CPM | 對比 Meta 投流平均名單成本 ($120/Lead) |\n| :--- | :--- | :--- | :--- | :--- | :--- |\n| **1,000 觀看** | **$500** | **10 個 (+1 或點擊)** | **$50.0 / 名單** | **$500** | **現省 58.3%**（兼買到原創影片） |\n| **10,000 觀看** | **$1,200** | **80 個** | **$15.0 / 名單** | **$120** | **現省 87.5%** |\n| **50,000 觀看** | **$2,500** | **350 個** | **$7.14 / 名單** | **$50** | **現省 94.0%** |\n| **100,000 觀看** | **$3,500** (封頂) | **600 個** | **$5.83 / 名單** | **$35** | **現省 95.1%** |\n\n---\n\n## 3. 業界四大行銷管道 10 萬元殘酷基準對比 (Industry Benchmark Battle)\n\n當品牌老闆手握 **NT$ 100,000 元行銷預算** 時，投入四種不同管道的真實獲客投報率（ROI）橫向基準對比：\n\n| 評估維度 | 管道 1：傳統影音代操 / 接案外包 | 管道 2：找 KOL / 網紅業配 | 管道 3：Meta / TikTok 官方廣告投流 | **管道 4：共鳴創作者計畫 (本案)** |\n| :--- | :--- | :--- | :--- | :--- |\n| **10 萬元買到什麼？** | 買到 5~8 支剪好的 MP4 檔案 | 買到 1~2 位萬粉網紅發 1 支片 | 買到約 50 萬次冷冰冰的廣告曝光 | **買到 80~100 支原創影片 ＋ 百位素人自建帳號真實推薦** |\n| **觀看數保證機制** | **0 保證**<br>(發布後只有 30 人看，外包商照收 10 萬) | **0 保證**<br>(網紅只負責發，若被演算法埋沒算你倒楣) | 依競價展示<br>(花完就沒了) | **雙門禁保證**<br>**(沒達到 1,000 播放 ＋ 互動，該支影片老闆付 $0 元！)** |\n| **獲取潛在客戶成本<br>(Cost Per Lead, CPL)** | 無法預估<br>(通常 > $200 / 名單) | 極高且難以追蹤<br>(通常 > $300 / 名單) | 約 **NT$ 120 ~ $180 / 名單**<br>(點進來常是誤觸路人) | **僅 NT$ 40 ~ $50 / 名單**<br>**(留言區主動喊「+1/想買」的高意圖精準買家)** |\n| **長尾資產累積** | 零<br>(死在自己沒人看的新帳號) | 差<br>(網紅過兩天就發新業配，被迅速洗掉) | **停投立刻歸零**<br>(像吸毒一樣不能停) | **永久留在全台百位創作者頻道**<br>(長尾自然搜尋＋持續被動出單) |\n| **消費者信任度** | 差（官方自賣自誇） | 差（觀眾一眼看出接業配） | 極差（「贊助」標籤，本能直接滑走） | **極高（素人生活真實體驗，社群信任感最強）** |\n| **預算風險誰承擔？** | **老闆承擔 100% 虧損風險** | **老闆承擔 100% 虧損風險** | **老闆承擔競價波動風險** | **【風險倒置】未達標我們負責，老闆只為真實成效買單！** |\n\n---\n\n## 4. 平台收費表 vs 創作者支出表利潤模型 (Platform Margin Architecture)\n\n作為平台營運樞紐，平台賺取的是**獲客服務價差 ＋ 爆款溢價 ＋ 後續長尾 CPS 抽成**：\n\n### (1) 單支影片階梯利潤對照表：\n\n| 流量與成效里程碑 | 1. 向品牌老闆收取 (Revenue) | 2. 支付給創作者 (Payout) | 3. 平台單支毛利 (Gross Profit) | 4. 平台毛利率 | 商業邏輯與利潤支撐 |\n| :--- | :--- | :--- | :--- | :--- | :--- |\n| **首發達標 (1k 播放 + 互動)** | **NT$ 800 元** | **NT$ 500 元** | **＋NT$ 300 元** | **37.5%** | 基礎撮合、AI 預審與客觀防刷質檢費 |\n| **破萬爆款 (10,000 觀看)** | **NT$ 1,800 元** | **NT$ 1,200 元** (累計) | **＋NT$ 600 元** | **33.3%** | 爆款流量溢價 (老闆獲萬次曝光 CPM 僅 $180) |\n| **五萬大爆款 (50,000 觀看)**| **NT$ 3,800 元** | **NT$ 2,500 元** (累計) | **＋NT$ 1,300 元** | **34.2%** | 全網擴散紅利 (帶來 350+ 名單，單支利潤破千) |\n| **十萬神作 (100,000 觀看)**| **NT$ 5,000 元** | **NT$ 3,500 元** (封頂) | **＋NT$ 1,500 元** | **30.0%** | 頂級爆款封頂，之後流量不再加收 |\n| **後續真實成交 (CPS 抽成)**| **收取商品銷售額 25%~30%** | **分潤給創作者 15%~20%** | **淨賺 10% 佣金** | **10% 淨提成** | 爆款影片長期留存，長尾被動現金流 |\n\n### (2) 品牌主月度專案打包收費方案：\n\n*   **方案 A：【種子測水溫專案包】（破冰首選）**\n    - **收費**：**NT$ 38,000 元**\n    - **交付保證**：交付 **30 支**滿千觀看＋有互動影片（未達標免費補拍或退款），預估 30,000+ 曝光 ＋ 150~300 個真實諮詢名單。\n    - **平台支出**：創作者底金 $15,000 ＋ 爆款儲備 $5,000 ＝ $20,000\n    - **👉 平台單案淨利**：**NT$ 18,000 元（淨利率 47.3%）**\n*   **方案 B：【品牌矩陣突圍包】（主力方案）**\n    - **收費**：**NT$ 98,000 元**\n    - **交付保證**：交付 **80 支**達標影片 ＋ 3~5 支破萬爆款，預估 150,000~300,000 曝光 ＋ 800~1,500 個真實名單。\n    - **平台支出**：創作者底金 $40,000 ＋ 爆款加碼 $15,000 ＝ $55,000\n    - **👉 平台單案淨利**：**NT$ 43,000 元（淨利率 43.8%）**\n*   **方案 C：【全網霸屏旗艦包】（大品牌大促）**\n    - **收費**：**NT$ 250,000 元**\n    - **交付保證**：交付 **200 支**達標影片 ＋ 多支 5 萬、10 萬大爆款，預估 800,000~1,500,000 曝光 ＋ 2,000+ 高意圖名單。\n    - **平台支出**：創作者底金 $100,000 ＋ 爆款加碼 $40,000 ＝ $140,000\n    - **👉 平台單案淨利**：**NT$ 110,000 元（淨利超過 11 萬元！）**\n\n---\n\n## 5. 獲客破產臨界線與安全邊際結論 (Breakeven Verdict)\n\n1. **底線安全邊際 (Downside Floor)**：\n   - 就算最慘狀況——創作者全部剛好卡在 1,000 觀看，品牌也是以 **$50 元/名單** 取得高意圖潛在客戶，同時還獲得了合法可二創的原創影片素材（市價 $1,000+）。\n2. **天花板爆款暴擊 (Upside Ceiling)**：\n   - 一旦出現 5 萬、10 萬大爆款，獲客成本雪崩式下跌至 **$5.8 元/名單**，CPM 壓低至 **$35 元**。\n   - 10 萬觀看後流量獎金封頂，完全轉入 CPS（有成交才分潤），徹底消滅預算黑洞。\n"
+        },
+        {
+          "path": "modules/web_translation/08_high_converting_landing_page.md",
+          "title": "雙邊品牌受眾轉化落地頁規劃手冊 (Web Translation Architecture)",
+          "name": "08_high_converting_landing_page.md",
+          "isYaml": false,
+          "raw": "# 雙邊品牌受眾轉化落地頁規劃手冊 (Web Translation Architecture)\n\n> **所屬專案**：`ugc_bounty_matrix` (共鳴創作者計畫)  \n> **數據母體**：[`../../_thinking/web_translation/web_model.yaml`](../../_thinking/web_translation/web_model.yaml)  \n> **模組狀態**：規劃完成  \n> **鐵律遵循**：**大腦隱形，受眾心動！0% 定位理論黑話，100% 直擊受眾靈魂的大白話轉化動線！**\n\n---\n\n## 📱 門戶 A：面向創作者與大學生（招募轉化動線）\n\n*   **Hero 首屏大標題**：\n    > **「別再用青春罰站領 185！剪 1 分鐘短影音，滿千觀看加互動秒領 $500，爆款單支最高 $3,500！」**\n*   **Hero 視覺錘**：手機入帳 $500 元推播通知截圖 ＋ 留言區「+1」刷屏動態效果。\n*   **四大免疑慮承諾徽章**：\n    1. 🟢 **終生 0 費用**：不用繳保證金、不用買教材、不推銷任何軟體。\n    2. 🟢 **免想文案**：官方提供 30 組爆款開頭鉤子與腳本積木。\n    3. 🟢 **絕不白嫖**：AI 預審通過即背書，達標 48 小時內銀行直接撥款。\n    4. 🟢 **資產全歸你**：影片發在個人號，粉絲與長期抽成分潤全是你的。\n*   **直球行動按鈕 (CTA)**：【立即領取官方彈藥庫，開啟第一支 $500 挑戰】（點擊跳轉 LINE 官方預審 Bot）。\n\n---\n\n## 👔 門戶 B：面向企業主與品牌老闆（獲客提案動線）\n\n*   **Hero 首屏大標題**：\n    > **「告別官方投流無底洞！發動百位素人自建矩陣，每一分錢只為『真實破千播放＋高意圖買家諮詢』買單！」**\n*   **四大業界殘酷基準橫向對比表 (對比傳統外包、網紅、Meta 投流)**：\n    - 展示 10 萬元預算下，本案如何以 $40~$50 超低名單單價帶回 1,600~2,500 個真實諮詢名單（較 Meta 投流省 60% 以上）。\n*   **三大算盤刀法話術**：\n    1. **算風險**：零觀看、零互動，老闆付 $0 元！\n    2. **算單價**：官方名單一個 $120~$180，本案只需 $40~$50。\n    3. **算暴擊**：百位素人同時下場，爆發 5 萬、10 萬超額爆款流量全白送給老闆！\n*   **核心品控保障**：\n    - 展示「AI 腳本預審」如何確保素人影片 100% 傳達品牌訴求，嚴禁虛假誇大。\n*   **零風險試水溫 Offer**：\n    - **【NT$ 38,000 種子測水溫專案】**：保證交付 30 支滿千觀看＋有互動影片，未達標按比例退款！\n*   **直球行動按鈕 (CTA)**：【預約獲客沙盒試跑方案】（線上填表，當天提供產品專屬爆款選題規劃）。\n"
+        }
+      ]
+    },
+    {
+      "id": "thinking_ssot",
+      "name": "🧠 思考神經元與 YAML 母體",
+      "icon": "🧠",
+      "files": [
+        {
+          "path": "_thinking/00_core/01_assets.yaml",
+          "title": "🧠 01_assets (SSOT 母體)",
+          "name": "01_assets.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\nbrand_name: \"共鳴創作者計畫 (Resonance Creator Program)\"\naudit_date: \"2026-11-28\"\n\nassets:\n  rtb_1_bounty_mechanics:\n    name: \"成果導向雙門禁賞金機制\"\n    description: \"打破傳統工時外包與純 CPS 盲盒，以『自然 1,000 觀看 ＋ 5~10 則真實互動/15次點擊』作為 $500 基礎保底解鎖條件。\"\n    rtb: \"兼顧創作者掌控感（可達成）與品牌主獲客意圖（杜絕假量），將單個高意圖潛在客戶 (Lead) 取得成本鎖定在 $30~$50。\"\n  \n  rtb_2_anti_fraud_stack:\n    name: \"AI 預審與後台受眾三層防刷防禦棧\"\n    description: \"結合開機前 AI 腳本大綱 30 秒預審、發布中 ManyChat/短鏈追蹤、結算時台灣受眾 >70% 截圖與 48 小時冷卻期。\"\n    rtb: \"機器人刷量無法在留言區產生真實互動，且跨國低價刷子帳號無法通過地區檢驗，徹底消滅無效刷量套利風險。\"\n\n  rtb_3_logarithmic_economics:\n    name: \"對數階梯爆款指數稀釋模型\"\n    description: \"1k 觀看給 $500（CPM $500 當素材製作補貼）；10k 觀看累計 $1,200（CPM $120）；50k 觀看累計 $2,500（CPM $50）；100k 觀看累計 $3,500（CPM $35）。\"\n    rtb: \"激勵創作者死磕前 3 秒鉤子以衝擊高額加碼，同時確保品牌的綜合獲客 CPM 比官方廣告便宜 50%~80%。\"\n\n  rtb_4_decentralized_trust:\n    name: \"去中心化多點推薦矩陣 (Social Proof)\"\n    description: \"由數十至數百位創作者自建個人號/垂直號發布，形成『千軍萬馬自發推薦』的真實社會證明。\"\n    rtb: \"避開官方單一品牌號廣告感過重與被演算法降權的風險，多賽道同時測試不同鉤子與受眾群體。\"\n\nconstraints:\n  - \"創作者無門檻啟動：嚴禁收取任何加盟費、學費或保證金（與 Andrew Tate HU 區隔）。\"\n  - \"驗收客觀透明：嚴禁以主觀審美退件，審核標準必須全部前置於 Step 2 AI 預審。\"\n  - \"財務安全硬頂：單支影片流量獎金上限 $3,500，超過 10 萬觀看後一律轉入 CPS 導流分潤。\"\n"
+        },
+        {
+          "path": "_thinking/00_core/02_category.yaml",
+          "title": "🧠 02_category (SSOT 母體)",
+          "name": "02_category.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\ncategory: \"短影音創作者外包與行銷獲客生態\"\n\nmarket_players:\n  legacy_freelance:\n    name: \"傳統接案外包 (Pro360 / Tasker / 接案社團)\"\n    core_logic: \"賣工時與交付 MP4 檔案\"\n    price_point: \"單支 1 分鐘短影音 NT$ 800 ~ 2,500\"\n    fatal_flaw: \"業主付了錢承擔全部風險，影片發布後 0 觀看接案者也照收錢；創作者反覆改稿耗時耗力。\"\n    mental_position: \"昂貴、低效、賭博式外包\"\n\n  paid_ads_meta_tiktok:\n    name: \"官方投流廣告 (Meta Ads / TikTok Ads)\"\n    core_logic: \"競價購買平台公域流量\"\n    price_point: \"CPM NT$ 80 ~ 250，單個名單 (Lead) NT$ 80 ~ 200\"\n    fatal_flaw: \"廣告感極重、觀眾本能滑走；成本隨競價年年攀升，一旦停投流量立即歸零。\"\n    mental_position: \"昂貴的租用流量毒藥\"\n\n  affiliate_and_hu:\n    name: \"海外矩陣裂變 (TikTok Shop Affiliate / Hustler's University)\"\n    core_logic: \"純 CPS 成交分潤 / 先收學費\"\n    price_point: \"0 底薪，成交抽成 5%~20% 或月費 $49\"\n    fatal_flaw: \"創作者承擔所有轉換風險，90% 新手因前期 0 收益而快速放棄；傳銷感重易被視為詐騙。\"\n    mental_position: \"免洗韭菜式分銷\"\n\nwhite_space_opportunity:\n  our_position: \"去中心化成果驗收共創網絡 (Decentralized Bounty Partner)\"\n  defining_difference: \"【不用先付昂貴外包費】✕【不讓創作者 0 收益做白工】✕【滿千觀看加互動即享 $500 保底】✕【爆款階梯加碼平滑 CPM】\"\n  competitive_moat: \"自帶高意圖互動（+1/點擊）的防刷驗收閉環，把每一塊錢行銷預算轉化為真實潛在顧客。\"\n"
+        },
+        {
+          "path": "_thinking/00_core/02_ladder_landmines.yaml",
+          "title": "🧠 02_ladder_landmines (SSOT 母體)",
+          "name": "02_ladder_landmines.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\ncategory: \"短影音創作者外包與行銷獲客生態\"\n\nmental_ladder:\n  legacy_freelance:\n    tier: 1\n    description: \"傳統接案外包 (以工時計費交付 MP4)\"\n    perceived_value: \"昂貴、不可控、業主承擔所有播放風險\"\n  paid_ads:\n    tier: 2\n    description: \"Meta / TikTok 官方廣告投流\"\n    perceived_value: \"租用流量毒藥、廣告感重、停投即死\"\n  pure_cps_affiliate:\n    tier: 3\n    description: \"海外傳銷矩陣 (先收學費或 0 底薪純賭出單)\"\n    perceived_value: \"割韭菜感強、創作者挫折感極高\"\n  resonance_bounty_matrix:\n    tier: 4\n    description: \"去中心化成果驗收共創網絡 (本案)\"\n    perceived_value: \"滿千播放+真實互動即領 $500，爆款指數平滑稀釋，雙贏閉環\"\n\nwhite_space_verdict:\n  physical_vacuum: \"市場缺乏一個兼具『零門檻啟動』與『客觀數據防刷』的去中心化影音外包分發協議。\"\n  mental_vacuum: \"『滿千觀看加互動秒領 $500』在大學生打工心智與品牌主獲客心智中均為絕對空白！\"\n\nlandmines_tree:\n  - id: LM-1\n    risk: \"刷量工作室惡意套利\"\n    mitigation: \"強制綁定留言區真實互動（+1）與後台受眾台灣比例 > 70% 截圖\"\n  - id: LM-2\n    risk: \"文案雷同導致平台判定搬運降權 (Shadowban)\"\n    mitigation: \"提供積木庫而非整支成片，創作者自行實拍或二創\"\n  - id: LM-3\n    risk: \"創作者因主觀退件產生白嫖怨氣\"\n    mitigation: \"AI 大綱 30 秒預審前置，通過即官方背書，達標必撥款\"\n  - id: LM-4\n    risk: \"百萬爆款導致行銷預算穿透\"\n    mitigation: \"單支影片流量獎金上限 $3,500，十萬播放後轉入純 CPS 抽成\"\n"
+        },
+        {
+          "path": "_thinking/00_core/03_hypotheses.yaml",
+          "title": "🧠 03_hypotheses (SSOT 母體)",
+          "name": "03_hypotheses.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\nhypotheses:\n  track_a_student_gig_disruption:\n    name: \"軌道 A：大學生高時薪斜槓打工顛覆軌 (存量替代)\"\n    core_idea: \"以 1 分鐘短影音滿千領 $500（等效時薪 $475~$1,200）直球擊穿超商/餐飲工讀生時薪 $185 罰站市場。\"\n    target_audience: \"大專院校學生、打工族、青年自媒體初學者\"\n    slogan: \"別再用青春罰站領 185！剪 1 分鐘短影音，滿千播放秒領 $500！\"\n    advantages: \"吸納海量校園優質原創產能，邊際招募成本極低。\"\n\n  track_b_boss_lead_generation:\n    name: \"軌道 B：品牌老闆去中心化成效獲客艦隊軌 (增量顛覆)\"\n    core_idea: \"以『零觀看付 $0 元』與『單個高意圖諮詢名單 $50 元』顛覆傳統昂貴官方投流與賭博式網紅外包。\"\n    target_audience: \"中小企業主、電商創辦人、品牌行銷總監\"\n    slogan: \"不用先砸十萬賭流量！發動百位創作者自建矩陣，每一塊錢只為真實觀看與買家名單買單！\"\n    advantages: \"商業閉環完整，以結果收費，老闆掏錢決策阻力極低。\"\n"
+        },
+        {
+          "path": "_thinking/00_core/04_red_team_scores.yaml",
+          "title": "🧠 04_red_team_scores (SSOT 母體)",
+          "name": "04_red_team_scores.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\nred_team_scores:\n  stress_test_vectors:\n    creator_attrition_risk:\n      score: 8.8\n      critique: \"如果前幾支片沒過千，創作者是否會放棄？\"\n      defense: \"提供爆款開頭積木庫，且下一支衝破萬爆款時加碼追溯至 $1,200~$3,500，一次超額補回。\"\n    fraud_bot_attack:\n      score: 9.5\n      critique: \"是否有職業刷子用腳本灌水套利？\"\n      defense: \"雙門禁硬性鎖定：留言區真實 +1 互動 ＋ 後台台灣受眾比例 > 70% 截圖 ＋ 48hr 冷卻期。\"\n    boss_quality_concern:\n      score: 9.0\n      critique: \"素人亂講話是否損害品牌？\"\n      defense: \"AI 腳本大綱 30 秒預審前置，踩違禁詞一票否決；素人真實感轉化率遠高於精緻廣告。\"\n\ndecision_verdict: \"雙軌合一推進：以軌道 A 聚攏百位創作者產能，以軌道 B 承接品牌老闆充沛預算，形成正向飛輪！\"\n"
+        },
+        {
+          "path": "_thinking/00_core/05_final_strategy.yaml",
+          "title": "🧠 05_final_strategy (SSOT 母體)",
+          "name": "05_final_strategy.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\ndecision_gate_status: \"APPROVED\"\nfinal_strategy:\n  brand_name: \"共鳴創作者計畫 (Resonance Creator Program)\"\n  category_anchor: \"去中心化成果驗收共創網絡\"\n  core_slogan: \"不賣時間罰站，用好內容創造真實共鳴！1分鐘短影音，滿千觀看加互動秒領 $500，爆款單支最高 $3,500 ＋ 永久被動抽成！\"\n  verbal_nail: \"不賣時間罰站，滿千加互動秒領 $500！\"\n  visual_hammer: \"手機入帳 $500 推播通知 ＋ 留言區 +1 刷屏滾動瀑布\"\n  anti_target: \"超商餐飲時薪 185 體力罰站 ✕ 傳統外包改稿白嫖 ✕ 官方投流無底洞\"\n  rtbs:\n    - \"滿千觀看 ＋ 真實互動雙門禁成果保底\"\n    - \"對數平滑階梯稀釋模型，綜合 CPM 壓至 $35\"\n    - \"AI 腳本預審 ＋ 台灣受眾後台截圖防刷體系\"\n"
+        },
+        {
+          "path": "_thinking/00_core/strategic_intent.yaml",
+          "title": "🧠 strategic_intent (SSOT 母體)",
+          "name": "strategic_intent.yaml",
+          "isYaml": true,
+          "raw": "strategic_intent:\n  project_id: \"ugc_bounty_matrix\"\n  program_name: \"共鳴創作者計畫 (Resonance Creator Program)\"\n  created_at: \"2026-11-28\"\n  \n  business_model_canvas:\n    value_proposition: \"去中心化短影音外包分銷網絡：以成果導向、防作弊的『滿千觀看＋有效導流』雙指標取代傳統昂貴且低效的工時外包與盲目投流。\"\n    target_creator_persona:\n      demographics: \"大學生、傳播/影視/行銷系學生、青年斜槓創作者、自媒體個人號主\"\n      pain_points:\n        - \"超商/餐飲工讀時薪低 ($185/hr)，且需固定排班罰站，體力耗竭\"\n        - \"傳統接案市場客戶改稿頻繁、結算拖延、溝通成本巨大\"\n        - \"自建自媒體帳號前期缺乏變現管道，容易熱情磨滅爛尾\"\n      desires:\n        - \"彈性自主工時，一部手機即可開工\"\n        - \"努力與報酬成正比，拍出爆款有高額加碼回報\"\n        - \"自建自媒體頻道資產，名利雙收（流量是自己的、還能拿品牌提成）\"\n\n  dual_sided_positioning:\n    side_a_brand_boss:\n      role_name: \"品牌主 / 企業老闆 (客戶端／買單方)\"\n      core_pain_points:\n        - \"官方投流費用年年飆漲 (CPM $150~$250)，獲客成本失控，停投即死\"\n        - \"傳統網紅/接案外包像買樂透，花數萬只換來幾百播放，外包商交出 MP4 檔案即推諉\"\n        - \"官方單一帳號廣告感極重，消費者滑走率高達 90%，毫無信任度\"\n      value_proposition: \"去中心化成效獲客艦隊：零底薪預付風險，只為『破千真實觀看 ＋ 精準諮詢名單』買單，以 $50 超低單價取得高意圖顧客！\"\n      primary_slogan: \"不用先砸十萬賭流量！發動百位創作者自建矩陣，每一塊錢只為『真實破千觀看＋精準諮詢』買單！\"\n      rtbs:\n        - \"成果導向雙門禁：沒達到 1,000 自然觀看或未產生互動，老闆一毛不拔\"\n        - \"獲客單價鎖定：$500 換 10 個 +1/諮詢 Lead，單個獲客成本 $50，較 Meta 投流省 60%\"\n        - \"爆款紅利全歸品牌：破萬至十萬播放 CPM 稀釋至 $35，享受超額自然流暴擊\"\n      objection_handling: \"擔心素人品質失控？AI 腳本預審與核心彈藥庫鎖死合規與前 3 秒鉤子，既真實又合規！\"\n\n    side_b_creator_student:\n      role_name: \"創作者 / 大學生與青年斜槓 (夥伴端／供給方)\"\n      core_pain_points:\n        - \"超商/餐飲工讀時薪 $185 體力罰站 8 小時，累得像狗且無技能積累\"\n        - \"接案社團業主反覆改稿刁難，最後只賺幾百塊甚至被拖欠跳票\"\n        - \"自己做自媒體卡在幾百播放無法變現，最怕兼職是繳學費/保證金的詐騙\"\n      value_proposition: \"自由高薪影音共創舞台：手機開工、免想腳本、滿千播放加互動秒領 $500，爆款單支最高 $3,500 ＋ 永久抽成！\"\n      primary_slogan: \"告別超商時薪 185 罰站！用你的手機剪 1 分鐘短影音，滿千自然觀看加互動秒領 $500，爆款單支最高 $3,500 ＋ 永久被動抽成！\"\n      rtbs:\n        - \"時薪翻 2.5 ~ 6.5 倍：1 分鐘片耗時 45 分鐘，滿千領 $500 (等效時薪 $475~$1,200)\"\n        - \"客觀數據驗收絕不白嫖：AI 大綱預審通過即背書，達標 48hr 必撥款，不憑老闆主觀審美挑刺\"\n        - \"自建自媒體個人資產：影片發在個人號上，粉絲、權重與長期分潤全歸自己\"\n        - \"終生零收費承諾：免學費、免樣品費、免保證金，真實乾淨的合作\"\n      objection_handling: \"擔心沒破千做白工？短影音基礎流量池 300~500，套用黃金前 3 秒開頭破千是常態；即使未達標也累積個人帳號素材，爆款一次補回！\"\n      pricing_and_economics:\n        plan_a_standard:\n          base_payout_creator: 500 # TWD\n          base_charge_boss: 800 # TWD\n          platform_margin: 300 # TWD (37.5%)\n          qualification_criteria:\n            min_views: 1000\n            verification_rule: \"自然推薦達 1,000 觀看 ＋ 後台截圖台灣受眾 >= 70%（排除假刷量）\"\n            cta_ownership: \"CTA（優惠/引導台詞）由老闆親自決定，創作者保證完整傳達給千人受眾，不考核成交轉換率\"\n          viral_milestones:\n            - views: 10000\n              creator_payout: 1200\n              boss_charge: 1800\n              platform_margin: 600\n              effective_cpm: 180\n            - views: 50000\n              creator_payout: 2500\n              boss_charge: 3800\n              platform_margin: 1300\n              effective_cpm: 76\n            - views: 100000\n              creator_payout: 3500\n              boss_charge: 5000\n              platform_margin: 1500\n              effective_cpm: 50\n          post_100k_mechanism: \"流量賞金封頂，轉入純 CPS 抽成（老闆付 25%~30%，創作者抽 15%~20%，平台淨賺 10%）\"\n\n    verification_and_anti_fraud:\n      step_1_pre_check: \"腳本與大綱 AI 預審（30秒過審制，防止偏離主題與違規）\"\n      step_2_geo_check: \"結算需提供後台截圖，台灣受眾比例需 > 70%\"\n      step_3_intent_check: \"留言區真實性與 ManyChat/專屬碼追蹤，杜絕機器人刷播放量\"\n      step_4_cool_down: \"影片發布後滿 48~72 小時結算，防止瞬間刷量套利\"\n"
+        },
+        {
+          "path": "_thinking/cross_industry/cross_industry_model.yaml",
+          "title": "🧠 cross_industry_model (SSOT 母體)",
+          "name": "cross_industry_model.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"cross_industry\"\nanalyzed_at: \"2026-11-28\"\n\nmutation_analysis:\n  archetype_1_web3_bounties:\n    origin_industry: \"Web3 / 去中心化加密社群\"\n    core_mechanism: \"賞金任務制 (Task Bounties) ＋ 成果鏈上核驗\"\n    borrowed_elements: \"去中心化節點、公開透明任務包、成果達標即觸發智能合約撥款理念\"\n    fatal_flaw_eliminated: \"剔除空氣幣炒作與代幣暴跌風險，改以新台幣現金 48 小時內銀行秒結\"\n\n  archetype_2_tiktok_affiliate_and_hu:\n    origin_industry: \"TikTok Shop Affiliate ✕ Andrew Tate Hustler's University\"\n    core_mechanism: \"矩陣式切片分發 ✕ 個人號推薦裂變\"\n    borrowed_elements: \"百號齊發形成社群真實推薦、長尾 CPS 永久分潤機制\"\n    fatal_flaw_eliminated: \"剔除割韭菜先繳學費機制，剔除純 CPS 導致新手 0 收益的高流失率；以『滿千+互動=$500』提供極致安全感\"\n\n  archetype_3_gig_economy:\n    origin_industry: \"Uber / Foodpanda 零工經濟\"\n    core_mechanism: \"碎片化時間調度 ✕ 任務單元化計酬\"\n    borrowed_elements: \"手機隨時隨地開工、不綁定排班、不限制出片數量\"\n    fatal_flaw_eliminated: \"擺脫風雨日曬體力罰站，升級為高附加價值且累積個人自媒體帳號資產的數位創作勞動\"\n"
+        },
+        {
+          "path": "_thinking/jtbd_forces/jtbd_model.yaml",
+          "title": "🧠 jtbd_model (SSOT 母體)",
+          "name": "jtbd_model.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"jtbd_forces\"\nanalyzed_at: \"2026-11-28\"\n\nfour_forces:\n  push_of_situation:\n    score: 9.2\n    pains:\n      - id: PUSH-1\n        title: \"超商/外場打工的體力榨取與廉價感\"\n        description: \"時薪僅 NT$ 185，必須連續站立 6~8 小時、搬重物、面對奧客，時間被嚴格綁死，身心俱疲且無技能積累。\"\n      - id: PUSH-2\n        title: \"傳統接案市場的白嫖與無限改稿\"\n        description: \"接案社團單支片開價 $500~$800，業主反覆改色調、字幕三四版，最後結算拖延數週甚至跳票。\"\n      - id: PUSH-3\n        title: \"個人自媒體起號的零收益焦慮\"\n        description: \"自己開帳號剪片發了十幾支，播放量卡在幾百，零變現路徑，找不到持續投入的理由。\"\n\n  pull_of_new:\n    score: 9.5\n    desires:\n      - id: PULL-1\n        title: \"1分鐘滿千秒領 $500 的即時爽感\"\n        description: \"做 1 支 1 分鐘短影音，只要演算法正常推破 1,000 觀看加留言互動，立即領取 $500（超商 2.7 小時工資），48 小時入帳。\"\n      - id: PULL-2\n        title: \"爆款追溯與被動收入夢想\"\n        description: \"破萬加發 $1,200、破五萬加發 $2,500，且享受專屬碼 15%~20% 永久分潤，實現『睡覺時帳號在替我賺錢』。\"\n      - id: PULL-3\n        title: \"自建帳號累積個人自媒體資產\"\n        description: \"不用幫老闆當槍手，影片發在自己的頻道上，粉絲、流量與變現全歸自己所有。\"\n\n  habit_and_inertia:\n    score: 4.5\n    habits:\n      - id: HABIT-1\n        title: \"去既有兼職打工的舒適慣性\"\n        description: \"習慣了去實體店打卡上班的被動勞動模式，雖然累但不需要動腦思考文案與演算法。\"\n\n  anxiety_of_new:\n    score: 5.2\n    anxieties:\n      - id: ANXIETY-1\n        title: \"害怕被白嫖或拍完被退件\"\n        description: \"『如果我拍完了，老闆嫌不好看故意不給錢怎麼辦？』\"\n        countermeasure: \"AI 大綱 30 秒預審機制，審核前置；只要預審過且達標，官方保證撥款。\"\n      - id: ANXIETY-2\n        title: \"害怕是網路詐騙或傳銷\"\n        description: \"『會不會是像 HU 一樣要我先繳學費？』\"\n        countermeasure: \"零收費條款，免保證金、免買樣品，完全透明的成果結算制。\"\n\nverdict:\n  propelling_force: 18.7 # Push (9.2) + Pull (9.5)\n  dragging_force: 9.7 # Habit (4.5) + Anxiety (5.2)\n  net_momentum: 9.0 # 強烈前進動能，市場切入點極其鋒利\n"
+        },
+        {
+          "path": "_thinking/market_sizing/census_model.yaml",
+          "title": "🧠 census_model (SSOT 母體)",
+          "name": "census_model.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"market_sizing\"\ncensus_source: \"台灣教育部統計處 112-113 學年度大專校院校務資訊 ✕ 主計總處人力資源普查\"\ncurrency: \"TWD\"\n\ndemographics:\n  total_college_students_tw: 1140000 # 台灣大專院校在學學生總數約 114 萬人\n  part_time_work_ratio: 0.62 # 兼職打工比例約 62% (約 70.6 萬人)\n  media_and_creative_affinity_ratio: 0.28 # 具備剪輯工具使用習慣與自媒體發布意願約 28% (約 19.7 萬人)\n  freelancer_slash_workers_tw: 850000 # 青年斜槓接案族群約 85 萬人\n\nmarket_sizing_calculations:\n  tam_total_addressable_market:\n    description: \"全台灣大專打工族 ＋ 青年斜槓影音創作者母體\"\n    population: 1550000 # 70.6萬工讀生 + 85萬斜槓族\n    annual_potential_gmv: 9300000000 # 假設每人每月有 500 元短影音外包需求/供給，年產值約 93 億 TWD\n\n  sam_serviceable_addressable_market:\n    description: \"活躍於 TikTok / IG Reels / Threads 且具備基礎 CapCut 剪輯能力的創作者供給\"\n    population: 197000 # 核心影音活躍大學生群體\n    annual_market_size: 1182000000 # 每月人均產出 1 支，年產值約 11.8 億 TWD\n\n  som_serviceable_obtainable_market:\n    description: \"計畫啟動 1~2 年內，本平台目標滲透簽約的活躍創作者夥伴 (3%~5% 滲透率)\"\n    active_creators_target: 6000 # 6,000 位核心創作者\n    monthly_videos_per_creator: 6\n    total_monthly_videos: 36000\n    payout_per_video: 500\n    monthly_platform_payout: 18000000 # 每月撥付 1,800 萬 TWD\n    annual_platform_gmv: 216000000 # 年 GMV 達 2.16 億 TWD\n    platform_take_rate_margin: 0.20 # 平台抽成/服務費 20%\n    annual_platform_net_revenue: 43200000 # 平台年淨營收 4,320 萬 TWD\n"
+        },
+        {
+          "path": "_thinking/mental_weapons/weapons_matrix.yaml",
+          "title": "🧠 weapons_matrix (SSOT 母體)",
+          "name": "weapons_matrix.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"mental_weapons\"\ncreated_at: \"2026-11-28\"\n\nweapons:\n  verbal_nail: \"不賣時間罰站，1 分鐘短影音，滿千觀看加互動秒領 $500！\"\n  visual_hammer: \"手機螢幕跳出的銀行入帳通知 ＋ 留言區被 +1 刷屏的瀑布畫面\"\n  category_name: \"去中心化成果驗收共創網絡 (Decentralized Bounty Partner)\"\n  anti_target: \"超商/外場廉價時薪罰站 ✕ 傳統接案無限改稿被白嫖 ✕ 純CPS分銷做白工\"\n  rtbs:\n    - \"滿千觀看 ＋ 5~10 則真實互動/15次點擊雙門禁保底，單個高意圖 Lead 成本鎖在 $30~$50\"\n    - \"對數平滑階梯稀釋模型，破萬加碼至 $1,200、破十萬至 $3,500，品牌平均 CPM 降至 $35\"\n    - \"AI 腳本大綱 30 秒預審 ＋ 台灣受眾 >70% 截圖驗收，機制級消滅刷量與勞資爭端\"\n  objection_killers:\n    - fear: \"創作者怕拍完被老闆嫌難看故意不給錢\"\n      killer: \"大綱預審通過即官方背書，只要播放滿千且有真實互動，48小時自動撥款，絕不主觀刁難\"\n    - fear: \"品牌主怕花錢買到機器人假播放\"\n      killer: \"強制綁定留言區互動諮詢與後台受眾台灣比例截圖，機器人刷不出真實對話\"\n  social_currency: \"欸我昨天剪了一支 1 分鐘短影音發在自己帳號，剛過 1,000 人看，500 塊真的秒入帳，比在超商站 3 小時爽多了！\"\n  pr_spike: \"『大學生打工革命：超商掀起離職潮？用短影音自然流換取時薪 475 元的共鳴創作者現象』\"\n"
+        },
+        {
+          "path": "_thinking/pretotyping_funnel/funnel_model.yaml",
+          "title": "🧠 funnel_model (SSOT 母體)",
+          "name": "funnel_model.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"pretotyping_funnel\"\ncreated_at: \"2026-11-28\"\n\nfunnel_architecture:\n  anti_vanity_rule: \"嚴禁用『純播放量、點讚、表情留言』作為驗收撥款依據，必須具備實質意圖承諾！\"\n  \n  tier_1_gate_ai_pre_check:\n    name: \"開機前 AI 腳本大綱 30 秒預審\"\n    flow: \"創作者透過 LINE Bot 提交『前3秒台詞 ＋ 痛點提綱 ＋ 結尾 CTA』\"\n    criteria:\n      theme_relevance: \">= 80%\"\n      forbidden_keywords: \"0 (嚴禁誇大、色情、侵權、絕對療效)\"\n      hook_structure: \"必須在前 3 秒提出具體衝突或問題\"\n    output: \"通過 (綠燈開拍) / 需修改 (指出具體改進點)\"\n\n  tier_2_gate_distribution_proof:\n    name: \"發布後真實互動與雙門禁驗收\"\n    thresholds:\n      min_views: 1000\n      intent_actions: \"留言區 5~10 則真實 +1/諮詢 或 專屬短鏈 15 次獨立點擊\"\n      geo_distribution: \"後台數據截圖需顯示台灣受眾 >= 70%\"\n      cool_down_period: \"發布後 48~72 小時結算\"\n\n  tier_3_lead_capture:\n    name: \"高意圖私訊自動化 (ManyChat / 專屬碼)\"\n    flow: \"留言區關鍵字觸發自動 DM ➔ 發送專屬領取短鏈 ➔ 落地頁領取優惠或加入官方 LINE\"\n    effective_cpl: \"NT$ 40 ~ $50 / Lead\"\n"
+        },
+        {
+          "path": "_thinking/scale_defense/defense_model.yaml",
+          "title": "🧠 defense_model (SSOT 母體)",
+          "name": "defense_model.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"scale_defense\"\nanalyzed_at: \"2026-11-28\"\n\nseven_powers:\n  counter_positioning:\n    power_name: \"反向定位 (Counter-Positioning)\"\n    strength: \"極強 (9.5/10)\"\n    analysis: \"傳統 4A 廣告代理商與影音代操公司以『收取數十萬高額月費與製作工時』為主營利潤。他們無法跟進本模式，因為一旦轉向『滿千播放＋名單才收費』，會直接摧毀其既有高利潤主業。\"\n\n  network_effects:\n    power_name: \"雙邊網絡效應 (Two-Sided Network Effects)\"\n    strength: \"強 (8.8/10)\"\n    analysis: \"越多的優質學生創作者加入，品牌主能以更低成本取得更多樣化的爆款切角；越多的品牌主開出預算，學生越能在平台上穩定獲得高於超商數倍的收入，形成良性飛輪。\"\n\n  process_power:\n    power_name: \"程序工藝與 AI 質檢防線 (Process Power)\"\n    strength: \"強 (8.5/10)\"\n    analysis: \"自研的 AI 大綱 30 秒預審、三層防刷雙門禁（台灣受眾 >70% 截圖與 48hr 冷卻）機制，構成極高的運營與風控壁壘，外部模仿者極易被職業刷手刷穿預算倒閉。\"\n\n  switching_costs:\n    power_name: \"創作者管道綁定與轉換成本 (Switching Costs)\"\n    strength: \"中高 (7.8/10)\"\n    analysis: \"創作者在平台上累積的專屬導流碼與長尾 CPS 被動抽成資產，讓核心創作者具備極高的留存黏性，不願輕易轉移到其他 0 保底平台。\"\n\ntoc_bottleneck_audit:\n  primary_bottleneck: \"爆款突然湧現時的後台人工核銷與撥款摩擦\"\n  mitigation: \"推動自動化金流 API 串接與 ManyChat 關鍵字自動認證，將核銷效率提升至 95% 自動化。\"\n"
+        },
+        {
+          "path": "_thinking/unit_economics/economics_model.yaml",
+          "title": "🧠 economics_model (SSOT 母體)",
+          "name": "economics_model.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"unit_economics\"\ncalculated_at: \"2026-11-28\"\n\ncreator_economics:\n  hourly_benchmark_taiwan: 185 # TWD (便利商店/餐飲基本工資)\n  creator_tiers:\n    novice_casual:\n      hours_per_week: 2\n      videos_per_month: 4\n      views_distribution:\n        pass_1k: 3\n        fail_1k: 1\n        viral_10k: 0\n        viral_50k: 0\n      conversions_per_month: 2\n      earnings:\n        base_milestone: 1500 # 3 * 500\n        viral_bonus: 0\n        cps_commission: 400 # 2 * 200\n        total_monthly: 1900\n      effective_hourly_wage: 475 # 1900 / 4 hrs = 2.56x minimum wage\n    \n    skilled_part_timer:\n      hours_per_week: 5\n      videos_per_month: 10\n      views_distribution:\n        pass_1k: 7\n        fail_1k: 1\n        viral_10k: 2\n        viral_50k: 0\n      conversions_per_month: 10\n      earnings:\n        base_milestone: 4500 # 9 * 500\n        viral_bonus: 1400 # 2 * (1200 - 500)\n        cps_commission: 2000 # 10 * 200\n        total_monthly: 7900\n      effective_hourly_wage: 790 # 7900 / 10 hrs = 4.27x minimum wage\n\n    power_creator:\n      hours_per_week: 10\n      videos_per_month: 18\n      views_distribution:\n        pass_1k: 10\n        fail_1k: 1\n        viral_10k: 5\n        viral_50k: 2\n      conversions_per_month: 35\n      earnings:\n        base_milestone: 8500 # 17 * 500\n        viral_bonus: 6100 # 5 * 700 + 2 * (2500 - 1200)\n        cps_commission: 7000 # 35 * 200\n        total_monthly: 21600\n      effective_hourly_wage: 1200 # 21600 / 18 hrs = 6.48x minimum wage\n\nbrand_unit_economics:\n  campaign_comparison_100k_budget:\n    traditional_agency:\n      budget: 100000 # TWD\n      deliverables: \"10 支短影音 MP4 檔案交付 (單支 $10,000)\"\n      guaranteed_views: 0 # 無保證播放\n      leads_generated: \"未知 / 取決於自行發布運氣\"\n      risk_borne_by: \"品牌老闆承擔 100% 暴死風險\"\n    \n    meta_paid_ads:\n      budget: 100000 # TWD\n      cpm_average: 180 # TWD\n      impressions: 555555\n      cpl_average: 120 # 單個名單 $120\n      leads_generated: 833\n      long_tail_value: 0 # 停投立刻歸零\n      social_proof: \"0 (純贊助廣告標籤，易引起反感)\"\n\n    ugc_bounty_matrix_our_model:\n      budget: 100000 # TWD\n      mechanism: \"只為滿千播放 ＋ 互動名單買單 ($500/支)\"\n      base_qualified_videos: 140 # 假設 140 支達成基礎門檻\n      viral_bonuses_paid: 30000 # 預留爆款加碼基金\n      estimated_total_views: \"800,000 ~ 1,500,000 (含破萬與五萬爆款自然流)\"\n      blended_cpm: 66.6 # 100,000 / 1,500,000 * 1000 = $66.6 TWD\n      leads_generated: \"1,600 ~ 2,500 個高意圖留言 +1 / 諮詢名單\"\n      effective_cpl: 45.0 # 單個名單約 $40 ~ $50\n      long_tail_value: \"永久沉澱在全台 100+ 個素人創作者帳號上，持續產生被動自然流量\"\n      social_proof: \"極高 (百人真實推薦，杜絕官方自嗨)\"\n  lead_generation_funnel:\n    base_milestone_1k:\n      cost: 500 # TWD\n      views: 1000\n      intent_actions: 10 # 留言+1 或 點擊\n      cost_per_lead_cpl: 50 # 500 / 10\n      cpm: 500\n      equivalent_meta_lead_cost: 120 # Meta 投流平均名單成本\n      savings_percentage: \"58.3%\"\n\n    viral_10k:\n      cost: 1200\n      views: 10000\n      intent_actions: 80\n      cost_per_lead_cpl: 15\n      cpm: 120\n      savings_percentage: \"87.5%\"\n\n    viral_50k:\n      cost: 2500\n      views: 50000\n      intent_actions: 350\n      cost_per_lead_cpl: 7.14\n      cpm: 50\n      savings_percentage: \"94.0%\"\n\n    viral_100k:\n      cost: 3500\n      views: 100000\n      intent_actions: 600\n      cost_per_lead_cpl: 5.83\n      cpm: 35\n      savings_percentage: \"95.1%\"\n"
+        },
+        {
+          "path": "_thinking/web_translation/web_model.yaml",
+          "title": "🧠 web_model (SSOT 母體)",
+          "name": "web_model.yaml",
+          "isYaml": true,
+          "raw": "project_id: \"ugc_bounty_matrix\"\nmodule: \"web_translation\"\ntranslation_rules:\n  invisible_brain_rule: \"落地頁中嚴禁出現特勞特、心智階梯、語言釘子、視覺錘、JTBD 等幕後商業黑話，全數溶解為大白話、直球利益與 FAQ！\"\n  pages_planned:\n    creator_recruitment_page:\n      title: \"共鳴創作者計畫 ‧ 官方招募主頁\"\n      target_audience: \"大學生、自媒體新手、青年斜槓打工族\"\n      hero_headline: \"別再用青春罰站領 185！剪 1 分鐘短影音，滿千觀看加互動秒領 $500，爆款單支最高 $3,500！\"\n    brand_boss_landing_page:\n      title: \"共鳴去中心化獲客系統 ‧ 品牌企業主解決方案\"\n      target_audience: \"中小企業主、電商創辦人、品牌行銷總監\"\n      hero_headline: \"不用先砸十萬賭流量！發動百位素人創作者自建矩陣，每一塊錢只為『真實破千觀看＋精準買家諮詢』買單！\"\n"
+        },
+        {
+          "path": "input.yaml",
+          "title": "🧠 input (SSOT 母體)",
+          "name": "input.yaml",
+          "isYaml": true,
+          "raw": "# 共鳴創作者計畫 (Resonance Creator Program) / UGC 賞金分銷矩陣專案規格輸入\nproject_id: \"ugc_bounty_matrix\"\nbrand_name: \"共鳴創作者計畫 (Resonance Creator Program)\"\nproject_type: \"NEW_INNOVATION\" # 去中心化短影音外包分銷矩陣與賞金協同網路\n\n# 地理邊界與市場座標\ngeography:\n  country: \"TW\"\n  market_scope: \"NATIONAL\"\n  target_regions: [\"全台灣\", \"各大專院校\", \"青年斜槓社群\"]\n  currency: \"TWD\"\n  language: \"zh-TW\"\n\n# 啟用模組配置\nmodules:\n  enable_market_sizing: true        # 校園與斜槓短影音外包創作者市場規模測算\n  enable_jtbd_forces: true          # 創作者（打工抗拒 vs 自由創作）與品牌主痛點推拉力\n  enable_unit_economics: true       # 1,000 播放保底 + 導流 CAC 臨界線與邊際 CPM 測算\n  enable_mental_weapons: true       # 8 大心智作戰武器庫與創作者彈藥庫腳本\n  enable_pretotyping_funnel: true   # 行動承諾驗證與雙向防刷機制\n  enable_scale_defense: true        # 去中心化矩陣防禦壁壘 (7 Powers)\n  enable_cross_industry: true       # 跨界借鏡 (Web3 Bounties ✕ TikTok Affiliate ✕ 零工經濟)\n  enable_web_translation: true      # 創作者招募官方門戶轉譯\n\n# 核心商業模式與定位架構\ncore_positioning:\n  product_name: \"共鳴創作者計畫 (Resonance Creator Program)\"\n  positioning_architecture: \"去中心化 UGC 帳號矩陣 ✕ 成果驗收保底 ✕ 爆款指數稀釋\"\n  primary_slogan: \"不賣時間罰站，用好內容創造真實共鳴！1 分鐘短影音，滿千自然觀看加互動現領 $500，爆款單支最高 $3,500 ＋ 永久導流分潤。\"\n  value_proposition: \"打破傳統短影音外包高預付款、交付拖延與效果未知之黑洞。透過標準化彈藥庫（前 3 秒鉤子＋痛點積木）、AI 前置審核質檢與『1,000 觀看 ＋ 有效導流互動』成果結算機制，建立低邊際成本、高轉換率之去中心化品牌推薦網絡。\"\n  \n  pricing_structure:\n    plan_a_standard:\n      name: \"方案 A：滿千 500 保底 ✕ 爆款階梯加碼\"\n      creator_base_payout: 500 # TWD\n      boss_base_charge: 800 # TWD\n      platform_base_margin: 300 # TWD (毛利率 37.5%)\n      base_milestone:\n        views: 1000\n        qualification: \"自然推薦達 1,000 觀看 ＋ 後台截圖台灣受眾 >= 70%（徹底排除海外假刷量）\"\n        cta_responsibility: \"CTA（優惠誘因/引導字詞）完全由老闆自定；創作者負責完整播報給千人受眾，不考核成交轉換率\"\n      viral_tier_1:\n        views: 10000\n        creator_cumulative: 1200 # 補差額 $700\n        boss_cumulative: 1800 # 補差額 $1,000\n        platform_margin: 600\n        effective_cpm: 180\n      viral_tier_2:\n        views: 50000\n        creator_cumulative: 2500 # 補差額 $1,300\n        boss_cumulative: 3800 # 補差額 $2,000\n        platform_margin: 1300\n        effective_cpm: 76\n      viral_tier_3:\n        views: 100000\n        creator_cumulative: 3500 # 封頂加發 $1,000\n        boss_cumulative: 5000 # 封頂加付 $1,200\n        platform_margin: 1500\n        effective_cpm: 50\n      cps_commission:\n        description: \"10 萬觀看後流量費用封頂，轉入純 CPS 抽成：老闆付 25%~30%，創作者抽 15%~20%，平台淨賺 10%\"\n\n# 迭代紀錄\niteration_history:\n  - date: \"2026-11-28\"\n    phase: \"PHASE_00_PROJECT_INIT\"\n    decision: \"正式確立專案 ugc_bounty_matrix。定調對外品牌為『共鳴創作者計畫』，確立『滿千觀看＋有效導流』雙指標防刷結算模型與階梯指數稀釋財務曲線。\"\n"
+        },
+        {
+          "path": "state.yaml",
+          "title": "🧠 state (SSOT 母體)",
+          "name": "state.yaml",
+          "isYaml": true,
+          "raw": "# 專案狀態追蹤母體\nproject_id: \"ugc_bounty_matrix\"\nbrand_name: \"共鳴創作者計畫 (Resonance Creator Program)\"\ncurrent_phase: \"PHASE_00_STRATEGIC_FOUNDATION\"\npipeline_status: \"IN_PROGRESS\"\nlast_updated: \"2026-11-28\"\n\nphases:\n  00_core_positioning:\n    status: \"COMPLETED\"\n    completion_rate: \"100%\"\n    required_files:\n      - \"README.md\"\n      - \"_thinking/00_core/strategic_intent.yaml\"\n      - \"_thinking/00_core/01_assets.yaml\"\n      - \"_thinking/00_core/02_category.yaml\"\n      - \"00_core_positioning/00_project_brief.md\"\n      - \"00_core_positioning/01_asset_audit.md\"\n      - \"00_core_positioning/02_white_space_verdict.md\"\n      - \"00_core_positioning/03_landmines_report.md\"\n      - \"00_core_positioning/HUMAN_DECISION_GATE.md\"\n\n  modules:\n    market_sizing: \"COMPLETED\"\n    jtbd_forces: \"COMPLETED\"\n    unit_economics: \"COMPLETED\"\n    mental_weapons: \"COMPLETED\"\n    pretotyping_funnel: \"COMPLETED\"\n    scale_defense: \"COMPLETED\"\n    cross_industry: \"COMPLETED\"\n    web_translation: \"COMPLETED\"\n"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <script>
+    const DOCS_DATA = JSON.parse(document.getElementById('project-docs-payload').textContent);
+    let currentDocPath = "README.md";
+
+    // Configure marked
+    marked.setOptions({
+      gfm: true,
+      breaks: true,
+      highlight: function(code, lang) {
+        const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+        return hljs.highlight(code, { language }).value;
+      }
+    });
+
+    // Initialize Mermaid
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#1e293b',
+        primaryTextColor: '#f8fafc',
+        primaryBorderColor: '#e2b857',
+        lineColor: '#e2b857',
+        secondaryColor: '#0f172a',
+        tertiaryColor: '#1e293b'
+      }
+    });
+
+    // Build Sidebar Nav
+    function buildSidebar(filterText = '') {
+      const navContainer = document.getElementById('nav-tree');
+      navContainer.innerHTML = '';
+      
+      const filter = filterText.toLowerCase().trim();
+
+      DOCS_DATA.categories.forEach(cat => {
+        const matchingFiles = cat.files.filter(f => {
+          if (!filter) return true;
+          return f.title.toLowerCase().includes(filter) || f.path.toLowerCase().includes(filter);
+        });
+
+        if (matchingFiles.length === 0) return;
+
+        const catEl = document.createElement('div');
+        catEl.className = 'nav-category';
+
+        const catTitle = document.createElement('div');
+        catTitle.className = 'category-title';
+        catTitle.innerHTML = `<span>${cat.icon}</span> <span>${cat.name}</span>`;
+        catEl.appendChild(catTitle);
+
+        matchingFiles.forEach(file => {
+          const item = document.createElement('a');
+          item.className = 'nav-item' + (file.path === currentDocPath ? ' active' : '');
+          item.href = '#' + encodeURIComponent(file.path);
+          item.innerHTML = `<span class="nav-item-icon">${file.isYaml ? '🧠' : '📄'}</span> <span title="${file.path}">${file.title}</span>`;
+          
+          item.onclick = (e) => {
+            e.preventDefault();
+            loadDocument(file.path);
+          };
+
+          catEl.appendChild(item);
+        });
+
+        navContainer.appendChild(catEl);
+      });
+    }
+
+    // Load Document
+    async function loadDocument(filePath) {
+      const fileData = DOCS_DATA.files[filePath];
+      if (!fileData) {
+        console.error('File not found:', filePath);
+        return;
+      }
+
+      currentDocPath = filePath;
+      window.location.hash = encodeURIComponent(filePath);
+
+      // Update sidebar active state
+      document.querySelectorAll('.nav-item').forEach(el => {
+        if (el.getAttribute('href') === '#' + encodeURIComponent(filePath)) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('active');
+        }
+      });
+
+      // Update breadcrumbs
+      document.getElementById('current-doc-title').textContent = fileData.title;
+
+      const container = document.getElementById('article-content');
+
+      if (fileData.isYaml) {
+        container.innerHTML = `<h1>${fileData.title}</h1><p style="color:var(--text-muted);font-family:var(--font-mono);font-size:0.85rem;">路徑: ${filePath}</p><div class="yaml-viewer"><code class="language-yaml">${escapeHtml(fileData.raw)}</code></div>`;
+        hljs.highlightAll();
+        generateTOC([]);
+        return;
+      }
+
+      // Custom Markdown processing: Callouts and Mermaid
+      let rawMd = fileData.raw;
+
+      // Extract Mermaid blocks
+      const mermaidBlocks = [];
+      rawMd = rawMd.replace(/```mermaid([\s\S]*?)```/g, function(match, code) {
+        const placeholder = `<!--MERMAID_PLACEHOLDER_${mermaidBlocks.length}-->`;
+        mermaidBlocks.push(code.trim());
+        return placeholder;
+      });
+
+      // Render Markdown
+      let html = marked.parse(rawMd);
+
+      // Restore Mermaid blocks into interactive cards with toolbar & lightbox triggers
+      mermaidBlocks.forEach((code, idx) => {
+        const placeholder = `<!--MERMAID_PLACEHOLDER_${idx}-->`;
+        const cardHtml = `
+          <div class="mermaid-card" id="mermaid-card-${idx}">
+            <div class="mermaid-toolbar">
+              <div class="mermaid-badge">📊 架構流程圖</div>
+              <div class="mermaid-actions">
+                <button class="mermaid-btn" onclick="zoomCard(this, 1.25)" title="放大">+</button>
+                <button class="mermaid-btn" onclick="zoomCard(this, 0.8)" title="縮小">−</button>
+                <button class="mermaid-btn" onclick="resetCard(this)" title="還原">↺</button>
+                <button class="mermaid-btn primary" onclick="openMermaidModal(this)" title="全螢幕互動放大檢視">🔍 放大檢視</button>
+              </div>
+            </div>
+            <div class="mermaid-viewport" onclick="openMermaidModal(this)" title="點擊放大至全螢幕 (可滑鼠滾輪縮放、拖曳平移)">
+              <div class="mermaid-canvas" style="transform: scale(1);">
+                <pre class="mermaid">${escapeHtml(code)}</pre>
+              </div>
+            </div>
+          </div>
+        `;
+        html = html.replace(placeholder, cardHtml);
+      });
+
+      container.innerHTML = html;
+
+      // Render Mermaid diagrams
+      try {
+        await mermaid.run({
+          nodes: container.querySelectorAll('.mermaid')
+        });
+      } catch (err) {
+        console.warn('Mermaid render error:', err);
+      }
+
+      // Hijack internal links (.md or relative links)
+      container.querySelectorAll('a').forEach(anchor => {
+        const href = anchor.getAttribute('href');
+        if (!href) return;
+
+        // Check if relative markdown or yaml
+        if (!href.startsWith('http://') && !href.startsWith('https://') && !href.startsWith('#')) {
+          // Normalize path
+          const cleanHref = href.replace(/^\.\//, '').split('#')[0];
+          
+          // Match against DOCS_DATA keys
+          let targetPath = null;
+          for (let key in DOCS_DATA.files) {
+            if (key.endsWith(cleanHref) || cleanHref.endsWith(key)) {
+              targetPath = key;
+              break;
+            }
+          }
+
+          if (targetPath) {
+            anchor.style.color = 'var(--gold-primary)';
+            anchor.style.textDecoration = 'underline';
+            anchor.onclick = (e) => {
+              e.preventDefault();
+              loadDocument(targetPath);
+            };
+          }
+        }
+      });
+
+      // Generate TOC
+      buildTOC();
+
+      // Scroll to top
+      document.getElementById('main').scrollTop = 0;
+    }
+
+    // Build Table of Contents
+    function buildTOC() {
+      const container = document.getElementById('article-content');
+      const tocList = document.getElementById('toc-list');
+      tocList.innerHTML = '';
+
+      const headings = container.querySelectorAll('h1, h2, h3');
+      if (headings.length === 0) {
+        document.getElementById('toc-container').style.display = 'none';
+        return;
+      }
+      document.getElementById('toc-container').style.display = 'block';
+
+      headings.forEach((h, idx) => {
+        const id = 'heading-' + idx;
+        h.id = id;
+
+        const li = document.createElement('li');
+        li.className = 'toc-item depth-' + h.tagName.substring(1);
+
+        const a = document.createElement('a');
+        a.className = 'toc-link';
+        a.href = '#' + id;
+        a.textContent = h.textContent.replace(/^[#\s]+/, '');
+        a.onclick = (e) => {
+          e.preventDefault();
+          h.scrollIntoView({ behavior: 'smooth' });
+        };
+
+        li.appendChild(a);
+        tocList.appendChild(li);
+      });
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function copyMarkdown() {
+      const fileData = DOCS_DATA.files[currentDocPath];
+      if (fileData) {
+        navigator.clipboard.writeText(fileData.raw).then(() => {
+          alert('✅ 已複製本篇 Markdown 原始碼至剪貼簿！');
+        });
+      }
+    }
+
+    // Inline Card Zooming
+    function zoomCard(btn, factor) {
+      const card = btn.closest('.mermaid-card');
+      const canvas = card.querySelector('.mermaid-canvas');
+      let currentScale = parseFloat(canvas.dataset.scale || '1');
+      currentScale = Math.min(Math.max(currentScale * factor, 0.5), 3.0);
+      canvas.dataset.scale = currentScale;
+      canvas.style.transform = `scale(${currentScale})`;
+    }
+
+    function resetCard(btn) {
+      const card = btn.closest('.mermaid-card');
+      const canvas = card.querySelector('.mermaid-canvas');
+      canvas.dataset.scale = '1';
+      canvas.style.transform = 'scale(1)';
+    }
+
+    // Lightbox Modal Interactive Zoom & Pan
+    let modalScale = 1.0;
+    let modalPanX = 0;
+    let modalPanY = 0;
+    let isDragging = false;
+    let startDragX = 0;
+    let startDragY = 0;
+
+    function openMermaidModal(element) {
+      const card = element.closest('.mermaid-card');
+      if (!card) return;
+      const originalSvg = card.querySelector('svg');
+      if (!originalSvg) return;
+
+      const modal = document.getElementById('mermaid-modal');
+      const canvas = document.getElementById('modal-canvas');
+      
+      // Clone svg into modal canvas
+      const clonedSvg = originalSvg.cloneNode(true);
+      canvas.innerHTML = '';
+      canvas.appendChild(clonedSvg);
+      
+      // Reset pan offset
+      modalPanX = 0;
+      modalPanY = 0;
+      
+      // Extract natural dimensions from viewBox string
+      let naturalWidth = 800;
+      let naturalHeight = 500;
+      
+      const vbAttr = clonedSvg.getAttribute('viewBox');
+      if (vbAttr) {
+        const parts = vbAttr.trim().split(/[\s,]+/);
+        if (parts.length === 4) {
+          naturalWidth = parseFloat(parts[2]) || naturalWidth;
+          naturalHeight = parseFloat(parts[3]) || naturalHeight;
+        }
+      } else {
+        const b = originalSvg.getBoundingClientRect();
+        if (b.width > 0) naturalWidth = b.width;
+        if (b.height > 0) naturalHeight = b.height;
+      }
+      
+      // Set explicit dimensions on cloned SVG so it never collapses
+      clonedSvg.setAttribute('width', naturalWidth + 'px');
+      clonedSvg.setAttribute('height', naturalHeight + 'px');
+      clonedSvg.style.width = naturalWidth + 'px';
+      clonedSvg.style.height = naturalHeight + 'px';
+      clonedSvg.style.maxWidth = 'none';
+      clonedSvg.style.maxHeight = 'none';
+      clonedSvg.style.display = 'block';
+
+      // Smart Auto-Fit: Calculate optimal initial scale to comfortably fill 85% of modal
+      const modalBody = document.getElementById('modal-viewport');
+      const availW = modalBody && modalBody.clientWidth > 0 ? modalBody.clientWidth * 0.9 : window.innerWidth * 0.85;
+      const availH = modalBody && modalBody.clientHeight > 0 ? modalBody.clientHeight * 0.85 : window.innerHeight * 0.75;
+      let fitScale = Math.min(availW / naturalWidth, availH / naturalHeight);
+      if (fitScale > 2.5) fitScale = 2.5;
+      if (fitScale < 0.3) fitScale = 0.3;
+      modalScale = parseFloat(fitScale.toFixed(2));
+
+      updateModalTransform();
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMermaidModal() {
+      const modal = document.getElementById('mermaid-modal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+      const canvas = document.getElementById('modal-canvas');
+      canvas.innerHTML = '';
+    }
+
+    function onModalBackdropClick(event) {
+      // Only close if clicking outside modal dialog (the backdrop itself)
+      if (event.target.id === 'mermaid-modal') {
+        closeMermaidModal();
+      }
+    }
+
+    function updateModalTransform() {
+      const canvas = document.getElementById('modal-canvas');
+      canvas.style.transform = `translate(${modalPanX}px, ${modalPanY}px) scale(${modalScale})`;
+      document.getElementById('modal-zoom-text').textContent = `${Math.round(modalScale * 100)}%`;
+    }
+
+    function zoomModal(factor) {
+      modalScale = Math.min(Math.max(modalScale * factor, 0.25), 6.0);
+      updateModalTransform();
+    }
+
+    function resetModalZoom() {
+      modalScale = 1.0;
+      modalPanX = 0;
+      modalPanY = 0;
+      updateModalTransform();
+    }
+
+    function setupModalListeners() {
+      const viewport = document.getElementById('modal-viewport');
+      if (!viewport) return;
+
+      // Mouse Wheel Zoom
+      viewport.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const factor = e.deltaY < 0 ? 1.15 : 0.85;
+        zoomModal(factor);
+      }, { passive: false });
+
+      // Mouse Drag Pan
+      viewport.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return; // Left click only
+        isDragging = true;
+        startDragX = e.clientX - modalPanX;
+        startDragY = e.clientY - modalPanY;
+        viewport.style.cursor = 'grabbing';
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        modalPanX = e.clientX - startDragX;
+        modalPanY = e.clientY - startDragY;
+        updateModalTransform();
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (isDragging) {
+          isDragging = false;
+          const viewport = document.getElementById('modal-viewport');
+          if (viewport) viewport.style.cursor = 'grab';
+        }
+      });
+
+      // Double click to reset
+      viewport.addEventListener('dblclick', (e) => {
+        if (e.target.closest('.modal-controls') || e.target.closest('.modal-header')) return;
+        resetModalZoom();
+      });
+
+      // Keyboard Esc to close
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeMermaidModal();
+        }
+      });
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const isLight = body.classList.toggle('theme-light');
+      document.getElementById('theme-icon').textContent = isLight ? '☀️' : '🌙';
+      document.getElementById('theme-text').textContent = isLight ? '淺色模式' : '深色模式';
+    }
+
+    // Setup Search
+    document.getElementById('search-box').addEventListener('input', (e) => {
+      buildSidebar(e.target.value);
+    });
+
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      buildSidebar();
+      setupModalListeners();
+
+      // Check hash
+      const hash = window.location.hash.substring(1);
+      if (hash && DOCS_DATA.files[decodeURIComponent(hash)]) {
+        loadDocument(decodeURIComponent(hash));
+      } else {
+        loadDocument(currentDocPath);
+      }
+    });
+  </script>
+</body>
+</html>
